@@ -1,0 +1,167 @@
+<style>
+    #tableList th{
+        text-align: center;
+    }
+</style>
+<table height="51" width="96%" align=center>
+    <tr class="listFormItem">
+        <td align="left">
+            <input type="button" class="clsButton" value="增加模版" onclick="addTemplate('${formType}')">
+        </td>
+    </tr>
+    <tr class="listFormItem">
+        <td nowrap align=center>&nbsp;
+            <a onclick="doURL('formItemTemplateADD.html');">
+                <input type="button" value="新增" class="clsButton" />
+            </a>
+            <a onclick="doURL('gFormWebLIST.html?multiLevel=formInclude');">
+                <input type="button" value="匯入" class="clsButton" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td nowrap>
+            <h4 align="center">表单子项</h4>
+        </td>
+    </tr>
+</table>
+
+
+<table id="tableList" width="96%" align="center" class="etable" style="word-wrap:break-word;word-break:break-all;">
+    <tr>
+        <th class="chooseFormItem" style="display: none">
+            <input name="showCheckAll" title="全选/全不选" type="checkbox" onclick="$('input[name=\'showCheck\']').slice().prop('checked',this.checked)">
+        </th>
+        <th>名字</th>
+        <th>标题</th>
+        <th>当控件为文本框时,尾部标题</th>
+        <th>打印时,是否显示标题</th>
+        <th>控制类型</th>
+        <th>分数</th>
+        <th>控件元素标题</th>
+        <th>控件元素值</th>
+        <th>显示方式</th>
+        <th>是否有其他值</th>
+        <th>其他值标题前面部分</th>
+        <th>其他值标题后面部分</th>
+        <th>是否被选中</th>
+        <th>是否显示</th>
+        <th>是否必填</th>
+        <th>控件验证提示语</th>
+        <th>点击事件</th>
+        <th>健盘输入事件</th>
+        <th>失去焦点事件</th>
+        <th>获取焦点事件</th>
+        <th>下拉选项变更事件</th>
+        <th>描述说明</th>
+        <th>需跳转的护理计划代码</th>
+        <th>需跳转的宣教代码</th>
+        <th>数据转介</th>
+        <th>数据转介类型</th>
+        <th>数据转介单位</th>
+        <th width="110" class="listFormItem"></th>
+    </tr>
+</table>
+
+
+
+<script id="tableListTr_Template" type="text/html">
+    {{each $data gForms idx}}
+        {{set gForm=gForms.gForm}}
+        <tr onclick="checkThis(this)">
+            <td class="etd chooseFormItem" style="display: none">
+                <input name="showCheck" type="checkbox" value="{{gForm.gformItemMap.fitName.itemValue}}">
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitName" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitTitle" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitBackTitle" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitPrintShowTitle" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitControlType" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitUiScore" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitUiDesc" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitUiValue" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitDisplayMode" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitHasOther" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitOtherTitle" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitOtherBackTitle" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitChecked" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitShow" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitRequired" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitPromptTips" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitClick" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitOnkeydown" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitBlur" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitFocus" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitChange" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitDescription" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitPlanNos" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitEducationNos" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitDataAdapter" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitDataType" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" width="90" align=center>
+                <font class="pFormItem" data-bean="fitDataUnit" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td nowrap class="etd listFormItem" style="text-align: center">
+                <a href="#" onclick="doMain('{{idx}}');">
+                    <input type="button" value="编辑" class="clsButton" />
+                </a>
+                <a href="#" onclick="doDelete('{{idx}}');">
+                    <input type="button" value="删除" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    </c:forEach>
+    {{/each}}
+</script>

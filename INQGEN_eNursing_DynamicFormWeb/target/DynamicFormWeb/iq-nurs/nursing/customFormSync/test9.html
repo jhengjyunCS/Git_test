@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁-北榮計算閱讀時數</title>
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+</head>
+
+<body>
+    測試頁-北榮計算閱讀時數<br />
+    <div id="example" />
+</body>
+
+</html>
+<script>
+ var newwin = window.open();   //此行一定要如此書寫,否則失效
+ newwin.location= "https://ihealth.vghtpe.gov.tw/media/1169/?key=2596053120200517003401323&authKey=jxmAimiG&ward=17&lastname=%E6%9E%9";   // url是 cgi 程式或者超連結 html
+var minuteCounts = 0;
+windoeOnClose();
+function windoeOnClose(){
+    if (newwin.closed){
+        console.log("已關閉分頁，共閱讀了"+minuteCounts+"秒鐘");
+        alert("閱讀了"+minuteCounts+"秒鐘");
+    }else{
+        setTimeout(function() {
+            console.log(++minuteCounts);
+            windoeOnClose();
+        }, 1000);
+    }
+}
+// $.ajax({
+//     url: "https://ihealth.vghtpe.gov.tw/media/1169/?key=2596053120200517003401323&authKey=jxmAimiG&ward=17&lastname=%E6%9E%9",
+//     dataType: "jsonp",
+//     success: function(response) {
+//         console.log(response);
+//     },
+//     error: function(response) {
+//         console.log("error");
+//     }
+// });
+
+
+</script>

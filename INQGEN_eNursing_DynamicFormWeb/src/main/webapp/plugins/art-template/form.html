@@ -1,0 +1,21 @@
+<div id="div_form_{{$data.formType}}" style="display: inline-block">
+    <div class="table">
+        <div class="caption">
+            {{$data.formName}}<br>
+            <input value="保存" type="button" onclick="addOrUpdGform();">
+            <input value="返回" type="button" onclick="closeGform();">
+        </div>
+        <div class="colgroup">
+            <div class="col" style="width: 20%"></div>
+            <div class="col" style="width: 80%"></div>
+        </div>
+        <div class="tbody">
+            {{each $data.items item}}
+            <div class="tr">
+                <div class="th">{{if !item.showTitle}}{{item.title}}{{/if}}</div>
+                <div class="td">{{@ajaxInclude(item.controlType,item)}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

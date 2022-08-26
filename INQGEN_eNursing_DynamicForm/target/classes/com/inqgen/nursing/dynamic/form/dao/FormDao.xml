@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.inqgen.nursing.dynamic.form.dao.FormDao">
+    <insert id="insertForm" parameterClass="com.inqgen.nursing.dynamic.form.bean.Form">
+	    INSERT INTO ${FORM}(formID, formVersionId, formType, formModel, encId, patientId, stationId, totalScore, EvaluationTime, CreateTime,createUserId,createUserName,RECORD_POID,BEDID) 
+   	 VALUES(#formId#, #formVersionId#, #formType#, #formModel#, #encId#, #patientId#, #stationId#, #totalScore#, #evaluationTime#, #createTime#,#createUserId#,#createUserName#,#recordPoid#,#bedId#)
+	</insert>
+
+    <insert id="insertForm2" parameterClass="com.inqgen.nursing.dynamic.form.bean.Form">
+	    INSERT INTO ${FORM}(formID, formType, formModel, encId, patientId, stationId, totalScore, EvaluationTime, CreateTime,createUserId,createUserName,RECORD_POID,formItems,formVersionId,STATES,bedId,receiveTime,receiveUserId,receiveUserName,CALM_ID,EVENTIDS,versionNo,content) 
+   	 VALUES(#formId#, #formType#, #formModel#, #encId#, #patientId#, #stationId#, #totalScore#, #evaluationTime#, #createTime#,#createUserId#,#createUserName#,#recordPoid#,#itemstring#,#formVersionId#,#states#,#bedId#,#receiveTime#,#receiveUserId#,#receiveUserName#,#calmId#,#eventIds#,#versionNo#,#content:VARCHAR:NULL#)
+	</insert>
+
+    <insert id="insertForm3" parameterClass="com.inqgen.nursing.dynamic.form.bean.Form">
+	    INSERT INTO ${FORM}(formID, formType, formModel, encId, patientId, stationId, totalScore, EvaluationTime, CreateTime,createUserId,createUserName,RECORD_POID,formItems,formVersionId,STATES,bedId,receiveTime,receiveUserId,receiveUserName,OFFORMID) 
+   	 VALUES(#formId#, #formType#, #formModel#, #encId#, #patientId#, #stationId#, #totalScore#, #evaluationTime#, #createTime#,#createUserId#,#createUserName#,#recordPoid#,#itemstring#,#formVersionId#,#states#,#bedId#,#receiveTime#,#receiveUserId#,#receiveUserName#,#ofFormId#)
+	</insert>
+
+    <select id="getFormIdByOfFormId" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+        select formid from ${FORM} where formType=#fromType# and OFFORMID=#ofFormId# ${WITHUR}
+    </select>
+
+    <insert id="insertFormItem" parameterClass="com.inqgen.nursing.dynamic.form.bean.FormItem">
+	    INSERT INTO ${FORMITEM}(ID, formID, itemKey, itemValue, otherValue, encId, patientId, stationId) 
+   	 VALUES(#ID#, #formID#, #itemKey#, #itemValue#, #otherValue#, #encId#, #patientId#, #stationId#)
+	</insert>
+
+    <select id="checkFormItemExist" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+        select ID from  ${FORMITEM} WHERE formID=#formId# and itemKey=#itemKey# ${WITHUR}
+    </select>
+
+    <delete id="deleteFormItemByFormIdKey" parameterClass="java.util.HashMap">
+        DELETE FROM ${FORMITEM} WHERE formID=#formId# and itemKey=#itemKey#
+    </delete>
+    
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.Form" id="formResultSign">
+        <result property="formId" column="formID"/>
+        <result property="formType" column="formType"/>
+        <result property="formModel" column="formModel"/>
+        <result property="encId" column="encId"/>
+        <result property="patientId" column="patientId"/>
+        <result property="stationId" column="stationId"/>
+        <result property="totalScore" column="totalScore"/>
+        <result property="evaluationTime" column="EvaluationTime"/>
+        <result property="createTime" column="CreateTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createUserName" column="createUserName"/>
+        <result property="recordPoid" column="RECORD_POID"/>
+        <result property="content" column="CONTENT"/>
+        <result property="itemstring" column="formItems"/>
+        <result property="formVersionId" column="formVersionId"/>
+        <result property="states" column="STATES"/>
+        <result property="bedId" column="BEDID"/>
+        <result property="receiveTime" column="receiveTime"/>
+        <result property="receiveUserId" column="receiveUserId"/>
+        <result property="receiveUserName" column="receiveUserName"/>
+        <result property="signatureId" column="CHECKID"/>
+        <result property="signatureDate" column="CHECKMODIFYDATE"/>
+        <result property="signatureName" column="CHECKUSERNAME"/>
+    </resultMap>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.Form" id="formResult">
+        <result property="formId" column="formID"/>
+        <result property="formType" column="formType"/>
+        <result property="formModel" column="formModel"/>
+        <result property="encId" column="encId"/>
+        <result property="patientId" column="patientId"/>
+        <result property="stationId" column="stationId"/>
+        <result property="totalScore" column="totalScore"/>
+        <result property="evaluationTime" column="EvaluationTime"/>
+        <result property="createTime" column="CreateTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createUserName" column="createUserName"/>
+        <result property="recordPoid" column="RECORD_POID"/>
+        <result property="content" column="CONTENT"/>
+        <result property="itemstring" column="formItems"/>
+        <result property="formVersionId" column="formVersionId"/>
+        <result property="states" column="STATES"/>
+        <result property="bedId" column="BEDID"/>
+        <result property="receiveTime" column="receiveTime"/>
+        <result property="receiveUserId" column="receiveUserId"/>
+        <result property="receiveUserName" column="receiveUserName"/>
+        <result property="calmId" column="CALM_ID"/>
+        <result property="eventIds" column="EVENTIDS"/>
+    </resultMap>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormItem" id="formItemResult">
+        <result property="itemKey" column="itemKey"/>
+        <result property="itemValue" column="itemValue"/>
+        <result property="otherValue" column="otherValue"/>
+        <result property="formID" column="formID"/>
+    </resultMap>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.Form" id="formResultOEM">
+        <result property="formId" column="formID"/>
+        <result property="formVersionId" column="formVersionId"/>
+        <result property="formType" column="formType"/>
+        <result property="formModel" column="formModel"/>
+        <result property="encId" column="encId"/>
+        <result property="patientId" column="patientId"/>
+        <result property="stationId" column="stationId"/>
+        <result property="totalScore" column="totalScore"/>
+        <result property="evaluationTime" column="EvaluationTime"/>
+        <result property="createTime" column="CreateTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createUserName" column="createUserName"/>
+        <result property="eventIds" column="eventIds"/>
+        <result property="versionNo" column="versionNo"/>
+        <result property="states" column="states"/>
+        <result property="content" column="content" />
+    </resultMap>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormItem" id="formItemResultOEM">
+        <result property="itemKey" column="itemKey"/>
+        <result property="itemValue" column="itemValue"/>
+        <result property="otherValue" column="otherValue"/>
+        <result property="formID" column="formID"/>
+        <result property="encId" column="encId"/>
+        <result property="patientId" column="patientId"/>
+        <result property="stationId" column="stationId"/>
+    </resultMap>
+
+
+    <select id="selectFormToOem" parameterClass="java.util.HashMap" resultMap="formResultOEM">
+        SELECT formID,formVersionId, formType, formModel, encId, patientId, stationId, totalScore, EvaluationTime,
+        CreateTime ,createUserId,createUserName,eventIds,versionNo, states
+        <isNotEmpty property="hasContent">
+            ,f.content as content
+        </isNotEmpty>
+        <isEmpty property="hasContent">
+            ,null content
+        </isEmpty>
+        FROM ${FORM} where encId=#encId# and formType=#formType# and formModel=#formModel#
+        <dynamic prepend="">
+            <isNotNull property="beginDate"> <![CDATA[ and CreateTime>=#beginDate# ]]></isNotNull>
+            <isNotNull property="endDate"> <![CDATA[ and CreateTime<=#endDate# ]]></isNotNull>
+            <isNotNull property="formId"> <![CDATA[ and formID=#formId# ]]></isNotNull>
+        </dynamic>
+        order by EvaluationTime ASC ${WITHUR}
+    </select>
+
+
+    <select id="selectFormItemOem" parameterClass="java.util.HashMap" resultMap="formItemResultOEM">
+		SELECT formID, itemKey, itemValue, otherValue, encId, patientId, stationId    
+    	FROM ${FORMITEM} where encId=#encId# and formId=#formId# ${WITHUR}
+    </select>
+
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.Form" extends="formResultOEM" id="formResultForWS" groupBy="formId">
+        <result property="items" resultMap="com.inqgen.nursing.dynamic.form.dao.FormDao.formItemResultForWS"/>
+    </resultMap>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormItem" id="formItemResultForWS">
+        <result property="itemKey" column="itemKey"/>
+        <result property="itemValue" column="itemValue"/>
+        <result property="otherValue" column="otherValue"/>
+        <result property="formID" column="formId"/>
+    </resultMap>
+
+    <select id="selectFormForWS" parameterClass="java.util.HashMap" resultMap="formResultForWS">
+        SELECT f.formID,f.formVersionId, f.formType, f.formModel, f.encId, f.patientId, f.stationId, f.totalScore, f.EvaluationTime,
+        f.CreateTime ,f.createUserId,f.createUserName,f.eventIds,f.versionNo,f.states
+        <isNotEmpty property="hasContent">
+            ,f.content as content,null ITEMKEY,null ITEMVALUE,null OTHERVALUE
+            FROM ${FORM} f
+        </isNotEmpty>
+        <isEmpty property="hasContent">
+            ,null content,fi.ITEMKEY,fi.ITEMVALUE,fi.OTHERVALUE
+            FROM ${FORM} f left join ${FORMITEM} fi on fi.FORMID=f.FORMID
+        </isEmpty>
+        where f.encId=#encId# and f.formType=#formType# and f.formModel=#formModel#
+        
+        <dynamic prepend="">
+            <isNotNull property="beginDate"> <![CDATA[ and f.CreateTime>=#beginDate# ]]></isNotNull>
+            <isNotNull property="endDate"> <![CDATA[ and f.CreateTime<=#endDate# ]]></isNotNull>
+            <isNotNull property="formId"> <![CDATA[ and f.formID=#formId# ]]></isNotNull>
+        </dynamic>
+        order by f.EvaluationTime DESC ${WITHUR}
+    </select>
+    <select id="selectLastFormWithItems" parameterClass="java.util.Map" resultMap="formResultForWS">
+        select f.*,fi.ITEMKEY,fi.ITEMVALUE,fi.OTHERVALUE from(SELECT f.formID,f.formVersionId, f.formType, f.formModel, f.encId, f.patientId, f.stationId,
+        f.totalScore, f.EvaluationTime,f.CreateTime,f.createUserId,f.createUserName,null eventIds,null versionNo
+        <isNotEmpty property="hasContent">
+            ,f.content as content
+        </isNotEmpty>
+        <isEmpty property="hasContent">
+            ,null content
+        </isEmpty>
+        ,f.states,row_number() OVER (ORDER BY f.EvaluationTime desc,f.CREATETIME desc) rowN
+        FROM ${FORM} f
+        where f.patientId=#patientId# and f.encId=#encId# and f.formType=#formType#
+        ) f left join ${FORMITEM} fi on fi.FORMID=f.FORMID
+        where f.rown=1
+        <isNotEmpty property="itemKeys">
+            and fi.itemKey in
+            <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                #itemKeys[]#
+            </iterate>
+        </isNotEmpty>
+        <isNotEmpty property="itemKey">
+            and fi.itemKey=#itemKey#
+        </isNotEmpty>
+        ${WITHUR}
+    </select>
+
+    <select id="selectLastFormId" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+        SELECT t.formID FROM (
+			SELECT row_number() OVER (ORDER BY f.CREATETIME desc) rowN, f.formID FROM ${FORM} f
+			where f.encId=#encId# and f.formType=#formType# and f.formModel=#formModel#
+		) t
+		where rowN = 1 ${WITHUR}
+    </select>
+
+    <select id="selectForm" parameterClass="java.util.HashMap" resultMap="formResult">
+        SELECT formID,
+        formType,
+        formModel,
+        encId,
+        patientId,
+        stationId,
+        totalScore,
+        EvaluationTime,
+        CreateTime,
+        createUserId,
+        createUserName,
+        RECORD_POID,
+        CONTENT,
+        formItems,
+        formVersionId,
+        STATES,
+        BEDID,
+        receiveTime,
+        receiveUserId,
+        receiveUserName,
+        CALM_ID,
+        EVENTIDS FROM ${FORM} where
+        <isNotNull property="encId">encId=#encId# and</isNotNull>
+        <dynamic prepend="">
+            <isNotNull property="encIds">
+                encId IN
+                <iterate property="encIds" open="(" close=")" conjunction=",">
+                    #encIds[]#
+                </iterate>
+                AND
+            </isNotNull>
+        </dynamic>
+
+        formType=#formType# and formModel=#formModel#
+        <dynamic prepend="">
+            <isNotNull property="beginDate"> <![CDATA[ and CreateTime>=#beginDate# ]]></isNotNull>
+            <isNotNull property="endDate"> <![CDATA[ and CreateTime<=#endDate# ]]></isNotNull>
+            <isNotNull property="formId"> <![CDATA[ and formID=#formId# ]]></isNotNull>
+        </dynamic>
+        order by EvaluationTime desc,CreateTime desc ${WITHUR}
+    </select>
+
+    <select id="selectFormToKardex" parameterClass="java.util.HashMap" resultMap="formResult">
+        SELECT formID,
+        formType,
+        formModel,
+        encId,
+        patientId,
+        stationId,
+        totalScore,
+        EvaluationTime,
+        CreateTime,
+        createUserId,
+        createUserName,
+        RECORD_POID,
+        CONTENT,
+        formItems,
+        formVersionId,
+        STATES,
+        BEDID,
+        receiveTime,
+        receiveUserId,
+        receiveUserName,
+        CALM_ID,
+        EVENTIDS
+        FROM ${FORM} where encId=#encId#
+        <isNotNull property="formTypes">and formType IN
+            <iterate property="formTypes" open="(" close=")" conjunction=",">
+                #formTypes[]#
+            </iterate>
+        </isNotNull>
+        order by EvaluationTime ASC ${WITHUR}
+    </select>
+
+
+    <select id="selectFormByTypes" parameterClass="java.util.HashMap" resultMap="formResult">
+        SELECT formID,
+        formType,
+        formModel,
+        encId,
+        patientId,
+        stationId,
+        totalScore,
+        EvaluationTime,
+        CreateTime,
+        createUserId,
+        createUserName,
+        RECORD_POID,
+        NULL CONTENT,
+        formItems,
+        formVersionId,
+        STATES,
+        BEDID,
+        receiveTime,
+        receiveUserId,
+        receiveUserName,
+        CALM_ID,
+        EVENTIDS FROM ${FORM} where
+        <dynamic prepend="">
+            <isNotNull property="encIds">
+                ENCID IN
+                <iterate property="encIds" open="(" close=")" conjunction=",">
+                    #encIds[]#
+                </iterate>
+                AND
+            </isNotNull>
+        </dynamic>
+
+        <dynamic prepend="">
+            <isNotNull property="formTypes">
+                formType IN
+                <iterate property="formTypes" open="(" close=")" conjunction=",">
+                    #formTypes[]#
+                </iterate>
+            </isNotNull>
+        </dynamic>
+        order by EvaluationTime asc ${WITHUR}
+    </select>
+
+
+    <select id="getLastFormScore" parameterClass="java.util.HashMap" resultMap="formResult">
+        SELECT formID,
+        formType,
+        formModel,
+        encId,
+        patientId,
+        stationId,
+        totalScore,
+        EvaluationTime,
+        CreateTime,
+        createUserId,
+        createUserName,
+        RECORD_POID,
+        CONTENT,
+        formItems,
+        formVersionId,
+        STATES,
+        BEDID,
+        receiveTime,
+        receiveUserId,
+        receiveUserName,
+        CALM_ID,
+        EVENTIDS
+        FROM ${FORM} where encId=#encId#
+        <isNotNull property="formTypes">and formType IN
+            <iterate property="formTypes" open="(" close=")" conjunction=",">
+                #formTypes[]#
+            </iterate>
+        </isNotNull>
+        order by EvaluationTime desc ${WITHUR}
+    </select>
+
+
+    <select id="selectForm2" parameterClass="java.util.HashMap" resultMap="formResult">
+        <![CDATA[
+       	SELECT formID,
+            formType,
+            formModel,
+            encId,
+            patientId,
+            stationId,
+            totalScore,
+            EvaluationTime,
+            CreateTime,
+            createUserId,
+            createUserName,
+            RECORD_POID,
+            CONTENT,
+            formItems,
+            formVersionId,
+            STATES,
+            BEDID,
+            receiveTime,
+            receiveUserId,
+            receiveUserName,
+            CALM_ID,
+            EVENTIDS
+		    FROM ${FORM} where
+		    EvaluationTime>=#beginDate# and EvaluationTime<#endDate#
+		    and formModel=#formModel#
+	  ]]>
+        <isNotNull property="stationId">and stationId IN
+            <iterate property="stationId" open="(" close=")" conjunction=",">
+                #stationId[]#
+            </iterate>
+        </isNotNull>
+
+        <isNotEmpty property="gtTotalScore"><![CDATA[ and totalScore>#gtTotalScore# ]]></isNotEmpty>
+        <isNotEmpty property="ltTotalScore"> <![CDATA[and totalScore<#ltTotalScore# ]]></isNotEmpty> ${WITHUR}
+    </select>
+
+
+    <delete id="deleteForm" parameterClass="java.lang.String">
+        delete from ${FORM} where formID=#value#
+    </delete>
+
+    <delete id="deleteFormItem" parameterClass="java.lang.String">
+        delete from ${FORMITEM} where formID=#value#
+    </delete>
+
+    <select id="selectFormItem" parameterClass="java.util.HashMap" resultMap="formItemResult">
+        SELECT formID, itemKey, itemValue, otherValue
+        FROM ${FORMITEM} where formID in(
+        SELECT formID FROM ${FORM} where
+        <isNotNull property="encId">encId=#encId# and</isNotNull>
+        <dynamic prepend="">
+            <isNotNull property="encIds">
+                encId IN
+                <iterate property="encIds" open="(" close=")" conjunction=",">
+                    #encIds[]#
+                </iterate>
+                AND
+            </isNotNull>
+        </dynamic>
+        formType=#formType# and formModel=#formModel#
+        <dynamic prepend="">
+            <isNotNull property="formId"> <![CDATA[ and formID=#formId# ]]></isNotNull>
+        </dynamic>
+        ) ${WITHUR}
+    </select>
+
+    <select id="selectFormById" parameterClass="java.lang.String"
+            resultClass="com.inqgen.nursing.dynamic.form.bean.Form">
+        SELECT formID, formType, formModel, encId, patientId, stationId, totalScore, EvaluationTime, CreateTime ,createUserId,createUserName
+		    FROM ${FORM} where formID=#value# ${WITHUR}
+    </select>
+
+
+    <select id="selectFormToWorkList" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+
+        select encId from ${FORM} where stationId=#stationid#
+        <isNotNull property="encid">and encid IN
+            <iterate property="encid" open="(" close=")" conjunction=",">
+                #encid[]#
+            </iterate>
+        </isNotNull>
+
+        <isNotNull property="formModel">and formModel IN
+            <iterate property="formModel" open="(" close=")" conjunction=",">
+                #formModel[]#
+            </iterate>
+        </isNotNull>
+
+        <isNotNull property="inStationDate">
+            <![CDATA[
+              	AND EvaluationTime>=#inStationDate#
+              ]]>
+
+        </isNotNull>
+
+        group by encid
+        ${WITHUR}
+    </select>
+
+
+    <select id="selectFormToWorkListOracle" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+
+        select encId from ${FORM} where stationId=#stationid#
+        <isNotNull property="encid">and encid IN
+            <iterate property="encid" open="(" close=")" conjunction=",">
+                #encid[]#
+            </iterate>
+        </isNotNull>
+
+        <isNotNull property="formModel">and formModel IN
+            <iterate property="formModel" open="(" close=")" conjunction=",">
+                #formModel[]#
+            </iterate>
+        </isNotNull>
+
+        <isNotNull property="inStationDate">
+            <![CDATA[
+              	AND EvaluationTime>=to_date(#inStationDate#, 'yyyy-MM-dd')
+              ]]>
+
+        </isNotNull>
+
+        group by encid
+        ${WITHUR}
+    </select>
+
+
+    <!-- 匯總表所用SQL -->
+
+
+    <select id="selectFormByEvaTime" parameterClass="java.util.HashMap" resultMap="formResult">
+        SELECT formID,
+        formType,
+        formModel,
+        encId,
+        patientId,
+        stationId,
+        totalScore,
+        EvaluationTime,
+        CreateTime,
+        createUserId,
+        createUserName,
+        RECORD_POID,
+        NULL CONTENT,
+        formItems,
+        formVersionId,
+        STATES,
+        BEDID,
+        receiveTime,
+        receiveUserId,
+        receiveUserName,
+        CALM_ID,
+        EVENTIDS FROM ${FORM} where formType=#formType# and formModel=#formModel#
+
+        <isNotNull property="encId">and encId=#encId#</isNotNull>
+        <dynamic prepend="">
+            <isNotNull property="encIds">
+                and encId IN
+                <iterate property="encIds" open="(" close=")" conjunction=",">
+                    #encIds[]#
+                </iterate>
+            </isNotNull>
+        </dynamic>
+
+
+        <dynamic prepend="">
+            <isNotNull property="beginDate"> <![CDATA[ and EvaluationTime>=#beginDate# ]]></isNotNull>
+            <isNotNull property="endDate"> <![CDATA[ and EvaluationTime<=#endDate# ]]></isNotNull>
+            <isNotNull property="formId"> <![CDATA[ and formID=#formId# ]]></isNotNull>
+        </dynamic>
+        order by EvaluationTime asc ${WITHUR}
+    </select>
+
+    <select id="getFormById" parameterClass="java.lang.String" resultMap="formResult">
+          SELECT formID,
+            formType,
+            formModel,
+            encId,
+            patientId,
+            stationId,
+            totalScore,
+            EvaluationTime,
+            CreateTime,
+            createUserId,
+            createUserName,
+            RECORD_POID,
+            CONTENT,
+            formItems,
+            formVersionId,
+            STATES,
+            BEDID,
+            receiveTime,
+            receiveUserId,
+            receiveUserName,
+            CALM_ID,
+            EVENTIDS from ${FORM} where formID=#value# ${WITHUR}
+    </select>
+
+    <select id="getFormItemForBMIScore" parameterClass="java.util.HashMap" resultMap="formItemResult">
+        SELECT formID, itemKey, itemValue, otherValue FROM ${FORMITEM} where encId=#encId# and formID=#formId# AND itemKey IN('admIdentity','adm65Identity','admWeightBMIScore','adm65WeightBMIScore') ${WITHUR}
+    </select>
+
+    <select id="getLastAddForm" resultClass="java.lang.String" parameterClass="java.util.HashMap">
+        SELECT CONTENT from ${FORM} where
+        patientId=#patientId# and formType=#formType# and formModel=#formModel#
+        <isNotNull property="formVersionId">and formVersionId=#formVersionId#</isNotNull>
+        order by EvaluationTime desc,CreateTime desc ${WITHUR}
+    </select>
+    <select id="getLastAddFormId" resultClass="java.lang.String" parameterClass="java.util.HashMap">
+        SELECT formId from ${FORM} where
+        patientId=#patientId# and formType=#formType# and formModel=#formModel#
+        <isNotNull property="formVersionId">and formVersionId=#formVersionId#</isNotNull>
+        order by EvaluationTime desc,CreateTime desc ${WITHUR}
+    </select>
+
+    <delete id="deleteFormByType" parameterClass="java.util.HashMap">
+        delete from ${FORM} where 
+        formType = #formType# and 
+        patientId=#patientid# and 
+        encId=#encid#
+        	<![CDATA[ and EVALUATIONTIME = #evaluationTime#
+
+
+
+        ]]>
+    </delete>
+
+    <select id="selectFormSign" parameterClass="java.util.HashMap" resultMap="formResultSign">
+        SELECT FORM.*,
+        CHECKNURSINGRECORD.ID CHECKID,
+        CHECKNURSINGRECORD.MODIFYDATE CHECKMODIFYDATE,
+        CHECKNURSINGRECORD.USERNAME CHECKUSERNAME
+        FROM ${FORM}
+        left join ${CHECKNURSINGRECORD} on ${FORM}.FORMID=${CHECKNURSINGRECORD}.FORMID
+        where
+        <isNotNull property="encId">FORM.encId=#encId# and</isNotNull>
+
+        ${FORM}.formType=#formType# and ${FORM}.formModel=#formModel#
+        <dynamic prepend="">
+            <isNotNull property="beginDate"> <![CDATA[ and ${FORM}.CreateTime>=#beginDate# ]]></isNotNull>
+            <isNotNull property="endDate"> <![CDATA[ and ${FORM}.CreateTime<=#endDate# ]]></isNotNull>
+        </dynamic> ${WITHUR}
+    </select>
+    <select id="queryFormByCalm" parameterClass="java.util.HashMap" resultMap="formResult">
+        SELECT f.FORMID ,f.FORMTYPE ,f.FORMMODEL,f.ENCID,f.PATIENTID ,f.STATIONID ,f.TOTALSCORE
+        ,f.EVALUATIONTIME,f.CREATETIME,f.CREATEUSERID ,f.CREATEUSERNAME ,f.RECORD_POID,f.CONTENT, f.FORMITEMS
+        ,f.FORMVERSIONID ,f.STATES,f.BEDID,f.CALM_ID,f.receiveTime,f.receiveUserId,f.receiveUserName,f.eventIds FROM
+        ${CALM} c left join ${FORM} f on f.CALM_ID=c.CALM_ID where f.PATIENTID=#patientId# and f.ENCID=#encId#
+        <dynamic prepend="">
+            <isNotNull property="encIds">
+                and f.ENCID IN
+                <iterate property="encIds" open="(" close=")" conjunction=",">
+                    #encIds[]#
+                </iterate>
+            </isNotNull>
+            <!-- <isNotNull property="id"> <![CDATA[ and f.CALM_ID=#id#  ]]></isNotNull> -->
+        </dynamic>
+        order by f.EVALUATIONTIME asc ${WITHUR}
+    </select>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.Form" id="getScores">
+        <result property="formId" column="formID"/>
+        <result property="formType" column="formType"/>
+        <result property="formModel" column="formModel"/>
+        <result property="totalScore" column="totalScore"/>
+        <result property="evaluationTime" column="EvaluationTime"/>
+        <result property="createTime" column="CreateTime"/>
+        <result property="createUserId" column="createUserId"/>
+        <result property="createUserName" column="createUserName"/>
+        <result property="recordPoid" column="RECORD_POID"/>
+        <result property="receiveTime" column="receiveTime"/>
+        <result property="receiveUserId" column="receiveUserId"/>
+        <result property="receiveUserName" column="receiveUserName"/>
+        <result property="signatureId" column="CHECKID"/>
+        <result property="signatureDate" column="CHECKMODIFYDATE"/>
+        <result property="signatureName" column="CHECKUSERNAME"/>
+        <result property="eventIds" column="EVENTIDS"/>
+    </resultMap>
+    <!--     跌倒，壓力性損傷(成人，兒童)，DVT取分數方法 -->
+    <select id="getScoresForRecordList" parameterClass="java.util.HashMap" resultMap="getScores">
+        select
+        f.FORMID,f.FORMTYPE,f.FORMMODEL,f.TOTALSCORE,f.CREATETIME,f.CREATEUSERID,f.CREATEUSERNAME,f.RECORD_POID,f.RECEIVETIME,f.RECEIVEUSERID,f.RECEIVEUSERNAME,f.EVALUATIONTIME,f.EVENTIDS,
+        c.ID CHECKID,
+        c.MODIFYDATE CHECKMODIFYDATE,
+        c.USERNAME CHECKUSERNAME
+        from ${FORM} f left join ${CHECKNURSINGRECORD} c on f.FORMID=c.FORMID
+        where
+        <dynamic prepend="">
+            <isNotNull property="encId"> <![CDATA[  f.ENCID=#encId# ]]></isNotNull>
+            <isNotNull property="patientId"> <![CDATA[ and f.PATIENTID=#patientId# ]]></isNotNull>
+            <isNotNull property="beginDate"> <![CDATA[ and f.EVALUATIONTIME>=#beginDate# ]]></isNotNull>
+            <isNotNull property="endDate"> <![CDATA[ and f.EVALUATIONTIME<=#endDate# ]]></isNotNull>
+            <isNotNull property="formType"> <![CDATA[ and f.FORMTYPE=#formType# ]]></isNotNull>
+            <isNotNull property="formModel"> <![CDATA[ and f.FORMMODEL=#formModel# ]]></isNotNull>
+        </dynamic>
+        order by f.EVALUATIONTIME asc ${WITHUR}
+    </select>
+    
+    <select id="getFormCount" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+        select count(*) from ${FORM} where formType=#fromType# and ENCID=#encId# and PATIENTID=#patientId# and STATES='Y' ${WITHUR}
+    </select>
+    
+</sqlMap>

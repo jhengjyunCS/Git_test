@@ -1,0 +1,426 @@
+
+body, #bodyContent{
+    height: 100%;
+    overflow-y: hidden !important;
+}
+#gotoTargetForm{
+    width:100%;
+    background-color: #555555;
+    overflow-y: hidden !important;
+}
+#topDiv{
+    margin-left: 5px;
+    border: 0;
+}
+#modelGroup{
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 0;
+    float:left;
+}
+#editorGroup{
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 0;
+    float:left;
+}
+#modelDiv{
+    margin: 10px;
+    border: 0;
+    float:left;
+}
+#editorDiv{
+    margin: 10px;
+    border: 0;
+    float:left;
+}
+#previewDiv{
+    margin: 10px;
+    border: 0;
+    float:left;
+}
+#list_formType{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+    overflow: auto;
+}
+#list_formVersion{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+    overflow: auto;
+}
+#list_formFrame{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+    overflow: auto;
+}
+#list_frameInit{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+    overflow: auto;
+}
+#formVersionDiv{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+}
+#formFrameDiv{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+}
+#frameInitDiv{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+}
+#frame{
+    margin: 10px;
+    border: 0;
+    background-color: #222222;
+}
+.width_100{
+    width: 98%;
+}
+.width_50{
+    width: 47%;
+}
+.width_0{
+    width: 0%;
+    display: none !important;
+}
+.height_100{
+    height: 92%;
+}
+.height_50{
+    height: 45%;
+}
+.height_33{
+    height: 29%;
+}
+.height_25{
+    height: 22%;
+}
+.height_0{
+    height: 0%;
+    display: none !important;
+}
+.editor{
+    width: 98%;
+    height: 88%;
+    display:block;
+    margin: 0px auto;
+    color: black;
+}
+
+#show{
+    width: 100%;
+    height: 100%;
+}
+
+/*http://buttonoptimizer.com/*/
+.buttonShow {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 4px 0 0 4px;
+    padding: 0px 7px;
+    border: 0px solid #b3b3b3;
+    border-radius: 9px;
+    background: #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#b3b3b3));
+    background: -moz-linear-gradient(top, #ffffff, #b3b3b3);
+    background: linear-gradient(to bottom, #ffffff, #b3b3b3);
+    -webkit-box-shadow: #ffffff 0px 0px 0px 0px;
+    -moz-box-shadow: #ffffff 0px 0px 0px 0px;
+    box-shadow: #ffffff 0px 0px 0px 0px;
+    text-shadow: #ffffff 0px 0px 0px;
+    font: normal normal bold 20px arial;
+    color: #111111;
+    text-decoration: none;
+    cursor: pointer;
+}
+.buttonShow:hover,
+.buttonShow:focus {
+    border: 0px solid #ffffff;
+    background: #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#d7d7d7));
+    background: -moz-linear-gradient(top, #ffffff, #d7d7d7);
+    background: linear-gradient(to bottom, #ffffff, #d7d7d7);
+    color: #111111;
+    text-decoration: none;
+}
+.buttonShow:active {
+    background: #b3b3b3;
+    background: -webkit-gradient(linear, left top, left bottom, from(#b3b3b3), to(#b3b3b3));
+    background: -moz-linear-gradient(top, #b3b3b3, #b3b3b3);
+    background: linear-gradient(to bottom, #b3b3b3, #b3b3b3);
+}
+.buttonShow:before{
+    content:  "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    margin: 0 4px -6px -4px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADbUlEQVRIia2WTWhcVRTHf/+bEEKJM0WkZN67t4NFVDouJJQuJBjcuCiiuHEnlJSKO7clNpSSKhXtoviBVNuNrtwILoK6EKslCoWsjEgXQvs+CMVFMhEJTbjHRealb6YTCdgDB+473+d/z733CXDsk5IkwTnGJY2bWZT0d5YV8b981EsQ90gUARdC8igwC3rVzI4CDYkIWgVumNkXEt9mWbldixMBV09Q0e53q9VyIyNuVrL3zTQmsQh23UwlMAZ0gBPAFNiSxKksK/+ox9kzQQjpKNiHZrwp6QrYfJaVd4d06bxPnpf42Ewe7JU8L39kIOAD7H16PoRky/t0di+bfvukEUL6nffpegjJ05V8sAMH4H36LHBTYt45u3j7dhnrdiGkk2as5XmxWZd7nzQkfgHWQDNZVmyPsLPR1ktggDWbjSsSW2An79wpt2s6vG85YFnSSLe7sVT373Y3thqNR1ZA82A3u92NW9WO77YaQpIAL4Jdrk3FLps5QONmHKg6runJ8/KnXgGvA64+UhGIZhw3szEzLQ7ooH8YGJDX14vAdAipGx1wQOIIqJtlRVnJenvycs2sAbzgfVr5/AN8lGXFvZ5+BWwSdKBKUD9k48BmXSbZtJlO14qYMGMKeALAzDZBXwJ3e373QA4YHQKRVoHHvE/HKl2M+sSMdo8fN6MELlUysKfyvFit7CVLgC6wOQyiZcBJPAf8AFAU9++bJEmQxKC8VihmzAC/x2ibdWh6k6DfgFtmnGLIgaqC9/v0HbhDwEuSfV2WZR/2EYhZlkewy5K9FkJyjCFTJPEe8A1DpkhiAbQJusYedxHe+1Ep/mymQ8BMnhf5IJSDdPhwy8XoTgJXgdN5XnxetfhAu81mM4JuAEeA6yEkx4fBUXEIyZiZzkj2mcSnMdq1XUgHO+h0Oq7bXTtjZu+APpBsGjhmpq8krpqxlOfFPSB6nySgExJvmXEU7AJoIc+L6gboh6jdDi7GOGdmC6C3m82DF9fX1x3EN3pBntx5aPgLNA7WYGfmvwc7l2Xl8iB0uwl6lc+ZcR4412wefHdlZaW2Ly0HekbSFDDJzmH8E+zXPd6J+9h3Oh0XQjoXQmIhpGfb7VC/xPhf63Y7uBDSs73gc51OZ98/AfshhZBOABlwqdHoh+VhkQshnXiosNTW/wKcFXutXAvskQAAAABJRU5ErkJggg==") no-repeat left center transparent;
+    background-size: 100% 100%;
+}
+
+.buttonHidden {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 4px 0 0 4px;
+    padding: 0px 7px;
+    border: 0px solid #61b26b;
+    border-radius: 9px;
+    background: #8afe99;
+    background: -webkit-gradient(linear, left top, left bottom, from(#8afe99), to(#61b26b));
+    background: -moz-linear-gradient(top, #8afe99, #61b26b);
+    background: linear-gradient(to bottom, #8afe99, #61b26b);
+    -webkit-box-shadow: #a6ffb8 0px 0px 0px 0px;
+    -moz-box-shadow: #a6ffb8 0px 0px 0px 0px;
+    box-shadow: #a6ffb8 0px 0px 0px 0px;
+    text-shadow: #b3ffc7 0px 0px 0px;
+    font: normal normal bold 20px arial;
+    color: #111111;
+    text-decoration: none;
+    cursor: pointer;
+}
+.buttonHidden:hover,
+.buttonHidden:focus {
+    border: 0px solid #8afe99;
+    background: #a6ffb8;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a6ffb8), to(#74d680));
+    background: -moz-linear-gradient(top, #a6ffb8, #74d680);
+    background: linear-gradient(to bottom, #a6ffb8, #74d680);
+    color: #111111;
+    text-decoration: none;
+}
+.buttonHidden:active {
+    background: #61b26b;
+    background: -webkit-gradient(linear, left top, left bottom, from(#61b26b), to(#61b26b));
+    background: -moz-linear-gradient(top, #61b26b, #61b26b);
+    background: linear-gradient(to bottom, #61b26b, #61b26b);
+}
+.buttonHidden:before{
+    content:  "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    margin: 0 4px -6px -4px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABgElEQVRIibWVsUrEQBCGv1ssrCWEKySFcH2KFBYWPoGFtfgIgk8SIlhaXHlvYeEDWNgpiEVstBCOIxyCZ7Gzl73NbXY1OjDssPdnZ/bff+ZGgOIfbUfWry2J9oFjYCK/PwK3wKuDD8buwRkwAz6BleNLYAqMLbwKxfbmIfAGNEAJFMCueCF7DVADOZGmxDM5/EU+Vh7PBVMDaQ/O+PoGM6nOrsx3/VywNz2YDYoyNOflD25t6EpjEpyjH7EgfGXjhXxz2oczMp3I+iBrif8R74FLC3uAlqQpdiO2NcuWOMaCeAWc8XuKTgI4FLprl2hqgqqgfeQFsBfCm2BKV6Y+MzK9jsCuE4zRzRPbaHMg6cF1Gs1UVhMeFXM0/1GUusMuRXdoQ3fYLdC0JHL4Cqhop3LHRrTadRMlwBGtzp+AO+DDwpTABXCF7o2t5h4cqyKk8ooAXUP/0YxkvXQpax3i5iaVsz+IIjv20jWUIre4EnhGxnifioZYArzbWd0q/iz+BtN7YNhjq/r3AAAAAElFTkSuQmCC") no-repeat left center transparent;
+    background-size: 100% 100%;
+}
+
+
+
+.buttonNotSelect {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 4px 0 0 0px;
+    padding: 0px 7px;
+    border: 0px solid #b3b3b3;
+    border-radius: 3px;
+    background: #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#b3b3b3));
+    background: -moz-linear-gradient(top, #ffffff, #b3b3b3);
+    background: linear-gradient(to bottom, #ffffff, #b3b3b3);
+    -webkit-box-shadow: #ffffff 0px 0px 0px 0px;
+    -moz-box-shadow: #ffffff 0px 0px 0px 0px;
+    box-shadow: #ffffff 0px 0px 0px 0px;
+    text-shadow: #ffffff 0px 0px 0px;
+    font: normal normal bold 20px arial;
+    color: #111111;
+    text-decoration: none;
+    cursor: pointer;
+}
+.buttonNotSelect:hover,
+.buttonNotSelect:focus {
+    border: 0px solid #ffffff;
+    background: #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#d7d7d7));
+    background: -moz-linear-gradient(top, #ffffff, #d7d7d7);
+    background: linear-gradient(to bottom, #ffffff, #d7d7d7);
+    color: #111111;
+    text-decoration: none;
+}
+.buttonNotSelect:active {
+    background: #b3b3b3;
+    background: -webkit-gradient(linear, left top, left bottom, from(#b3b3b3), to(#b3b3b3));
+    background: -moz-linear-gradient(top, #b3b3b3, #b3b3b3);
+    background: linear-gradient(to bottom, #b3b3b3, #b3b3b3);
+}
+
+
+.buttonPreview {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 2px 0 0 0px;
+    padding: 0px 4px;
+    border: 0px solid #b3b3b3;
+    border-radius: 3px;
+    background: #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#b3b3b3));
+    background: -moz-linear-gradient(top, #ffffff, #b3b3b3);
+    background: linear-gradient(to bottom, #ffffff, #b3b3b3);
+    -webkit-box-shadow: #ffffff 0px 0px 0px 0px;
+    -moz-box-shadow: #ffffff 0px 0px 0px 0px;
+    box-shadow: #ffffff 0px 0px 0px 0px;
+    text-shadow: #ffffff 0px 0px 0px;
+    font: normal normal bold 16px arial;
+    color: #111111;
+    text-decoration: none;
+    cursor: pointer;
+}
+.buttonPreview:hover,
+.buttonPreview:focus {
+    border: 0px solid #ffffff;
+    background: #ffffff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#d7d7d7));
+    background: -moz-linear-gradient(top, #ffffff, #d7d7d7);
+    background: linear-gradient(to bottom, #ffffff, #d7d7d7);
+    color: #111111;
+    text-decoration: none;
+}
+.buttonPreview:active {
+    background: #b3b3b3;
+    background: -webkit-gradient(linear, left top, left bottom, from(#b3b3b3), to(#b3b3b3));
+    background: -moz-linear-gradient(top, #b3b3b3, #b3b3b3);
+    background: linear-gradient(to bottom, #b3b3b3, #b3b3b3);
+}
+
+
+
+.buttonSelected {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 4px 0 0 0px;
+    padding: 0px 7px;
+    border: 0px solid #61b26b;
+    border-radius: 2px;
+    background: #8afe99;
+    background: -webkit-gradient(linear, left top, left bottom, from(#8afe99), to(#61b26b));
+    background: -moz-linear-gradient(top, #8afe99, #61b26b);
+    background: linear-gradient(to bottom, #8afe99, #61b26b);
+    -webkit-box-shadow: #a6ffb8 0px 0px 0px 0px;
+    -moz-box-shadow: #a6ffb8 0px 0px 0px 0px;
+    box-shadow: #a6ffb8 0px 0px 0px 0px;
+    text-shadow: #b3ffc7 0px 0px 0px;
+    font: normal normal bold 20px arial;
+    color: #111111;
+    text-decoration: none;
+    cursor: pointer;
+}
+.buttonSelected:hover,
+.buttonSelected:focus {
+    border: 0px solid #8afe99;
+    background: #a6ffb8;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a6ffb8), to(#74d680));
+    background: -moz-linear-gradient(top, #a6ffb8, #74d680);
+    background: linear-gradient(to bottom, #a6ffb8, #74d680);
+    color: #111111;
+    text-decoration: none;
+}
+.buttonSelected:active {
+    background: #61b26b;
+    background: -webkit-gradient(linear, left top, left bottom, from(#61b26b), to(#61b26b));
+    background: -moz-linear-gradient(top, #61b26b, #61b26b);
+    background: linear-gradient(to bottom, #61b26b, #61b26b);
+}
+
+.dynamicFormTable{
+    border: solid 1px #e5e5e5;
+    background-color: #222222 !important;
+}
+.dynamicFormTable tr{
+    background-color: #222222 !important;
+    font-color: #ffffff;
+}
+.dynamicFormTable tr th{
+    border: solid 1px #e5e5e5;
+    background-color: #555555 !important;
+    color: #66FF66;
+    padding: 1px;
+    margin: 1px;
+    text-align: center;
+}
+.dynamicFormTable tr td{
+    border: solid 1px #e5e5e5;
+    background-color: #222222 !important;
+    color: #e2e2e2;
+    padding: 1px;
+    margin: 1px;
+}
+.dynamicFormTable tr:hover td,
+.dynamicFormTable tr:hover td {
+    background-color: #555555 !important;
+}
+
+.selectVersion_font{
+    color: #66FF66;
+}
+.selectVersion_text{
+    width: 70px;
+    background-color: #222222;
+    color: #e2e2e2;
+}
+.selectVersion_text_formType{
+    width: 250px;
+    background-color: #222222;
+    color: #e2e2e2;
+}
+.selectVersion_text_frameModel{
+    width: 120px;
+    background-color: #222222;
+    color: #e2e2e2;
+}
+
+.noData, .noData2{
+    background-color: #FF2222;
+    color: #FFFFFF;
+}
+
+
+
+/*遮挡部分CSS*/
+#showAddUpdModelDiv {
+    height: 100%;
+    width: 100%;
+    /*// 页面定位到最上面*/
+    position: absolute;
+    top:0;
+    left:0;
+    background: silver;
+    /*// 透明度这样能看到后面的内容效果真实一些*/
+    opacity:0.8;
+    /*// 遮挡级别最好高一些，防止别的内容会突然出现在你的弹出层上面，这就尴尬了。*/
+    z-index: 99;
+}
+/*// 弹出框内容CSS*/
+#showAddUpdModel {
+    width: 80%;
+    height: 80%;
+    background-color: #222222;
+    border-radius: 10px;
+    padding: 15px;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    z-index: 99;
+}

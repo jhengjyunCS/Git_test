@@ -1,0 +1,192 @@
+<div class="iframe_page detailed">
+    <div class="whiteBg">
+        <div class="title between">
+            <div class="flex-end">
+                <h3>使用者管理</h3>
+                <span class="status">查詢資料</span>
+            </div>
+            <div class="btnAll">
+                <!-- <a href="../../../_page/page02_2.html" class="btn patientDetail">新增</a> -->
+                <a data-formtype="TSR-UserInfo" data-framemodel="gFormWebADD" onclick="window.localStorage.removeItem('gForm');changeCustomFormPage(this);return false;" class="btn patientDetail">新增</a>
+            </div>
+        </div>
+        <div class="searchbox">
+            <form class="form">
+                <div class="top flex">
+                    <div class="form-group flex">
+                        <div class="pFormItem2" data-bean="ORG_ID" >
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <input id="sh_UD_USERID" type="text" placeholder="使用者ID">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <input id="sh_UD_NAME" type="text" placeholder="使用者姓名">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <select id="sh_UD_RIGHT">
+                                <option value="">使用者群組</option>
+                                <option value="1">一般使用組</option>
+                                <option value="2">系統管理組</option>
+                                <option value="3">跨院管理組</option>
+                                <option value="4">系統分析組</option>
+                                <option value="5">資料分析組</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom flex">
+                    <!-- <div class="form-group flex">
+                        <label>住院日期迄：</label>
+                        <div>
+                            <input type="text" id="sh_IH_DT_end" placeholder="yyyy-MM-dd" data-title="住院日期起" data-dateformat="yyyy-MM-dd" data-typeformat="{&quot;date&quot;:{&quot;format&quot;:&quot;yyyy-mm-dd&quot;,&quot;weekStart&quot;:1,&quot;todayBtn&quot;:1,&quot;autoclose&quot;:1,&quot;todayHighlight&quot;:1,&quot;startView&quot;:4,&quot;minView&quot;:2,&quot;forceParse&quot;:0,&quot;language&quot;:&quot;zh-TW&quot;}}" data-minlimit="{&quot;date&quot;:&quot;1800-01-01&quot;}" data-maxlimit="{&quot;date&quot;:&quot;+0y+0m+0d&quot;}" onblur="checkDateFormat(this);">
+                        </div>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+        <div class="searchBtn btnAll">
+            <button class="btn" onclick="showData(this); return false;"><i class="fas fa-search"></i>查詢資料</button>
+        </div>
+        <div class="tableAll">
+            <div class="toolBar between">
+                <div class="tableBtn">
+                    <!-- <button class="btn" onclick="deleteForm(this); return false;">刪除</button>
+                    <button class="btn" onclick="alert('敬請期待...'); return false;">匯出</button>
+                    <span>[請勾選下表中的選項]</span> -->
+                </div>
+                <div class="tableDetail">
+                    <p>每頁顯示<input type="text" id="showCounts" value="10" maxlength="4" style="width: 60px;" onblur="showCountsChange();"/>筆，資料筆數：<font id="font_countFirst">1</font> - <font id="font_countLast">10</font> 筆，共 <font id="font_countTotal">1268</font> 筆</p>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="tableList" class="table tableList table-striped table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th scope="col">姓名</th>
+                            <th scope="col">登入帳號</th>
+                            <th scope="col">醫院別</th>
+                            <th scope="col">群組</th>
+                            <th scope="col">有無效</th>
+                            <th scope="col">建檔人</th>
+                            <th scope="col">建檔日期</th>
+                            <th scope="col">最後修改人</th>
+                            <th scope="col">修改日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="mypager">
+                <ul id="ul_showPage" class="pagination justify-content-center mypager_list" data-total="12">
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('first'); return false;">1</a>
+                    </li>
+                    <li class="page-item prev">
+                        <a href="" class="page-link" onclick="changeDataPage('prev'); return false;">&lt;</a>
+                    </li>
+                    <li class="page-item active">
+                        <a href="" class="page-link" onclick="changeDataPage('index', $(this).html()); return false;">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('index', $(this).html()); return false;">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('index', $(this).html()); return false;">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('next'); return false;">&gt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('last'); return false;">？</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script id="tableListTr_Template" type="text/html">
+{{if $data.length==0}}
+        <tr>
+            <td colspan="11">查無資料..</td>
+        </tr>
+{{else}}
+    {{each $data gForm idx}}
+        <tr>
+            <td class="etd" align=center>
+                <a href="_page/page02_1b.html" class="patientDetail" data-formtype="TSR-UserInfo" data-framemodel="gFormWebADD" onclick="updateForm(this, {{idx}});return false;">
+                    <font class="ud_NAME">{{gForm.ud_NAME}}</font>
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_USERID">{{gForm.ud_USERID}}</font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_UNIT" data-bean="ORG_ID" data-controlmode="readOnly">{{gForm.ud_UNIT}}</font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_RIGHT">{{gForm.ud_RIGHT}}</font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_AVAILABLE">
+                    {{if gForm.ud_AVAILABLE=='1'}}
+                        <font color="#6441F5">有效</font>
+                    {{else if gForm.ud_AVAILABLE=='0'}}
+                        無效
+                    {{else}}
+                        gForm.ud_AVAILABLE
+                    {{/if}}
+                </font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_CREATEID">{{gForm.ud_CREATEID}}</font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_CREATEDT">{{gForm.ud_CREATEDT}}</font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_UPDATEID">{{gForm.ud_UPDATEID}}</font>
+            </td>
+            <td class="etd" align=center>
+                <font class="ud_UPDATE">{{gForm.ud_UPDATE}}</font>
+            </td>
+        </tr>
+    {{/each}}
+{{/if}}
+</script>
+
+<script id="ul_showPage_Template" type="text/html">
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('first'); return false;">1</a>
+    </li>
+    <li class="page-item prev">
+        <a href="" class="page-link" onclick="changeDataPage('prev'); return false;">&lt;</a>
+    </li>
+{{if $data.hidePrevIndex}}
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('index', {{$data.hidePrevIndex}}); return false;">..</a>
+    </li>
+{{/if}}
+{{each $data.pageArr page idx}}
+    <li class="page-item {{if page.active}}active{{/if}}">
+        <a href="" class="page-link" onclick="changeDataPage('index', {{page.index}}); return false;">{{page.index}}</a>
+    </li>
+{{/each}}
+{{if $data.hideNextIndex}}
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('index', {{$data.hideNextIndex}}); return false;">..</a>
+    </li>
+{{/if}}
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('next'); return false;">&gt;</a>
+    </li>
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('last'); return false;">{{$data.pageTotal}}</a>
+    </li>
+</script>

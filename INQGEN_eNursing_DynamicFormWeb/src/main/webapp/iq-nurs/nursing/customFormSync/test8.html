@@ -1,0 +1,77 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁-取得local的xml、xsl並顯示</title>
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+</head>
+
+<body>
+    測試頁-取得local的xml、xsl並顯示<br />
+    因代碼風險的關係暫時拿掉<br />
+    <div id="example" />
+</body>
+
+</html>
+<script>
+console.error("=====因代碼風險的關係暫時拿掉");
+
+//讀取檔案
+// function loadXMLDoc(filename) {
+//     if (window.ActiveXObject) {
+//         xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+//     } else {
+//         xhttp = new XMLHttpRequest();
+//     }
+//     xhttp.open("GET", filename, false);
+//     try { xhttp.responseType = "msxml-document" } catch (err) {} // Helping IE11
+//     xhttp.send("");
+//     console.log((new XMLSerializer()).serializeToString(xhttp.responseXML));
+//     // return xhttp.responseXML; //xml物件
+//     return (new XMLSerializer()).serializeToString(xhttp.responseXML); //xml物件 轉 字串
+// }
+// //將字串轉換成 XML 物件
+// function convert_string_to_xml(strXML)
+// {
+//     if (window.ActiveXObject) {
+//         xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+//         xmlDoc.async="false";
+//         xmlDoc.loadXML(strXML);
+//         return xmlDoc;
+//     } else {
+//         parser=new DOMParser();
+//         xmlDoc=parser.parseFromString(strXML,"text/xml");
+//         return xmlDoc;
+//     }
+// }
+//
+// function displayResult() {
+//     xml = loadXMLDoc("frc.xml");
+//     xsl = loadXMLDoc("frc.xsl");
+//     window.localStorage["frc.xml"] = xml;
+//     window.localStorage["frc.xsl"] = xsl;
+//     xml = convert_string_to_xml(window.localStorage["frc.xml"]);
+//     xsl = convert_string_to_xml(window.localStorage["frc.xsl"]);
+//     console.log(xml);
+//     console.log(xsl);
+//     // code for IE
+//     if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
+//         ex = xml.transformNode(xsl);
+//         document.getElementById("example").innerHTML = ex;
+//     }
+//     // code for Chrome, Firefox, Opera, etc.
+//     else if (document.implementation && document.implementation.createDocument) {
+//         xsltProcessor = new XSLTProcessor();
+//         xsltProcessor.importStylesheet(xsl);
+//         resultDocument = xsltProcessor.transformToFragment(xml, document);
+//         document.getElementById("example").appendChild(resultDocument);
+//     }
+// }
+//
+// displayResult();
+</script>

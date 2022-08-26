@@ -1,0 +1,20 @@
+<div
+        class="divFormItem"
+        id="div_{{$data.name}}"
+        style="display: inline"
+>
+    {{if $data.showTitle}}
+    <span
+            class="spanFormItem"
+            id="span_{{$data.name}}"
+    >
+		{{$data.title}}：
+	</span>
+    {{/if}}
+    <select class="formItem" id="{{$data.name}}" name="{{$data.name}}">
+        <option value="">请选择</option>
+        {{each $data.uiDesc uiDesc i}}
+        <option value="{{$data.uiValue[i]}}">{{uiDesc}}</option>
+        {{/each}}
+    </select>
+</div>

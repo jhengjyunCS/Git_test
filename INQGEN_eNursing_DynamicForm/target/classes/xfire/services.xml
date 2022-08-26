@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START SNIPPET: services -->
+<beans>
+
+  <service xmlns="http://xfire.codehaus.org/config/1.0">
+     <name>DynamicFormService</name>
+     <namespace>http://cs-ehealth.com/DynamicFormService</namespace>
+     <serviceClass>com.inqgen.nursing.dynamic.webservice.DynamicFormService</serviceClass>
+     <implementationClass>com.inqgen.nursing.dynamic.webservice.DynamicFormServiceImpl</implementationClass>
+  </service>
+
+  <service xmlns="http://xfire.codehaus.org/config/1.0">
+     <name>DatabaseService</name>
+     <namespace>http://cs-ehealth.com/DatabaseService</namespace>
+     <serviceClass>com.inqgen.nursing.database.webservice.DataBaseService</serviceClass>
+     <implementationClass>com.inqgen.nursing.database.webservice.DataBaseServiceImpl</implementationClass>
+  </service>
+
+  
+</beans>
+<!-- END SNIPPET: services -->

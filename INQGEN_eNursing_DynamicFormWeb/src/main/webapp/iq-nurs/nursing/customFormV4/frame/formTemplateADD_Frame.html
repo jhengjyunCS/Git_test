@@ -1,0 +1,157 @@
+
+<style type="text/css">
+    .modal {
+        display: none;
+    }
+    .modal .background{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        background: #000;
+        filter: alpha(opacity=40);
+        opacity: 0.40;
+    }
+    .modal .content{
+        position: fixed;
+        top: 20%;
+        left: 6%;
+        width: 89%;
+        height: 60%;
+        z-index: 101;
+    }
+    ul, li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .abgne_tab {
+        clear: left;
+        width: 100%;
+        margin: 10px 0;
+    }
+    ul.tabs {
+        width: 100%;
+        height: 32px;
+        border-bottom: 1px solid #999;
+        border-left: 1px solid #999;
+    }
+    ul.tabs li {
+        float: left;
+        height: 31px;
+        line-height: 31px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: -1px;    /* 讓 li 往下移來遮住 ul 的部份 border-bottom */
+        border: 1px solid #999;
+        border-left: none;
+        background: #e1e1e1;
+    }
+    ul.tabs li a {
+        display: block;
+        padding: 0 10px;
+        color: #000;
+        border: 1px solid #fff;
+        text-decoration: none;
+    }
+    ul.tabs li a:hover {
+        background: #ccc;
+    }
+    ul.tabs li.active  {
+        background: #fff;
+        border-bottom: 1px solid#fff;
+    }
+    ul.tabs li.active a:hover {
+        background: #fff;
+    }
+    div.tab_container {
+        clear: left;
+        width: 100%;
+        border: 1px solid #999;
+        border-top: none;
+        background: #fff;
+    }
+    div.tab_container .tab_content {
+        padding: 20px;
+    }
+    div.tab_container .tab_content h2 {
+        margin: 25px 0 20px;
+
+</style>
+
+<form action="addOrUpdateForm" id="dynamicForm" method="post" onsubmit="return addData()" target="_self">
+    <table align="center" height="51">
+        <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center"><h4 align="center">表单模板</h4></td>
+            <td nowrap width="20%"></td>
+        </tr>
+        <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" id="btnAdd" name="btnAdd" value="暂存" class="clsButton" onclick="gFormJS.evaluationTime = new Date().format('yyyy/MM/dd HH:mm:ss');gFormJS.status='N';gFormSave(this)">
+                <input type="button" id="btnAdd" name="btnAdd" value="保存" class="clsButton" onclick="gFormJS.evaluationTime = new Date().format('yyyy/MM/dd HH:mm:ss');gFormJS.status='Y';gFormSave(this)">
+
+                <input type="button" value="返回查询界面" class="clsButton"onclick="doURL('formTemplateLIST.html')"/>
+            </td>
+            <td nowrap width="20%"></td>
+        </tr>
+    </table>
+
+    <div class="abase_tab">
+        <ul class="tabs">
+            <li><a href="#tab_1">表单模板</a></li>
+        </ul>
+
+        <div id="tab_1" class="tab_content">
+            <table width="100%" class="etable" align="center" height="294">
+                 <tr>
+                    <th align="left">表单名字</th>
+                    <td class="etd" colspan="3">
+                        <p class="pFormItem" data-bean="ftFormName" />
+                    </td>
+                 </tr>
+                 <tr>
+                    <th align="left">表单类型</th>
+                    <td class="etd" colspan="3">
+                        <p class="pFormItem" data-bean="ftFormType" />
+                    </td>
+                </tr>
+                 <tr>
+                    <th align="left">表单子项</th>
+                    <td class="etd" colspan="3">
+                        <p class="pFormItem" data-bean="ftItems" />
+                        <input type="button" value="请选择表单子项" onclick="chooseItems(this)">
+                    </td>
+                </tr>
+                 <tr>
+                    <th align="left">表单子项1</th>
+                    <td class="etd" colspan="3">
+                        <p class="pFormItem" data-bean="ftItems1" />
+                        <input type="button" value="请选择表单子项" onclick="chooseItems(this)">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <table align="center">
+        <tr>
+            <td nowrap align="center">
+                <input type="button" id="btnAdd" name="btnAdd" value="暂存" class="clsButton" onclick="gFormJS.evaluationTime = new Date().format('yyyy/MM/dd HH:mm:ss');gFormJS.status='N';gFormSave(this)">
+                <input type="button" id="btnAdd" name="btnAdd" value="保存" class="clsButton" onclick="gFormJS.evaluationTime = new Date().format('yyyy/MM/dd HH:mm:ss');gFormJS.status='Y';gFormSave(this)">
+                <input type="button" value="返回查询界面" class="clsButton"onclick="doURL('formTemplateLIST.html')"/>
+            </td>
+        </tr>
+    </table>
+</form>
+<div class="modal" id="content">
+    <div class="content" style="text-align: center">
+        <input type="button" class="clsButton" value="确定" onclick="confirm()">
+        <input type="button" class="clsButton" value="关闭" onclick="closeSelf()">
+        <iframe style="width: 100%;height: 96%;" border="0" style="border: 0;" scrolling="auto"></iframe>
+    </div>
+    <div class="background"></div>
+</div>

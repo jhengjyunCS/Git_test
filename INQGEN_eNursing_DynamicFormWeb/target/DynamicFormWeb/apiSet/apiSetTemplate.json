@@ -1,0 +1,155 @@
+{
+  "formName": "api设定",
+  "formType": "apiSet",
+  "formModel": "apiSet",
+  "items": [
+    {
+      "title": "方法名",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "apiName",
+      "controlType": "text",
+      "show": true,
+      "required": true,
+      "textSize": 50,
+      "promptTips": "请输入【方法名】！"
+    },
+    {
+      "title": "请求方式",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "requestMethod",
+      "controlType": "radio",
+      "uiDesc": [
+        "webService",
+        "webSocket",
+        "http.json"
+      ],
+      "uiValue": [
+        0,
+        1,
+        2
+      ],
+      "displayMode": "vertical",
+      "show": true,
+      "required": true,
+      "textSize": 8,
+      "promptTips": "请输入【请求方式】！"
+    },
+    {
+      "title": "请求地址",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "requestUrl",
+      "controlType": "text",
+      "show": true,
+      "required": true,
+      "textSize": 30,
+      "promptTips": "请输入【请求地址】！"
+    },
+    {
+      "title": "方法类型",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "apiType",
+      "controlType": "text",
+      "show": true,
+      "required": true,
+      "blur": "checkExists(this);",
+      "textSize": 50,
+      "promptTips": "请输入【方法类型】！"
+    },
+    {
+      "title": "输入参数",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "input",
+      "controlType": "textarea",
+      "show": true,
+      "required": true,
+      "textSize": 50,
+      "promptTips": "请输入【输入参数】！"
+    },
+    {
+      "title": "返回结果",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "output",
+      "controlType": "textarea",
+      "show": true,
+      "required": true,
+      "textSize": 50,
+      "promptTips": "请输入【返回结果】！"
+    },
+    {
+      "title": "请求后台资料",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "linkLine",
+      "controlType": "radio",
+      "uiDesc": [
+        "否",
+        "是"
+      ],
+      "uiValue": [
+        0,
+        1
+      ],
+      "displayMode": "horizontal",
+      "show": true,
+      "required": true,
+      "textSize": 8,
+      "promptTips": "请输入【请求后台数据】！"
+    },
+    {
+      "title": "记录日志",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "hasLog",
+      "controlType": "radio",
+      "uiDesc": [
+        "否",
+        "是"
+      ],
+      "uiValue": [
+        0,
+        1
+      ],
+      "displayMode": "horizontal",
+      "show": true,
+      "required": true,
+      "textSize": 8,
+      "promptTips": "请输入【记录日志】！"
+    },
+    {
+      "title": "入参加密方式",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "inputSecretMode",
+      "controlType": "select",
+      "uiDesc": ["BASE64"],
+      "uiValue": [0],
+      "displayMode": "horizontal",
+      "show": true,
+      "required": false,
+      "textSize": 8,
+      "promptTips": "请输入【入参加密方式】！"
+    },
+    {
+      "title": "出参解密方式",
+      "showTitle": false,
+      "printShowTitle": false,
+      "name": "outputDecryptMode",
+      "controlType": "select",
+      "uiDesc": ["BASE64"],
+      "uiValue": [0],
+      "displayMode": "horizontal",
+      "show": true,
+      "required": false,
+      "textSize": 8,
+      "promptTips": "请输入【出参解密方式】！"
+    }
+  ],
+  "version": 0,
+  "formVersionId": "9dfc7453-3tc9-4c68-9b02-ee2ded4f1897"
+}

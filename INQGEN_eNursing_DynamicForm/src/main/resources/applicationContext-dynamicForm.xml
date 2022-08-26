@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="applicationContext-ibatis-form.xml"/>
+    <bean id="gformFixedFields" class="java.util.LinkedHashSet">
+        <constructor-arg>
+            <list>
+                <value>sourceId</value>
+                <value>formId</value>
+                <value>formVersionId</value>
+                <value>evaluationTime</value>
+                <value>status</value>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean class="com.inqgen.nursing.dynamic.form.bean.comparison.GFormComparison"/>
+    <bean id="formTempConfig"  class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>\WEB-INF\formTemplate\formConfig.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="UTF-8"></property>
+        <property name="ignoreResourceNotFound" value="true"></property>
+    </bean>
+</beans>

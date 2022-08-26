@@ -1,0 +1,3171 @@
+<style type="text/css">
+#div_TRMICH_score,
+#div_TRMSAH_score,
+#OFFMRS{
+    width: 50px;
+}
+#div_OH_DT{
+    width: 8em;
+}
+#div_BIRTH_DT{
+    width: auto;
+}
+</style>
+<!-- 表單 修改及新增作業 -->
+<div class="iframe_page detailed">
+    <div class="whiteBg scrollDiv">
+        <div class="title between">
+            <div class="flex-end">
+                <h3>資料登錄</h3>
+                <span class="status" id="addSpan">新增作業</span>
+                <span class="status" id="updSpan" style="display: none;">修改作業</span>
+                <div class="choiceBox" style="padding: 0;">
+                    <div class="divFormItem">
+                        <input id="b" name="choice" type="checkbox" onclick="openOrCloseAll(this)">
+                        <label for="b">全部展開</label>
+                    </div>
+                </div>
+            </div>
+            <div class="btnAll">
+                <button class="btn" onclick="location_Prev();return false;">返回</button>
+                <button class="btn" id="showBtnHeadingEleven_1" onclick="showHeadingEleven_1(this);return false;" style="display: none;">定期追蹤(1)</button>
+                <button class="btn" id="showBtnHeadingEleven_3" onclick="showHeadingEleven_3(this);return false;" style="display: none;">定期追蹤(3)</button>
+                <button class="btn" id="showBtnHeadingEleven_6" onclick="showHeadingEleven_6(this);return false;" style="display: none;">定期追蹤(6)</button>
+                <button class="btn" id="saveAll_N" onclick="saveForm(this, 'N');return false;">全部暫存</button>
+                <button class="btn btnblue" id="saveAll_Y" onclick="dittoNA();checkLogic();saveForm(this, 'Y');return false;">全部儲存</button>
+                <button class="btn btnblue" id="btnApplyUpd" data-formtype="TSR-ApplyUpd" data-frameModel="gFormWebADD" data-sourceid="TSR-ApplyUpd" onclick="applyUpd(this);return false;" style="display: none;">修改申請</button>
+            </div>
+        </div>
+        <div class="between subData">
+            <div class="choiceBox">
+            </div>
+            <div class="flex">
+                <label>填表人：</label>
+                <div>
+                    <input id="modifyName" type="text" disabled="disabled">
+                </div>
+            </div>
+        </div>
+        <div class="accordion" id="accordionExample">
+            <div class="formList tabcontent" id="divHeadingOne">
+                <div class="card-header flex" id="headingOne">
+                    <div class="titel_btn" id="isOpenHeadingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        基本資料 / Final Stroke Diagnosis / Ischemic stroke subtype
+                    </div>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
+                    <form class="form flex_wrap">
+                        <div class="row">
+                            <div class="form-group col-md-6 flex minWd-40em">
+                                <label>醫院別/科別：</label>
+                                <div class="flex moreInputBox">
+                                    <div class="col-md-6 moreInput fixedWd-20em">
+                                        <div class="pFormItem" data-bean="ORG_ID" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 moreInput fixedWd-20em">
+                                        <div class="pFormItem flex" data-bean="DCTYPE24_ID">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>姓名：</label>
+                                <div class="pFormItem fixedWd-10em" data-bean="PTNAME" >
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>身分證：</label>
+                                <div class="pFormItem fixedWd-10em" data-bean="PTID" >
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>性別：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="GENDER_TX" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>生日：</label>
+                                <div class="pFormItem" data-bean="BIRTH_DT" >
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>身高/體重：</label>
+                                <div class="flex moreInputBox">
+                                    <div class="pFormItem col-md-6 moreInput fixedWd-5em" data-bean="HEIGHT_NM">
+                                    </div>
+                                    <div class="backTitle">cm / </div>
+                                    <div class="pFormItem col-md-6 moreInput fixedWd-5em" data-bean="WEIGHT_NM">
+                                    </div>
+                                    <div class="backTitle">kg</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>病歷號：</label>
+                                <div class="pFormItem fixedWd-10em" data-bean="PATIENT_ID" style="position: relative;z-index: 1">
+                                </div>
+                                <div>
+                                    <button class="btn" onclick="fillPatient();return false;">提取</button>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex" style="min-width: calc(24em + 8em);">
+                                <label>簡表代號：</label>
+                                <div class="pFormItem" data-bean="S_ID" data-controlmode="disabled">
+                                    <input type="text">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 flex">
+                                <label>地址：</label>
+                                <div class="flex moreInputBox" id="defaultval">
+                                    <div class="fixedWd-5em">
+                                        <input type="text" id="zipcode" name="zipcode" class="zipcode" autocomplete="off">
+                                    </div>
+                                    <div class="fixedWd-10em">
+                                        <select id="county" name="county" class="county"></select>
+                                    </div>
+                                    <div class="fixedWd-10em">
+                                        <select id="district" name="district" class="district" zipcode="300"></select>
+                                    </div>
+                                    <div class="moreInput" style="width:100%;">
+                                        <input type="text" id="street" name="street" class="street" zipcode="" autocomplete="off">
+                                    </div>
+                                </div>
+                                <!-- <div class="flex moreInputBox" id="defaultval">
+                                    <div data-role="zipcode" class="fixedWd-5em"></div>
+                                    <div data-role="county" class="fixedWd-10em"></div>
+                                    <div data-role="district" class="fixedWd-10em"></div>
+                                    <div data-role="address" class="moreInput" style="width:100%;"></div>
+                                </div> -->
+                                <div class="flex moreInputBox" style="display: none">
+                                    <div class="col-md-12 moreInput fixedWd-5em">
+                                        <div class="pFormItem flex" data-bean="ZIPCODE_ID">
+                                        </div>
+                                        <div class="pFormItem flex" data-bean="COUNTRY_ID">
+                                        </div>
+                                        <div class="pFormItem flex" data-bean="DISTRICT_ID">
+                                        </div>
+                                        <div class="pFormItem flex" data-bean="ADDRESS_ID">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 flex">
+                                <label>教育程度：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="EDU_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 flex">
+                                <label>職業：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="PRO_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>入院方式：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="OPC_ID" >
+                                        <div class="divFormItem">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>發生日期：</label>
+                                <div class="pFormItem" data-bean="ONSET" style="max-width:220px">
+                                </div>
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="ONSET_FL" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>住院日期：</label>
+                                <div class="hasChoice">
+                                    <div class="radioBox">
+                                        <div class="pFormItem" data-bean="IH_FL" data-uiValueItem="1">
+                                        </div>
+                                    </div>
+                                    <div class="pFormItem defaultHide" data-bean="IH_DT" >
+                                    </div>
+                                    <div class="radioBox">
+                                        <div class="pFormItem" data-bean="IH_FL" data-uiValueItem="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 flex">
+                                <label>出院日期：</label>
+                                <div class="pFormItem" data-bean="OH_DT">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 flex">
+                                <label>備註：</label>
+                                <div>
+                                    <div class="pFormItem" data-bean="REMAEK_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title col-md-12">Final Stroke Diagnosis<div class="titleInput">ICD10：<div class="pFormItem" data-bean="ICD_TX" ></div></div></div>
+                            <div class="column">
+                                <div class="columnChoice radioBox">
+                                    <div class="pFormItem" data-bean="ICD_ID" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox flex">
+                                    <label>Symptom of TIA：</label>
+                                    <div class="pFormItem" data-bean="ICD_TIA" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox flex">
+                                    <label>Cause of ICH：</label>
+                                    <div class="pFormItem" data-bean="ICDICH_CAUSE" >
+                                    </div>
+                                </div>
+                                <div class="subChoice choiceBox flex defaultHide">
+                                    <label>Non-HTN：</label>
+                                    <div class="pFormItem" data-bean="ICDICH_CAUSE_NONHTN" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox flex">
+                                    <label>Cause of SAH：</label>
+                                    <div class="pFormItem" data-bean="ICDSAH" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox flex defaultHide">
+                                    <label>其他：</label>
+                                    <div class="pFormItem" data-bean="ICDSAH_NM" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox defaultHide InfarctShow TIAShow">
+                                    <label>IV t-PA：</label>
+                                    <div class="pFormItem" data-bean="TRM_IVt-PA" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox defaultHide InfarctShow TIAShow">
+                                    <label>EVT：</label>
+                                    <div class="pFormItem" data-bean="EVT_ist" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title col-md-12 InfarctShow defaultHide">Ischemic stroke subtype<div class="titleInput">TOAST分類</div></div>
+                            <div class="column InfarctShow defaultHide">
+                                <div class="columnChoice radioBox">
+                                    <div class="pFormItem" data-bean="TOAST_ID" >
+                                    </div>
+                                </div>
+                                <div class="subChoice choiceBox flex defaultHide">
+                                    <label>Large artery atherosclerosis：</label>
+                                    <div class="pFormItem" data-bean="TOAST_LA" >
+                                    </div>
+                                </div>
+                                <div class="subChoice columnChoice choiceBox defaultHide">
+                                    <label>Specific etiology：</label>
+                                    <div class="pFormItem" data-bean="TOAST_SE" >
+                                    </div>
+                                </div>
+                                <div class="subChoice columnChoice radioBox defaultHide">
+                                    <label>Undetermined etiology：</label>
+                                    <div class="pFormItem" data-bean="TOAST_UE" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-footer">
+                        <!-- <button class="btn btn-warning">暫存</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingTwo">
+                <div class="card-header flex" id="headingTwo">
+                    <div class="titel_btn collapsed" id="btnHeadingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        時間表
+                    </div>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
+                    <form class="form formMore">
+                        <div class="table_control table-responsive">
+                            <table class="table table-striped table-bordered table-hover " style="max-width: 800px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="thDate">日期</th>
+                                        <th class="thTime">時間</th>
+                                        <th class="unsure">不確定</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>發生時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                &nbsp;&nbsp;&nbsp;<font id="font2_ONSET"><!-- 2020-05-05&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11:11 --></font>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font id="font2_ONSET_FL"><!-- 不確定 --></font>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>到院時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="OT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OT_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>第一次醫師檢視時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="FLOOK" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="FLOOK_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1st CT時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="FCT_DT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="FCTOH_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="ICHShow defaultHide">
+                                        <td>急診醫師照會時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="ERLOOK" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="ICHShow defaultHide">
+                                        <td>神外醫師檢視時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="NSLOOK" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="defaultHide">
+                                        <td>IV-tPA時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="IVTPA" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="inputSpan">
+                                            <div class="pFormItem" data-bean="IVTPAMG_NM" >
+                                            </div>
+                                            <span>mg</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="defaultHide">
+                                        <td>2nd CT時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="SecCT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="SecCT_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="title col-md-12 defaultHide" id="SecCT_RESULT_title">2nd CT 結果</div>
+                        <div class="columnChoice defaultHide" id="SecCT_RESULT_parent">
+                            <div class="radioBox">
+                                <div class="pFormItem" data-bean="SecCT_RESULT" >
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 舊版複選項 -->
+                        <div class="title col-md-12 defaultHide" id="NIVTPA_ID_title">未打IV-tPA原因</div>
+                        <div class="columnChoice defaultHide" id="NIVTPA_ID_parent">
+                            <div class="radioBox">
+                                <div class="pFormItem" data-bean="NIVTPA_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subChoice columnChoice choiceBox defaultHide">
+                            <label>缺血性中風發作至到院2小時內，但不符合下列施打條件：</label>
+                            <div class="pFormItem" data-bean="NIVTPA1_FL" >
+                            </div>
+                        </div>
+                        <div class="subChoice columnChoice choiceBox defaultHide">
+                            <label>缺血性中風發作至到院2~3小時內，但不符合下列施打條件：</label>
+                            <div class="pFormItem" data-bean="NIVTPA2_FL" >
+                            </div>
+                        </div>
+                        <!-- 舊版複選項END -->
+                        <!-- 新版複選項 -->
+                        <!-- <div class="title col-md-12">未打IV-tPA</div>
+                        <div class="columnChoice">
+                            <div class="radioBox">
+                                <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                    <div class="divFormItem">
+                                        <input id="form09_1" name="form09" type="radio" class="formItem radioFormItem" checked>
+                                        <label for="form09_1">輸注本藥前，急性缺血性中風發作的時間已超過3小時，或症狀發作時間不明</label>
+                                        <input id="form09_2" name="form09" type="radio" class="formItem radioFormItem">
+                                        <label for="form09_2">缺血性中風發作至到院2小時內，但不符合下列施打條件</label>
+                                        <input id="form09_3" name="form09" type="radio" class="formItem radioFormItem">
+                                        <label for="form09_3">缺血性中風發作至到院2~3小時內，但不符合下列施打條件</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice choiceBox">
+                                <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                    <div class="divFormItem">
+                                        <input id="form10_1" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_1">輸注本藥前，缺血性腦中風發作的時間已超過3小時</label>
+                                        <input id="form10_2" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_2">輸注本藥前，急性缺血性腦中風的症狀已迅速改善或症狀輕微。（如NIHSS&lt;4分)</label>
+                                        <input id="form10_3" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_3">臨床或影像判定為嚴重之中風（如NIHSS&gt;25）</label>
+                                        <input id="form10_4" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_4">年齡在18歲以下</label>
+                                        <input id="form10_5" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_5">過去曾中風且合併糖尿病</label>
+                                        <input id="form10_6" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_6">收縮壓>185mmhg或舒張壓>110mmhg</label>
+                                        <input id="form10_7" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_7">最近3個月內有中風病史或有嚴重性頭部創傷</label>
+                                        <input id="form10_8" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_8">中風發作時併發癲癇</label>
+                                        <input id="form10_9" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_9">病人正接受口服抗凝血劑，如warfarin sodium（INR&gt;1.3）</label>
+                                        <input id="form10_10" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_10">48小時內服用NOAC藥物</label>
+                                        <input id="form10_11" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_11">最近3個月內曾患胃腸道潰瘍</label>
+                                        <input id="form10_12" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_12">最近3個月內曾患胃腸道潰瘍</label>
+                                        <input id="form10_13" name="form10" type="checkbox" class="formItem checkboxFormItem">
+                                        <label for="form10_13">其他</label>
+                                        <input type="text" class="oCkTextFormItem">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="radioBox">
+                                <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                    <div class="divFormItem">
+                                        <input id="form09_4" name="form09" type="radio" class="formItem radioFormItem" checked>
+                                        <label for="form09_4">到院前已接受IV-tPA治療或IA-tPA或機械性血管內再灌注</label>
+                                        <input id="form09_5" name="form09" type="radio" class="formItem radioFormItem">
+                                        <label for="form09_5">病歷上有記載病人無法接受血栓溶解劑之原因</label>
+                                        <input id="form09_6" name="form09" type="radio" class="formItem radioFormItem">
+                                        <label for="form09_6">拒絕接受IV-tPA治療或IA-tPA或機械性血管內再灌注</label>
+                                        <input id="form09_7" name="form09" type="radio" class="formItem radioFormItem">
+                                        <label for="form09_7">到院病人未接受治療即轉院</label>
+                                        <input id="form09_8" name="form09" type="radio" class="formItem radioFormItem">
+                                        <label for="form09_8">非前述原因</label>
+                                        <input type="text" class="oRdTextFormItem">
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- 新版複選項END -->
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingThree">
+                <div class="card-header flex" id="headingThree">
+                    <div class="titel_btn collapsed" id="btnHeadingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        昏迷指數及生命徵象
+                    </div>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
+                    <from class="form formMore">
+                        <div class="title col-md-12">昏迷指數及生命徵象</div>
+                        <div class="row flex_wrap">
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-9 flex">
+                                    <label>GCS：</label>
+                                    <div class="flex moreInputBox inputSpanLeft">
+                                        <div class="col-md-4 moreInput" data-span="E">
+                                            <div class="pFormItem" data-bean="GCSE_NM" >
+                                            </div>
+                                            <div class="infoMsg">
+                                                <p>睜眼(Eye open;E)</p>
+                                                <p>4分: 會自動張開眼睛(spontaneous)</p>
+                                                <p>3分: 有聲音時,會將眼睛張開<br/>(to speech)</p>
+                                                <p>2分: 給予痛的刺激才有睜眼反應<br/>(to pain)</p>
+                                                <p>1分: 給予痛的刺激仍無睜眼反應<br/>(none)</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 moreInput" data-span="V">
+                                            <div class="pFormItem" data-bean="GCSV_NM" >
+                                            </div>
+                                            <div class="infoMsg">
+                                                <p>語言反應(Verbal response;V)</p>
+                                                <p>5分: 對人、時、地有清楚的定向感、說話有條理(alert)</p>
+                                                <p>4分: 對人、時、地無定向感,有答非所問情形;混亂(confused)</p>
+                                                <p>3分: 說一些毫無意義的字語、單字、嗜睡(drowsy)</p>
+                                                <p>2分: 發出他人無法了解的聲音、喃喃自語(groans)</p>
+                                                <p>1分: 無語言反應(none)</p>
+                                                <p>E(endotracheal): <br/>氣管插管無法正常發聲</p>
+                                                <p>T(tracheostomy): <br/>氣管切開無法正常發聲</p>
+                                                <p>A(aphasia): <br/>失語症</p>
+                                                <p>註 : 以E、T表示時,其分數相當於1分</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 moreInput" data-span="M">
+                                            <div class="pFormItem" data-bean="GCSM_NM" >
+                                            </div>
+                                            <div class="infoMsg">
+                                                <p>運動反應(Motor response;M)</p>
+                                                <p>6分: 可依指令動作(obey)</p>
+                                                <p>5分: 施以刺激時,能除去痛覺刺激源<br/>(localize)</p>
+                                                <p>4分: 疼痛刺激時,肢體會回縮<br/>(withdrawal)</p>
+                                                <p>3分: 疼痛刺激時,肢體會彎曲<br/>(decorticate flexion)</p>
+                                                <p>2分: 疼痛刺激時,肢體會伸直<br/>(decerebrate extension)</p>
+                                                <p>1分: 對任何痛刺激肢體均無動作反應(none)</p>
+                                                <p>註 : 刺激部位以上肢為主,上肢無法行動時,則不做運動測試</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-4 flex">
+                                    <label>SBP：</label>
+                                    <div class="pFormItem" data-bean="SBP_NM" >
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 flex">
+                                    <label>DBP：</label>
+                                    <div class="pFormItem" data-bean="DBP_NM" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-4 flex">
+                                    <label>BT：</label>
+                                    <div class="pFormItem" data-bean="BT_NM" >
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 flex">
+                                    <label>HR：</label>
+                                    <div class="pFormItem" data-bean="HR_NM" >
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4 flex">
+                                    <label>RR：</label>
+                                    <div class="pFormItem" data-bean="RR_NM" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </from>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingFour">
+                <div class="card-header flex" id="headingFour">
+                    <div class="titel_btn collapsed" id="btnHeadingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                        Type of heart disease / 住院處置
+                    </div>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour">
+                    <form class="form formMore">
+                        <div class="title col-md-12"> Type of heart disease
+                            <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="THD_ID" data-uiValueItem="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columnChoice choiceBox" style="width: 500px">
+                            <div class="pFormItem" data-bean="THD_ID" data-uiValueItem="1,2,3,4,5,6,7,8,9,10,99">
+                            </div>
+                        </div>
+                        <div class="title col-md-12">住院處置
+                            <!-- <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                        <div class="divFormItem">
+                                            <input id="a2" name="choiceNo2" type="checkbox" class="formItem checkboxFormItem">
+                                            <label for="a2">否(勾否者電腦下拉選單勾選原因)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="table_control table-responsive">
+                            <table class="table table-striped table-bordered table-hover TRM_table" style="max-width: 1200px;">
+                                <thead>
+                                    <tr>
+                                        <th class="maxWidth">有</th>
+                                        <th class="maxWidth">無</th>
+                                        <th>處置</th>
+                                        <th class="remarkWidth">備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="defaultHide InfarctShow TIAShow">
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMAN_FL" data-uiValueItem="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMAN_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Antithrombotic drugs start within 48h</td>
+                                        <!-- 點是出現 -->
+                                        <!-- <td class="twoInput">
+                                            <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                                <div class="divFormItem dtDivFormItem">
+                                                    <input class="formItem dtFormItem" type="hidden">
+                                                    <input class="dtDateFormItem" type="text"/>
+                                                    <input class="dtTimeFormItem" type="text"/>
+                                                </div>
+                                            </div>
+                                        </td> -->
+                                        <!-- 點是出現END -->
+                                        <!-- 點否出現 -->
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem defaultHide" data-bean="TRMAN_FLRESULT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!-- 點否出現END -->
+                                    </tr>
+                                    <tr class="defaultHide ICHShow">
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMICH_ID" data-uiValueItem="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMICH_ID" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><label>ICH(ICH score)</label></td>
+                                        <td>
+                                            <div class="defaultHide">
+                                                <label>時間：</label>
+                                                <div class="pFormItem" data-bean="TRMICH_DT" >
+                                                </div>
+                                                <label>分數：</label>
+                                                <div class="pFormItem" data-bean="TRMICH_score" >
+                                                </div>
+                                            <div>
+                                        </td>
+                                    </tr>
+                                    <tr class="defaultHide SAHShow">
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMSAH_ID" data-uiValueItem="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMSAH_ID" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><label>SAH(H&H score)</label></td>
+                                        <td>
+                                            <div class="defaultHide">
+                                                <label>時間：</label>
+                                                <div class="pFormItem" data-bean="TRMSAH_DT" >
+                                                </div>
+                                                <label>分數：</label>
+                                                <div class="pFormItem" data-bean="TRMSAH_score" >
+                                                </div>
+                                            <div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMRE_FL" data-uiValueItem="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMRE_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Rehab</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem defaultHide" data-bean="TRMRE_RESULT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMDY_FL" data-uiValueItem="1">
+                                                    <div class="divFormItem">
+                                                        <input id="form24_4" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_4"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMDY_FL" data-uiValueItem="0">
+                                                    <div class="divFormItem">
+                                                        <input id="form24n_4" name="form24n" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24n_4"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Dysphagia Screen</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem defaultHide" data-bean="TRMDY_RESULT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMED_FL" data-uiValueItem="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMED_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Education(stroke)</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem defaultHide" data-bean="TRMED_RESULT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="defaultHide InfarctShow TIAShow">
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMLMW_FL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_8" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_8"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>LMW heparin</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="defaultHide InfarctShow TIAShow">
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRM_HPRFL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_9" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_9"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Heparin</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMVTL_FL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_10" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_10"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Ventilator</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMICU_FL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_11" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_11"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Admission to ICU</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMNGT_FL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_12" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_12"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Nasogastric tube</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMFOL_FL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_13" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_13"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Foley</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMDNR_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Sign DNR</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMSCC_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Smoking cessation counseling</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMCELL_TRPY" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Cell therapy </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMEN_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Endovascular treatment</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox defaultHide">
+                                                <div class="pFormItem" data-bean="TRMEN_ID" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMOP_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Operation</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox defaultHide">
+                                                <div class="pFormItem" data-bean="TRMOP_ID" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_18" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_18"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24n_18" name="form24n" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24n_18"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Procoagulant Reversal Agent Initiation</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="AAAAAAAAAAA" >
+                                                    <div class="divFormItem">
+                                                        <input id="form42_1" name="form42" type="radio" class="formItem radioFormItem">
+                                                        <label for="form42_1">到院前已接受促凝血因數治療</label>
+                                                        <input id="form42_2" name="form42" type="radio" class="formItem radioFormItem">
+                                                        <label for="form42_2">拒絕接受促凝血因數治療</label>
+                                                        <input id="form42_3" name="form42" type="radio" class="formItem radioFormItem">
+                                                        <label for="form42_3">到院病人未接受治療即轉院</label>
+                                                        <input id="form42_4" name="form42" type="radio" class="formItem radioFormItem">
+                                                        <label for="form42_4">病歷上有記載病人無法使用促凝血因數治療</label>
+                                                        <input id="form42_5" name="form42" type="radio" class="formItem radioFormItem">
+                                                        <label for="form42_5">非前述原因</label>
+                                                        <input class="oRdTextFormItem" type="text"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TRMOT_FL" >
+                                                    <div class="divFormItem">
+                                                        <input id="form24_19" name="form24" type="checkbox" class="formItem checkboxFormItem">
+                                                        <label for="form24_19"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td>Others</td>
+                                        <td>
+                                            <div class="pFormItem defaultHide" data-bean="TRMOT_NM" ></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table_control nopadding table-responsive defaultHide">
+                            <table class="table table-striped table-bordered table-hover " style="max-width: 1200px;">
+                                <thead>
+                                    <tr>
+                                        <td colspan="3">EVT</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Puncture time</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="EVT_ist_Puncture_time" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>抽吸完成時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="EVT_ist_Suction_completion_time" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Target artery：</td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Target_artery" data-uiDescItem="ICA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_ICA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Target_artery" data-uiDescItem="VA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_VA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Target_artery" data-uiDescItem="BA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Target_artery" data-uiDescItem="MCA M1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_MCA_M1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Target_artery" data-uiDescItem="MCA M2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_MCA_M2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Target_artery" data-uiDescItem="Other">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="pFormItem" data-bean="EVT_ist_other" >
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Device：</td>
+                                        <td colspan="2">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_Device" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TICI：</td>
+                                        <td colspan="2">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_ist_TICI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSubTitle" colspan="3">2nd</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Puncture time</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Puncture_time" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>抽吸完成時間</td>
+                                        <td colspan="2" class="tableTime">
+                                            <div class="form-group">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Suction_completion_time" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Target artery：</td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Target_artery" data-uiDescItem="ICA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_ICA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Target_artery" data-uiDescItem="VA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_VA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Target_artery" data-uiDescItem="BA">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Target_artery" data-uiDescItem="MCA M1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_MCA_M1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Target_artery" data-uiDescItem="MCA M2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_MCA_M2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Target_artery" data-uiDescItem="Other">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="pFormItem" data-bean="EVT_2nd_other" >
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Device：</td>
+                                        <td colspan="2">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_Device" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>TICI：</td>
+                                        <td colspan="2">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="EVT_2nd_TICI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex_wrap">
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingFive">
+                <div class="card-header flex" id="headingFive">
+                    <div class="titel_btn collapsed" id="btnHeadingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                        住院前/出院時 / 併發症 / Deterioration
+                    </div>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive">
+                    <form class="form formMore">
+                        <div class="table_control table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="OM_table" style="max-width: 800px;">
+                                <thead>
+                                    <tr>
+                                        <th class="maxWidth">住院前</th>
+                                        <th class="maxWidth">出院時</th>
+                                        <th>藥物</th>
+                                        <th class="remarks">備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMAS_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMAS_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Aspirin</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMTI_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMTI_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Ticlopidine</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMCL_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMCL_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Clopidogrel</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMCI_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMCI_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Cilostazol</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMWA_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMWA_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Warfarin</td>
+                                        <td class="inputSpan left">
+                                            <div>
+                                                <div class="pFormItem" data-bean="OMWA_INR" data-showTitle="true">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMDA_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMDA_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Dabigatran</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMRI_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMRI_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Rivaroxaban</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMAP_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMAP_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Apixaban</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMED_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMED_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Edoxaban</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OM_NONE" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OM_NONE" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>未使用抗血栓藥物</td>
+                                        <td class="tableRadioBox">
+                                            <div class="defaultHide">
+                                                <label>出院未使用抗血栓藥物原因</label>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="OM_NONE_CAUSE" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMAND_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMAND_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>anti DM drug</td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMORA_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMLI_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMLI_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>lipid lowering drug</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="OMST_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMANH" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OMANH" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>anti H/T drug</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OM_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OM_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Others</td>
+                                        <td>
+                                            <div class="pFormItem" data-bean="OMOTH_RE">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OM_NONE_FL" data-uiValueItem="0">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="OM_NONE_FL" data-uiValueItem="2">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>NONE</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="title col-md-12 defaultHide" id="THDA_FL_title">
+                            Atrial fibrillation
+                        </div>
+                        <div class="subChoice radioBox defaultHide">
+                            <div class="pFormItem" data-bean="THDA_FL" >
+                            </div>
+                        </div>
+
+                        <div class="subChoice radioBox defaultHide">
+                            <label>未使用抗凝血藥物原因：</label>
+                            <div class="pFormItem" data-bean="THDA_NO" >
+                            </div>
+                        </div>
+
+                        <div class="title col-md-12">併發症
+                            <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="COM" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columnChoice choiceBox">
+                            <div class="pFormItem" data-bean="COM_ID" >
+                            </div>
+                        </div>
+                        <div class="title col-md-12">Deterioration
+                            <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="DET" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columnChoice choiceBox">
+                            <div class="pFormItem defaultHide InfarctShow TIAShow" data-bean="DET_ID" data-uiValueItem="1"></div>
+                            <div class="pFormItem" data-bean="DET_ID" data-uiValueItem="2,3"></div>
+                            <div class="pFormItem defaultHide ICHShow" data-bean="DET_ID" data-uiValueItem="4"></div>
+                            <div class="pFormItem defaultHide SAHShow" data-bean="DET_ID" data-uiValueItem="5,6"></div>
+                            <div class="pFormItem" data-bean="DET_ID" data-uiValueItem="7,8,9,10,99"></div>
+                        </div>
+                        <div class="subChoice radioBox flex defaultHide">
+                            <label>Hemorrhagic infarct：</label>
+                            <div class="pFormItem" data-bean="DET_HINF_FL" >
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingSix">
+                <div class="card-header flex" id="headingSix">
+                    <div class="titel_btn collapsed" id="btnHeadingSix" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                        危險因子
+                    </div>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix">
+                    <form class="form formMore">
+                        <div class="title col-md-12">危險因子
+                            <div class="titleInput"><!-- 狀態欄位內，請填入0：沒有、1：有、2：不知道 --></div>
+                        </div>
+                        <div class="table_control nopadding table-responsive dontFocusHintMsg">
+                            <table class="table table-striped table-bordered table-hover " id="dangerTable" style="max-width: 1200px">
+                                <thead>
+                                    <tr>
+                                        <th class="tableStatus">有</th>
+                                        <th class="tableStatus">無</th>
+                                        <th class="tableStatus">不知</th>
+                                        <th>危險因素</th>
+                                        <th class="remarkWidth">備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HT_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HT_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HT_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>HT</td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="THISHY_ID" data-showTitle="true">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="DM_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="DM_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="DM_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>DM</td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="THISDI_ID" data-showTitle="true">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PCVA_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PCVA_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PCVA_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Previous CVA</td>
+                                        <td class="tableRadioBox">
+                                            <div class="choiceBox notMe">
+                                                <div class="pFormItem defaultHide" data-bean="PCVAC_ID" data-showTitle="true">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PTIA_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PTIA_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PTIA_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Previous TIA</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HD_ID" data-uiValueItem="1" data-controlMode="disabled">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HD_ID" data-uiValueItem="0" data-controlMode="disabled">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HD_ID" data-uiValueItem="2" data-controlMode="disabled">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Heart Disease</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="UR_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="UR_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="UR_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Uremia</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PAD_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PAD_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="PAD_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>PAD</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="FAHIID_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="FAHIID_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="FAHIID_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Family History of stroke</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HC_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HC_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="HC_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Dyslipidemia</td>
+                                        <td>
+                                            <div class="choiceBox notMe">
+                                                <div class="pFormItem defaultHide" data-bean="HCHT_ID">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="SM_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="SM_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="SM_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group col-md-12 flex">
+                                                <div class="col-md-4 inputSpanSMY">
+                                                    Smoking
+                                                </div>
+                                                <div class="col-md-4 inputSpanSMY defaultHide hasSmoking">
+                                                    <div class="pFormItem" data-bean="SMC_NM" >
+                                                    </div>
+                                                    <span>支/天</span>
+                                                </div>
+                                                <div class="col-md-4 inputSpanSMY defaultHide hasSmoking">
+                                                    <div class="pFormItem" data-bean="SMY_NM">
+                                                    </div>
+                                                    <span>年</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox defaultHide hasSmoking notMe">
+                                                <div class="pFormItem" data-bean="SMCP_ID" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="AL_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="AL_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="AL_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Alcohol</td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="CA_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="CA_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="CA_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Cancer</td>
+                                        <td>
+                                            <div>
+                                                <div class="pFormItem defaultHide" data-bean="CANAME_RE" data-showTitle="true">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="Others_ID" data-uiValueItem="1" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="Others_ID" data-uiValueItem="0" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="Others_ID" data-uiValueItem="2" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Others</td>
+                                        <td>
+                                            <div>
+                                                <div class="pFormItem defaultHide" data-bean="Others_TEXT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent defaultHide InfarctShow TIAShow SAHShow otherShow" id="divHeadingSeven">
+                <div class="card-header flex" id="headingSeven">
+                    <div class="titel_btn collapsed" id="btnHeadingSeven" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                            此次中風相關影像 Infarct location
+                    </div>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven">
+                    <form class="form formMore">
+                        <div class="title col-md-12">此次中風相關影像
+                            <div class="titleInput">所有收案病人均須填寫CT或MRI檢查時間</div>
+                        </div>
+                        <div class="table_control nopadding table-responsive">
+                            <table class="table table-striped table-bordered table-hover " style="max-width: 800px;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>確認診斷之CT</th>
+                                        <th>MRI(DWI)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="CT_tbody">
+                                    <tr>
+                                        <td>日期</td>
+                                        <td>
+                                            <div>
+                                                <div class="pFormItem" data-bean="CT_D" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <div class="pFormItem" data-bean="MRI_D" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>時間</td>
+                                        <td>
+                                            <div>
+                                                <div class="pFormItem" data-bean="CT_T" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <div class="pFormItem" data-bean="MRI_T" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="CT_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="MRI_FL" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSubTitle" colspan="3">Ant. circulation: cortical</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ACA</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="CORTICAL_ACA_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="CORTICAL_ACA_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>MCA</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="CORTICAL_MCA_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="CORTICAL_MCA_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSubTitle" colspan="3">Ant. circulation: subcortical</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ACA</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="SUBCORTICAL_ACA_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="SUBCORTICAL_ACA_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>MCA</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="SUBCORTICAL_MCA_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="SUBCORTICAL_MCA_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSubTitle" colspan="3">Posterior circulation</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PCA cortex</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="PCA Cortex_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="PCA Cortex_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>thalamus</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="thalamus_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="thalamus_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>brainstem</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="brainstem_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="brainstem_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>cerebellum</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="cerebellum_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="cerebellum_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Watershed</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="Wastershed_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="Wastershed_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hemorrhagic infarct</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="Hemorrhagic infact_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="Hemorrhagic infact_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Old stroke</td>
+                                        <td>
+                                            <div class="choiceBox CT_FL_N">
+                                                <div class="pFormItem" data-bean="Old_stroke_CT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox MRI_FL_N">
+                                                <div class="pFormItem" data-bean="Old_stroke_MRI" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other</td>
+                                        <td>
+                                            <di class="CT_FL_N">
+                                                <div class="pFormItem" data-bean="other_CT_text" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <di class="MRI_FL_N">
+                                                <div class="pFormItem" data-bean="other_MRI_text" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent defaultHide ICHShow otherShow" id="divHeadingSeven_2">
+                <div class="card-header flex" id="headingSeven_2">
+                    <div class="titel_btn collapsed" id="btnHeadingSeven_2" data-toggle="collapse" data-target="#collapseSeven_2" aria-expanded="true" aria-controls="collapseSeven_2">
+                            ICH locaion
+                    </div>
+                </div>
+                <div id="collapseSeven_2" class="collapse" aria-labelledby="headingSeven_2">
+                    <form class="form formMore">
+                        <div class="title col-md-12">ICH locaion
+                            <div class="titleInput"></div>
+                        </div>
+                        <div class="table_control nopadding table-responsive">
+                            <div class="subChoice choiceBox flex">
+                                <div class="pFormItem" data-bean="ICDICH_LOCATION" >
+                                </div>
+                            </div>
+                            <div class="subChoice choiceBox flex defaultHide">
+                                <label>Lobar：</label>
+                                <div class="pFormItem" data-bean="ICDICH_LOCATION_LOBAR" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent defaultHide InfarctShow TIAShow" id="divHeadingEight">
+                <div class="card-header flex" id="headingEight">
+                    <div class="titel_btn collapsed" id="btnHeadingEight" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                        Ultrasound/MRA Studies
+                    </div>
+                </div>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingEight">
+                    <form class="form formMore">
+                        <div class="table_control table-responsive">
+                            <table class="table table-striped table-bordered table-hover" style="max-width: 1200px;">
+                                <thead>
+                                    <tr>
+                                        <th class="tableStatus">序號</th>
+                                        <th>名稱</th>
+                                        <th>備註</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1.</td>
+                                        <td>Carotid duplex</td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="CARDU" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Carotid atherosclerosis</td>
+                                        <td class="tableRadioBox">
+                                            <div class="radioBox">
+                                                <div class="pFormItem" data-bean="CARATH" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>R ICA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="CDR_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>L ICA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="CDL_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2.</td>
+                                        <td>TCCS  </td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="TCCS_ID" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>R MCA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="TCCSR_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>L MCA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="TCCSL_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>BA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="TCCSBA_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="MCD_check">
+                                        <td>3.</td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="MCDDOORNOT" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox">
+                                                <div class="pFormItem" data-bean="MCDNONE" >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="MCD_check">
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>R MCA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="MCDR_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="MCD_check">
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>L MCA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="MCDL_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="MCD_check">
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>VA or BA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="MCDBA_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="MCD_check">
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>R ICA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="MCDRI_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="MCD_check">
+                                        <td></td>
+                                        <td colspan="2">
+                                            <div class="tableRadioBox flex">
+                                                <span>L ICA：</span>
+                                                <div class="radioBox">
+                                                    <div class="pFormItem" data-bean="MCDLI_ID" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingNine">
+                <div class="card-header flex" id="headingNine">
+                    <div class="titel_btn collapsed" id="btnHeadingNine" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                        NIHSS
+                    </div>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine">
+                    <form class="form formMore">
+                        <div class="table_control table-responsive">
+                            <table class="table table-striped table-bordered table-hover table_NIHSS" style="max-width: 800px">
+                                <thead>
+                                    <tr>
+                                        <th>NIHSS</th>
+                                        <th>最初進院</th>
+                                        <th>第二次評估</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="NIHSIN_tbody">
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="choiceBox" style="text-align: center;">
+                                                <div class="pFormItem" data-bean="NIHSIN_NA"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choiceBox" style="text-align: center;">
+                                                <div class="pFormItem" data-bean="NIHSIN_SEC_NA" ></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>評估日期</td>
+                                        <td><div class="pFormItem" data-bean="NIHSIN_DT"></div></td>
+                                        <td><div class="pFormItem" data-bean="NIHSIN_SEC_DT" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1a. Level of Consciousness (LOC) (0-3)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM1a"></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM1a" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1b. LOC Questions(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM1b"></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM1b" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1c. LOC Commands(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM1c" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM1c" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2. Best Gaze(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM2" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM2" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3. Visual(0-3)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM3" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM3" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4. Facial Palsy(0-3)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM4" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM4" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5a Left Motor Arm(0-4)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM5a" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM5a" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5b. Right Motor Arm(0-4)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM5b" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM5b" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6a. Left Motor Leg(0-4)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM6a" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM6a" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6b. Right Motor Leg(0-4)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM6b" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM6b" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7. Limb Ataxia(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM7" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM7" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>8. Sensory(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM7" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM7" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9. Best Language(0-3)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM9" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM9" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>10. Dysarthria(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM10" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM10" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>11. Extinction and Inattention(0-2)</td>
+                                        <td><div class="pFormItem NID" data-bean="NID_NM11" ></div></td>
+                                        <td><div class="pFormItem NIDS" data-bean="NIDS_NM11" ></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="T_center tableSubTitle">評估Total</td>
+                                        <td class="T_center tableSubTitle"><div class="pFormItem" data-bean="NID_TOTAL" data-controlMode="disabled"></div></td>
+                                        <td class="T_center tableSubTitle"><div class="pFormItem" data-bean="NIDS_TOTAL" data-controlMode="disabled"></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent" id="divHeadingTen">
+                <div class="card-header flex" id="headingTen">
+                    <div class="titel_btn collapsed" id="btnHeadingTen" data-toggle="collapse" data-target="#collapseTen" aria-expanded="true" aria-controls="collapseTen">
+                        ECG / 抽血結果 / 出院情形
+                    </div>
+                </div>
+                <div id="collapseTen" class="collapse" aria-labelledby="headingTen">
+                        <form class="form formMore">
+                            <div class="title col-md-12">ECG
+                                <div class="titleInput tableRadioBox">
+                                    <div class="radioBox">
+                                        <div class="pFormItem" data-bean="ECG_ID" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="columnChoice choiceBox">
+                                <div class="pFormItem" data-bean="ECG_CH" >
+                                </div>
+                            </div>
+                            <div class="title col-md-12">抽血結果</div>
+                            <div class="subTitle">急診抽血或第一次抽血：</div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-3 flex">
+                                    <label>Hb：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="HB_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>Hct：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="HCT_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>Platelet：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="PLATELET_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>WBC：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="WBC_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-6 flex">
+                                    <label>PTT：</label>
+                                    <div class="flex moreInputBox">
+                                        <div class="col-md-6 moreInput">
+                                            <div>
+                                                <div class="pFormItem dittoNA" data-bean="PTT1_NM" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 moreInput">
+                                            <div>
+                                                <div class="pFormItem dittoNA" data-bean="PTT2_NM" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>PT(INR)：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="PTINR_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>Glucose (ER)：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="ER_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-3 flex">
+                                    <label>BUN：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="BUN_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>Creatinine：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="CRE_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>HbA1c：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="HBAC_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex defaultHide">
+                                <label><span class="red">*</span>ICH INR>1.4使用促凝血因子：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="PTINR_JUD" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice columnChoice radioBox defaultHide">
+                                <label>未使用促凝血因子：</label>
+                                <div class="pFormItem" data-bean="PTINR_Option" >
+                                </div>
+                            </div>
+                            <div class="subTitle">第一次空腹抽血：</div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-3 flex">
+                                    <label>Glu(AC)：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="AC_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>T-CHO：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="TCHO_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>TG：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="TG_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>HDL：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="HDL_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex">
+                                <div class="form-group col-md-3 flex">
+                                    <label>LDL：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="LDL_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>GOT：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="GOT_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 flex">
+                                    <label>GPT：</label>
+                                    <div>
+                                        <div class="pFormItem dittoNA" data-bean="GPT_NM" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-row col-md-12 flex defaultHide">
+                                <label><span class="red">*</span>LDL>100 出院開立降血脂用藥：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="LDL_JUD" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice columnChoice radioBox defaultHide">
+                                <label>未開立降血脂用藥：</label>
+                                <div class="radioBox">
+                                    <div class="pFormItem" data-bean="LDL_Option" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title col-md-12">出院情形</div>
+                            <div class="col-row col-md-12">
+                                <div class="columnChoice  radioBox">
+                                    <div class="pFormItem" data-bean="OFF_ID" >
+                                    </div>
+                                </div>
+                                <div class="subChoice radioBox widthMore flex defaultHide">
+                                    <label>死　因：</label>
+                                    <div class="pFormItem" data-bean="OFFD_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title col-md-12">出院mRS
+                                <div class="titleInput tableRadioBox radioBox" >
+                                    <div class="pFormItem" data-bean="OFFMRS" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <!-- <button class="btn btn-warning">暫存</button> -->
+                            </div>
+                        </form>
+                </div>
+            </div>
+            <div style="display: none;">
+                <div class="pFormItem" data-bean="TRACK_1_ID">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_1_DT">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_1_USER_ID">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_1_USER_NM">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_3_ID">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_3_DT">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_3_USER_ID">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_3_USER_NM">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_6_ID">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_6_DT">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_6_USER_ID">
+                </div>
+                <div class="pFormItem" data-bean="TRACK_6_USER_NM">
+                </div>
+            </div>
+            <div class="formList tabcontent defaultHide" id="divHeadingEleven_1" isshow="false">
+                <div class="card-header flex" id="headingEleven_1">
+                    <div class="titel_btn collapsed" id="btnHeadingEleven_1" data-toggle="collapse" data-target="#collapseEleven_1" aria-expanded="true" aria-controls="collapseEleven_1">
+                        定期追蹤記錄-中風後1個月
+                    </div>
+                </div>
+                <div id="collapseEleven_1" class="collapse" aria-labelledby="headingEleven_1">
+                    <form class="form formMore">
+                        <div class="title col-md-12">中風後1個月
+                            <div class="titleInput">
+                                <div class="pFormItem" data-bean="RFUR_1_D">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle">目前所在地</div>
+                        <div class="col-row col-md-12">
+                            <div class="columnChoice  radioBox">
+                                <div class="pFormItem" data-bean="LOCATION_1_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle LOCATION_1_lost">相關醫療記錄(一)</div>
+                        <div class="col-row col-md-12">
+                            <div class="columnChoice radioBox LOCATION_1_lost">
+                                <div class="pFormItem" data-bean="FLU_1_ID" >
+                                </div>
+                            </div>
+                            <div class="subChoice choiceBox flex defaultHide">
+                                <label>拒回診原因：</label>
+                                <div class="pFormItem" data-bean="FLURESULT_1_TX" >
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <div class="flex">
+                                    <label>死亡日期：</label>
+                                    <div class="pFormItem" data-bean="DEATH_1_DT" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <div class="flex">
+                                    <label>死因原因：</label>
+                                    <div class="pFormItem" data-bean="DEATH_1_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <label>因中風而死亡：</label>
+                                <div class="pFormItem" data-bean="DEATHSK_1_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle title LOCATION_1_lost">相關醫療記錄(二)
+                            <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="VE_1_ID" data-uiValueItem="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-row col-md-12 LOCATION_1_lost VE_1_none">
+                            <div class="columnChoice choiceBox">
+                                <div class="pFormItem" data-bean="VE_1_ID" data-uiValueItem="1,2">
+                                </div>
+                            </div>
+                            <div class="subChoice flex defaultHide">
+                                <div class="radioBox flex">
+                                    <label>再中風：</label>
+                                    <div class="pFormItem" data-bean="VERSCICH_1_ID" >
+                                    </div>
+                                </div>
+                                <div class="pFormItem" data-bean="VERS_1_D" >
+                                </div>
+                                <div class="pFormItem" data-bean="VERSORG_1_ID" data-placeholder="請輸入醫院名稱" data-backTitle="醫院">
+                                </div>
+                            </div>
+                            <div class="subChoice flex defaultHide">
+                                <div class="radioBox flex">
+                                    <label>Ischemic heart disease：</label>
+                                    <div class="pFormItem" data-bean="VEIHD_1_ID" >
+                                    </div>
+                                </div>
+                                <div class="pFormItem" data-bean="VEIHD_1_D" >
+                                </div>
+                                <div class="pFormItem" data-bean="VEIHDORG_1_ID" data-placeholder="請輸入醫院名稱" data-backTitle="醫院">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle LOCATION_1_lost">mRS</div>
+                        <div class="col-row col-md-12 LOCATION_1_lost">
+                            <div class="subChoice radioBox flex">
+                                <label>mRS：</label>
+                                <div class="pFormItem" data-bean="MRS_1_TX" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent defaultHide" id="divHeadingEleven_3" isshow="false">
+                <div class="card-header flex" id="headingEleven_3">
+                    <div class="titel_btn collapsed" id="btnHeadingEleven_3" data-toggle="collapse" data-target="#collapseEleven_3" aria-expanded="true" aria-controls="collapseEleven_3">
+                        定期追蹤記錄-中風後3個月
+                    </div>
+                </div>
+                <div id="collapseEleven_3" class="collapse" aria-labelledby="headingEleven_3">
+                    <form class="form formMore">
+                        <div class="title col-md-12">中風後3個月
+                            <div class="titleInput">
+                                <div class="pFormItem" data-bean="RFUR_3_D" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle">目前所在地</div>
+                        <div class="col-row col-md-12">
+                            <div class="columnChoice  radioBox">
+                                <div class="pFormItem" data-bean="LOCATION_3_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle LOCATION_3_lost">相關醫療記錄(一)</div>
+                        <div class="col-row col-md-12">
+                            <div class="columnChoice radioBox LOCATION_3_lost">
+                                <div class="pFormItem" data-bean="FLU_3_ID" >
+                                </div>
+                            </div>
+                            <div class="subChoice choiceBox flex defaultHide">
+                                <label>拒回診原因：</label>
+                                <div class="pFormItem" data-bean="FLURESULT_3_TX" >
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <div class="flex">
+                                    <label>死亡日期：</label>
+                                    <div class="pFormItem" data-bean="DEATH_3_DT" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <div class="flex">
+                                    <label>死因原因：</label>
+                                    <div class="pFormItem" data-bean="DEATH_3_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <label>因中風而死亡：</label>
+                                <div class="pFormItem" data-bean="DEATHSK_3_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle title LOCATION_3_lost">相關醫療記錄(二)
+                            <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="VE_3_ID" data-uiValueItem="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-row col-md-12 LOCATION_3_lost VE_3_none">
+                            <div class="columnChoice choiceBox">
+                                <div class="pFormItem" data-bean="VE_3_ID" data-uiValueItem="1,2">
+                                </div>
+                            </div>
+                            <div class="subChoice flex defaultHide">
+                                <div class="radioBox flex">
+                                    <label>再中風：</label>
+                                    <div class="pFormItem" data-bean="VERSCICH_3_ID" >
+                                    </div>
+                                </div>
+                                <div class="pFormItem" data-bean="VERS_3_D" >
+                                </div>
+                                <div class="pFormItem" data-bean="VERSORG_3_ID" data-placeholder="請輸入醫院名稱" data-backTitle="醫院">
+                                </div>
+                            </div>
+                            <div class="subChoice flex defaultHide">
+                                <div class="radioBox flex">
+                                    <label>Ischemic heart disease：</label>
+                                    <div class="pFormItem" data-bean="VEIHD_3_ID" >
+                                    </div>
+                                </div>
+                                <div class="pFormItem" data-bean="VEIHD_3_D" >
+                                </div>
+                                <div class="pFormItem" data-bean="VEIHDORG_3_ID" data-placeholder="請輸入醫院名稱" data-backTitle="醫院">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle LOCATION_3_lost">mRS</div>
+                        <div class="col-row col-md-12 LOCATION_3_lost">
+                            <div class="subChoice radioBox flex">
+                                <label>mRS：</label>
+                                <div class="pFormItem" data-bean="MRS_3_TX" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="formList tabcontent defaultHide" id="divHeadingEleven_6" isshow="false">
+                <div class="card-header flex" id="headingEleven_6">
+                    <div class="titel_btn collapsed" id="btnHeadingEleven_6" data-toggle="collapse"  data-target="#collapseEleven_6" aria-expanded="true" aria-controls="collapseEleven_6">
+                        定期追蹤記錄-中風後6個月
+                    </div>
+                </div>
+                <div id="collapseEleven_6" class="collapse" aria-labelledby="headingEleven_6">
+                    <form class="form formMore">
+                        <div class="title col-md-12">中風後6個月
+                            <div class="titleInput">
+                                <div class="pFormItem" data-bean="RFUR_6_D" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle">目前所在地</div>
+                        <div class="col-row col-md-12">
+                            <div class="columnChoice radioBox">
+                                <div class="pFormItem" data-bean="LOCATION_6_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle LOCATION_6_lost">相關醫療記錄(一)</div>
+                        <div class="col-row col-md-12">
+                            <div class="columnChoice radioBox LOCATION_6_lost">
+                                <div class="pFormItem" data-bean="FLU_6_ID" >
+                                </div>
+                            </div>
+                            <div class="subChoice choiceBox flex defaultHide">
+                                <label>拒回診原因：</label>
+                                <div class="pFormItem" data-bean="FLURESULT_6_TX" >
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <div class="flex">
+                                    <label>死亡日期：</label>
+                                    <div class="pFormItem" data-bean="DEATH_6_DT" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <div class="flex">
+                                    <label>死因原因：</label>
+                                    <div class="pFormItem" data-bean="DEATH_6_ID" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="subChoice radioBox flex defaultHide">
+                                <label>因中風而死亡：</label>
+                                <div class="pFormItem" data-bean="DEATHSK_6_ID" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle title LOCATION_6_lost">相關醫療記錄(二)
+                            <div class="titleInput">
+                                <div class="choiceBox">
+                                    <div class="pFormItem" data-bean="VE_6_ID" data-uiValueItem="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-row col-md-12 LOCATION_6_lost VE_6_none">
+                            <div class="columnChoice choiceBox">
+                                <div class="pFormItem" data-bean="VE_6_ID" data-uiValueItem="1,2">
+                                </div>
+                            </div>
+                            <div class="subChoice flex defaultHide">
+                                <div class="radioBox flex">
+                                    <label>再中風：</label>
+                                    <div class="pFormItem" data-bean="VERSCICH_6_ID" >
+                                    </div>
+                                </div>
+                                <div class="pFormItem" data-bean="VERS_6_D" >
+                                </div>
+                                <div class="pFormItem" data-bean="VERSORG_6_ID" data-placeholder="請輸入醫院名稱" data-backTitle="醫院">
+                                </div>
+                            </div>
+                            <div class="subChoice flex defaultHide">
+                                <div class="radioBox flex">
+                                    <label>Ischemic heart disease：</label>
+                                    <div class="pFormItem" data-bean="VEIHD_6_ID" >
+                                    </div>
+                                </div>
+                                <div class="pFormItem" data-bean="VEIHD_6_D" >
+                                </div>
+                                <div class="pFormItem" data-bean="VEIHDORG_6_ID" data-placeholder="請輸入醫院名稱" data-backTitle="醫院">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subTitle LOCATION_6_lost">mRS</div>
+                        <div class="col-row col-md-12 LOCATION_6_lost">
+                            <div class="subChoice radioBox flex">
+                                <label>mRS：</label>
+                                <div class="pFormItem" data-bean="MRS_6_TX" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <!-- <button class="btn btn-warning">暫存</button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 範本 -->
+            <!-- <div class="formList tabcontent" id="divHeading數字">
+                <div class="card-header flex" id="heading數字">
+                    <div class="titel_btn" data-toggleid="btnHeading數字" ="collapse" data-target="#collapse數字" aria-expanded="true" aria-controls="collapse數字">
+                    </div>
+                </div>
+                <div id="collapse數字" class="collapse show" aria-labelledby="heading數字">
+                        <form class="form flex_wrap">
+
+                            <div class="form-footer">
+                                    <button class="btn btn-warning">暫存
+                                </button>
+                            </div>
+                        </form>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("a.patientDetail").on('click',function(e){
+                e.preventDefault();
+                var srcLink = $(this).attr("href");
+                window.parent.postMessage(srcLink, '*');
+            });
+        });
+    </script>
+</div>

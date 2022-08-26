@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/jquery.form.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+    <style>
+        .imp-rejectTable{
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .imp-rejectTable td, .imp-rejectTable th{
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+
+        .imp-rejectTable thead th{
+            background-color: #CCE8EB;
+            width: 200px;
+        }
+
+        .imp-rejectTable tr:nth-child(odd){
+            background: #fff;
+        }
+
+        .imp-rejectTable tr:nth-child(even){
+            background: #F5FAFA;
+        }
+    </style>
+</head>
+
+<body>
+    XML表單(gForm)導入測試頁...<br/>
+    <input type="file" onchange="impTool.tpl.importData(this);"/>
+    <div id="impTool_tpl_msg"></div>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/user.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/xlsx.core.min.js?csSvnVersion="></script>
+<script src="../customFormV3/js/import.js?csSvnVersion="></script>
+<script type="text/javascript">
+var formType = "formItemTemplate";
+//登入者ID
+var userId = 11;
+//登入者姓名
+var userName = 22;
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+
+var gFormJS = nursing.createGForm();
+
+</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>mbnisAPI測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+</head>
+
+<body>
+    mbnisAPI測試頁...
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/checkObjectFormat.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script type="text/javascript">
+    var checkObjectFormat = nursing.createCheckObjectFormat();
+
+    //基础参数
+    var basicParam = nursing.getBasicParam();
+    //動態表單
+    var dynamicForm = null;
+    dynamicForm = nursing.getDynamicForm();
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = "PDR1";
+    dynamicForm.searchParamDF.frameModel = "xxxx";
+    // basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, function(formFrame) {
+    //     if (formFrame != null) {
+    //         var newVersionNo = parseFloat(formFrame.newVersionNo);
+    //         versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+    //         appendInit(formFrame.content);
+    //     }
+    // }, function() {});
+    //gForm
+    var gFormJS = nursing.createGForm();
+    //查詢該sourceId和formType下的所有數據
+    //     3ab36859ee644ae4b5af77415e618128
+    // 8bb330e61d894a30a7d9608dc9c2fc5c
+    gFormJS.searchParamGF.sourceIds = ["formTemplate"];
+    gFormJS.searchParamGF.formType = "formTemplate";
+    gFormJS.searchParamGF.formId = "7135975e30734999b86429ad34cf43eb";
+    gFormJS.searchParamGF.beginDate = "2019-6-4 03:16:04";
+    gFormJS.searchParamGF.endDate = "2019-09-31";
+    // gFormJS.searchParamGF.beginTotalScore = "1";
+    // gFormJS.searchParamGF.endTotalScore = "1";
+    gFormJS.searchParamGF.beginCreateTime = "2019-01-01";
+    gFormJS.searchParamGF.endCreateTime = "2019-09-31";
+    gFormJS.searchParamGF.status = "D";
+    // gFormJS.searchParamGF.statusArr = ["Y","N"];
+    gFormJS.searchParamGF.modifyUserId = "administrator";
+    gFormJS.searchParamGF.modifyUserName = "管理员";
+    gFormJS.searchParamGF.beginModifyTime = "2019-01-01";
+    gFormJS.searchParamGF.endModifyTime = "2019-09-31";
+    gFormJS.searchParamGF.beginVersionNo = 0;
+    gFormJS.searchParamGF.endVersionNo = 300;
+    gFormJS.searchParamGF.itemCondition = "(gfi2.itemkey='ftFormType' AND gfi2.itemvalue = 'mjAdultForm_V3') OR (gfi2.itemkey='ftFormName' AND gfi2.itemvalue = '入院护理评估-成人')";
+    gFormJS.searchParamGF.itemConditionHitCounts = 2;
+    gFormJS.getGFormListWithCondition(gFormJS, successCall2, function() {});
+
+    //查詢動態表單
+    var call2 = false;
+
+    function successCall2(result) {
+        if (call2) return;
+        else call2 = true;
+        $("#tableList").find("tr:has(td)").remove();
+        gForms = result;
+        if (window.console) console.log(gForms);
+    }
+
+
+
+    var param = {
+        /**不同数据*/
+        node: "evt.cg.getpatDisability",
+        /**动作*/
+        action: "select"
+    };
+    var json = {"var":{"wb_base64":"0","wb_big5":"0","chart":"病歷號"}};
+
+    eNursing.sendMsg("evt.cg.getpatDisability", json, param, "", function (result) {
+        if (result.resultMsg.success) {
+            if (window.console) console.log("==========查詢病患一年內最近的檢查報告完成日期");
+            if (window.console) console.log(result);
+        } else {
+            if (window.console) console.log("(error)==========查詢病患一年內最近的檢查報告完成日期");
+            if (window.console) console.log(result);
+        }
+    }, function(){});
+
+
+</script>

@@ -1,0 +1,95 @@
+<ReportGenerator>
+  		
+   
+   
+   <Algorithm>
+       
+    <DeleteData NAME="CICRCASE">
+	        <Where><![CDATA[REDT=TO_DATE(:month,'YYYY/MM')]]></Where>
+	        <Field NAME="month">month</Field>
+	</DeleteData>
+	    
+	<MainFile TotalLevel="3">
+		<QueryData NAME="CICCASE"> <!-- 個案總表 -->
+			<Where>(APTIME&lt;=TO_DATE(:month,'YYYY/MM') or (CLOSEDT is null or CLOSEDT&gt;=TO_DATE(:month,'YYYY/MM')) )  AND CASETYPE='MSDischargeNote'</Where>
+			<OrderBy>PHISTNUM, PCASENO, APTIME desc</OrderBy>
+			<Field NAME="month">month</Field>
+		</QueryData>
+	   <Key Level="1" NAME="PHISTNUM"/> <!-- 病歷號 -->
+	   <Key Level="2" NAME="PCASENO"/> <!-- 住院號 -->
+	</MainFile>
+	<Process_Detail>
+		<QueryData NAME="PAT_BASIC"> <!-- 讀取病患基本資料 -->
+			<Where>HHISNUM=:PHISTNUM</Where>
+			<OrderBy></OrderBy>
+			<Field NAME="PHISTNUM">getMap(mainFile, "PHISTNUM")</Field>
+		</QueryData>
+		<QueryData NAME="PAT_ADM_CASE"> <!-- 讀取病患住院資料 -->
+			<Where>HCASENO=:PCASENO and HHISNUM=:PHISTNUM</Where>
+			<OrderBy></OrderBy>
+			<Field NAME="PCASENO">getMap(mainFile, "PCASENO")</Field>
+			<Field NAME="PHISTNUM">getMap(mainFile, "PHISTNUM")</Field>
+		</QueryData>
+		<QueryData NAME="MSTelClose"> <!-- 讀取個案評估表 -->
+			<Where>SOURCEID=:PCASENO</Where>
+			<OrderBy>EVALUATIONTIME desc</OrderBy>
+			<Field NAME="PCASENO">getMap(mainFile, "PCASENO")</Field>
+		</QueryData>
+	</Process_Detail>
+
+
+	<Process_Tail>
+	    <Level>2</Level>
+	    <NewData NAME="CICRCASE"/>
+	    <NewData NAME="CICRTELCLOSE"/>
+	</Process_Tail>
+	
+   </Algorithm>
+						
+	<ResultTable NAME="CICRCASE" Description="個案清單" >
+		<Field NAME="ID" isPk="true">UUID()</Field>
+		<Field NAME="REDT">parseDt(month, "yyyyMM")</Field>
+		<Field NAME="STATIONID">getMap(mainFile, "HNURSTA")</Field>
+		<Field NAME="PHISTNUM">getMap(mainFile, "PHISTNUM")</Field>
+		<Field NAME="PCASENO">getMap(mainFile, "PCASENO")</Field>
+		<Field NAME="HINDT">getListToTm(resultMap, "PAT_ADM_CASE",["HADMDT","HADMTM"] as String[], "yyyyMMddHHmm")</Field>
+		<Field NAME="PNAMEC">getListValue(resultMap,"PAT_ADM_CASE", "HNAMEC")</Field>
+		<Field NAME="PBIRTHDT">getListToTm(resultMap,"PAT_ADM_CASE", ["HBIRTHDT"]  as String[], "yyyyMMdd")</Field>
+		<Field NAME="PDIAGTXT">getListValue(resultMap,"PAT_ADM_CASE", "HINDIAGDESC")</Field>
+		<Field NAME="CICCASE">(dateUtils.format(getMap(mainFile, "APTIME"), "yyyyMM").equals(month)?"1":"0")</Field>
+		<Field NAME="OLD_CASE">(dateUtils.format(getMap(mainFile, "APTIME"), "yyyyMM").equals(month)?"1":"0")</Field>
+		<Field NAME="CLOSE_CASE">
+		    <![CDATA[
+		    (getMap(mainFile, "CLOSEDT")!=null && dateUtils.format(getMap(mainFile, "CLOSEDT"), "yyyyMM").equals(month)?"1":"0")
+		    ]]>
+		</Field>
+		<Field NAME="HDISDT">getListToTm(resultMap,"PAT_ADM_CASE", ["HDISDTM","HDISDT"] as String[], "yyyyMMddHHmm")</Field>
+		<Field NAME="TRDT">null</Field>
+		<Field NAME="CLOSEDT">getMap(mainFile, "CLOSEDT")</Field>
+		<Field NAME="DEATHDT"></Field>
+	</ResultTable>
+	
+	<ResultTable NAME="CICRTELCLOSE" Description="個案清單">
+		<Field NAME="ID">UUID()</Field>
+		<Field NAME="CICRCASE_ID">getMap(mainFile,"CICRCASE.ID")</Field>
+		<Field NAME="traceMode">getMapCount(resultMap,"MSTelClose")</Field>
+		<Field NAME="regularOFUL">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","0")?"1":"0"</Field>
+		<Field NAME="regularOFUO">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","1")?"1":"0"</Field>
+		<Field NAME="transOHM">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","2")?"1":"0"</Field>
+		<Field NAME="transOHR">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","3")?"1":"0"</Field>
+		<Field NAME="transOHA">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","4")?"1":"0"</Field>
+		<Field NAME="transMSNH">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","5")?"1":"0"</Field>
+		<Field NAME="transONH">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","6")?"1":"0"</Field>
+		<Field NAME="transOPCC">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","7")?"1":"0"</Field>
+		<Field NAME="transLHC">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","8")?"1":"0"</Field>
+		<Field NAME="transLNC">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","9")?"1":"0"</Field>
+		<Field NAME="death">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","10")?"1":"0"</Field>
+		<Field NAME="unableToCont">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","11")?"1":"0"</Field>
+		<Field NAME="denyService">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","12")?"1":"0"</Field>
+		<Field NAME="moveHouse">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","13")?"1":"0"</Field>
+		<Field NAME="otherHospRCW">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","14")?"1":"0"</Field>
+		<Field NAME="readmission">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","15")?"1":"0"</Field>
+		<Field NAME="other">searchListHasVal(resultMap,"MSTelClose","settleLawsuitReason","16")?"1":"0"</Field>
+	</ResultTable>
+
+</ReportGenerator>

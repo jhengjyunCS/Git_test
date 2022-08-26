@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/jquery.form.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/Base64.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/Blob.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/polyfill.Uint8Array.js?csSvnVersion="></script>
+</head>
+
+<body>
+    File物件測試頁...
+    <input type="button" value="顯示儲存物件" onclick="console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[0].itemValue))"/>
+    <p class="pFormItem" data-bean="A1"></p>
+    <!-- 上傳檔案： <input type="file" name="content" id="content"/>
+    <input type="button" value="上傳" onclick="aaa()" /> -->
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+var formType = "test6.html";
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+dynamicForm.searchParamDF.formType = "PDR1";
+dynamicForm.searchParamDF.frameModel = "xxxx";
+// basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, function(formFrame) {
+//     if (formFrame != null) {
+//         var newVersionNo = parseFloat(formFrame.newVersionNo);
+//         versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+//         appendInit(formFrame.content);
+//     }
+// }, function() {});
+//gForm
+var gFormJS = nursing.createGForm();
+//查詢該sourceId和formType下的所有數據
+//     3ab36859ee644ae4b5af77415e618128
+// 8bb330e61d894a30a7d9608dc9c2fc5c
+gFormJS.searchParamGF.sourceIds = ["formTemplate"];
+gFormJS.searchParamGF.formType = "formTemplate";
+gFormJS.searchParamGF.formId = "7135975e30734999b26429ad34cf43eb";
+gFormJS.searchParamGF.beginDate = "2019-6-4 03:16:04";
+gFormJS.searchParamGF.endDate = "2019-09-31";
+// gFormJS.searchParamGF.beginTotalScore = "1";
+// gFormJS.searchParamGF.endTotalScore = "1";
+gFormJS.searchParamGF.beginCreateTime = "2019-01-01";
+gFormJS.searchParamGF.endCreateTime = "2019-09-31";
+gFormJS.searchParamGF.status = "D";
+// gFormJS.searchParamGF.statusArr = ["Y","N"];
+gFormJS.searchParamGF.modifyUserId = "administrator";
+gFormJS.searchParamGF.modifyUserName = "管理员";
+gFormJS.searchParamGF.beginModifyTime = "2019-01-01";
+gFormJS.searchParamGF.endModifyTime = "2019-09-31";
+gFormJS.searchParamGF.beginVersionNo = 0;
+gFormJS.searchParamGF.endVersionNo = 300;
+gFormJS.searchParamGF.itemCondition = "(gfi2.itemkey='ftFormType' AND gfi2.itemvalue = 'mjAdultForm_V3') OR (gfi2.itemkey='ftFormName' AND gfi2.itemvalue = '入院护理评估-成人')";
+gFormJS.searchParamGF.itemConditionHitCounts = 2;
+// gFormJS.getGFormListWithCondition(gFormJS, successCall2, function() {});
+
+//查詢動態表單
+var call2 = false;
+
+function successCall2(result) {
+    if (call2) return;
+    else call2 = true;
+    $("#tableList").find("tr:has(td)").remove();
+    gForms = result;
+    if (window.console) console.log(gForms);
+}
+
+var dynamicFormTemplate = {
+    "formVersionId": "18a510e7-d328-45a7-a895-2ffb4cc9b772",
+    "formName": "AAAA",
+    "formType": "AAAA",
+    "formModel": "AAAA",
+    "hashItems":
+    {
+        "A1":
+        {
+            "controlType": "file",
+            "educationNos": [null],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1-B2",
+            "required": false,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1",
+            "totalScoreType": "total",
+            "fileMode": "fileDefaultMultiple"
+        },
+        "A1-B1":
+        {
+            "controlType": "text",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1",
+            "required": false,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B1",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        }
+    },
+    "highRisk": 0,
+    "peopleCategory": "adult",
+    "version": 0
+};
+
+dynamicFormTemplate.items=[];
+for (var key in dynamicFormTemplate.hashItems) {
+    if (dynamicFormTemplate.hashItems.hasOwnProperty(key)){
+        dynamicFormTemplate.items.push(dynamicFormTemplate.hashItems[key]);
+    }
+}
+console.log(dynamicFormTemplate);
+
+var gForm = {};
+gForm.gformItems=[];
+gForm = gFormJS.setGFormItemMap(gForm);
+console.log(gForm.gformItemMap);
+
+
+createElement(dynamicFormTemplate.hashItems, pageReady);
+
+
+function pageReady(){
+    console.log("Ready GO!!");
+    setElementValue_GForm();
+    $("#A1").val(JSON.stringify([{"fileName":"WS呼叫範例.txt","fileStoreSetId":"b1e3f33e-bf10-41c8-b768-ba7f6ff85eed","id":"b1e3f33e-bf10-41c8-b768-ba7f6ff85eed","states":"Y"},{"fileName":"yes you can.jpg","fileStoreSetId":"7264aabc-9d30-41be-ae09-303ee2443d01","id":"7264aabc-9d30-41be-ae09-303ee2443d01","states":"Y"},{"fileName":"T13.exe","fileStoreSetId":"c088614d-8698-4912-bf53-bdbed6556d9f","id":"c088614d-8698-4912-bf53-bdbed6556d9f","states":"Y"}])).change();
+}
+function aaa() {
+    var form = $('<form method="POST" enctype="multipart/form-data"></form>');
+    form.attr("action", eNursing.serviceUrl.replace(/send\.do/, "fileUpload.do"));
+    form.append($("#content").clone(true));
+    form.append('<input type="text" name="states" value="Y"/>');
+    form.append('<input type="sysModel" name="states" value="'+formType+'"/>');
+    form.append('<input type="text" name="storeType" value="1"/>');
+    form.append('<input type="text" name="gformServiceUrl" value="'+const_gformServiceUrl+'"/>');
+
+    var options = {
+        // beforeSubmit:  showRequest,  // pre-submit callback
+        success:       showResponse  // post-submit callback
+    };
+
+    // bind to the form's submit event
+    form.submit(function() {
+        $(this).ajaxSubmit(options);
+        return false;
+    });
+    form.submit();
+    // pre-submit callback
+    // function showRequest(formData, jqForm, options) {
+    //     return true;
+    // }
+    // post-submit callback
+    function showResponse(responseText, statusText)  {
+        console.log(statusText);
+        console.log(responseText);
+    }
+}
+</script>

@@ -1,0 +1,101 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem externalDataFontFormItem"
+			id=				"font_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem externalDataLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if $data.upload||$data.upload==false}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem externalDataDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem externalDataFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+		<input
+			type=			"hidden"
+			class=			"formItem externalDataFormItem{{if isHor}} isHorFormItem{{/if}}{{if isVer}} isVerFormItem{{/if}} {{$data.uiClass}}"
+			id=				"{{$data.name}}"
+			name=			"{{$data.name}}"
+			autocomplete=	"off"
+			data-title=		"{{$data.title}}"
+			data-bean=		"{{$data.name}}"
+			data-id=		"{{$data.name}}"
+			data-parent=	"{{$data.parent}}"
+			data-required=	"{{$data.required}}"
+			data-prompttips="{{if $data.promptTips==undefined}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+			data-typeformat='{{$data.typeFormat}}'
+			{{if isHor||isVer}}
+				data-upload="false"
+			{{else if $data.upload||$data.upload==false}}
+				data-upload="{{$data.upload}}"
+			{{else}}
+				data-upload="{{$data.show}}"
+			{{/if}}
+			{{if $data.controlMode=="disabled"}}
+				disabled=	"disabled"
+			{{/if}}
+			onchange=		"externalDataFn.showData(this);"
+		>
+		</input>
+		<input
+				type=			"hidden"
+				class=			"oExternalDataTextFormItem"
+				id=				"{{$data.name}}_otherText"
+		/>
+		<button
+				type=			"button"
+				class=			"externalDataButton"
+				id=				"{{$data.name}}_button"
+				data-bean=		"{{$data.name}}"
+				data-id=		"{{$data.name}}"
+				style=			"{{if $data.width!=undefined}}width:{{$data.width}};{{/if}}"
+				onclick=		"externalDataFn.showDivByBtn(this);{{$data.click}}"
+		>
+			{{$data.title}}
+		</button>
+	{{if $data.backTitle}}
+		<label
+			class=			"externalDataBkFormItem"
+			id=				"label_backTitle_{{$data.name}}"
+		>
+		{{$data.backTitle}}
+		</label>
+	{{/if}}
+		<div
+				class=		"externalDataShowDataDiv"
+				id=			"{{$data.name}}_showDataDiv"
+		>
+		</div>
+	</div>
+{{/if}}

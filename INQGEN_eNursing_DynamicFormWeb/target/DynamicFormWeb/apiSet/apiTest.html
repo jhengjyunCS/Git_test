@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>apiTest</title>
+    <link rel="stylesheet" type="text/css" href="../plugins/css/div-table.css?csSvnVersion="/>
+    <script type="text/javascript" src="../js/jquery-1.11.1.min.js?csSvnVersion="></script>
+    <script type="text/javascript" src="../plugins/art-template/template-web.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../plugins/art-template/template-transfer.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../META-JS/properties.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../plugins/modules/apiSet.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion=" id="eInit" defer></script>
+    <style>
+        .td{
+            height: 169px;
+        }
+    </style>
+</head>
+<body style="height: 100%">
+<div style="border-collapse: collapse;">
+    <div style="overflow-y: scroll">
+        <div class="table" style="width: 98%;">
+            <div class="caption">ApiSet 测试页</div>
+            <div class="colgroup">
+                <div class="col" style="width: 16%"></div>
+                <div class="col" style="width: 16%"></div>
+                <div class="col" style="width: 31%"></div>
+                <div class="col" style="width: 31%"></div>
+                <div class="col" style="width: 16%"></div>
+            </div>
+            <div class="thead">
+                <div class="tr">
+                    <div class="th">方法名</div>
+                    <div class="th">方法类型</div>
+                    <div class="th">输入内容</div>
+                    <div class="th">输出内容</div>
+                    <div class="th">操作</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="max-height: 93vh;overflow-y: scroll">
+        <div class="table" style="width: 98%;">
+            <div class="colgroup">
+                <div class="col" style="width: 16%"></div>
+                <div class="col" style="width: 16%"></div>
+                <div class="col" style="width: 31%"></div>
+                <div class="col" style="width: 31%"></div>
+                <div class="col" style="width: 16%"></div>
+            </div>
+            <div class="tbody" id="api-container" style="overflow: auto;">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="api-template">
+    {{each $data api i}}
+    {{if api.output!=null}}
+    <div class="tr">
+        <div class="td">{{api.apiName}}</div>
+        <div class="td">{{api.apiType}}</div>
+        <div class="td">
+            <textarea id="{{i}}-input" style="width: 98%;height: 98%">{{@api.input|jsonFormat}}</textarea>
+        </div>
+        <div class="td">
+            <textarea id="{{i}}-output" style="width: 98%;height: 98%">{{@api.output|jsonFormat}}</textarea>
+        </div>
+        <div class="td">
+            <label><input id="{{i}}-linkLine" type="checkbox" name="linkLine" value="true">连接真实数据</label>
+            <input type="button" value="提交" onclick="submitApi('{{i}}','{{api.apiType}}')">
+        </div>
+    </div>
+    {{/if}}
+    {{/each}}
+</script>
+<script type="text/javascript">
+
+    function submitApi(i,apiType) {
+        var data = JSON.parse($("#" + i + "-input").val());
+        var linkline = $("#" + i + "-linkLine").prop("checked");
+        var param = {
+            /**不同数据*/
+            node: apiType,
+            /**动作*/
+            action: "select",
+
+            linkline:linkline
+        };
+        eNursing.sendMsg(apiType,data,param,"",function (result) {
+            if (result.resultMsg.success) {
+                var data=eNursing.isString(result.data)?JSON.parse(result.data):result.data;
+                $("#" + i + "-output").val(JSON.stringify(data,null,4));
+            } else {
+                errorCall(result.resultMsg);
+            }
+        },errorCall);
+        function errorCall(error) {
+            eNursing.error(error)
+        }
+    }
+    $("#eInit").ready(function () {
+        var apiSet = nursing.getApiSet();
+        apiSet.getApiSetList(apiSet,function (apiSetData) {
+            var render = template.compile($("#api-template").html());
+            var html = render(apiSetData);
+            $("#api-container").html(html)
+        },function (error) {
+            if(console)console.error(error);
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<style>
+    .pageTitle table {
+        width: 100%;
+        border: 1px solid;
+    }
+</style>
+<div class="resultGroup">
+    <div class="pageHeader model">
+        <div class="left">新店耕莘醫院</div>
+        <div class="middle">照會回覆-營養師</div>
+        <div class="right">列印日期:${now.yyyy/MM/dd HH:mm}</div>
+    </div>
+    <div class="pageTitle model">
+        <table class="apiResultTable" data-api-structure="{&quot;apiName&quot;:&quot;CTHgetNoteApplyInfo&quot;,&quot;runMode&quot;:&quot;F&quot;,&quot;sourceId&quot;:&quot;xindian&quot;}">
+            <tbody>
+            <tr class="">
+                <td>
+                    <label>床號</label>
+                </td>
+                <td class="pFormItem" data-bean="bedno">
+                </td>
+                <td>
+                    <label>病歷號</label>
+                </td>
+                <td class="pFormItem" data-bean="patientid">
+                </td>
+                <td>
+                    <label>主治醫師</label>
+                </td>
+                <td class="pFormItem" data-bean="HVDOCNM">
+                </td>
+                <td>
+                    <label>住院科別</label>
+                </td>
+                <td class="pFormItem" data-bean="CURSVCL">
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    <label>姓名</label>
+                </td>
+                <td class="pFormItem" data-bean="patientName">
+                </td>
+                <td>
+                    <label>生日(年齡)</label>
+                </td>
+                <td class="pFormItem" data-bean="birthday">
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <label>住院日期</label>
+                </td>
+                <td class="pFormItem" data-bean="age">
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    <label>申請人員</label>
+                </td>
+                <td class="pFormItem" data-bean="HADMDT">
+                </td>
+                <td>
+                    <label>申請單位</label>
+                </td>
+                <td class="pFormItem" data-bean="inDays">
+                </td>
+                <td>
+                    <label>申請時間</label>
+                </td>
+                <td class="pFormItem" data-bean="noteUser">
+                </td>
+                <td>
+                    <label>照會團隊</label>
+                </td>
+                <td class="pFormItem" data-bean="stationid">
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    <label>照會原因</label>
+                </td>
+                <td class="pFormItem" data-bean="noteTime">
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pageFooter model">
+        <div class="left"></div>
+        <div class="middle"></div>
+        <div class="right">第${page.count}頁，共${page.total}頁</div>
+    </div>
+    <table class="resultTable" data-search-param-g-f="{&quot;formType&quot;:&quot;CTHNoteReplySocialWorker&quot;, &quot;sourceId&quot;:&quot;eval:sourceId&quot;}">
+        <thead>
+        <!-- 設定每個tbody>td可容納幾個中文字(僅允許一格為空) -->
+        <tr class="trWordCountSetting">
+            <td data-word-count="5">&nbsp;</td>
+            <td data-word-count="5">&nbsp;</td>
+            <td data-word-count="12">&nbsp;</td>
+            <td data-word-count="6">&nbsp;</td>
+            <td data-word-count="4">&nbsp;</td>
+            <td data-word-count="4">&nbsp;</td>
+            <td data-word-count="6">&nbsp;</td>
+            <td data-word-count="4">&nbsp;</td>
+            <td data-word-count="4">&nbsp;</td>
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        </tbody>
+    </table>
+</div>
+
+<script class="resultTableTemplate" type="text/html">
+    {{if $data.length==0}}
+    <tr>
+        <td class="text-center" colspan="10">查無資料...</td>
+    </tr>
+    {{else}}
+    {{each $data gForms idx}}
+    {{set gForm=gForms.gForm}}
+    <tr class="trReplyMsg">
+        <td class="">回覆時間</td>
+        <td class="pFormItem" colspan="2" data-bean="replyTime" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+        <td class="">是否收案</td>
+        <td class="pFormItem" colspan="2" data-bean="RECLIST" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+        <td class="">回覆人員</td>
+        <td class="pFormItem" colspan="3" data-bean="REUSERNAME" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanBottom"></td>
+        <td class="rowspanBottom"></td>
+        <td class="middleBorderHide">社會資源諮詢</td>
+        <td class="pFormItem" colspan="7" data-bean="SocietyP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">經濟問題</td>
+        <td class="pFormItem" colspan="7" data-bean="EconomyP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">情緒問題</td>
+        <td class="pFormItem" colspan="7" data-bean="MoodP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom">問題評估</td>
+        <td class="middleBorderHide">家庭問題</td>
+        <td class="pFormItem" colspan="7" data-bean="FamilyP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">適應問題</td>
+        <td class="pFormItem" colspan="7" data-bean="AdaptP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">醫療合作及醫病關係問題</td>
+        <td class="pFormItem" colspan="7" data-bean="MedicalP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom">照會回覆</td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">住院/出院照顧問題</td>
+        <td class="pFormItem" colspan="7" data-bean="HospitalP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop"></td>
+        <td class="middleBorderHide">特殊個案</td>
+        <td class="pFormItem" colspan="7" data-bean="SpecialP" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+
+
+
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanBottom"></td>
+        <td class="middleBorderHide">提供病人/家屬個別輔導</td>
+        <td class="pFormItem" colspan="7" data-bean="Counseling" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">強化病人及家庭功能</td>
+        <td class="pFormItem" colspan="7" data-bean="Function" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom">處遇計畫</td>
+        <td class="middleBorderHide">提供及協調社會資源</td>
+        <td class="pFormItem" colspan="7" data-bean="Community" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">經濟評估與輔助</td>
+        <td class="pFormItem" colspan="7" data-bean="Economy" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="rowspanTop rowspanBottom"></td>
+        <td class="middleBorderHide">增進醫護病溝通</td>
+        <td class="pFormItem" colspan="7" data-bean="Communication" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    <tr class="">
+        <td class="rowspanTop"></td>
+        <td class="rowspanTop"></td>
+        <td class="middleBorderHide">出院準備協助</td>
+        <td class="pFormItem" colspan="7" data-bean="Discharge" data-index="{{gForm.idx}}" data-formversionid="{{gForm.formVersionId}}"></td>
+    </tr>
+    {{/each}}
+    {{/if}}
+</script>

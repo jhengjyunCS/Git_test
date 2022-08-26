@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定磐api設計工具 (csApiDefinder)</title>
+    <link rel="icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-4.6.0-dist/css/bootstrap.min.css?csSvnVersion=">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-4.6.0-dist/css/bstreeview.min.css?csSvnVersion=">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-icons/font/bootstrap-icons_forCanvas.css?csSvnVersion=">
+    <link rel="stylesheet" href="css/form.css?csSvnVersion=">
+    <link rel="stylesheet" href="css/iFrameTestAPI.css?csSvnVersion=">
+    <!-- 基礎參數設定 -->
+    <script src="../../../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../../js2/jquery.js?csSvnVersion="></script>
+    <script src="js/formFile.js?csSvnVersion="></script>
+    <!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+    <script src="../../../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/apiModule.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+    <script src="../../../customFormV3/js2/base64.js?csSvnVersion="></script>
+    <script src="../../../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../../../customFormV3/js/common.js?csSvnVersion="></script>
+    <!-- codemirror 文字編輯器 -->
+    <script src="../codemirror-5.57.0/lib/codemirror.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="../codemirror-5.57.0/lib/codemirror.css?csSvnVersion=">
+    <link rel="stylesheet" href="../codemirror-5.57.0/theme/monokai.css?csSvnVersion=">
+    <script src="../codemirror-5.57.0/mode/javascript/javascript.js?csSvnVersion="></script>
+    <script src="../codemirror-5.57.0/mode/htmlmixed/htmlmixed.js?csSvnVersion="></script>
+    <script src="../codemirror-5.57.0/mode/xml/xml.js?csSvnVersion="></script>
+    <script src="../codemirror-5.57.0/mode/css/css.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="../jsonViewer/jquery.json-viewer.css">
+    <script src="../jsonViewer/jquery.json-viewer.js"></script>
+    <script src="../jsonViewer/jquery.json-editor.js"></script>
+    <!-- testAPI -->
+    <script src="js/testAPI.js?csSvnVersion="></script>
+</head>
+<body>
+<div id="funcBar">
+    <button class="btn btn-success" type="button" onclick="testApi.resetAll()">重新設定</button>
+    <button class="btn btn-success" type="button" onclick="testApi.testAll()">全部執行</button>
+</div>
+<div id="showPage" class="scrollbar-black square">
+    <div class="row stepRow" id="step01" title="設定api物件" title="設定api物件">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="txt_apiModule">apiModule物件</label>
+            <textarea id="txt_apiModule" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step02" title="設定網址">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-12 listParam">
+            <div class="divParam">
+                <label class="h5 paramTitle">調用api方式(sendMethod)：</label>
+                <label class="h5 paramTitle" id="sendMethod">httpJson</label>
+            </div>
+        </div>
+        <div class="col-12 listParam">
+            <div class="divParam">
+                <label class="h5 paramTitle">domain</label>
+                <div class="paramValue" id="domain" title="domain"></div>
+            </div>
+            <div class="divParam">
+                <label class="h5 paramTitle">url</label>
+                <div class="paramValue" id="url" title="url"></div>
+            </div>
+        </div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_connectUrl">api位址</label>
+            <textarea id="tx_connectUrl" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step03-1" title="設定傳入參數">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-12 listParam" id="divSendParam">
+            <div class="divParam">
+                <label class="h5 paramTitle">formId</label>
+                <button class="paramBtn">local</button>
+                <div class="paramValue" id="formId"></div>
+            </div>
+            <div class="divParam">
+                <label class="h5 paramTitle">userId</label>
+                <div class="paramValue" id="userId"></div>
+            </div>
+            <div class="divParam">
+                <label class="h5 paramTitle">userName</label>
+                <div class="paramValue" id="userName"></div>
+            </div>
+        </div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_sendData1">ajax-data 傳入參數</label>
+            <textarea id="tx_sendData1" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step03-2" title="轉換傳入參數值">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_sendData2">ajax-data 傳入參數 (轉換後)</label>
+            <textarea id="tx_sendData2" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step03-3" title="傳入參數前處理">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 d-flex flex-column drawPage scrollbar-black square show" id="drawPagePreProcessing_send" style="padding: 10px 15px 0 15px;">
+            <div class="row preProcessingTitle">
+                <div class="col-2 bg-dark" style="border-right: white 1px solid;"><label class="h5 text-light">順序</label></div>
+                <div class="col-10 bg-dark"><label class="h5 text-light">方法</label></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2 idx">1</div>
+                <div class="col-10">
+                    <select class="processing custom-select custom-select-lg mb-3"
+                            onchange="formFile.changeProcessing(this, 'drawPagePreProcessing_send')">
+                        <option value="">請選擇</option>
+                        <option value="base64 decode">反解base64 - base64 decode</option>
+                        <option value="url decode">反解url編碼 - url decode</option>
+                        <option value="String to JSON">字串 to JSON - String to JSON</option>
+                        <option value="base64 encode">base64編碼 - base64 encode</option>
+                        <option value="url encode">url編碼 - url encode</option>
+                        <option value="JSON to String">JSON to 字串 - JSON to String</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_sendData3">ajax-data 傳入參數 (前處理)</label>
+            <textarea id="tx_sendData3" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step04" title="connect執行api">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-12 listParam" id="divConnectParam">
+            <div class="divParam">
+                <label class="h5 paramTitle">來源資料原始格式</label>
+                <select class="custom-select custom-select-lg mb-3" id="orgResultType">
+                    <option value="string">字串</option>
+                    <option value="json">json/陣列</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_result1">result回傳結果</label>
+            <textarea id="tx_result1" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step05" title="轉出資料前處理">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 d-flex flex-column drawPage scrollbar-black square show" id="drawPagePreProcessing_receive" style="padding: 10px 15px 0 15px;">
+            <div class="row preProcessingTitle">
+                <div class="col-2 bg-dark" style="border-right: white 1px solid;"><label class="h5 text-light">順序</label></div>
+                <div class="col-10 bg-dark"><label class="h5 text-light">方法</label></div>
+            </div>
+
+            <div class="row">
+                <div class="col-2 idx">1</div>
+                <div class="col-10">
+                    <select class="processing custom-select custom-select-lg mb-3"
+                            onchange="formFile.changeProcessing(this, 'drawPagePreProcessing_receive')">
+                        <option value="">請選擇</option>
+                        <option value="base64 decode">反解base64 - base64 decode</option>
+                        <option value="url decode">反解url編碼 - url decode</option>
+                        <option value="String to JSON">字串 to JSON - String to JSON</option>
+                        <option value="base64 encode">base64編碼 - base64 encode</option>
+                        <option value="url encode">url編碼 - url encode</option>
+                        <option value="JSON to String">JSON to 字串 - JSON to String</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_result2">處理後結果</label>
+            <textarea id="tx_result2" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step06" title="取得檢核位置資訊">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_targetCheck">檢核位置資訊</label>
+            <textarea id="tx_targetCheck" class="codeMirror" style="display: none"></textarea>
+        </div>
+    </div>
+    <div class="row stepRow" id="step07" title="檢核api成功與否">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_resultMsg">檢核結果</label>
+            <textarea id="tx_resultMsg" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12">
+            <label class="h5">檢核結果：</label>
+            <label class="h5 resultMsgAnswer" id="resultMsgAnswer"></label>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+    <div class="row stepRow" id="step08" title="取得bean註冊資訊">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_dataMapping">bean & mapping 資訊</label>
+            <textarea id="tx_dataMapping" class="codeMirror" style="display: none"></textarea>
+        </div>
+    </div>
+    <div class="row stepRow" id="step09" title="取得資料">
+        <div class="col-12 divEmpty"></div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_rs">執行beanMapping後的資料</label>
+            <textarea id="tx_rs" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-10 divCodeMirror">
+            <label class="h5 codeMirrorTitle" title="tx_rsGform">轉gForm結構</label>
+            <textarea id="tx_rsGform" class="codeMirror" style="display: none"></textarea>
+        </div>
+        <div class="col-12 divRun">
+            <button class="btn btn-secondary" type="button" onclick="testApi.testUnit(this)">單元測試</button>
+            <button class="btn btn-success" type="button" onclick="testApi.testUntil(this)">執行至此</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

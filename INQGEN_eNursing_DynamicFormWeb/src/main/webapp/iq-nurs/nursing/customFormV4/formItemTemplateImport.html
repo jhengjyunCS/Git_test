@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes"/>
+    <META http-equiv="Expires" content="Mon, 26 Jul 1997 05:00:00 GMT">
+    <META http-equiv="Last-Modified" content="Sat, 10 Nov 1997 09:08:07 GMT">
+    <META http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <META http-equiv="Pragma" content="no-cache">
+    <title></title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/jquery.form.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/common.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/bootstrap.js?csSvnVersion=" id="bootstrap_js" class="defult_UI"></script>
+    <script src="../customFormV3/js2/datetimepicker/bootstrap-datetimepicker.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js?csSvnVersion="></script>
+
+    <script src="js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="js/includeFootJsWeb.js?csSvnVersion="></script>
+    <!--Add特有區段 start-->
+    <script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+    <!--Add特有程式 start-->
+    <!--資料導入工具包 end-->
+    <script src="../customFormV3/js2/xlsx.core.min.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/import.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap.min.css?csSvnVersion=">
+    <!--資料導入工具包 end-->
+    <style>
+        * {
+            font-family: Microsoft JhengHei;
+        }
+
+        .imp-rejectTable {
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .imp-rejectTable td, .imp-rejectTable th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+
+        .imp-rejectTable thead th {
+            background-color: #CCE8EB;
+            width: 200px;
+        }
+
+        .imp-rejectTable tr:nth-child(odd) {
+            background: #fff;
+        }
+
+        .imp-rejectTable tr:nth-child(even) {
+            background: #F5FAFA;
+        }
+
+        .formNameBlock, .formTypeBlock {
+            display: none !important;
+        }
+
+        .formNameBlock.active, .formTypeBlock.active {
+            display: inline-table !important;
+        }
+
+        #impFormName, #impFormType {
+            cursor: pointer;
+        }
+
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        li {
+            line-height: 2.5;
+        }
+
+        .padTB {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 padTB">
+            <p id="headerTitle">XML表單(gForm)導入頁面...</p>
+        </div>
+        <div class="col-md-8 form-inline padTB">
+            <div class="form-group" style="display: none;">
+                <input type="text" class="form-control" id="impFileEle" data-bean="impFileEle" data-id="impFileEle">
+            </div>
+            <div class="form-group file-group">
+                <label for="file_impFileEle">Excel檔案:</label>
+                <input type="file" class="fileFormItem" id="file_impFileEle" style="display: inline-block">
+            </div>
+            <div class="form-group">
+                <label for="styling">樣式選擇:</label>
+                <select class="form-control" id="styling" onchange="changeSystem(this)">
+                    <option value="CICMS">北榮樣式</option>
+                    <option value="CICMS_NIS_">nis樣式</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label onclick="changePrint(this);">
+                    <input type="checkbox" name="onlyPrint" id="onlyPrint">
+                    <span style="color: red">不刪檔產生列印頁</span>
+                </label>
+            </div>
+            <input type="button" class="btn btn-success fileBtnFormItem" id="fileBtn_impFileEle"
+                   onclick="impTool.tpl.importData(document.getElementById('file_impFileEle'));" value="開始導入">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 container">
+            <ul>
+                <li class="form-group form-inline">
+                    <label for="inputFrameName">formName：</label>
+                    <span id="impFormName" style="color: #8373FA"></span>
+                    <div class="input-group formNameBlock">
+                        <input type="text" class="form-control" id="inputFrameName">
+                        <div class="input-group-addon btn btn-success" onclick="save(this);">o</div>
+                        <div class="input-group-addon btn btn-danger" onclick="noSave(this);">x</div>
+                    </div>
+                </li>
+                <li class="form-group form-inline">
+                    <label for="inputFormType">formType：</label>
+                    <span id="impFormType" style="color: #8373FA"></span>
+                    <div class="input-group formTypeBlock">
+                        <input type="text" class="form-control" id="inputFormType">
+                        <div class="input-group-addon btn btn-success" onclick="save(this);">o</div>
+                        <div class="input-group-addon btn btn-danger" onclick="noSave(this);">x</div>
+                    </div>
+                </li>
+                <li class="form-group">
+                    <label>sourceId：</label>
+                    <span id="impSourceId" style="color: #8373FA"></span>
+                </li>
+                <li class="form-group">
+                    <label>userId：</label>
+                    <span id="impUserId" style="color: #8373FA"></span>
+                </li>
+                <li class="form-group">
+                    <label>userName：</label>
+                    <span id="impUserName" style="color: #8373FA"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="fileDivFormItem" id="fileDiv_impFileEle"></div>
+            <label style="background-color: #F16B6B; padding: 3px;">導入動作：</label>
+            <span style="padding: 3px;">
+					刪除舊元件→導入新元件(gForm)→產生formVersion(XML)→產生frame(LIST)→產生frame(UPD)→產生frame(ADD)→完成
+                </span>
+            <br/>
+            <span>
+					模板路徑 (iq-nurs/nursing/customFormV3/template/dynamicTools/) ↓↓
+				</span>
+            <br/>
+            <div class="container-flur">
+                <div class="form-horizontal row module list_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="listbox" name="framebox" value="1" checked> LIST模板:
+                        </label>
+                        <label for="list_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="list_frameName" class="form-control" type="text"
+                                   value="gFormCICMSWebLIST_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="list_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="list_initName" class="form-control" type="text"
+                                   value="gFormCICMSWebLIST_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal row module upd_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="updbox" name="framebox" value="2" checked> UPD模板:
+                        </label>
+                        <label for="upd_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="upd_frameName" class="form-control" type="text"
+                                   value="gFormCICMSWebUPD_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="upd_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="upd_initName" class="form-control" type="text"
+                                   value="gFormCICMSWebUPD_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal row module add_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="addbox" name="framebox" value="4" checked> ADD模板:
+                        </label>
+                        <label for="add_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="add_frameName" class="form-control" type="text"
+                                   value="gFormCICMSWebADD_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="add_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="add_initName" class="form-control" type="text"
+                                   value="gFormCICMSWebADD_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal row module print_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="printbox" name="framebox" value="8" checked> 打印模板:
+                        </label>
+                        <label for="print_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="print_frameName" class="form-control" type="text"
+                                   value="gFormCICMSWebPRINT_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="print_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="print_initName" class="form-control" type="text"
+                                   value="gFormCICMSWebPRINT_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-horizontal row module print_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="appAddbox" name="framebox" value="16" checked>appADD模板:
+                        </label>
+                        <label for="appAdd_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="appAdd_frameName" class="form-control" type="text"
+                                   value="gFormCICMSAppAdd_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="appAdd_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="appAdd_initName" class="form-control" type="text"
+                                   value="gFormCICMSAppAdd_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal row module print_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="appUpdbox" name="framebox" value="32" checked>appUPD模板:
+                        </label>
+                        <label for="appUpd_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="appUpd_frameName" class="form-control" type="text"
+                                   value="gFormCICMSAppUpd_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="appUpd_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="appUpd_initName" class="form-control" type="text"
+                                   value="gFormCICMSAppUpd_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-horizontal row module print_module active">
+                    <div class="form-group col-md-6 row">
+                        <label class="col-sm-2 control-label checkbox-inline">
+                            <input type="checkbox" id="appListbox" name="framebox" value="64" checked> APPLIST模板:
+                        </label>
+                        <label for="appList_frameName" class="col-sm-1 control-label">frame</label>
+                        <div class="col-sm-9">
+                            <input id="appList_frameName" class="form-control" type="text"
+                                   value="gFormCICMSAppList_Frame_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 row">
+                        <label for="appList_initName" class="col-sm-1 control-label">init</label>
+                        <div class="col-sm-11">
+                            <input id="appList_initName" class="form-control" type="text"
+                                   value="gFormCICMSAppList_INIT_autoCreate_v1.html"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="progress fade">
+        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+             aria-valuemax="100" style="width: 0%; color: blue; font-weight: bold;">
+            0%
+        </div>
+    </div>
+    <label style="background-color: #F16B6B; padding: 3px;">導入狀態：</label>
+    <label style="padding: 3px;" id="importStatus">...</label>
+</div>
+<div id="impTool_tpl_msg"></div>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/DateTime.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/checkObjectFormat.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/user.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/station.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/patient.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/test.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/forwardNull.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/process.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script>
+    var checkObjectFormat = nursing.createCheckObjectFormat();
+
+    // eNursing.sendMsg=eNursing.sendMsgWS; //把WebSocket接口改為WebService接口，IE9以下不支援WebSocket
+
+    //取得多層變數 multiLevel
+    // var multiLevel = nursing.createGForm().getUrlSessionToJson().multiLevel;
+    //設定Title
+    var headerTitle = window.localStorage["import_headerTitle"];
+    //設定此form的beanName
+    var formType = "formItemTemplate"; //window.localStorage["import_formType"+multiLevel];
+    //設定此form的sourceId
+    var sourceId = window.localStorage["import_sourceId"];
+    //登入者ID
+    var userId = window.localStorage["gForm_userId"];
+    //登入者姓名
+    var userName = window.localStorage["gForm_userName"];
+    //基础参数
+    var basicParam = nursing.getBasicParam();
+    //動態表單
+    var dynamicForm = nursing.getDynamicForm();
+    //gForm
+    var gFormJS = nursing.createGForm();
+    //當前頁面狀態
+    var thisPageStatus = "formItemTemplateImport";
+    //activeFrame
+    var activity = 127;
+    //binaryActivity
+    var bActivity = "1111111";
+
+    // $("#headerTitle").html(headerTitle);
+    var impFormType = headerTitle.split("(");
+    $("#impFormName").text(impFormType[0]);
+    $("#impFormType").text(impFormType[impFormType.length - 1].split(")")[0]);
+    $("#impSourceId").text(sourceId);
+    $("#impUserId").text(userId);
+    $("#impUserName").text(userName);
+
+
+    // $("#impFileEle").val(JSON.stringify([{"fileName":"WS呼叫範例.txt","fileStoreSetId":"b1e3f33e-bf10-41c8-b768-ba7f6ff85eed","id":"b1e3f33e-bf10-41c8-b768-ba7f6ff85eed","states":"Y"},{"fileName":"yes you can.jpg","fileStoreSetId":"7264aabc-9d30-41be-ae09-303ee2443d01","id":"7264aabc-9d30-41be-ae09-303ee2443d01","states":"Y"},{"fileName":"T13.exe","fileStoreSetId":"c088614d-8698-4912-bf53-bdbed6556d9f","id":"c088614d-8698-4912-bf53-bdbed6556d9f","states":"Y"}]));
+    fileTool.fileDefaultMultiple_show("impFileEle");
+
+    var $addFrameName = $("#add_frameName");
+    var addFrameUrl = $addFrameName.val();
+    var $addInitName = $("#add_initName");
+    var addInitUrl = $addInitName.val();
+    var $updFrameName = $("#upd_frameName");
+    var updFrameUrl = $updFrameName.val();
+    var $updInitName = $("#upd_initName");
+    var updInitUrl = $updInitName.val();
+    var $listFrameName = $("#list_frameName");
+    var listFrameUrl = $listFrameName.val();
+    var $listInitName = $("#list_initName");
+    var listInitUrl = $listInitName.val();
+    var $printFrameName = $("#print_frameName");
+    var printFrameUrl = $printFrameName.val();
+    var $printInitName = $("#print_initName");
+    var printInitUrl = $printInitName.val();
+
+    var $appAddFrameNamee = $("#appAdd_frameName");
+    var appAddFrameUrl = $appAddFrameNamee.val();
+    var $appAddInitName = $("#appAdd_initName");
+    var appAddInitUrl = $appAddInitName.val();
+    var $appUpdFrameName = $("#appUpd_frameName");
+    var appUpdFrameUrl = $appUpdFrameName.val();
+    var $appUpdInitName = $("#appUpd_initName");
+    var appUpdInitUrl = $appUpdInitName.val();
+
+    $(document).ready(function () {
+        $('input[name="framebox"]').click(function () {
+            var chk = $(this).prop('checked');
+            var val = $(this).val();
+            if (chk) {
+                activity += val - 0;
+            } else {
+                activity -= val - 0;
+            }
+            bActivity = activity.toString(2);
+            for (var i=7, len=bActivity.length; i>len; --i){
+                bActivity = "0"+bActivity;
+            }
+            console.log(bActivity);
+        });
+
+        $('#impFormName').dblclick(function () {
+            var txt = $(this).text();
+            $('.formNameBlock').addClass('active');
+            $('.formNameBlock').find('input').val(txt.trim());
+            $(this).hide();
+        });
+
+        $('#impFormType').dblclick(function () {
+            var txt = $(this).text();
+            $('.formTypeBlock').addClass('active');
+            $('.formTypeBlock').find('input').val(txt.trim());
+            $(this).hide();
+        });
+    });
+
+    function save(that) {
+        var tar = $(that).parent().find('input').val();
+        $(that).parent().parent().find('span').text(tar).show();
+        $(that).parent().removeClass('active');
+    }
+
+    function noSave(that) {
+        $(that).parent().parent().find('span').show();
+        $(that).parent().removeClass('active');
+    }
+
+    function changeSystem(tar) {
+        $addFrameName.val(addFrameUrl.replace("CICMS", tar.value));
+        $addInitName.val(addInitUrl.replace("CICMS", tar.value));
+        $updFrameName.val(updFrameUrl.replace("CICMS", tar.value));
+        $updInitName.val(updInitUrl.replace("CICMS", tar.value));
+        $listFrameName.val(listFrameUrl.replace("CICMS", tar.value));
+        $listInitName.val(listInitUrl.replace("CICMS", tar.value));
+        $printFrameName.val(printFrameUrl.replace("CICMS", tar.value));
+        $printInitName.val(printInitUrl.replace("CICMS", tar.value));
+    }
+
+    function changePrint(that) {
+        var chk = $(that).find('input').prop('checked');
+        $('input[name="framebox"]').each(function (index) {
+            var chk2 = $(this).prop('checked');
+            if (chk && chk2) {
+                if (index !== 3) {
+                    $(this).click();
+                }
+            } else if (chk && !chk2) {
+                if (index === 3) {
+                    $(this).click();
+                }
+            } else if (!chk && !chk2) {
+                $(this).click();
+            }
+        });
+        if (chk) {
+            $('.file-group').hide();
+        } else {
+            $('.file-group').show();
+        }
+    }
+
+</script>

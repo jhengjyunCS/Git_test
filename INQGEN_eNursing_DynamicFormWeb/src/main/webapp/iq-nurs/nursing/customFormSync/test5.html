@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap-datetimepicker.css?csSvnVersion=">
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap.min.css?csSvnVersion=">
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap-reset.css?csSvnVersion=">
+
+    <script src="../customFormV3/js2/bootstrap.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/bootstrap-datetimepicker.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+</head>
+
+<body>
+    mbnisAPI測試頁...
+    <input type="button" value="顯示儲存物件" onclick="console.log(dynamicFormSave_getItems(this));console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[2].itemValue))"/>
+    <p class="pFormItem" data-bean="rdo" data-uiDescItem="1,2,6" data-rules='{"rulesA":[{"bean":"C","evt":"show","uiValue":"1","operator":"||","parent":""},{"bean":"B","evt":"show","uiValue":"2,5","operator":"||","parent":""},{"bean":"A","evt":"show","uiValue":"1,5","operator":"&&","parent":""}]}'></p>
+    <p class="pFormItem" data-bean="rdo" data-uiDescItem="3,4,5" data-rules='{"rulesA":[{"bean":"C","evt":"show","uiValue":"1","operator":"||","parent":""},{"bean":"B","evt":"show","uiValue":"2,5","operator":"||","parent":""},{"bean":"A","evt":"show","uiValue":"1,5","operator":"&&","parent":""}]}'></p>
+    <p class="pFormItem" data-bean="chk" data-uiDescItem="1,2,6" data-rules='{"rulesA":[{"bean":"C","evt":"show","uiValue":"1","operator":"||","parent":""},{"bean":"B","evt":"show","uiValue":"2,5","operator":"||","parent":""},{"bean":"A","evt":"show","uiValue":"1,5","operator":"&&","parent":""}]}'></p>
+    <p class="pFormItem" data-bean="chk" data-uiDescItem="3,4,5" data-rules='{"rulesA":[{"bean":"C","evt":"show","uiValue":"1","operator":"||","parent":""},{"bean":"B","evt":"show","uiValue":"2,5","operator":"||","parent":""},{"bean":"A","evt":"show","uiValue":"1,5","operator":"&&","parent":""}]}'></p>
+    <div>
+        <p class="pFormItem" data-bean="Birthday"></p>
+        <p class="pFormItem" data-bean="A" data-show="false"></p>
+        <p class="pFormItem" data-bean="B" data-show="false" data-controltype="checkbox" data-uidesc="1,2" data-uiValue="1,2"></p>
+        <p class="pFormItem" data-bean="C" data-show="false"></p>
+        <p class="pFormItem" data-bean="D" data-show="false"></p>
+        <p class="pFormItem" data-bean="E" data-show="false"></p>
+    </div>
+    <!-- <p class="pFormItem" data-bean="A-B3"></p> -->
+    <label>
+    </label>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/DateTime.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/user.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/station.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/patient.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/test.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/forwardNull.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/process.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+dynamicForm.searchParamDF.formType = "PDR1";
+dynamicForm.searchParamDF.frameModel = "xxxx";
+var gFormJS = nursing.createGForm();
+var dynamicFormTemplate = {"formVersionId":"089ad061-2203-482e-8da1-accfe6aa22c0","formName":"test","formType":"test","formModel":"test","items":[{"controlType":"date","dontDitto":false,"typeFormat":"{\"date\":{\"format\":\"yyyy-mm-dd\",\"weekStart\":1,\"todayBtn\":1,\"autoclose\":0,\"todayHighlight\":1,\"startView\":2,\"minView\":2,\"forceParse\":0,\"language\":\"zh-TW\"}}","educationNos":[null],"hasOther":[false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Birthday","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"promptTips":"请输入出生年","required":true,"show":true,"showTitle":false,"textSize":8,"title":"出生日期","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"radio","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"rdo","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"rdo","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},{"controlType":"checkbox","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"chk","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"chk","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"A","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"A","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"B","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"B","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"C","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"C","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"D","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"D","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"E","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"E","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]}],"hashItems":{"Birthday":{"controlType":"date","dontDitto":false,"typeFormat":"{\"date\":{\"format\":\"yyyy-mm-dd\",\"weekStart\":1,\"todayBtn\":1,\"autoclose\":0,\"todayHighlight\":1,\"startView\":2,\"minView\":2,\"forceParse\":0,\"language\":\"zh-TW\"}}","educationNos":[null],"hasOther":[false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Birthday","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"promptTips":"请输入出生年","required":true,"show":true,"showTitle":false,"textSize":8,"title":"出生日期","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"D":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"D","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"D","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"rdo":{"controlType":"radio","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"rdo","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"rdo","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},"E":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"E","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"E","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"chk":{"controlType":"checkbox","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"chk","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"chk","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},"A":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"A","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"A","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"B":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"B","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"B","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"C":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"C","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"C","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]}},"highRisk":0,"peopleCategory":"adult","version":0};
+
+console.log(dynamicFormTemplate);
+
+var gForm = {};
+gForm.gformItems=[];
+gForm = gFormJS.setGFormItemMap(gForm);
+console.log(gForm.gformItemMap);
+
+
+createElement(dynamicFormTemplate.hashItems, pageReady);
+
+
+function pageReady(){
+    console.log("Ready GO!!");
+    setElementValue_GForm();
+}
+
+
+
+
+
+//物件的驗證規則表
+var viryRules = [];
+//物件的驗證規則表索引 (ifs: 觸發條件, events: 驗證規則)
+var viryRules_idx = {"ifs":{},"events":{}};
+//物件的驗證規則表_元件value表
+var viryRules_val = {};
+viryRules.push({
+    "ifs" : [
+        // {
+        //     "datatype": "checked",  //number / string /checked
+        //     "bean" : "chk",
+        //     "uiValue" : ["1","2","4"],
+        //     "operator": "&&",
+        // },
+        // {
+        //     "datatype": "checked",
+        //     "bean" : "chk",
+        //     "uiValue" : ["1","2","5"],
+        //     "operator": "&&",
+        // },
+        // {
+        //     "datatype": "string",
+        //     "bean" : "rdo",
+        //     "min": "1",
+        //     "max": "1",
+        // }
+    ],
+    // "tar" : ["C","B","A"],
+    // "evt" : ["show","hide","show"],
+    "operator": "||",
+    "events" : [
+        {
+            "tar" : "Birthday",
+            "ifs" : [
+                // {
+                //     "checktype" : "string",      //string, number, int, regex, function, array, eval
+                //     // "condition": "checked",   //regex
+                //     "min": "2019-01-01",         //string, number
+                //     "max": "2019-10-24"          //string, number
+                // },
+                {
+                    "checktype" : "function",      //string, number, int, regex, function, array, eval
+                    "condition": "checkTwID",   //function
+                },
+                // {
+                //     "checktype" : "regex",       //string, number, int, regex, function, array, eval
+                //     "condition": "/\d/g",        //regex
+                // },
+                // {
+                //     "checktype" : "regex",       //string, number, int, regex, function, array, eval
+                //     "condition": "1,2,3,4,99",        //array
+                // },
+                // {
+                //     "checktype" : "number",      //string, number, int, regex, function, array, eval
+                //     "min": "",               //number
+                //     "max": "2018-12-31"          //string, number
+                // }
+            ],
+            "operator": "||",
+            "evts" : [
+                {
+                    "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+                    "hint" : "數字應\"介於100~300\"之間"                  //提示訊息
+                },
+                {
+                    "mode" : "cgcolor",          //改變顏色
+                    "bgColor" : "#A33",       //條件成立-改變背景顏色
+                    "fontColor" : "#FFF",      //條件成立-改字體景顏色
+                    "runMode" : "auto"       //執行模式(auto [true時執行, false時逆執行] / onlyTrue [僅在true時執行] / onlyFalse [僅在false時執行])
+                },
+                // {
+                //     "mode" : "eval",          //調用函數
+                //     "eval_true" : "console.log(true);",  //條件成立
+                //     "eval_false" : "console.log(false);" //條件不成立
+                // }
+            ],
+            "eval_true" : "",
+            "eval_false" : ""
+        }
+        // ,{
+        //     "tar" : "Birthday",
+        //     "ifs" : [
+        //         {
+        //             "checktype" : "string",      //string, number, int, regex, function, array, eval
+        //             // "condition": "checked",   //regex
+        //             "min": "",         //string, number
+        //             "max": "2018-12-31"          //string, number
+        //         }
+        //     ],
+        //     "operator": "||",
+        //     "evts" : [
+        //         {
+        //             "mode" : "cgcolor",          //改變顏色
+        //             "bgColor" : "",       //條件成立-改變背景顏色
+        //             "fontColor" : "",      //條件成立-改字體景顏色
+        //             "runMode" : "auto"       //執行模式(auto [true時執行, false時逆執行] / onlyTrue [僅在true時執行] / onlyFalse [僅在false時執行])
+        //         }
+        //     ],
+        //    "eval_true" : "",
+        //    "eval_false" : ""
+        // }
+    ]
+});
+
+function abc(b){
+    alert(b);
+}
+
+/*
+//建置物件的驗證規則表索引
+ruleTools.viryRules_compiler=function(){
+    viryRules_idx = {"ifs":{},"events":{}};
+    viryRules_val = {};
+    console.log("=======viryRules========");
+    console.log(viryRules);
+    for (var i = 0, len = viryRules.length; i<len; ++i){
+        var vifs = viryRules[i].ifs;
+        for (var i2 = 0, len2 = vifs.length; i2<len2; ++i2){
+            var bean = vifs[i2].bean;
+            if (viryRules_idx.ifs[bean]==undefined){
+                viryRules_idx.ifs[bean] = [];
+                viryRules_val[bean] = [];
+            }
+            if (viryRules_idx.ifs[bean].indexOf(i)<0){
+                viryRules_idx.ifs[bean].push(i);
+            }
+        }
+        var events = viryRules[i].events;
+        for (var i3 = 0, len3 = events.length; i3<len3; ++i3){
+            var tar = events[i3].tar;
+            if (viryRules_idx.events[tar]==undefined){
+                viryRules_idx.events[tar] = [];
+            }
+            if (viryRules_idx.events[tar].indexOf(i)<0){
+                viryRules_idx.events[tar].push(i);
+            }
+        }
+    }
+    console.log("=======viryRules_idx========");
+    console.log(viryRules_idx);
+    console.log("=======viryRules_val========");
+    console.log(viryRules_val);
+};
+*/
+ruleTools.viryRules_compiler();
+/*
+//選A,B,C...驗證D  完整版
+ruleTools.viryElement=function(that){
+    //查詢規則表索引
+    var idxs = [];
+    var idxs_if = viryRules_idx.ifs[getDataset(that).bean];
+    var idxs_events = viryRules_idx.events[getDataset(that).bean];
+    if (!idxs_if && !idxs_events){
+        //console.log("查無規則表索引: viryRules_idx.ifs["+getDataset(that).bean+"]");
+        return false;
+    }else if (idxs_if){
+        idxs = idxs_if;
+        //抄寫元件value至viryRules_val.ifs (radio, checkbox)
+        ruleTools.writeRulesIf(that, viryRules_val);
+    }
+    //有可能被觸發的ele同時在規則表
+    if (idxs_events){
+        if (idxs.length>0){
+            for (var i=0, len=idxs_events.length; i<len; ++i){
+                if (idxs.indexOf(idxs_events[i])===-1) idxs.push(idxs_events[i]);
+            }
+        }else{
+            idxs = idxs_events;
+        }
+    }
+
+    //依照規則表viryRules顯示
+    for (var i = 0, len = idxs.length; i<len; ++i){
+        var idx = idxs[i];
+        var rule = viryRules[idx];
+        //查出rules.ifs裡面各個條件為true或false -> countsIf
+        var vifs = rule.ifs;
+        var countsIf = ruleTools.checkRules(vifs, viryRules_val);
+        console.log("==========countsIf");
+        console.log(countsIf);
+        if (countsIf===false) return false;
+
+        //檢查符合條件的數量
+        var counts = 0;
+        for (var i2=0, len2=countsIf.length; i2<len2; ++i2){
+            if(countsIf[i2])
+                ++counts;
+        }
+
+        //是否符合觸發條件
+        var firstIsTrue = (countsIf.length==0)||(rule.operator=="||"&&counts>0)||(rule.operator=="&&"&&counts==countsIf.length);
+
+        //開始驗證 驗證 events.ifs, 並執行 events.evts
+        var events = rule.events;
+        for (var i2 = 0, len2 = events.length; i2<len2; ++i2){
+            var event = events[i2], tar = event.tar, operator = event.operator;
+            var eifs = event.ifs, evts = event.evts;
+
+            var $ele = $("#"+tar);
+            if ($ele.length==0){
+                console.log("查無符合的element");
+                console.log("tar="+tar);
+                console.log(event);
+                continue;
+            }
+
+            console.log(countsIf.length);
+            console.log(counts);
+            console.log(operator);
+            console.log("===firstIsTrue");
+            console.log(firstIsTrue);
+            var viryResult = false; //最終驗證結果
+
+            //是否符合觸發條件
+            if (firstIsTrue){
+                //開始驗證
+                var v = $ele.val();
+                var countsIf2 = ruleTools.viryRules(v, eifs);
+                if (countsIf2===false){
+                    console.error("tar:"+tar);
+                    return false;
+                }
+                //檢查符合條件的數量
+                var counts2 = 0;
+                for (var i3=0, len3=countsIf2.length; i3<len3; ++i3){
+                    if(countsIf2[i3])
+                        ++counts2;
+                }
+                console.log(countsIf2);
+                console.log(operator);
+                console.log(counts2);
+                console.log((countsIf2.length==0)||(operator=="||"&&counts2>0)||(operator=="&&"&&counts2==countsIf2.length));
+                //最終驗證結果
+                viryResult = (countsIf2.length==0)||(operator=="||"&&counts2>0)||(operator=="&&"&&counts2==countsIf2.length);
+            }else{//最終驗證結果為不符合
+                viryResult = false;
+            }
+            console.log("===viryResult");
+            console.log(viryResult);
+            for (var i3 = 0, len3 = evts.length; i3<len3; ++i3){
+                var evt = evts[i3];
+                if (ruleTools[evt.mode]==undefined){
+                    console.log("尚不支援此驗證事件");
+                    console.log("mode="+evt.mode);
+                    console.log(evt);
+                    continue;
+                }
+                //執行觸發事件 (false為不符合條件, true為符合條件)
+                ruleTools[evt.mode]($ele, viryResult, evt);
+            }
+        }
+    }
+};
+
+
+//false時，提示驗證失敗並阻止上傳
+//@param viryResult = true 驗證符合條件 / false 驗證不符合
+ruleTools.reject = function($e, viryResult, json){
+    console.log("==============reject");
+    if (viryResult) {
+    console.log("data-pass  false");
+        $e.parent().addClass("rejectedItem");
+        $e.attr('data-pass', 'false').attr('data-hint', json.hint);
+    } else {
+        $e.parent().removeClass("rejectedItem").attr('data-pass', 'true');
+        $e.attr('data-pass', 'true').attr('data-hint', '');
+    }
+};
+
+//改變顏色
+//@param viryResult = true 驗證符合條件 / false 驗證不符合
+ruleTools.cgcolor = function($e, viryResult, json){
+    var bgColor="", fontColor="";
+    if (viryResult){
+        bgColor=json.bgColor;
+        fontColor=json.fontColor;
+
+        var className = getDataset($e[0]).bean+"-cgcolor";
+        $("#"+className).remove();
+        if (bgColor=="" && fontColor==""){
+            $e.removeClass(className);
+            return;
+        }
+        $e.addClass(className);
+
+        var css = "."+className+"{";
+        if (bgColor!=""){
+            css += "background-color:"+bgColor+";";
+        }
+        if (fontColor!=""){
+            css += "color:"+fontColor+";";
+        }
+        css += "}";
+        $("head").append($("<style id='"+className+"'></style>").append(css));
+    }
+};
+
+//執行自定義方法
+//@param viryResult = true 驗證符合條件 / false 驗證不符合
+ruleTools.eval = function($e, viryResult, json){
+    if (viryResult){
+        eval(json.eval_true);
+    }else{
+        eval(json.eval_false);
+    }
+};
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

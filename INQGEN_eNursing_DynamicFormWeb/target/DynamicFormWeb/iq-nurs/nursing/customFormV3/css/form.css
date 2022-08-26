@@ -1,0 +1,562 @@
+html, body {
+    height: 100%;
+}
+label {
+    word-break: keep-all;
+}
+input.form-control[readonly], textarea.form-control[readonly] {
+    background: white;
+}
+input[type="range"] {
+    margin-top: 12px;
+}
+button.icon {
+    dispaly: none;
+    position: absolute;
+    border: 0;
+    background: none;
+    padding: 0;
+    font-size: 15pt;
+    color: coral;
+    transform: translate(-50%,-50%);
+    z-index: 1;
+}
+button.icon-sm {
+    font-size: 11pt !important;
+}
+button.icon.top {
+    top: 0;
+    left: 50%;
+}
+button.icon.bottom {
+    top: 100%;
+    left: 50%;
+}
+button.icon.left {
+    top: 50%;
+    left: 0;
+}
+button.icon.right {
+    top: 50%;
+    left: 100%;
+}
+button.icon:hover {
+    color: orangeRed;
+}
+button.combineBtn {
+    width: 80px;
+    height: 80px;
+    font-size: 26pt;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 100%;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    transition: opacity .8s ease-in-out;
+    cursor: auto;
+}
+button.combineBtn.active {
+    opacity: 1;
+    cursor: pointer;
+    z-index: 999;
+}
+button.combineBtn i:before {
+    transition: transform .8s ease-in-out;  
+}
+button.combineBtn.rotate i:before {
+    transform: rotate(90deg);
+}
+input + label + .form-group[data-display-mode="horizontal"]::before {
+    content: '(';
+    position: relative;
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
+}
+input + label + .form-group[data-display-mode="horizontal"]::after {
+    content: ')';
+    position: relative;
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
+    padding-left: .15rem;
+}
+.inputColor {
+    width: 100%;
+    height: 100%;
+}
+.view-page .view-hide {
+    display: none!important;
+}
+.btn-menu-list {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.main-page div:not(#drawPage .table div), .view-page div {
+    transition: background-color 0.3s;
+    overflow-y: auto;
+}
+#bean-tree-list div {
+    overflow-y: hidden!important;
+    transition: none!important;
+}
+.main-page, .view-page {
+    height: 100%;
+}
+.left-block, .right-block {
+    display: flex;
+    border: 1px solid #dee2e6;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    transition: all .5s!important;
+}
+.left-block {
+    width: 0px;
+    flex-direction: column;
+    padding-right: 1%;
+}
+.left-block.active {
+    width: 26%;
+    flex: 1 1 auto;
+}
+.left-block.hover {
+    background-color: #9595e985;
+    cursor: pointer;
+}
+.right-block {
+    height: 100%;
+    width: 74%;
+    flex: 1 1 auto;
+}
+.left-top-box {
+    display: none;
+    height: 300px;
+    padding: 5px 5px;
+    line-height: 3;
+    background-color: #ffffff;
+}
+.left-top-box .nav.nav-tabs {
+    line-height: 1;
+}
+.left-bottom-box {
+    display: none;
+    height: 400px;
+    padding: 0;
+    background-color: #ffffff;
+}
+.left-block.active .left-top-box,
+.left-block.active .left-bottom-box {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    border: 1px solid #dee2de;
+    width: 100%;
+    position: relative;
+}
+.left-bottom-box .materialTitle {
+    overflow-y: hidden!important;
+    height: 40px;
+}
+.attributeTitle {
+    line-height: 2.5rem;
+}
+.attributeContent {
+    height: 100%;
+    line-height: 2.5rem;
+}
+.attributeContent .subTitle {
+    font-weight: bold;
+    padding-top: calc(.375rem + 1px);
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+    word-break: break-all;
+}
+.attributeContent .subContent {
+    padding-top: calc(.375rem + 1px);
+    border-bottom: 1px solid black;
+    user-select: none;
+    overflow: hidden;
+    word-break: break-all;
+}
+#materialTable thead tr th:first-child {
+    width: 100px;
+}
+.tool-pack-bar {
+    width: 0px;
+    height: 80px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    right: 120px;
+    padding-left: 60px;
+    background: transparent;
+    transition: all .4s;
+    opacity: 0;
+    overflow: hidden;
+    transform: translate(0%,-50%);
+}
+.tool-pack-bar.active {
+    width: 400px;
+    opacity: 1;
+    z-index: 49;
+}
+.tool-pack-bar button {
+    width: 60px;
+    height: 60px;
+    font-size: 18pt;
+    border: 1px solid black;
+    border-radius: 100%;
+    padding: 10px;
+    top: 50%;
+    flex: 0 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: flex-end;
+    position: relative;
+    background-color: white;
+    transition: opacity .8s ease-in-out;
+    cursor: auto;
+    display: none;
+}
+.tool-pack-bar button.active {
+    display: inline-block;
+    cursor: pointer;
+}
+.tool-pack-bar button.rotate i:before {
+    transform: rotate(90deg);
+}
+.tab-content.border {
+    border-top: none!important;
+}
+.tab-content .tab-pane {
+    transition: background-color 0.3s;
+    overflow-y: auto;
+}
+.no-padding {
+    padding: 0!important;
+}
+.title-bar.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+#drawPage {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+#drawPage .table tbody td, #drawPage .table tbody th, .view-page .table tbody td, .view-page .table tbody th {
+    position: relative;
+    vertical-align: middle;
+}
+#drawPage .table tbody td:hover, #drawPage .table tbody th:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,.075);
+}
+#drawPage .table tbody td.active, #drawPage .table tbody th.active {
+    background-color: rgba(0,0,0,.2);
+}
+#drawPage .table tbody td.disabled, #drawPage .table tbody th.disabled {
+    background-color: rgba(0,0,0,.1);
+    cursor: no-drop;
+}
+#drawPage .table tbody td.active:hover, #drawPage .table tbody th.active:hover {
+    background-color: rgba(0,0,0,.275);
+}
+div.form-group[data-is-bean="Y"] {
+    overflow: hidden;
+}
+.form-group:not(.modal-body .form-group) {
+    margin-bottom: 0;
+    align-self: center;
+}
+.form-group[data-control-type="checkbox"], .form-group[data-control-type="radio"] {
+    margin-right: 15px;
+}
+.form-group[data-control-type="checkbox"], .form-group[data-control-type="radio"] {
+    display: inline-block;
+}
+.form-group[data-control-type="checkbox"][data-display-mode="vertical"], .form-group[data-control-type="radio"][data-display-mode="vertical"] {
+    flex-direction: column;
+}
+.form-group[data-control-type="checkbox"][data-display-mode="horizontal"], .form-group[data-control-type="radio"][data-display-mode="horizontal"] {
+    flex-direction: row;
+}
+.form-horizontal .form-group.pFormItem {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.input-group {
+    border-radius: .50rem;
+}
+.main-page .group-default {
+    outline: 4px double gold;
+    background-color: rgb(241, 231, 43, 42%);
+}
+.selected {
+    z-index: 51;
+    background-color: white;
+    outline: 3px dashed black;
+}
+.nav-link {
+    cursor: pointer;
+}
+.tab-pane {
+    padding: 15px 25px;
+}
+.button-list {
+    padding: 5px 15px;
+}
+.tree-list {
+    padding: 0;
+    line-height: 1;
+    user-select: none;
+}
+.title-bar, .title-block {
+    overflow: hidden;
+    /*background-color: #f2f2f2;*/
+    /*border-left: 5px solid #FF6347;*/
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.title-block {
+    background-color: #f2f2f2;
+    border-left: 5px solid #FF6347;
+}
+.form-title-div {
+    padding: 0;
+}
+.title-bar.vertical {
+    background-color: #ffffff;
+    border-left: none;
+    line-height: 2.5;
+}
+.title-bar div span.h4 {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.title-bar .btn:not(.input-group-append .btn) {
+    margin-left: 10px;
+}
+.title-bar-text {
+    flex: 0 0 50%;
+    max-width: 50%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    align-self: center;
+}
+.title-bar.vertical .title-bar-text {
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+}
+.title-bar-button {
+    flex: 0 0 50%;
+    max-width: 50%;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-align: right;
+}
+.title-bar.vertical .title-bar-button {
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+}
+.btn-margin {
+    margin-left: 10px;
+}
+.mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.6);
+}
+.form-row-div {
+    transition: background-color 0.3s;
+    overflow-y: hidden;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    margin: 5px;
+    /*vertical-align: middle;*/
+}
+.break-line-div {
+    overflow-y: hidden;
+    height: 0;
+}
+.group-default {
+    display: flex;
+}
+[data-form-type="print"] .form-row-div label.h6 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.form-row-div label.h6 {
+    padding-top: calc(.375rem + 1px);
+    padding-bottom: calc(.375rem + 1px);
+    margin: 3px;
+    font-size: inherit;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+.form-row-div.group-default label.h6 {
+    padding-top: calc(.375rem + 3px);
+}
+.form-group {
+    transition: background-color 0.3s;
+    overflow: hidden;
+}
+.form-title-div .form-group {
+    width: 100%;
+}
+.form-row-div .form-group.selected {
+    margin: 3px;
+}
+.search-box {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    justify-content: flex-end;
+}
+.search-box button {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.bean-drop {
+    width: 80px;
+    background-color: rgba(0, 255, 200, 0.2);
+}
+.bean-drop.drop-after {
+    flex: 1 1 auto;
+}
+.focus-edit {
+    z-index: 51;
+    background-color: white;
+}
+.focus-edit input:focus {
+    z-index: 60;
+}
+.form-check .bean-drop {
+    height: 2rem;
+    border: 1px dotted #9595e9;
+    margin: 1px;
+}
+.form-check .form-group {
+    margin-left: 8px;
+}
+.form-check .form-group.selected {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.form-check .h6 {
+    margin-bottom: 0;
+}
+.form-check.d-flex.align-items-center input {
+    margin-top: 0;
+}
+.form-check .h6 + .checkbox-default, .form-check .checkbox-label-default + .h6,
+.form-check .h6 + .radio-default, .form-check .radio-label-default + .h6 {
+    margin-left: 5px;
+}
+.form-check.d-flex.align-items-center {
+    padding-left: 0;
+}
+.form-check .form-check-input.checkbox-default,
+.form-check .form-check-input.radio-default {
+    position: static;
+    margin-left: 0.25rem;
+    margin-right: .3125rem;
+}
+.btn-default i.bi {
+    margin-right: 3px;
+    margin-left: 3px;
+}
+.table td.table-data-title {
+    text-align: center;
+    vertical-align: middle;
+}
+.table-striped tbody tr td.table-data-title {
+    background-color: #e6e6fa;
+}
+.view-page .form-row-div {
+    display: inline-block;
+}
+.view-page .groupItem {
+    display: flex;
+    padding-top: 3px;
+}
+.modal .init-script-select {
+    position: absolute;
+    left: -14rem;
+    width: 200px;
+    top: -3.95rem;
+}
+.modal .table tbody tr {
+    background-color: white;
+}
+.modal .table tbody tr.active {
+    background-color: pink;
+}
+.modal td div.need-show {
+    background-color: #49ad22 !important;
+    color: white !important;
+}
+.modal td.need-hide, .modal li a.need-hide, .modal .tab-pane.need-hide, .modal td div.need-hide {
+    background-color: #ad5656 !important;
+    color: white !important;
+}
+.modal .form-check.active {
+    border: 2px solid lightcoral;
+    padding: 5px 8px;
+    background-color: lavender;
+}
+.modal form .form-row-div {
+    display: inline-block;
+}
+.form-check-inline:last-child {
+    margin-right: 0;
+}
+.divHorFormItem {
+    margin-left: 3px;
+}
+input.checkboxFormItem, input.radioFormItem {
+    vertical-align: middle;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+.hide, .nav-link.view-hide {
+    display: none!important;
+}
+/** queryList **/
+#tableData td button.btn:not(:first-child) {
+    margin-left: 5px;
+}
+#search-button, #reset-button {
+    margin-left: 5px;
+}
+input.dateTimeTool.dateInput {
+    width: 8rem;
+}
+input.dateTimeTool.timeInput {
+    width: 5rem;
+}
+#search-bar > div + label {
+    margin-left: 5px;
+}
+/** divLogF **/
+#divLogF *:not(font):not(a){
+    color: white;
+}
+#divLogF label{
+    cursor: inherit;
+}

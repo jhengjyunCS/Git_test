@@ -1,0 +1,94 @@
+
+<section id="container" class="">
+    <section id="Section1" class="sidebar-close">
+        <!--header start-->
+        <header class="header white-bg">
+            <div class="sidebar-toggle-box">
+                <div id="headerTitle" data-original-title="护士管理系统" data-placement="right" class="icon-reorder tooltips">請定義表單名稱</div>
+            </div>
+            <div class="notify-row">
+                <div class="alert alert-info" role="alert" id="savesuccess">
+                    <label>保存成功</label>
+                </div>
+            </div>
+            <div class="top-nav">
+                <ul class="nav pull-right top-menu">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="username" id="USER"></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a class="" href="javascript:location.replace('index.html?exited=true')"><i class="icon-key"></i>退出登录</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <!-- page start-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading userbg">
+                                <form class="form-horizontal">
+                                    <div class="uInfo">
+                                        <span id="p_station"></span>
+                                        <span id="p_name"></span>
+                                    </div>
+                                    <div class="uInfo">
+                                        <span id="p_caseno"></span>
+                                        <span id="p_sex"></span>
+                                        <span id="p_age"></span>
+                                        <span id="p_patientID" hidden></span>
+                                        <span id="p_bedID" hidden></span>
+                                    </div>
+                                </form>
+                            </header>
+                            <div class="panel-body">
+                                <div class="modal fade main-contrnt" id="pt-mpa-scan" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h3 class="modal-title">扫描腕带</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    <input type="text" id="textareaID1">
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal" id="dialogscan">确定</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">离开</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container col-md-12 main-contrnt">
+                                    <form id="targetForm" class="form-horizontal" role="form">
+                                    </form>
+                                    <center>
+                                        <div id="loadeffect" class="loading" style="display: none"></div>
+                                    </center>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+</section>
+<div id="bottomToolbar">
+</div>

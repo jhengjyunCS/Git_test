@@ -1,0 +1,43 @@
+.nurstr-add{
+    border-style:solid;
+    border-width:2px;
+    background-color: #CEE7EE;
+    height:38px;
+    width: 60px !important;
+    font-size: 18px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.etd_executeA-add{
+    border-width:2px;
+}
+
+.clsButton-add{
+    border-radius: 10px;
+    color: #33658A;
+}
+
+.tableType-add td
+{
+    border-color:#1AB39F;
+
+}
+.NSNtextarea textarea{
+    width: 100% !important;
+}
+
+
+.clsButton-list{
+    border-radius: 10px;
+    color: #33658A;
+}
+
+.etable-list tr th{
+    background-color: #CEE7EE;
+    text-align:center;
+}
+
+.etable-list tr td{
+    text-align:center;
+}

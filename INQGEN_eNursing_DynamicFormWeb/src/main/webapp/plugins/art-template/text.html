@@ -1,0 +1,36 @@
+<div
+        class="divFormItem"
+        id="div_{{$data.name}}"
+        style="display: inline"
+>
+    {{if $data.showTitle}}
+    <span
+            class="spanFormItem"
+            id="span_{{$data.name}}"
+    >
+        {{$data.title}}：
+    </span>
+    {{/if}}
+    <input
+            type="text"
+            class="formItem"
+            id="{{$data.name}}"
+            name="{{$data.name}}"
+            size="{{$data.textSize}}"
+            data-bean="{{$data.name}}"
+            data-id="{{$data.name}}"
+            data-required="{{$data.required}}"
+            data-promptTips="{{$data.promptTips}}"
+            data-disabled="{{!$data.show}}"
+            {{if !$data.show}}
+            disabled="disabled"
+            {{/if}}
+    style= ""
+    onclick= "{{$data.click}}"
+    onblur="checkHandler.checkSelf(this);{{$data.blur}}"
+    >
+    {{$data.backTitle}}
+    {{if $data.displayMode=="wrap"}}
+    <br>
+    {{/if}}
+</div>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+
+	<tlib-version>1.1</tlib-version>
+	<short-name>gform</short-name>
+	<uri>http://www.inqgen.com/taglibs/gform</uri>
+
+	<tag>
+		<name>toHtml</name>
+		<tag-class>com.inqgen.nursing.tag.GformToDocument</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+        	<description>創建或列印gform元素</description>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+        	<description>gform模板</description>
+			<name>template</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+        	<description>gform值</description>
+			<name>gForm</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+        	<description>bean</description>
+			<name>beanName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+        	<description>groupBean 英文逗號分隔；多項合並一起再用@拼接 比如：A,B,C@D,E(CD會顯示在一個td)</description>
+			<name>groupBeanName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+</taglib>

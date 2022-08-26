@@ -1,0 +1,1492 @@
+@charset "utf-8";
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  font-size: 100%;
+  letter-spacing: 1.8px;
+  line-height: 1.5;
+  height: 100%;
+  background: #e2e2e2;
+  font: 14px "微軟正黑體", "宋体", "Arial Narrow", HELVETICA;
+  -webkit-text-size-adjust: 100%;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*頁首*/
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 8vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  background-image:linear-gradient(to top, #a3c2d9 8%, #4a88c5 100%);
+  z-index: 1001;
+}
+
+.title_wrap {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 1.2em;
+  color: #fff;
+  padding: 10px;
+}
+
+.title_wrap a {
+  margin: 0 10px;
+  color: white;
+  padding: 5px;
+  transition: all 0.3s;
+}
+
+.title_wrap .return:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(24, 126, 169);
+}
+
+.title_wrap .logout:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(24, 126, 169);
+}
+
+.title_wrap .report:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #e17e04;
+}
+
+.username,
+.usernum {
+  font-size: 1.5em;
+}
+
+.report {
+  background: #fc8e05;
+  width: 7em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.return {
+  background: #34a0ce;
+  width: 7em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.logout {
+  background: #34a0ce;
+  width: 6em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.title {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 2em;
+  color: #004085;
+}
+
+.title span {
+  font-size: 0.85em;
+  margin: 10px;
+  color: #fff;
+}
+
+.title img {
+  width: 1.5em;
+  margin: 10px;
+}
+
+/*表格設定(共用)*/
+/*page*/
+.page .main {
+  margin: 20px auto;
+}
+
+.page .main {
+  width: 100%;
+  margin: 0;
+}
+
+.page .main .table_title {
+  position: relative;
+  padding-left: 20px;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 0 0 10px 15px;
+}
+
+.page .main .table-responsive {
+  width: 100%;
+  height: calc(100vh - 70px);
+}
+
+.page .main .table_title::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0;
+  width: 5px;
+  height: 1.5em;
+  background: #5bade1;
+}
+
+.page .main .slick-item {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.page .main .table_detail {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  padding: 0px 5px;
+}
+
+.page .main .table_detail .left {
+  width: 50px;
+}
+
+.page .main .table_detail .right {
+  width: 100%;
+  background-color: #a3c2d9;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.page .main .table_detail .list_number {
+  position: relative;
+  margin: 5px auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #004085;
+}
+
+.page .main .table_detail .list_number span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.page .main .table_detail .table_th_all {
+  width: 100%;
+}
+
+.page .main .table_detail .table_th_all .table_t {
+  white-space: nowrap;
+  text-align: center;
+  background-color: #a3c2d9;
+  color: #000;
+  padding: 8px 15px;
+  font-weight: bold;
+  width: 32%;
+  margin: 0% 0.6%;
+}
+
+.page .main .table_detail .table_td_all {
+  width: 100%;
+}
+
+.page .main .table_detail .table_td_all .table_t {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 0px 15px;
+  padding: 6px 15px\9;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  width: 32%;
+  margin: 0% 0.6%;
+}
+
+.page .main .table_detail .table_td_all .table_control {
+  justify-content: center;
+}
+
+.page .main .btn {
+  background-color: #004085;
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  color: #ffffff;
+  margin: 0px 3px;
+  padding: 2px 12px;
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page .main .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.page .main .date span {
+  margin-left: 10px;
+}
+
+.page .main .table_detail .width_half {
+  width: 50%;
+}
+
+.page .main .table_all .table {
+  width: 95%;
+}
+
+.page .main .table_all .table thead {
+  white-space: nowrap;
+  background-color: #a3c2d9;
+  color: #000;
+  text-align: center;
+  position: sticky;
+  top: -1px;
+}
+
+.page .main .table_all .table th {
+  white-space: nowrap;
+  background-color: #a3c2d9;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.page .main .table_all .table td {
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.page .main .table_all tbody {
+  background-color: #ffffff;
+}
+
+.page .main .table_all table {
+  margin: 0;
+}
+
+.page .main .table_all .table .fz-lg {
+  font-size: 1.5em;
+}
+
+/*表格寬度*/
+.page .main .table_detail .table_th_all .l_table {
+  width: 50%;
+}
+
+.page .main .table_detail .table_th_all .m_table {
+  width: 15%;
+}
+
+.page .main .table_detail .table_th_all .r_table {
+  width: 35%;
+}
+
+
+/* nav */
+#mini {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav {
+  font-size: 1.5em;
+  width: 220px;
+  height: 100%;
+  background-image:linear-gradient(to bottom, #a3c2d9 20%, #004085 100%);
+  transition: all 0.3s;
+  bottom: 0;
+  position: fixed;
+  top: 70px;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.nav a {
+  display: block;
+  overflow: hidden;
+  padding-left: 20px;
+  line-height: 46px;
+  max-height: 46px;
+  color: #004085;;
+  transition: all 0.3s;
+}
+
+.btn_wrap {
+  display: inline-block;
+  width: 220px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.nav .switch_btn {
+  display: inline-block;
+  font-size: 0.75em;
+  width: 45%;
+  padding: 5px;
+  margin: 5px;
+  line-height: 40px;
+  border-radius: 5px;
+  background: #34a0ce;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.nav .switch_btn:hover {
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(24, 126, 169);
+}
+
+.nav .switch_name {
+  display: inline-block;
+  font-size: 0.85em;
+  background: #004085;
+  color: #fff;
+  border-radius: 5px;
+  width: 40%;
+  margin: 5px;
+  padding: 5px;
+  line-height: 40px;
+  transition: all 0.3s;
+}
+
+.nav a span {
+  margin-left: 10px;
+  color: #004085;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item.nav-show {
+  border-bottom: none;
+}
+
+.nav-item ul {
+  display: none;
+  /* background: rgba(0, 0, 0, 0.1); */
+}
+
+.nav-item.nav-show ul {
+  display: inline-block;
+}
+
+.nav-item>a:before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  width: 6px;
+  height: 46px;
+  background: #004085;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.nav .nav-icon {
+  font-size: 20px;
+  margin-left: -1px;
+}
+
+.icofont-rounded-right {
+  float: right;
+  margin-right: 20px;
+  font-size: 18px;
+  transition: transform 0.3s;
+  line-height: 2.5;
+}
+
+.nav-show .icofont-rounded-right {
+  transform: rotate(90deg);
+}
+
+.nav-show,
+.nav-item>a:hover {
+  color: #fff;
+  /* background: rgba(0, 0, 0, 0.1); */
+}
+
+.nav-show>a:before,
+.nav-item>a:hover:before {
+  opacity: 1;
+}
+
+.nav-item li:hover a {
+  color: #fff;
+  background: #002043;
+  /* background: rgba(0, 0, 0, 0.1); */
+}
+.nav-item li:hover span{
+  color:#fff;
+}
+/* nav-mini */
+.nav-mini.nav {
+  width: 100px;
+}
+
+.nav-mini+.main {
+  padding-left: 0px;
+  transition: all 0.3s;
+}
+
+.nav-mini .btn_wrap {
+  display: inline-block;
+  width: 100px;
+}
+
+.nav-mini .switch_name,
+.nav-mini .switch_btn {
+  transition: all 0.3s;
+  width: 90%;
+}
+
+.nav-mini .switch_btn {
+  font-size: 0.65em;
+}
+
+.nav-mini.nav .nav-item>a span {
+  display: none;
+}
+
+.nav-mini.nav .nav-more {
+  margin-right: -20px;
+}
+
+.nav-mini.nav .nav-item ul {
+  position: absolute;
+  top: 0px;
+  left: 60px;
+  width: 180px;
+  z-index: 99;
+  background: #a3c2d9;
+  overflow: hidden;
+}
+
+.nav-mini.nav .nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-mini.nav .nav-item:hover .nav-item a {
+  color: #fff;
+}
+
+.nav-mini.nav .nav-item:hover a:before {
+  opacity: 1;
+}
+
+.nav-mini.nav .nav-item:hover ul {
+  display: block;
+}
+
+/*內容*/
+.main_content {
+  height: calc(100vh - 105px);
+  margin: 75px auto 0px;
+}
+
+.main {
+  width: 100%;
+  padding-left: 0px;
+  margin: 0;
+}
+
+/*下一頁 取消 確認按鈕*/
+.main .check_icon {
+  font-size: 1.5em;
+}
+
+.main .bottom_btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.main .bottom_btn .next {
+  display: inline-block;
+  margin: 0 15px;
+  background: #34a0ce;
+  color: #fff;
+  width: 85px;
+  padding: 5px;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 30px;
+  transition: all 0.3s;
+}
+
+.main .cancel {
+  display: inline-block;
+  margin: 15px;
+  background: #dc3545;
+  color: #fff;
+  width: 85px;
+  padding: 5px;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 30px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.main .submit {
+  display: inline-block;
+  text-decoration: none;
+  background: #459e22;
+  color: #fff;
+  width: 115px;
+  padding: 5px;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 40px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.main .cancel:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #ab2431;
+}
+
+.main .submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #348115;
+}
+
+.main .next:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #2183ac;
+}
+
+.main .next:active,
+.main .cancel:active,
+.main .submit:active {
+  transform: translateY(3px);
+}
+
+.main {
+  margin: 15px 0 0 0;
+}
+
+.check_box {
+  text-align: left;
+}
+
+.check_box input {
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+}
+
+.input_control {
+  width: 50px;
+  text-align: center;
+}
+
+.controllerdrugs .main .table_all .table .text_left {
+  text-align: left;
+}
+
+/*======================管制藥品======================*/
+
+/*管制藥品上層選單*/
+
+.controllerdrugs_index .main_content {
+  margin: 140px auto 0;
+  height: calc(100vh - 145px);
+}
+
+.head_fix {
+  position: relative;
+  top: 0;
+  z-index: 1111;
+  height: 125px;
+}
+
+.head_fix a {
+  display: block;
+  text-decoration: none;
+  line-height: 50px;
+}
+
+.submenu_wrap {
+  width: 50%;
+  display: flex;
+}
+
+.submenu_wrap a {
+  line-height: 40px;
+}
+
+.controllerdrugs_index .main .btn_wrap {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.controllerdrugs_index .main .btn_wrap .menu_btn {
+  position: relative;
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  color: #004085;
+  border: none;
+  margin: 0px 3px;
+  padding: 4px 15px;
+  font-size: 1.5em;
+  height: 55px;
+  background: #a3c2d9;
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.controllerdrugs_index .main .btn_wrap .menu_btn:hover {
+  border-bottom: 3px solid #34a0ce;
+}
+
+.controllerdrugs_index .main .btn_wrap .menu_btn:focus {
+  background: #004085;
+  color: #fff;
+}
+
+.controllerdrugs_index .main .btn_wrap .menu_btn:hover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 88%;
+  left: 50%;
+  transform: translateX(-54%);
+  border-style: solid;
+  border-width: 0 7px 7px 7px;
+  border-color: transparent transparent #34a0ce transparent;
+}
+
+.controllerdrugs_index .main .collapse .menu_btn {
+  -webkit-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  color: #313131;
+  border: none;
+  margin: 0px 3px;
+  padding: 4px 15px;
+  font-size: 1.2em;
+  height: 45px;
+  background: #c5c5c5;
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.controllerdrugs_index .main .collapse .menu_btn:hover {
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  border-bottom: 4px solid #34a0ce;
+}
+
+.controllerdrugs_index .main .collapse .menu_btn:focus {
+  background: #34a0ce;
+  color: #fff;
+}
+
+.controllerdrugs_index .main .collapse .card-body {
+  padding: 0;
+}
+
+/*管制藥品-點班內容*/
+.date_icon {
+  font-size: 1.2em;
+}
+
+.pre_btn {
+  background: #fff;
+  color: #34a0ce;
+  padding: 2px 4px;
+  font-size: 1.2em;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.pre_btn:hover {
+  background: #34a0ce;
+  color: #fff;
+
+}
+
+.pre_btn:active {
+  background: #1b4b65;
+  color: #fff;
+
+}
+
+.date_wrap {
+  width: 262px;
+  border: solid 1px #34a0ce;
+  background: #c6def0;
+  padding: 10px 0;
+  color: #34a0ce;
+  justify-content: space-evenly;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.date_wrap input {
+  width: 55%;
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.back_btn,
+.logout {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.back_btn {
+  background: #34a0ce;
+  color: #fff;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 20px;
+  transition: all 0.3s;
+  margin: 10px;
+}
+
+.logout {
+  background: #fc8e05;
+  color: #fff;
+  padding: 0.5em 1em;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.back_btn:hover,
+.logout:hover {
+  color: #fff;
+  transform: translateY(-5px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(-5px);
+  -moz-transform: translateY(-5px);
+  -ms-transform: translateY(-5px);
+  -o-transform: translateY(-5px);
+  text-decoration: none;
+}
+
+.back_btn:active,
+.logout:active {
+  transform: translateY(5px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(5px);
+  -moz-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  -o-transform: translateY(5px);
+}
+
+.controllerdrugs .main .table-responsive {
+  height: 100%;
+}
+
+.controllerdrugs .main .table_content {
+  margin-bottom: 10px;
+}
+
+.controllerdrugs .main {
+  height: 100%;
+  padding-left: 0px;
+}
+
+.controllerdrugs .main_content {
+  height: calc(100vh - 205px);
+  padding: 0;
+}
+
+.controllerdrugs .main .collapse .btn_wrap {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 50%;
+  margin: 10px 0;
+}
+
+.controllerdrugs .main .collapse .card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: none;
+  background-clip: border-box;
+  border: none;
+  border-radius: 0.25rem;
+  justify-self: center;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.controllerdrugs .main .btn {
+  display: inline-block;
+  font-size: 1em;
+  padding: 5px 43px;
+}
+
+
+/*管制藥品-點班表格設定*/
+.controllerdrugs .main .table_control {
+  width: 40%;
+}
+
+.controllerdrugs .main .table_all .table_head {
+  font-size: 1.2em;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 355px;
+  overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+}
+
+.controllerdrugs .main .table-wrapper-scroll-y .table {
+  margin: 5px auto;
+}
+
+.controllerdrugs .main .table-wrapper-scroll-y .table th {
+  background: #ffe69a;
+}
+
+.controllerdrugs .main .table-wrapper-scroll-y .table thead {
+  background: #ffe69a;
+  font-size: 1.2em;
+}
+
+/*nav*/
+.controllerdrugs_index .main .nav {
+  font-size: 1.2em;
+  width: 80%;
+  height: 45px;
+  background: #e2e2e2;
+  transition: all 0.3s;
+  bottom: 0;
+  top: 70px;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+.controllerdrugs_index .main .nav-show, .nav-item>a:hover{
+  color:#002043;
+
+}
+.controllerdrugs_index .main  .nav-item>a::before{
+    content: "";
+    position: absolute;
+    left: 0px;
+    width: 6px;
+    height: 46px;
+    background: #004085;
+    opacity: 0;
+    transition: all 0.3s;
+}
+.controllerdrugs_index .main .nav-item {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.controllerdrugs_index .main .nav-item .btn_control {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.controllerdrugs_index .main .nav-item.nav-show ul {
+  display: inline-flex !important;
+}
+
+.controllerdrugs_index .main .nav-item li a {
+  padding: 0;
+  width: 100px;
+}
+
+/*管制藥品-領回存入-藥局領回*/
+.controllerdrugs .main .table_control2 {
+  width: 100%;
+}
+
+.pharmacy .main .table-wrapper-scroll-y .table th {
+  background: #aadad6;
+}
+
+.pharmacy .main .table-wrapper-scroll-y .table thead {
+  background: #aadad6;
+  font-size: 1.2em;
+}
+
+/*管制藥局-領回存入-自備存入*/
+.prepare .main .info {
+  color: #00C3DA;
+  font-weight: bold;
+}
+
+.prepare_plus_btn {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  line-height: 40px;
+  background: #1b4b65;
+  margin: 10px 0;
+  text-align: center;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.2em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.prepare_plus_btn:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #347598;
+  text-decoration: none;
+}
+
+.prepare_plus_btn:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #1b4b65;
+}
+
+/*管制藥局-領回存入-自備存入-新增自備*/
+.prepare_plus .main .table-wrapper-scroll-y .table th {
+  background: #aadad6;
+}
+
+.prepare_plus .main .table-wrapper-scroll-y .table thead {
+  background: #aadad6;
+  font-size: 1.2em;
+}
+
+/*管制藥局-未用歸回*/
+.unuse_return .main .table_all .table_red th {
+  white-space: nowrap;
+  background-color: #e8c7ca;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.unuse_return .main .table_all .table_yellow th {
+  white-space: nowrap;
+  background-color: #ffe69a;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table_subtitle {
+  width: 130px;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  background: #e27f88;
+  padding: 7px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.table_subtitle_y {
+  width: 130px;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  background: #f3c14b;
+  padding: 7px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.unuse_return .main .table_all .table_head {
+  margin-bottom: 15px;
+}
+
+.title_top {
+  display: flex;
+  align-items: baseline;
+}
+
+.scan {
+  margin-left: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.scan input {
+  background: #ccc;
+}
+
+.unuse_return .submit {
+  display: inline-block;
+  text-decoration: none;
+  background: #459e22;
+  color: #fff;
+  width: 115px;
+  padding: 5px;
+  font-size: 1.2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 40px;
+  transition: all 0.3s;
+}
+
+.unuse_return .submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: #348115;
+}
+
+.unuse_return .submit:active {
+  transform: translateY(3px);
+}
+
+/*管制藥局-查詢*/
+.search_box {
+  width: 100%;
+  position: relative;
+  margin: 0 auto 10px;
+  border: 4px solid #14445f;
+  padding: 15px;
+  font-size: 1.5em;
+  background: #dbdbdb;
+}
+
+.search_title {
+  width: 12%;
+  padding: 10px;
+  background: #194964;
+  color: #fff;
+  position: absolute;
+  top: -25px;
+  left: 40%;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.search_btn_wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search_btn {
+  width: 10%;
+  padding: 10px;
+  background: #194964;
+  color: #fff;
+  font-size: 0.85em;
+  text-align: center;
+  margin: 0 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.search_btn:hover {
+  background: #2a6484;
+  transform: translateY(-3px);
+}
+
+.search_btn:active {
+  background: #194964;
+  transform: translateY(2px);
+}
+
+.level {
+  position: relative;
+  top: 25px;
+}
+
+.level input {
+  width: 25px;
+  height: 20px;
+}
+
+.search .main .table-wrapper-scroll-y .table th {
+  background: #aadad6;
+}
+
+.search .main .table-wrapper-scroll-y .table thead {
+  background: #aadad6;
+  font-size: 1.2em;
+}
+
+/*管制藥品-異常通報*/
+.controllerdrugs_report .main .table_all .table .table_control {
+  width: 20%;
+}
+
+.controllerdrugs_report input[type="checkbox"] {
+  width: 25px;
+  height: 20px;
+}
+
+.form-group {
+  margin: 0;
+}
+
+.form-control {
+  font-size: 1.2em;
+  height: 2.2em;
+}
+
+/*======================急救常備======================*/
+/*急救常備-點班*/
+.firstaid_shiftwork .main .table_control {
+  width: 15%;
+}
+
+.firstaid_shiftwork .main input {
+  width: 30%;
+  text-align: center;
+}
+
+.firstaid_shiftwork .main .plus_btn {
+  display: inline-block;
+  margin: 0 10px;
+  color: #6f6f6f;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.firstaid_shiftwork .main .plus_btn:hover {
+  margin: 0 10px;
+  color: #34a0ce;
+  font-size: 1.5em;
+}
+
+.firstaid_shiftwork .main .plus_btn:active {
+  transform: translateY(3px);
+  -webkit-transform: translateY(3px);
+  -moz-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  -o-transform: translateY(3px);
+}
+
+/*急救常備-歸回*/
+.firstaid_return .main .table_all .table_red th {
+  white-space: nowrap;
+  background-color: #e8c7ca;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.advice_btn {
+  width: 150px;
+  padding: 5px 10px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 1.1em;
+  background: #9a9797;
+  color: #fff;
+  text-decoration: none;
+}
+
+.advice_btn:hover {
+  text-decoration: none;
+  background: #5d5d5d;
+  color: #fff;
+}
+
+/*急救常備-有效醫囑*/
+
+.medical_advice .form-control {
+  width: 95%;
+  margin: 0 5px;
+  font-size: 1em;
+  height: 2em;
+}
+
+.medical_advice .menu_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  margin: 15px;
+}
+
+.medical_advice .menu_top input[type="text"] {
+  width: 35px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.medical_advice input[type="checkbox"] {
+  width: 25px;
+  height: 20px;
+}
+
+.medical_advice .main {
+  padding: 0;
+}
+
+.medical_advice .main .table_all .table_red th {
+  white-space: nowrap;
+  background-color: #e8c7ca;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.medical_advice .main .table_all .table_yellow th {
+  white-space: nowrap;
+  background-color: #ffe69a;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.medical_advice .main .table_all .table_head {
+  margin-bottom: 15px;
+}
+
+.medical_advice .pre_btn,
+.next_btn {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1em;
+
+}
+
+.medical_advice .main .pre_btn {
+  padding: 10px;
+  border-radius: 15px 0 0 15px;
+  color: #ffffff;
+  background: #004085;
+}
+
+.medical_advice .main .next_btn {
+  padding: 10px;
+  border-radius: 0 10px 10px 0;
+  color: #ffffff;
+  background: #004085;
+}
+
+.medical_advice .main .pre_btn:hover,
+.medical_advice .main .next_btn:hover {
+  background: #34a0ce;
+}
+
+.medical_advice .main .pre_btn:active,
+.medical_advice .main .next_btn:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(3px);
+  -moz-transform: translateY(3px);
+  -ms-transform: translateY(3px);
+  -o-transform: translateY(3px);
+}
+
+/*======================交班作業======================*/
+.shift_work .main .table_subtitle {
+  position: relative;
+  margin: 10px auto;
+  width: 27%;
+  color: #ffffff;
+  background: #004085;
+  z-index: 2;
+}
+
+.subtitle_wrap {
+  position: relative;
+  width: 100%;
+}
+
+.shift_work .main .subtitle_wrap::after {
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 19px;
+  left: 0;
+  background: #004085;
+  z-index: 1;
+}
+
+.return_btn {
+  background: #e27f88;
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.return_btn:hover {
+  background: #ec626e;
+
+}
+
+.recover_btn {
+  background: #8c8c8c;
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.recover_btn:hover {
+  background: #585858;
+
+}
+/*======================行政管理======================*/
+.modal-body{
+  font-size: 1.2em;
+  overflow: scroll;
+}
+.admin .main .table_all .table_yellow th {
+  white-space: nowrap;
+  background-color: #ffe69a;
+  color: #000;
+  text-align: center;
+  vertical-align: middle;
+}
+.modal-body .page .main {
+  padding: 0;
+  height: auto;
+}
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+  background: #002043;
+  color: #fff;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.5em;
+}
+.modal-body input{
+  width: 50px;
+  text-align: center;
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 900px;
+    margin: 1.75rem auto;
+  }
+}
+.circle_y_ok{
+  background: #ecb303;
+  border: 5px solid #ecb303;
+  font-size: 1.5em;
+  padding: 8px 10px;
+  border-radius: 30px;
+  vertical-align: middle;
+}
+.circle_y_no{
+  font-size: 1.5em;
+  padding: 8px 10px;
+  border-radius: 30px;
+  vertical-align: middle;
+  border: 5px solid #b5b5b5;
+  background: #d6d6d6;
+}
+.circle_b_ok{
+  background: #34a0ce;
+  border: 5px solid #34a0ce;
+  font-size: 1.5em;
+  padding: 8px 10px;
+  border-radius: 30px;
+  vertical-align: middle;
+  color: #fff;
+}
+.circle_b_no{
+  font-size: 1.5em;
+  padding: 8px 10px;
+  border-radius: 30px;
+  vertical-align: middle;
+  border: 5px solid #b5b5b5;
+  background: #d6d6d6;
+}
+.arrow_y_ok{
+  color: #ecb303;
+  font-size:3.5em;
+  vertical-align: middle;
+}
+.arrow_b_ok{
+  color: #34a0ce;
+  font-size:3.5em;
+  vertical-align: middle;
+}
+.arrow_no{
+  color: #9c9c9c;
+  font-size:3.5em;
+  vertical-align: middle;
+}
+.text-warning{
+  color: #151515 !important;
+  background: #ecb303;
+  padding: 10px;
+}
+.text-primary{
+  color: #fff !important;
+  background: #34a0ce;
+  padding: 10px;
+}
+.text-success{
+  font-weight: bold;
+}
+.text-danger{
+  font-weight: bold;
+}
+.text-adjust{
+  font-weight: bold;
+  color:red;
+}

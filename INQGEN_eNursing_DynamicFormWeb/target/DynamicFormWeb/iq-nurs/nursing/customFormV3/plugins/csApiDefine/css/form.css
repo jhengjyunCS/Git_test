@@ -1,0 +1,1061 @@
+@charset "UTF-8";
+/*檔案*/
+/*幫助*/
+/*工具icon*/
+/*切換模式*/
+/*其他物件*/
+/*# sourceMappingURL=form.css.map */
+html {
+  height: calc(100vh - 0px);
+  overflow: hidden;
+}
+
+body {
+  height: calc(100vh - 0px);
+  overflow: hidden;
+}
+
+label {
+  word-break: keep-all;
+  user-select: none;
+}
+
+table td {
+  user-select: none;
+}
+table th {
+  user-select: none;
+}
+
+#modal_gFormList td, #modal_gFormList th {
+  user-select: auto;
+}
+
+input.form-control[readonly] {
+  background: white;
+}
+
+textarea.form-control[readonly] {
+  background: white;
+}
+
+input[type=range] {
+  margin-top: 12px;
+}
+
+button.icon {
+  position: absolute;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 15pt;
+  color: coral;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  margin: 22px 1px;
+}
+button.icon:hover {
+  color: orangeRed;
+}
+
+button.icon-sm {
+  font-size: 11pt !important;
+}
+
+button.icon.top {
+  top: 0;
+  left: 50%;
+}
+
+button.icon.bottom {
+  top: 100%;
+  left: 50%;
+}
+
+button.icon.left {
+  top: 50%;
+  left: 0;
+}
+
+button.icon.right {
+  top: 50%;
+  left: 100%;
+}
+
+button.combineBtn {
+  width: 80px;
+  height: 80px;
+  font-size: 26pt;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 100%;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  transition: opacity 0.8s ease-in-out;
+  cursor: auto;
+}
+button.combineBtn i:before {
+  transition: transform 0.8s ease-in-out;
+}
+
+button.combineBtn.active {
+  opacity: 1;
+  cursor: pointer;
+  z-index: 999;
+}
+
+button.combineBtn.rotate i:before {
+  transform: rotate(90deg);
+}
+
+input + label + .form-group[data-display-mode=horizontal]::before {
+  content: "(";
+  position: relative;
+  padding-top: calc(.375rem + 1px);
+  padding-bottom: calc(.375rem + 1px);
+}
+input + label + .form-group[data-display-mode=horizontal]::after {
+  content: ")";
+  position: relative;
+  padding-top: calc(.375rem + 1px);
+  padding-bottom: calc(.375rem + 1px);
+  padding-left: 0.15rem;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99999 !important;
+  transform: translate(-50%, -50%);
+}
+
+.loading-spinner {
+  width: 25rem;
+  height: 25rem;
+  color: white;
+  z-index: 99999 !important;
+  font-size: 300px;
+}
+
+.inputColor {
+  width: 100%;
+  height: 100%;
+}
+
+.btn-menu-list {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.main-page div:not(#drawPage, #divJsonEditor, .CodeMirror, .CodeMirror *) {
+  transition: background-color 0.3s;
+  overflow: auto;
+}
+
+#bean-tree-list div {
+  overflow-y: hidden !important;
+  transition: none !important;
+}
+
+.view-page {
+  height: 100%;
+}
+.view-page #plus-tab {
+  display: none;
+}
+.view-page .table tbody td {
+  position: relative;
+  vertical-align: middle;
+}
+.view-page .table tbody th {
+  position: relative;
+  vertical-align: middle;
+}
+.view-page .form-row-div {
+  display: inline-block;
+}
+.view-page .groupItem {
+  display: flex;
+  padding-top: 3px;
+}
+
+.left-block {
+  display: flex;
+  border: 1px solid #dee2e6;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  transition: all 0.5s !important;
+  width: 0;
+  flex-direction: column;
+  padding-right: 1%;
+}
+
+.right-block {
+  display: flex;
+  border: 1px solid #dee2e6;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  transition: all 0.5s !important;
+  height: calc(100vh - 74px);
+  width: 70%;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.left-block.active {
+  width: 30%;
+  flex: 1 1 auto;
+}
+.left-block.active .left-top-box {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  border: 1px solid #dee2de;
+  width: 100%;
+  position: relative;
+}
+.left-block.active .left-bottom-box {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  border: 1px solid #dee2de;
+  width: 100%;
+  position: relative;
+}
+
+.left-block.hover {
+  background-color: #9595e985;
+  cursor: pointer;
+}
+
+.left-top-box {
+  display: none;
+  height: 300px;
+  padding: 5px 5px;
+  line-height: 3;
+  background-color: #ffffff;
+}
+.left-top-box .nav.nav-tabs {
+  line-height: 1;
+}
+
+.left-bottom-box {
+  display: none;
+  height: calc(100vh - 375px);
+  padding: 0;
+  background-color: #ffffff;
+}
+.left-bottom-box .materialTitle {
+  overflow-y: hidden !important;
+  height: 40px;
+}
+
+.attributeTitle {
+  line-height: 2.5rem;
+}
+
+.attributeContent {
+  height: 100%;
+  line-height: 2.5rem;
+  align-content: flex-start;
+}
+.attributeContent .subTitle {
+  font-weight: bold;
+  padding-top: calc(.375rem + 1px);
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  overflow: hidden;
+  word-break: break-all;
+  height: 60px;
+}
+.attributeContent .subContent {
+  padding-top: calc(.375rem + 1px);
+  border-bottom: 1px solid black;
+  user-select: none;
+  overflow: hidden;
+  word-break: break-all;
+  height: 60px;
+}
+
+#materialTable thead tr th:first-child {
+  width: 100px;
+}
+
+.tool-pack-bar {
+  width: 0;
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  position: absolute;
+  bottom: 0;
+  right: 120px;
+  padding-left: 60px;
+  background: transparent;
+  transition: all 0.4s;
+  opacity: 0;
+  overflow: hidden;
+  transform: translate(0%, -50%);
+}
+.tool-pack-bar button {
+  width: 60px;
+  height: 60px;
+  font-size: 18pt;
+  border: 1px solid black;
+  border-radius: 100%;
+  padding: 10px;
+  top: 50%;
+  flex: 0 0 auto;
+  margin-left: 5px;
+  margin-right: 5px;
+  align-items: flex-end;
+  position: relative;
+  background-color: white;
+  transition: opacity 0.8s ease-in-out;
+  cursor: auto;
+  display: none;
+}
+.tool-pack-bar button.active {
+  display: inline-block;
+  cursor: pointer;
+}
+.tool-pack-bar button.rotate i:before {
+  transform: rotate(90deg);
+}
+
+.tool-pack-bar.active {
+  width: 400px;
+  opacity: 1;
+  z-index: 49;
+}
+
+.tab-content.border {
+  border-top: none !important;
+}
+
+.tab-content .tab-pane {
+  transition: background-color 0.3s;
+  overflow-y: auto;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#drawPage {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+#drawPage .table tbody td {
+  position: relative;
+  vertical-align: middle;
+}
+#drawPage .table tbody td:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.075);
+}
+#drawPage .table tbody th {
+  position: relative;
+  vertical-align: middle;
+}
+#drawPage .table tbody th:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.075);
+}
+#drawPage .table tbody td.active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+#drawPage .table tbody td.active:hover {
+  background-color: rgba(0, 0, 0, 0.275);
+}
+#drawPage .table tbody th.active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+#drawPage .table tbody th.active:hover {
+  background-color: rgba(0, 0, 0, 0.275);
+}
+#drawPage .table tbody td.disabled {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: no-drop;
+}
+#drawPage .table tbody th.disabled {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: no-drop;
+}
+#drawPage .table tbody tr::before {
+  content: "";
+  display: block;
+  width: 0.1rem;
+}
+#drawPage .table tbody tr:first-child td:before {
+  content: "";
+  display: flex;
+  height: 1.3rem;
+  position: absolute;
+  top: -1.3rem;
+  left: 0;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+#drawPage #list .table tbody tr::before {
+  content: unset;
+}
+#drawPage .table-striped tbody tr td.table-data-title:hover {
+  background-color: #bfbff2;
+}
+#drawPage .table-striped tbody tr td.table-data-title.active {
+  background-color: #9595e9;
+}
+#drawPage .table-striped tbody tr.hover {
+  cursor: url("../../../plugins/bootstrap/bootstrap-icons/icons/caret-right-fill.svg"), auto;
+  background-color: rgba(179, 217, 255, 0.5);
+}
+#drawPage .table-striped tbody td.hover {
+  cursor: url("../../../plugins/bootstrap/bootstrap-icons/icons/caret-down-fill.svg"), auto;
+}
+#drawPage .table.table-striped tbody tr.hover:nth-of-type(odd) {
+  background-color: rgba(179, 217, 255, 0.5);
+}
+#drawPage .table.table-striped tbody td.hover {
+  background-color: rgba(179, 217, 255, 0.5);
+}
+#drawPage .tab-pane {
+  padding: 30px 25px 15px 25px;
+}
+
+div.form-group[data-is-bean=Y] {
+  overflow: hidden;
+}
+
+.form-group {
+  transition: background-color 0.3s;
+  overflow: hidden;
+}
+
+.form-group:not(.modal-body .form-group) {
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.form-group[data-control-type=checkbox] {
+  margin-right: 15px;
+  display: inline-block;
+}
+
+.form-group[data-control-type=radio] {
+  margin-right: 15px;
+  display: inline-block;
+}
+
+.form-group[data-control-type=checkbox][data-display-mode=vertical] {
+  flex-direction: column;
+  vertical-align: middle;
+}
+
+.form-group[data-control-type=radio][data-display-mode=vertical] {
+  flex-direction: column;
+  vertical-align: middle;
+}
+
+.form-group[data-control-type=checkbox][data-display-mode=horizontal] {
+  flex-direction: row;
+}
+
+.form-group[data-control-type=radio][data-display-mode=horizontal] {
+  flex-direction: row;
+}
+
+.input-group {
+  border-radius: 0.5rem;
+}
+
+.input-group.focus-edit {
+  position: fixed;
+  width: 300px;
+}
+
+.selected {
+  z-index: 51;
+  background-color: white;
+  outline: 3px dashed black;
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.tab-pane {
+  padding: 15px 25px;
+}
+
+.button-list {
+  padding: 5px 15px;
+}
+
+.tree-list {
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+.title-bar {
+  overflow: hidden;
+  background-color: #f2f2f2;
+  border-left: 5px solid #FF6347;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.title-bar div span.h4 {
+  color: black;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.title-bar .btn:not(.input-group-append .btn) {
+  margin-left: 10px;
+}
+
+.title-bar.vertical {
+  background-color: #ffffff;
+  border-left: none;
+  line-height: 2.5;
+}
+.title-bar.vertical .title-bar-text {
+  flex: 0 0 100%;
+  max-width: 100%;
+  text-align: center;
+}
+.title-bar.vertical .title-bar-button {
+  flex: 0 0 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
+.title-bar-text {
+  flex: 0 0 50%;
+  max-width: 50%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  align-self: center;
+}
+
+.title-bar-button {
+  flex: 0 0 50%;
+  max-width: 50%;
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align: right;
+}
+
+.btn-margin {
+  margin-left: 10px;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.form-row-div {
+  transition: background-color 0.3s;
+  overflow: visible;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  vertical-align: middle;
+  margin: 5px;
+}
+.form-row-div label.h6 {
+  padding-top: calc(.375rem + 1px);
+  padding-bottom: calc(.375rem + 1px);
+  margin: 3px;
+  font-size: inherit;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.form-row-div .form-group.selected {
+  margin: 3px;
+}
+
+[data-form-type=print] .form-row-div label.h6 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.form-row-div.group-default label.h6 {
+  padding-top: calc(.375rem + 3px);
+}
+
+.break-line-div {
+  height: 0.7rem;
+}
+
+.search-box {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: flex-end;
+}
+.search-box button {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.bean-drop {
+  width: 80px;
+  background-color: rgba(0, 255, 200, 0.2);
+}
+
+.bean-drop.drop-after {
+  flex: 1 1 auto;
+}
+
+.focus-edit {
+  z-index: 51;
+  background-color: white;
+}
+.focus-edit input:focus {
+  z-index: 60;
+}
+
+.form-check .bean-drop {
+  height: 2rem;
+  border: 1px dotted #9595e9;
+  margin: 1px;
+}
+.form-check .form-group {
+  margin-left: 8px;
+}
+.form-check .form-group.selected {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.form-check .h6 {
+  margin-bottom: 0;
+}
+.form-check .h6 + .checkbox-default {
+  margin-left: 5px;
+}
+.form-check .h6 + .radio-default {
+  margin-left: 5px;
+}
+.form-check .checkbox-label-default + .h6 {
+  margin-left: 5px;
+}
+.form-check .radio-label-default + .h6 {
+  margin-left: 5px;
+}
+.form-check .form-check-input.checkbox-default {
+  position: static;
+  margin-left: 0.25rem;
+  margin-right: 0.3125rem;
+}
+.form-check .form-check-input.radio-default {
+  position: static;
+  margin-left: 0.25rem;
+  margin-right: 0.3125rem;
+}
+
+.form-check.d-flex.align-items-center {
+  padding-left: 0;
+}
+.form-check.d-flex.align-items-center input {
+  margin-top: 0;
+}
+
+.form-check-input {
+  margin: 10px 10px;
+  width: 25px;
+  height: 25px;
+}
+
+.btn-default i.bi {
+  margin-right: 3px;
+}
+
+.table-data-title {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-striped tbody tr td.table-data-title {
+  background-color: #e6e6fa;
+}
+
+.drag-hover {
+  background-color: rgba(255, 111, 97, 0.1);
+}
+
+[data-edit=true].hover {
+  background-color: white;
+  outline: 3px dotted black;
+}
+
+.modal .table td {
+  transition: background-color 0.3s;
+}
+.modal .table tbody tr {
+  background-color: white;
+}
+.modal .table tbody tr.active {
+  background-color: pink;
+}
+.modal .init-script-select {
+  position: absolute;
+  left: -14rem;
+  width: 200px;
+  top: -3.95rem;
+}
+.modal td.need-show {
+  background-color: #49ad22 !important;
+  color: white !important;
+}
+.modal li a.need-show {
+  background-color: #49ad22 !important;
+  color: white !important;
+}
+.modal li a.need-hide {
+  background-color: #ad5656 !important;
+  color: white !important;
+}
+.modal .tab-pane.need-show {
+  background-color: #49ad22 !important;
+  color: white !important;
+}
+.modal td div.need-show {
+  background-color: #49ad22 !important;
+  color: white !important;
+}
+.modal td div.need-hide {
+  background-color: #ad5656 !important;
+  color: white !important;
+}
+.modal td.need-hide {
+  background-color: #ad5656 !important;
+  color: white !important;
+}
+.modal .tab-pane.need-hide {
+  background-color: #ad5656 !important;
+  color: white !important;
+}
+.modal .form-check.active {
+  border: 2px solid lightcoral;
+  padding: 5px 8px;
+  background-color: lavender;
+}
+.modal form .form-row-div {
+  display: inline-block;
+}
+
+.modal-body-paragraph {
+  white-space: pre-wrap;
+}
+
+.form-check-inline {
+  padding-left: 3px;
+}
+.form-check-inline:last-child {
+  margin-right: 0;
+}
+
+.h-0 {
+  height: 0;
+}
+
+.noHeight {
+  height: 0;
+}
+
+.hide {
+  display: none !important;
+}
+
+.scrollbar-black {
+  scrollbar-color: #000 #F5F5F5;
+}
+.scrollbar-black::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+.scrollbar-black::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+.scrollbar-black::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #000;
+}
+
+.square::-webkit-scrollbar-track {
+  border-radius: 0 !important;
+}
+.square::-webkit-scrollbar-thumb {
+  border-radius: 0 !important;
+}
+
+/*工具icon*/
+#toolBar {
+  margin-left: 50px;
+}
+#toolBar > button {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 35px;
+  line-height: 40px;
+}
+#toolBar > button:first-child {
+  border-left: 1px #515151 solid;
+}
+#toolBar > button:last-child {
+  border-right: 1px #515151 solid;
+}
+
+/*檔案*/
+#navbarFileDropdown button {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 28px;
+  line-height: 20px;
+}
+
+/*幫助*/
+#navbarHelpDropdown button {
+  padding: 0 5px 0 5px;
+  font-size: 38px;
+  line-height: 20px;
+}
+
+/*切換模式*/
+.switchMode-div:hover {
+  background-color: #eaebf5;
+  cursor: pointer;
+}
+
+.switchMode-div.active {
+  background-color: #ced3f1;
+}
+.switchMode-div.active:hover {
+  background-color: #b8c0f3;
+}
+
+.switchMode-label {
+  font-weight: 500;
+}
+
+.hotKey {
+  float: right;
+  color: #888888;
+}
+
+/*其他物件*/
+#addDiv_templateDiv {
+  height: 48px;
+  overflow: hidden !important;
+}
+
+.icon.trash {
+  font-size: 22px;
+  color: red;
+}
+
+/*單選/複選框*/
+.checkbox, .radio {
+  margin-right: 5px;
+}
+.checkbox + label, .radio + label {
+  margin-bottom: 0;
+}
+
+/*drawPage 操作區*/
+#drawPageNormal, #drawPageReplacing, #drawPagePreProcessing {
+  padding: 60px;
+  /*單選/複選框*/
+  /*下拉選單*/
+  /*網域/API路徑*/
+  /*可編輯div*/
+  /*轉換傳入參數、轉換輸出資料*/
+  /*沒有資料*/
+  /*前處理*/
+  /*順序*/
+}
+#drawPageNormal .row, #drawPageReplacing .row, #drawPagePreProcessing .row {
+  min-height: 50px;
+}
+#drawPageNormal .h5, #drawPageReplacing .h5, #drawPagePreProcessing .h5 {
+  cursor: auto;
+  user-select: auto;
+}
+#drawPageNormal .btn-check, #drawPageReplacing .btn-check, #drawPagePreProcessing .btn-check {
+  display: none;
+}
+#drawPageNormal .btn-check:checked + label, #drawPageReplacing .btn-check:checked + label, #drawPagePreProcessing .btn-check:checked + label {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+#drawPageNormal .btn-check + label, #drawPageReplacing .btn-check + label, #drawPagePreProcessing .btn-check + label {
+  margin: 0 2px;
+  height: 36px;
+}
+#drawPageNormal .btn-check + label:hover, #drawPageReplacing .btn-check + label:hover, #drawPagePreProcessing .btn-check + label:hover {
+  color: #fff;
+  background-color: #565e64;
+  border-color: #51585e;
+}
+#drawPageNormal .btn-check:disabled:checked + label, #drawPageReplacing .btn-check:disabled:checked + label, #drawPagePreProcessing .btn-check:disabled:checked + label {
+  background-color: #bfbfbf;
+}
+#drawPageNormal .btn-check:disabled:not(:checked) + label, #drawPageReplacing .btn-check:disabled:not(:checked) + label, #drawPagePreProcessing .btn-check:disabled:not(:checked) + label {
+  color: #bfbfbf;
+  border-color: #bfbfbf;
+}
+#drawPageNormal .custom-select, #drawPageReplacing .custom-select, #drawPagePreProcessing .custom-select {
+  padding: 0 0 0 15px;
+  font-size: 18px;
+  height: 38px;
+  margin: 5px 0;
+}
+#drawPageNormal #div_domain_url .canEdit, #drawPageReplacing #div_domain_url .canEdit, #drawPagePreProcessing #div_domain_url .canEdit {
+  text-align: left;
+}
+#drawPageNormal #div_domain_url .canEdit:nth-of-type(3n-2), #drawPageReplacing #div_domain_url .canEdit:nth-of-type(3n-2), #drawPagePreProcessing #div_domain_url .canEdit:nth-of-type(3n-2) {
+  text-align: center;
+}
+#drawPageNormal #div_domain_url .bg-dark, #drawPageReplacing #div_domain_url .bg-dark, #drawPagePreProcessing #div_domain_url .bg-dark {
+  border: white 1px solid;
+}
+#drawPageNormal .bg-dark, #drawPageReplacing .bg-dark, #drawPagePreProcessing .bg-dark {
+  text-align: center;
+}
+#drawPageNormal .bg-dark .h5.text-light, #drawPageReplacing .bg-dark .h5.text-light, #drawPagePreProcessing .bg-dark .h5.text-light {
+  line-height: 42px;
+}
+#drawPageNormal .canEdit, #drawPageReplacing .canEdit, #drawPagePreProcessing .canEdit {
+  margin: 5px 0;
+  line-height: 37px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: #343a40 1px solid;
+  height: 37px;
+  overflow: hidden !important;
+  -webkit-user-modify: read-write;
+  -moz-user-modify: read-write;
+  user-modify: read-write;
+  white-space: pre-wrap;
+}
+#drawPageNormal .canEdit:hover, #drawPageReplacing .canEdit:hover, #drawPagePreProcessing .canEdit:hover {
+  cursor: text;
+  background-color: #eaebf5;
+}
+#drawPageNormal .rowReplacing, #drawPageReplacing .rowReplacing, #drawPagePreProcessing .rowReplacing {
+  margin-bottom: 8px;
+  border-bottom: #dee2e6 1px solid;
+  overflow: hidden !important;
+  /*bean 描述*/
+  /*方法(method)*/
+  /*配置*/
+}
+#drawPageNormal .rowReplacing .bean, #drawPageNormal .rowReplacing .desc, #drawPageReplacing .rowReplacing .bean, #drawPageReplacing .rowReplacing .desc, #drawPagePreProcessing .rowReplacing .bean, #drawPagePreProcessing .rowReplacing .desc {
+  margin: 5px 0;
+  line-height: 37px;
+  font-size: 18px;
+  overflow: hidden !important;
+  border-right: #dee2e6 1px solid;
+}
+#drawPageNormal .rowReplacing .desc, #drawPageReplacing .rowReplacing .desc, #drawPagePreProcessing .rowReplacing .desc {
+  text-align: center;
+}
+#drawPageNormal .rowReplacing .col-setting, #drawPageReplacing .rowReplacing .col-setting, #drawPagePreProcessing .rowReplacing .col-setting {
+  padding: 0;
+}
+#drawPageNormal .rowReplacing .col-setting .replaceArrow, #drawPageReplacing .rowReplacing .col-setting .replaceArrow, #drawPagePreProcessing .rowReplacing .col-setting .replaceArrow {
+  margin: 5px 0;
+  height: 37px;
+}
+#drawPageNormal .rowReplacing .col-setting .replaceArrow .bi, #drawPageReplacing .rowReplacing .col-setting .replaceArrow .bi, #drawPagePreProcessing .rowReplacing .col-setting .replaceArrow .bi {
+  line-height: 36px;
+}
+#drawPageNormal .rowReplacing .col-setting .replaceFrom, #drawPageNormal .rowReplacing .col-setting .replaceArrow, #drawPageNormal .rowReplacing .col-setting .replaceTo, #drawPageReplacing .rowReplacing .col-setting .replaceFrom, #drawPageReplacing .rowReplacing .col-setting .replaceArrow, #drawPageReplacing .rowReplacing .col-setting .replaceTo, #drawPagePreProcessing .rowReplacing .col-setting .replaceFrom, #drawPagePreProcessing .rowReplacing .col-setting .replaceArrow, #drawPagePreProcessing .rowReplacing .col-setting .replaceTo {
+  display: inline-block;
+  margin-bottom: 18px;
+}
+#drawPageNormal .noData, #drawPageReplacing .noData, #drawPagePreProcessing .noData {
+  margin: 5px 0;
+  line-height: 37px;
+  font-size: 18px;
+  height: 37px;
+}
+#drawPageNormal .idx, #drawPageReplacing .idx, #drawPagePreProcessing .idx {
+  text-align: center;
+  margin: 5px 0;
+  line-height: 37px;
+  font-size: 18px;
+  height: 37px;
+}
+
+/**彈出框**/
+.modal-body {
+  overflow: auto;
+  max-height: 65vh;
+}
+
+/**alert彈出框**/
+#modal_alert {
+  z-index: 9999;
+}
+
+/**localStorage管理-新增/修改**/
+#modal_localStorage_modify_tbody ::placeholder {
+  /* CSS 3 標準 */
+  color: #b9b9b9;
+  font-style: italic;
+}
+#modal_localStorage_modify_tbody ::-webkit-input-placeholder {
+  /* Chrome, Safari */
+  color: #b9b9b9;
+  font-style: italic;
+}
+
+/**iframeTestAPI**/
+#drawPageTestApi {
+  padding-right: 0;
+}
+
+.iframeTestAPI {
+  border: none;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=form.css.map */

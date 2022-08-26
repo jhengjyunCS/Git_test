@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.inqgen.nursing.dynamic.form.dao.GFormDao">
+
+
+    <parameterMap id="GFormParam" class="com.inqgen.nursing.dynamic.form.bean.GForm">
+        <parameter property="fdocId" />
+        <parameter property="formId" />
+        <parameter property="formType" />
+        <parameter property="evaluationTime" />
+        <parameter property="totalScore" jdbcType="VARCHAR"/>
+        <parameter property="formVersionId" />
+        <parameter property="status" />
+        <parameter property="creatorId" jdbcType="VARCHAR"/>
+        <parameter property="creatorName" jdbcType="VARCHAR"/>
+        <parameter property="createTime" jdbcType="TIMESTAMP"/>
+        <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+        <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+        <parameter property="modifyTime" jdbcType="TIMESTAMP" />
+        <parameter property="versionNo" />
+        <parameter property="content" jdbcType="VARCHAR"/>
+    </parameterMap>
+    <insert id="insertForm" parameterMap="GFormParam" >
+        INSERT INTO ${GFORM} (
+                            fdocId,
+                            formId,
+                            formType,
+                            evaluationTime,
+                            totalScore,
+                            formVersionId,
+                            status,
+                            userId,
+                            userName,
+                            createTime,
+                            modifyId,
+                            modifyName,
+                            modifyTime,
+                            versionNo,
+                            content)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    </insert>
+
+    <parameterMap id="GFormIndexParam" class="com.inqgen.nursing.dynamic.form.bean.GFormIndex">
+        <parameter property="id"/>
+        <parameter property="sourceId"/>
+        <parameter property="formId"/>
+        <parameter property="formType"/>
+        <parameter property="creatorId" jdbcType="VARCHAR"/>
+        <parameter property="creatorName" jdbcType="VARCHAR"/>
+        <parameter property="createTime" jdbcType="TIMESTAMP"/>
+        <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+        <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+        <parameter property="modifyTime" jdbcType="TIMESTAMP" />
+        <parameter property="status"/>
+    </parameterMap>
+    <insert id="insertFormIndex" parameterMap="GFormIndexParam">
+        INSERT INTO ${GFORMINDEX} (id,
+                                   sourceId,
+                                   formId,
+                                   formType,
+                                   userId,
+                                   userName,
+                                   createTime,
+                                   modifyId,
+                                   modifyName,
+                                   modifyTime,
+                                   status)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)
+    </insert>
+
+    <parameterMap id="GFormItemParam" class="com.inqgen.nursing.dynamic.form.bean.GFormItem">
+        <parameter property="formItemId"/>
+        <parameter property="fdocId"/>
+        <parameter property="formId"/>
+        <parameter property="itemKey"/>
+        <parameter property="itemValue" jdbcType="VARCHAR"/>
+        <parameter property="otherValue" jdbcType="VARCHAR"/>
+        <parameter property="creatorId" jdbcType="VARCHAR"/>
+        <parameter property="creatorName" jdbcType="VARCHAR"/>
+        <parameter property="createTime" jdbcType="TIMESTAMP"/>
+        <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+        <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+        <parameter property="modifyTime" jdbcType="TIMESTAMP" />
+    </parameterMap>
+    <insert id="insertFormItem" parameterMap="GFormItemParam">
+        INSERT INTO ${GFORMITEM} (
+                                    formItemId,
+                                    fdocId,
+                                    formId,
+                                    itemKey,
+                                    itemValue,
+                                    otherValue,
+                                    userId,
+                                    userName,
+                                    createTime,
+                                    modifyId,
+                                    modifyName,
+                                    modifyTime)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+    </insert>
+
+    <delete id="deleteFormItem" parameterClass="java.util.HashMap">
+        DELETE FROM ${GFORMITEM} WHERE fdocId=#fdocId# and formId=#formId#
+        <isNotEmpty property="itemKey"> <![CDATA[ and itemKey=#itemKey# ]]></isNotEmpty>
+        <isNotEmpty property="itemKeys">
+            itemKey IN
+            <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                #itemKeys[]:VARCHAR#
+            </iterate>
+        </isNotEmpty>
+    </delete>
+
+    <delete id="deleteForm" parameterClass="java.lang.String">
+        delete
+        from ${GFORM}
+        where formId = #formId# and status in('Y', 'N')
+    </delete>
+    <update id="deleteFormWeak" parameterClass="java.lang.String">
+        update ${GFORM}
+        set STATUS = 'D'
+        where formId = #formId#
+            and status in('Y', 'N')
+    </update>
+    <update id="updateFormSourceIdByFormId" parameterClass="java.util.HashMap">
+        update ${GFORMINDEX} set SOURCEID = #sourceId# where FORMID = #formId#
+    </update>
+    <update id="deleteFormIndexWeak" parameterClass="java.lang.String">
+        update ${GFORMINDEX}
+        set STATUS = 'D'
+        where formId = #formId# and STATUS='Y'
+    </update>
+    <update id="updateFormIndex" parameterClass="java.util.HashMap">
+        update ${GFORMINDEX}
+        set SOURCEID = #formId#
+        where SOURCEID = #oldFormId# and STATUS='Y'
+    </update>
+
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GForm" id="formResult">
+        <result property="formId" column="formId" />
+        <result property="fdocId" column="fdocId" />
+        <result property="formType" column="formType" />
+        <result property="totalScore" column="totalScore" />
+        <result property="status" column="status" />
+        <result property="formVersionId" column="formVersionId" />
+        <result property="evaluationTime" column="evaluationTime" />
+        <result property="creatorId" column="userId" />
+        <result property="creatorName" column="userName" />
+        <result property="createTime" column="createTime" />
+        <result property="modifyUserId" column="modifyId" />
+        <result property="modifyUserName" column="modifyName" />
+        <result property="versionNo" column="versionNo" />
+        <result property="modifyTime" column="modifyTime" />
+        <result property="content" column="content" />
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GForm" extends="formResult" id="formResult2">
+        <result property="sourceId" column="sourceId" />
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GForm" id="formResult3">
+        <result property="formId" column="formId" />
+        <result property="fdocId" column="fdocId" />
+        <result property="formType" column="formType" />
+        <result property="totalScore" column="totalScore" />
+        <result property="status" column="status" />
+        <result property="formVersionId" column="formVersionId" />
+        <result property="evaluationTime" column="evaluationTime" />
+        <result property="creatorId" column="userId" />
+        <result property="creatorName" column="userName" />
+        <result property="createTime" column="createTime" />
+        <result property="modifyUserId" column="modifyId" />
+        <result property="modifyUserName" column="modifyName" />
+        <result property="versionNo" column="versionNo" />
+        <result property="modifyTime" column="modifyTime" />
+
+        <result property="sourceId" column="sourceId" />
+        <result property="totalCounts" column="totalCounts" />
+    </resultMap>
+    <resultMap class="java.lang.String" id="formContentResult">
+        <result property="content" column="content" />
+    </resultMap>
+    <select id="selectContentByFormId" parameterClass="java.util.HashMap" resultMap="formContentResult">
+        SELECT content
+        FROM ${GFORM} where fdocId=#fdocId#
+            ${WITHUR}
+    </select>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GFormItem" id="formItemResult">
+        <result property="itemKey" column="itemKey" />
+        <result property="itemValue" column="itemValue" />
+        <result property="otherValue" column="otherValue" />
+        <result property="formId" column="formId" />
+    </resultMap>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GForm" id="formAutoItemsResult" extends="formResult">
+        <result property="sourceId" column="sourceId" />
+        <result property="gformItems" select="com.inqgen.nursing.dynamic.form.dao.GFormDao.selectFormItem"
+                column="{formType=formType,formId=formId,fdocId=fdocId}" />
+    </resultMap>
+    <select id="selectFormAutoItems" parameterClass="java.util.HashMap" resultMap="formAutoItemsResult">
+        select * from(SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo
+        <isNotEmpty property="hasContent">,g.content as content</isNotEmpty>
+        <isEmpty property="hasContent">,null content </isEmpty>
+        ,gi.SOURCEID
+        FROM ${GFORM} g left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID
+        where g.formType=#formType#
+        <dynamic prepend="">
+            <isNotEmpty property="beginDate"> <![CDATA[ and evaluationTime>=#beginDate# ]]></isNotEmpty>
+            <isNotEmpty property="endDate"> <![CDATA[ and evaluationTime<=#endDate# ]]></isNotEmpty>
+            <isNotEmpty property="formId"> <![CDATA[ and g.formId=#formId# ]]></isNotEmpty>
+            <isNotEmpty property="sourceId">and gi.SOURCEID
+                <isNotEqual property="isArray" compareValue="true">=#sourceId#</isNotEqual>
+                <isEqual property="isArray" compareValue="true">in
+                    <iterate property="sourceId" open="(" close=")" conjunction=",">#sourceId[]:VARCHAR#</iterate>
+                </isEqual>
+                and gi.FORMTYPE=#formType# and gi.STATUS in('Y', 'N')
+            </isNotEmpty>
+            <isNotEmpty property="items">
+                and (select count(*) from ${GFORMITEM} gfi where gfi.fdocId=g.fdocId and gfi.FORMID = g.FORMID
+                <iterate property="items" prepend="and" open="(" close=")" conjunction="or">
+                    <![CDATA[ (gfi.itemKey=#items[].key# and gfi.itemValue=#items[].value#)]]>
+                </iterate>
+                )>0
+            </isNotEmpty>
+        </dynamic>
+        <isEmpty property="status">
+            and g.status in('Y', 'N')
+        </isEmpty>
+        <isNotEmpty property="status">
+            and g.status=#status#
+        </isNotEmpty>) b
+        order by evaluationTime,createtime
+        ${WITHUR}
+    </select>
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GForm" id="formAndItemsResult" extends="formResult2" groupBy="fdocId">
+        <result property="gformItems" resultMap="com.inqgen.nursing.dynamic.form.dao.GFormDao.formItemResult"/>
+    </resultMap>
+    <select id="selectFormWithItems" parameterClass="java.util.HashMap" resultMap="formAndItemsResult">
+        select * from(SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gfi.itemKey,gfi.itemValue,gfi.otherValue,gi.sourceId
+       <isNotEmpty property="hasContent">,g.content as content</isNotEmpty>
+       <isEmpty property="hasContent">,null content </isEmpty>
+        FROM ${GFORM} g
+        <![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+         left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="formType"> <![CDATA[g.formType=#formType# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="beginDate"> <![CDATA[evaluationTime>=#beginDate# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="endDate"> <![CDATA[evaluationTime<=#endDate# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="formId"> <![CDATA[g.formId=#formId# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="formIds">
+                g.formId in <iterate property="formIds" open="(" conjunction="," close=")">#formIds[]#</iterate>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sourceId"> gi.SOURCEID
+                <isNotEqual property="isArray" compareValue="true">=#sourceId#</isNotEqual>
+                <isEqual property="isArray" compareValue="true">in
+                    <iterate property="sourceId" open="(" close=")" conjunction=",">#sourceId[]:VARCHAR#</iterate>
+                </isEqual>
+                <isNotEmpty prepend="and" property="formType">
+                gi.FORMTYPE=#formType#
+                </isNotEmpty>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sourceIds"> gi.SOURCEID in
+                <iterate property="sourceIds" open="(" close=")" conjunction=","> #sourceIds[]:VARCHAR# </iterate>
+                <isNotEmpty prepend="and" property="formType"> gi.FORMTYPE=#formType# </isNotEmpty>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="items">
+                (select count(*) from ${GFORMITEM} gfi where gfi.fdocId=g.fdocId and gfi.formId = g.formId
+                 and ($itemCons$) )>=#itemSize#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="itemKeys">
+                gfi.itemKey in
+                <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                    #itemKeys[]#
+                </iterate>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="itemKey">
+                gfi.itemKey=#itemKey#
+            </isNotEmpty>
+            <isEmpty prepend="and" property="status">
+                g.status in('Y', 'N')
+            </isEmpty>
+            <isNotEmpty prepend="and" property="status">
+                g.status=#status#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="fdocId">
+                g.fdocId=#fdocId#
+            </isNotEmpty>
+        </dynamic>
+            ) b
+        order by evaluationTime,createtime
+        ${WITHUR}
+    </select>
+
+    <select id="selectFormStatusByFormId" parameterClass="java.lang.String" resultClass="java.lang.String">
+        select g.STATUS FROM ${GFORM} g left join ${GFORMINDEX} gi on g.FORMID = gi.FORMID
+        where g.STATUS in('Y', 'N') and g.FORMID = #value#
+    </select>
+
+    <select id="getGFormListBySourceIdsGroupOne" parameterClass="java.util.HashMap" resultMap="formAndItemsResult">
+        select * from(SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gfi.itemKey,gfi.itemValue,gfi.otherValue,gi.sourceId,null content
+        FROM ${GFORM} g
+        <![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+        left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="isGroupOne">
+                g.formId in (
+                select t.FORMID
+                from (
+                select row_number()over(partition by SOURCEID order by CREATETIME desc)rn, ci.FORMID,ci.SOURCEID from ${GFORMINDEX} ci
+                where ci.formType=#formType# and ci.SOURCEID in <iterate property="sourceIds" open="(" close=")" conjunction=",">#sourceIds[]:VARCHAR#</iterate>
+                )t
+                where t.rn=1
+                )
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="itemKeys">
+                gfi.itemKey in
+                <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                    #itemKeys[]#
+                </iterate>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="itemKey">
+                gfi.itemKey=#itemKey#
+            </isNotEmpty>
+            <isEmpty prepend="and" property="status">
+                g.status in('Y', 'N')
+            </isEmpty>
+            <isNotEmpty prepend="and" property="status">
+                g.status=#status#
+            </isNotEmpty>
+        </dynamic>
+        ) b
+        order by evaluationTime,createtime
+        ${WITHUR}
+    </select>
+
+    <select id="selectFormByFormIds" parameterClass="java.util.HashMap" resultMap="formAndItemsResult">
+       SELECT g.fdocId,g.formId, g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,
+        g.createTime ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gfi.itemKey,gfi.itemValue,gfi.otherValue,
+        gi.sourceId
+        <isNotEmpty property="hasContent">,g.content as content</isNotEmpty>
+        <isEmpty property="hasContent">,null content </isEmpty>
+        FROM ${GFORM} g left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID
+        left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId
+        where g.formId in (select  id from (select
+        <isNotEmpty property="hasSourceId">c.sourceId id </isNotEmpty>
+        <isEmpty property="hasSourceId">c.formId id </isEmpty> ,row_number() over(ORDER BY
+        <isNotEmpty property="hasSourceId">c.sourceId </isNotEmpty>
+        <isEmpty property="hasSourceId">c.formId </isEmpty>
+        DESC) as r
+        from ${GFORM} a left join ${GFORMITEM} b on a.formId = b.formId and a.fdocId=b.fdocId
+        left join  ${GFORMINDEX} c on a.FORMID=c.FORMID
+        where a.formType=#formType# and a.status =#status#
+            <dynamic prepend="">
+                <isNotEmpty property="itemKey">
+                    and b.itemKey= #itemKey#
+                </isNotEmpty>
+                <isNotEmpty property="itemKeys">
+                    and b.itemKey in
+                    <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                        #itemKeys[]#
+                    </iterate>
+                </isNotEmpty>
+            </dynamic>
+        and b.itemValue=#itemValue# and a.evaluationTime between #startDt#  and #endDt#
+        group by
+        <isNotEmpty property="hasSourceId">c.sourceId </isNotEmpty>
+        <isEmpty property="hasSourceId">c.formId </isEmpty>
+        ,a.evaluationTime  order by a.evaluationTime
+        ) where  r between #starNum# AND #endNum# )
+        and g.status =#status# order by evaluationTime,createtime  ${WITHUR}
+    </select>
+    <select id="selectFormTotalCountByItemKey" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+        select  max(r) from (select row_number() over(ORDER BY
+        <isNotEmpty property="hasSourceId">c.sourceId </isNotEmpty>
+        <isEmpty property="hasSourceId">c.formId </isEmpty>
+          DESC) as r
+        from ${GFORM} a left join ${GFORMITEM} b on a.formId = b.formId and a.fdocId=b.fdocId
+        left join  ${GFORMINDEX} c on a.FORMID=c.FORMID
+        where a.formType=#formType# and a.status =#status#
+        <dynamic prepend="">
+            <isNotEmpty property="itemKey">
+                and b.itemKey= #itemKey#
+            </isNotEmpty>
+            <isNotEmpty property="itemKeys">
+                and b.itemKey in
+                <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                    #itemKeys[]#
+                </iterate>
+            </isNotEmpty>
+        </dynamic>
+        and b.itemValue=#itemValue#
+        and a.evaluationTime between #startDt#  and #endDt# group by
+        <isNotEmpty property="hasSourceId">c.sourceId </isNotEmpty>
+        <isEmpty property="hasSourceId">c.formId </isEmpty>
+        ) ${WITHUR}
+    </select>
+
+    <select id="selectLastGFormId" parameterClass="java.util.HashMap" resultClass="java.lang.String">
+        SELECT t.formID FROM (
+			SELECT row_number() OVER (ORDER BY g.CREATETIME desc) rowN, g.formID FROM ${GFORM} g
+        	<![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+			where gi.sourceId=#sourceId# and g.formType=#formType#
+            <isNotEmpty property="indexStatus">
+                and gi.status=#indexStatus#
+            </isNotEmpty>
+		) t
+		where rowN = 1 ${WITHUR}
+    </select>
+    <select id="selectLastGformWithItems" parameterClass="java.util.Map" resultMap="formAndItemsResult">
+        select g.*,gfi.itemKey,gfi.itemValue,gfi.otherValue from(
+        SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gi.sourceId,row_number() OVER (ORDER BY g.evaluationtime desc,g.CREATETIME desc,g.modifytime desc) rowN
+       ,null content
+        FROM ${GFORM} g
+        left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID
+        where g.formType=#formType#
+        <isNotEmpty property="sourceId">and gi.SOURCEID=#sourceId# </isNotEmpty>
+            and gi.FORMTYPE=#formType# and gi.STATUS in('Y', 'N')
+        <isEmpty property="status">
+            and g.status in('Y', 'N')
+        </isEmpty>
+        <isNotEmpty property="status">
+            and g.status=#status#
+        </isNotEmpty>) g
+                 left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId
+        where g.rowN=1
+        <isNotEmpty property="itemKeys">
+            and gfi.itemKey in
+            <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                #itemKeys[]#
+            </iterate>
+        </isNotEmpty>
+        <isNotEmpty property="itemKey">
+            and gfi.itemKey=#itemKey#
+            <isNotEmpty property="itemValue">
+                and gfi.itemValue=#itemValue#
+            </isNotEmpty>
+        </isNotEmpty>
+        ${WITHUR}
+    </select>
+
+    <select id="selectLastGformAutoItems" parameterClass="java.util.Map" resultMap="formAndItemsResult">
+        select g.*
+        <isEqual property="withItems" compareValue="true">,gfi.itemKey,gfi.itemValue,gfi.otherValue</isEqual>
+        <isNotEqual property="withItems" compareValue="true">,null itemKey,null itemValue,null otherValue</isNotEqual>
+        from(
+        SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gi.sourceId,row_number() over(partition by gi.sourceId ORDER BY g.evaluationtime desc,g.CREATETIME desc,g.modifytime desc) rowN
+       ,
+        <isNotEqual property="hasContent" compareValue="true">null content</isNotEqual>
+        <isEqual property="hasContent" compareValue="true">g.content</isEqual>
+        FROM ${GFORM} g
+        left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID
+        where
+        <isNotEmpty property="formType">g.FORMTYPE=#formType# </isNotEmpty>
+        <isNotEmpty property="formTypes">g.FORMTYPE in <iterate property="formTypes" open="(" close=")" conjunction=",">#formTypes[]#</iterate></isNotEmpty>
+        <isEmpty property="status"> and g.status in('Y', 'N') </isEmpty>
+        <isNotEmpty property="status">and g.status=#status#</isNotEmpty>
+        <isNotEmpty property="sourceId">and gi.SOURCEID=#sourceId# </isNotEmpty>
+        <isNotEmpty property="sourceIds">and gi.SOURCEID in <iterate property="sourceIds" open="(" close=")" conjunction=",">#sourceIds[]#</iterate></isNotEmpty>
+        <isNotEmpty property="formType">and gi.FORMTYPE=#formType# </isNotEmpty>
+        <isNotEmpty property="formTypes">and gi.FORMTYPE in <iterate property="formTypes" open="(" close=")" conjunction=",">#formTypes[]#</iterate></isNotEmpty>
+        and gi.STATUS in('Y', 'N')
+        ) g
+        <isEqual property="withItems" compareValue="true">left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId</isEqual>
+        where g.rowN=1
+        <isEqual property="withItems" compareValue="true">
+        <isNotEmpty property="itemKeys">
+            and gfi.itemKey in
+            <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                #itemKeys[]#
+            </iterate>
+        </isNotEmpty>
+        <isNotEmpty property="itemKey">
+            and gfi.itemKey=#itemKey#
+            <isNotEmpty property="itemValue">
+                and gfi.itemValue=#itemValue#
+            </isNotEmpty>
+        </isNotEmpty>
+        <isNotEmpty property="itemValues">
+            and gfi.itemValue in
+            <iterate property="itemValues" open="(" close=")" conjunction=",">
+                #itemValues[]#
+            </iterate>
+        </isNotEmpty>
+        </isEqual>
+        ${WITHUR}
+    </select>
+
+    <resultMap id="gformSizeResult" class="com.inqgen.nursing.dynamic.form.bean.GForm">
+        <result property="sourceId" column="sourceId"/>
+        <result property="formType" column="formType"/>
+        <result property="totalCounts" column="totalCounts"/>
+    </resultMap>
+    <select id="countGformSize" parameterClass="java.util.Map" resultMap="gformSizeResult">
+        SELECT gi.sourceId,gi.formType,count(*) totalCounts
+        FROM ${GFORM} g
+        left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID
+        where
+        <isNotEmpty property="formType">g.FORMTYPE=#formType# </isNotEmpty>
+        <isNotEmpty property="formTypes">g.FORMTYPE in <iterate property="formTypes" open="(" close=")" conjunction=",">#formTypes[]#</iterate></isNotEmpty>
+        <isEmpty property="status">and g.status in('Y', 'N')</isEmpty>
+        <isNotEmpty property="status">and g.status=#status#</isNotEmpty>
+        <isNotEmpty property="sourceId">and gi.SOURCEID=#sourceId# </isNotEmpty>
+        <isNotEmpty property="sourceIds">and gi.SOURCEID in <iterate property="sourceIds" open="(" close=")" conjunction=",">#sourceIds[]#</iterate></isNotEmpty>
+        <isNotEmpty property="formType">and gi.FORMTYPE=#formType# </isNotEmpty>
+        <isNotEmpty property="formTypes">and gi.FORMTYPE in <iterate property="formTypes" open="(" close=")" conjunction=",">#formTypes[]#</iterate></isNotEmpty>
+        and gi.STATUS in('Y', 'N')
+        group by gi.formType,gi.sourceId
+        ${WITHUR}
+    </select>
+
+
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.GForm" id="formAndItemsResult2" extends="formResult2" groupBy="fdocId">
+        <result property="gformItems" resultMap="com.inqgen.nursing.dynamic.form.dao.GFormDao.formItemResult"/>
+    </resultMap>
+    <select id="selectGFormListWithCondition" parameterClass="com.inqgen.nursing.dynamic.form.bean.SearchParamGF" resultMap="formAndItemsResult2">
+        select * from(SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gfi.itemKey,gfi.itemValue,gfi.otherValue
+        ,gi.sourceId
+        <isEqual property="hasContent" compareValue="true">,g.content as content</isEqual>
+        <isEqual property="hasContent" compareValue="false">,null content </isEqual>
+        FROM ${GFORM} g
+	    <![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+        left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId
+        where g.formType=#formType#
+        <isEqual property="hasSourceId" compareValue="true">
+		    and gi.SOURCEID=#sourceId#
+        </isEqual>
+        <isEqual property="hasSourceIds" compareValue="true">
+		    and gi.SOURCEID in
+	    	<iterate property="sourceIds" open="(" close=")" conjunction=",">
+	    	    #sourceIds[]:VARCHAR#
+	    	</iterate>
+        </isEqual>
+        <dynamic prepend="">
+            <isNotEmpty property="formId"> and g.formId=#formId# </isNotEmpty>
+            <isNotEmpty property="beginDate"> <![CDATA[ and g.evaluationTime>=#beginDate# ]]></isNotEmpty>
+            <isNotEmpty property="endDate"> <![CDATA[ and g.evaluationTime<=#endDate# ]]></isNotEmpty>
+            <isNotEmpty property="beginTotalScore"> <![CDATA[ and g.totalScore>=#beginTotalScore# ]]></isNotEmpty>
+            <isNotEmpty property="endTotalScore"> <![CDATA[ and g.totalScore<=#endTotalScore# ]]></isNotEmpty>
+            <isNotEmpty property="beginCreateTime"> <![CDATA[ and g.createTime>=#beginCreateTime# ]]></isNotEmpty>
+            <isNotEmpty property="endCreateTime"> <![CDATA[ and g.createTime<=#endCreateTime# ]]></isNotEmpty>
+            <isNotEmpty property="status"> and g.status=#status# </isNotEmpty>
+            <isNotEmpty property="statusArr">
+                and g.status in
+				<iterate property="statusArr" open="(" close=")" conjunction=",">
+		    	    #statusArr[]:VARCHAR#
+		    	</iterate>
+		    </isNotEmpty>
+            <isNotEmpty property="userId"> and g.userId=#userId# </isNotEmpty>
+            <isNotEmpty property="modifyUserId"> and g.modifyUserId=#modifyUserId# </isNotEmpty>
+            <isNotEmpty property="modifyUserName"> and g.modifyUserName=#modifyUserName# </isNotEmpty>
+            <isNotEmpty property="beginModifyTime"> <![CDATA[ and g.modifyTime>=#beginModifyTime# ]]></isNotEmpty>
+            <isNotEmpty property="endModifyTime"> <![CDATA[ and g.modifyTime<=#endModifyTime# ]]></isNotEmpty>
+            <isNotEmpty property="beginVersionNo"> <![CDATA[ and g.versionNo>=#beginVersionNo# ]]></isNotEmpty>
+            <isNotEmpty property="endVersionNo"> <![CDATA[ and g.versionNo<=#endVersionNo# ]]></isNotEmpty>
+            <isNotEmpty property="itemCondition">
+                <![CDATA[
+	                and (select count(*) from ${GFORMITEM} gfi2 where gfi2.fdocId=g.fdocId and gfi2.formId=g.formId and ($itemCondition$))
+	                >= #itemConditionHitCounts#
+                ]]>
+            </isNotEmpty>
+        </dynamic>) b
+        order by evaluationTime,createtime
+        ${WITHUR}
+    </select>
+
+
+    <select id="selectGFormListWithConditionPlus" parameterClass="com.inqgen.nursing.dynamic.form.bean.SearchParamGF" resultMap="formResult3">
+        select
+		<isEqual property="queryTotalCounts" compareValue="true">
+		    COUNT(*) as totalCounts
+		    ,null as formId
+			,null as fdocId
+			,null as formType
+			,null as totalScore
+			,null as status
+			,null as formVersionId
+			,null as evaluationTime
+			,null as userId
+			,null as userName
+			,null as createTime
+			,null as modifyId
+			,null as modifyName
+			,null as versionNo
+			,null as modifyTime
+			,null as content
+			,null as sourceId
+		</isEqual>
+		<isEqual property="queryTotalCounts" compareValue="false">
+			b.*, null as totalCounts
+	    </isEqual>
+        from(
+        SELECT cast(ROW_NUMBER() OVER(order by evaluationTime desc,g.createTime desc) as int) AS rownumber
+        ,g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo
+        ,gi.sourceId
+        FROM ${GFORM} g
+	    <![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+        where g.formType=#formType#
+        <isEqual property="hasSourceId" compareValue="true">
+		    and gi.SOURCEID=#sourceId#
+        </isEqual>
+        <isEqual property="hasSourceIds" compareValue="true">
+		    and gi.SOURCEID in
+	    	<iterate property="sourceIds" open="(" close=")" conjunction=",">
+	    	    #sourceIds[]:VARCHAR#
+	    	</iterate>
+        </isEqual>
+        <dynamic prepend="">
+            <isNotEmpty property="formId"> and g.formId=#formId# </isNotEmpty>
+            <isNotEmpty property="beginDate"> <![CDATA[ and g.evaluationTime>=#beginDate# ]]></isNotEmpty>
+            <isNotEmpty property="endDate"> <![CDATA[ and g.evaluationTime<=#endDate# ]]></isNotEmpty>
+            <isNotEmpty property="beginTotalScore"> <![CDATA[ and g.totalScore>=#beginTotalScore# ]]></isNotEmpty>
+            <isNotEmpty property="endTotalScore"> <![CDATA[ and g.totalScore<=#endTotalScore# ]]></isNotEmpty>
+            <isNotEmpty property="beginCreateTime"> <![CDATA[ and g.createTime>=#beginCreateTime# ]]></isNotEmpty>
+            <isNotEmpty property="endCreateTime"> <![CDATA[ and g.createTime<=#endCreateTime# ]]></isNotEmpty>
+            <isNotEmpty property="status"> and g.status=#status# </isNotEmpty>
+            <isNotEmpty property="statusArr">
+                and g.status in
+				<iterate property="statusArr" open="(" close=")" conjunction=",">
+		    	    #statusArr[]:VARCHAR#
+		    	</iterate>
+		    </isNotEmpty>
+            <isNotEmpty property="modifyUserId"> and g.modifyUserId=#modifyUserId# </isNotEmpty>
+            <isNotEmpty property="modifyUserName"> and g.modifyUserName=#modifyUserName# </isNotEmpty>
+            <isNotEmpty property="beginModifyTime"> <![CDATA[ and g.modifyTime>=#beginModifyTime# ]]></isNotEmpty>
+            <isNotEmpty property="endModifyTime"> <![CDATA[ and g.modifyTime<=#endModifyTime# ]]></isNotEmpty>
+            <isNotEmpty property="beginVersionNo"> <![CDATA[ and g.versionNo>=#beginVersionNo# ]]></isNotEmpty>
+            <isNotEmpty property="endVersionNo"> <![CDATA[ and g.versionNo<=#endVersionNo# ]]></isNotEmpty>
+            <isNotEmpty property="itemCondition">
+                <![CDATA[
+	                and (select count(*) from ${GFORMITEM} gfi2 where gfi2.fdocId=g.fdocId and gfi2.formId=g.formId and ($itemCondition$))
+	                >= #itemConditionHitCounts#
+                ]]>
+            </isNotEmpty>
+        </dynamic>) b
+		<isEqual property="queryTotalCounts" compareValue="false">
+			<isNotNull  property="beginIndex">
+		        <isNotNull  property="endIndex">
+			        where 1=1 
+			        <![CDATA[ and ( b.rownumber BETWEEN cast(#beginIndex# as int) AND cast(#endIndex# as int) ) ]]>
+				</isNotNull>
+			</isNotNull>
+			order by b.rownumber
+	    </isEqual>
+        ${WITHUR}
+    </select>
+
+    <select id="selectGFormListWithConditionPlusCountSQLServer" parameterClass="com.inqgen.nursing.dynamic.form.bean.SearchParamGF" resultClass="java.lang.Integer">
+        select count(*) as totalCounts from (
+            SELECT (ROW_NUMBER() OVER(order by g.evaluationTime desc, g.createTime desc)) AS rownumber,
+                   g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,
+                   g.userName,g.createTime,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gi.sourceId
+            FROM ${GFORM} g <![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+            where g.formType = #formType#
+            <isEqual property="hasSourceId" compareValue="true">
+                and gi.SOURCEID = #sourceId#
+            </isEqual>
+            <isEqual property="hasSourceIds" compareValue="true">
+                and gi.SOURCEID in
+                <iterate property="sourceIds" open="(" close=")" conjunction=",">
+                    #sourceIds[]:VARCHAR#
+                </iterate>
+            </isEqual>
+            <dynamic prepend="">
+                <isNotEmpty property="formId"> and g.formId=#formId# </isNotEmpty>
+                <isNotEmpty property="beginDate"> <![CDATA[ and g.evaluationTime>=#beginDate# ]]></isNotEmpty>
+                <isNotEmpty property="endDate"> <![CDATA[ and g.evaluationTime<=#endDate# ]]></isNotEmpty>
+                <isNotEmpty property="beginTotalScore"> <![CDATA[ and g.totalScore>=#beginTotalScore# ]]></isNotEmpty>
+                <isNotEmpty property="endTotalScore"> <![CDATA[ and g.totalScore<=#endTotalScore# ]]></isNotEmpty>
+                <isNotEmpty property="beginCreateTime"> <![CDATA[ and g.createTime>=#beginCreateTime# ]]></isNotEmpty>
+                <isNotEmpty property="endCreateTime"> <![CDATA[ and g.createTime<=#endCreateTime# ]]></isNotEmpty>
+                <isNotEmpty property="status"> and g.status=#status# </isNotEmpty>
+                <isNotEmpty property="statusArr">
+                    and g.status in
+                    <iterate property="statusArr" open="(" close=")" conjunction=",">
+                        #statusArr[]:VARCHAR#
+                    </iterate>
+                </isNotEmpty>
+                <isNotEmpty property="modifyUserId"> and g.modifyUserId=#modifyUserId# </isNotEmpty>
+                <isNotEmpty property="modifyUserName"> and g.modifyUserName=#modifyUserName# </isNotEmpty>
+                <isNotEmpty property="beginModifyTime"> <![CDATA[ and g.modifyTime>=#beginModifyTime# ]]></isNotEmpty>
+                <isNotEmpty property="endModifyTime"> <![CDATA[ and g.modifyTime<=#endModifyTime# ]]></isNotEmpty>
+                <isNotEmpty property="beginVersionNo"> <![CDATA[ and g.versionNo>=#beginVersionNo# ]]></isNotEmpty>
+                <isNotEmpty property="endVersionNo"> <![CDATA[ and g.versionNo<=#endVersionNo# ]]></isNotEmpty>
+                <isNotEmpty property="itemCondition">
+                    <![CDATA[
+                        and (select count(*) from ${GFORMITEM} gfi2 where gfi2.fdocId=g.fdocId and gfi2.formId=g.formId and ($itemCondition$)) >= #itemConditionHitCounts#
+                    ]]>
+                </isNotEmpty>
+            </dynamic>
+        ) b ${WITHUR}
+    </select>
+
+    <select id="selectFormItem" parameterClass="java.util.HashMap" resultMap="formItemResult">
+        SELECT formId, itemKey, itemValue, otherValue
+        FROM ${GFORMITEM} where fdocId=#fdocId# and formId=#formId#
+        <isNotEmpty property="itemKey"> <![CDATA[ and itemKey=#itemKey# ]]></isNotEmpty>
+        <isNotEmpty property="itemValue"> <![CDATA[ and itemValue=#itemValue# ]]></isNotEmpty>
+        ${WITHUR}
+    </select>
+
+    <resultMap id="gformExcelConfResult" class="com.inqgen.nursing.dynamic.form.bean.GformExcelConf" groupBy="formType">
+        <result property="id" column="id"/>
+        <result property="formType" column="formType"/>
+        <result property="formDesc" column="formDesc"/>
+        <result property="itemList" resultMap="com.inqgen.nursing.dynamic.form.dao.GFormDao.gformItemExcelConfResult"/>
+    </resultMap>
+    <resultMap id="gformItemExcelConfResult" class="com.inqgen.nursing.dynamic.form.bean.GformItemExcelConf">
+        <result property="itemDesc" column="itemDesc"/>
+        <result property="itemNameInner" column="itemNameInner"/>
+        <result property="itemNameOuter" column="itemNameOuter"/>
+        <result property="dataFormat" column="dataFormat"/>
+    </resultMap>
+
+    <select id="selectGformExcelConfByParent" parameterClass="java.lang.String" resultMap="gformExcelConfResult">
+        select ge.id,ge.formDesc, ge.formType, gie.itemDesc, gie.itemNameInner, gie.itemNameOuter, gie.dataFormat
+        from ${GEMCCONF} ge left join ${GIEMCCONF} gie on ge.formType = gie.formType and gie.itemOrder is not null
+        where ge.parentForm = #parentForm# and ge.formOrder is not null
+        order by formOrder, itemOrder
+        ${WITHUR}
+    </select>
+    <select id="selectGformExcelConfByType" parameterClass="java.lang.String" resultMap="gformExcelConfResult">
+        select ge.id,ge.formDesc, ge.formType, gie.itemDesc, gie.itemNameInner, gie.itemNameOuter, gie.dataFormat
+        from ${GEMCCONF} ge left join ${GIEMCCONF} gie on ge.formType = gie.formType and gie.itemOrder is not null
+        where ge.formType =#formType# and ge.formOrder is not null
+        order by formOrder, itemOrder
+        ${WITHUR}
+    </select>
+    <select id="selectGformTypeRelation" resultClass="com.inqgen.nursing.dynamic.form.bean.GformExcelConf">
+        select id,formType,parentForm from ${GEMCCONF} where formOrder is not null
+        ${WITHUR}
+    </select>
+    <select id="selectDepartList" resultClass="com.inqgen.nursing.dynamic.form.bean.Depart">
+        select id,departId,departName,departType,parentId from ${DEPART} where ${departOrder} is not null order by departType,parentId,${departOrder}
+            ${WITHUR}
+    </select>
+    <resultMap id="userDepartResult" class="com.inqgen.nursing.dynamic.form.bean.UserDepart" groupBy="userId">
+        <result property="userId" column="userId"/>
+        <result property="departIds" resultMap="com.inqgen.nursing.dynamic.form.dao.GFormDao.departId"/>
+        <result property="groupIds" resultMap="com.inqgen.nursing.dynamic.form.dao.GFormDao.groupId"/>
+    </resultMap>
+    <resultMap id="departId" class="java.lang.String">
+        <result property="value" column="departId"/>
+    </resultMap>
+    <resultMap id="groupId" class="java.lang.String">
+        <result property="value" column="groupId"/>
+    </resultMap>
+    <select id="selectUserDepartList" parameterClass="java.lang.String" resultMap="userDepartResult">
+        select userId,departId,groupId from ${USERDEPART} where userId=#userId#
+           ${WITHUR}
+     </select>
+    <select id="selectGformByFdocId" parameterClass="java.lang.String" resultMap="formResult">
+        select * from ${GFORM} where fdocId=#fdocId#  ${WITHUR}
+    </select>
+    <select id="selectGformByFdocIds" parameterClass="java.util.HashMap" resultMap="formResult">
+        select * from ${GFORM} where fdocId IN
+        <iterate property="fdocIds" open="(" close=")" conjunction=",">
+            #fdocIds[]#
+        </iterate>  ${WITHUR}
+    </select>
+    <update id="updateGFormContent" parameterClass="java.util.HashMap">
+        update ${GFORM} set CONTENT = #content# where FDOCID=#fdocId# and FORMID=#formId#
+    </update>
+    <update id="updateGFormItemValue" parameterClass="java.util.HashMap">
+        update ${GFORMITEM} set ITEMVALUE = #itemValue# where FDOCID=#fdocId# and FORMID=#formId# AND ITEMKEY=#itemKey#
+    </update>
+
+    <select id="selectFormTypeToProduceXml" parameterClass="java.util.HashMap" resultMap="formAutoItemsResult">
+        select * from (SELECT g.fdocId, g.formId, g.formType, totalScore, g.status, formVersionId, g.evaluationTime
+        , g.userId, g.userName, g.createTime, g.modifyId, g.modifyName, g.modifyTime, g.versionNo
+        <isNotEmpty property="hasContent">, g.content as content</isNotEmpty>
+        <isEmpty property="hasContent">, null content </isEmpty>
+        , gi.SOURCEID
+        FROM ${GFORM} g left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID where 1=1
+        <dynamic prepend="">
+            <isNotNull property="formTypes"> and g.formType IN
+                <iterate property="formTypes" open="(" close=")" conjunction=",">
+                    #formTypes[]#
+                </iterate>
+            </isNotNull>
+            <isNotEmpty property="beginDate"> <![CDATA[ and g.evaluationTime>=#beginDate# ]]></isNotEmpty>
+            <isNotEmpty property="endDate"> <![CDATA[ and g.evaluationTime<=#endDate# ]]></isNotEmpty>
+            <isNotEmpty property="formId"> <![CDATA[ and g.formId=#formId# ]]></isNotEmpty>
+        </dynamic>
+        <isNotEmpty property="status">
+            and g.status=#status#
+        </isNotEmpty>) b
+        order by evaluationTime, createtime
+        ${WITHUR}
+    </select>
+    
+     <select id="selectFormWithItemsForSign" parameterClass="java.util.HashMap" resultMap="formAndItemsResult">
+        select * from(SELECT g.fdocId,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime,g.userId,g.userName,g.createTime
+        ,g.modifyId,g.modifyName,g.modifyTime,g.versionNo,gfi.itemKey,gfi.itemValue,gfi.otherValue,gi.sourceId
+       <isNotEmpty property="hasContent">,g.content as content</isNotEmpty>
+       <isEmpty property="hasContent">,null content </isEmpty>
+        FROM ${GFORM} g
+        <![CDATA[ left join ${GFORMINDEX} gi on g.FORMID=gi.FORMID]]>
+         left join ${GFORMITEM} gfi on gfi.fdocId=g.fdocId and gfi.formId = g.formId
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="formType"> <![CDATA[g.formType=#formType# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="beginDate"> <![CDATA[evaluationTime>=#beginDate# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="endDate"> <![CDATA[evaluationTime<=#endDate# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="formId"> <![CDATA[g.formId=#formId# ]]></isNotEmpty>
+            <isNotEmpty prepend="and" property="sourceId"> gi.SOURCEID
+                <isNotEqual property="isArray" compareValue="true">=#sourceId#</isNotEqual>
+                <isEqual property="isArray" compareValue="true">in
+                    <iterate property="sourceId" open="(" close=")" conjunction=",">#sourceId[]:VARCHAR#</iterate>
+                </isEqual>
+                <isNotEmpty prepend="and" property="formType">
+                gi.FORMTYPE=#formType#
+                </isNotEmpty>
+                and gi.STATUS in('Y', 'N','D')
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sourceIds"> gi.SOURCEID in
+                <iterate property="sourceIds" open="(" close=")" conjunction=","> #sourceIds[]:VARCHAR# </iterate>
+                <isNotEmpty prepend="and" property="formType"> gi.FORMTYPE=#formType# </isNotEmpty>
+                and gi.STATUS in('Y', 'N','D')
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="items">
+                (select count(*) from ${GFORMITEM} gfi where gfi.fdocId=g.fdocId and gfi.formId = g.formId
+                <iterate property="items" prepend="and" open="(" close=")" conjunction="or">
+                    <![CDATA[ (gfi.itemKey=#items[].key# and gfi.itemValue=#items[].value#)]]>
+                </iterate>
+                )>0
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="itemKeys">
+                gfi.itemKey in
+                <iterate property="itemKeys" open="(" close=")" conjunction=",">
+                    #itemKeys[]#
+                </iterate>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="itemKey">
+                gfi.itemKey=#itemKey#
+            </isNotEmpty>
+            <isEmpty prepend="and" property="status">
+                g.status in('Y', 'N','D')
+            </isEmpty>
+            <isNotEmpty prepend="and" property="status">
+                g.status=#status#
+            </isNotEmpty>
+             <isNotEmpty prepend="and" property="fdocId">
+                g.fdocId=#fdocId#
+            </isNotEmpty>
+        </dynamic>
+            ) b
+        order by evaluationTime,createtime
+        ${WITHUR}
+    </select>
+</sqlMap>

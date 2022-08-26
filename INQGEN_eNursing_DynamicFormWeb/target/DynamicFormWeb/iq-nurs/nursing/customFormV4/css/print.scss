@@ -1,0 +1,7 @@
+/*externalData元件下的data*/
+.externalDataShowDataDiv {
+    max-width: 100%;
+    .externalData:not(.show) {
+        display: none;
+    }
+}

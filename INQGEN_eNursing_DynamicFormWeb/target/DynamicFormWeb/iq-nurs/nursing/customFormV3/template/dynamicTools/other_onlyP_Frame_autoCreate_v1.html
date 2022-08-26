@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="../customFormV3/css/CDS_Drug/reset.css?csSvnVersion=" />
+<link rel="stylesheet" type="text/css" href="../customFormV3/plugins/CDS_Drug/icofont/icofont.min.css?csSvnVersion=">
+<!-- <link rel="stylesheet" href="../customFormV3/plugins/CDS_Drug/bootstrap/css/bootstrap.css?csSvnVersion=" /> -->
+<link rel="stylesheet" href="../customFormV3/css/CDS_Drug/style.css?csSvnVersion=" />
+<!-- <script type="text/javascript" src="../customFormV3/plugins/CDS_Drug/bootstrap/js/bootstrap.js?csSvnVersion="></script> -->
+<script type="text/javascript" src="../customFormV3/js/CDS_Drug/custom.js?csSvnVersion="></script>
+
+
+{{each $data.items item idx}}{{item.title}} : <br/>
+<p class="{{if item.controlType=="group"}}pFormItemGroup{{else}}pFormItem{{/if}}" data-bean="{{item.name}}" />
+{{/each}}

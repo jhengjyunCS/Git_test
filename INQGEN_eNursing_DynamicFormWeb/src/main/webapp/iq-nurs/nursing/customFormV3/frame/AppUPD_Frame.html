@@ -1,0 +1,212 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div class="container col-md-12 main-contrnt">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <div class="col-xs-2 col-md-2">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pt-pa-info">?</button>
+            </div>
+            <div class="modal fade main-contrnt" id="pt-pa-info" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 class="modal-title">评估结果</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <strong>成人≥3分，小于或等于4岁的儿童≥1分，属于高危险性跌倒个案；应确立护理问题：高危险性伤害/跌倒。 </strong>
+                            </p>
+                            <p>
+                                <strong>(1)</strong>普通病房病患评估总分≧3分，常规7天评估一次，持续评估至小于3分；加护病房病患均属于高危险性 跌倒病人，只需于转入或是入院时进行一次跌倒危险性评估，于护理记录中确立护理问题及措施。
+                            </p>
+                            <p>
+                                <strong>(2)</strong>若评估为总分＜3分的病患，不再评估，直至产生新的评估时机。
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div align="center" class="col-xs-5  col-md-3">
+                <input type="button" value=" 保 存 " onclick="dynamicFormSave(this)" />
+            </div>
+            <div align="center" class="col-xs-4  col-md-3">
+                <a class="" href="javascript: return false;" onclick="doURL('AppLIST.html')">
+                    <input type="button" value=" 清 除 " /></a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="datetimepicker1" class="col-xs-3 col-md-2">纪录日期</label>
+            <div class="col-xs-5 col-md-5">
+                <input type="text" class="form-control" id="datetimepicker1" readonly />
+            </div>
+            <div class="col-xs-4 col-md-5">
+                <input type="text" class="form-control" id="datetimepicker2" readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">陪伴者：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm1" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">年龄≧65岁 ≦4岁：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm2" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">意识状态GCS：7-14分：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm3" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">Hb值偏低 ≤80g／l或Hct≤24%：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm4" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">头晕、晕眩：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm5" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">过去半年有跌倒经验：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm6" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">病患身上有管路留置(iv 02或引流管)：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm7" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">主诉视觉不良：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm8" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">辅具使用(使用助行器或轮椅)：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm9" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">医嘱下达需陪护1人，实际却无陪：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm10" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">排泄情形(失禁、腹泻、尿频或需人协助如厕)：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm11" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">使用增加跌倒风险药物：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm12" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">步态不稳或肢体活动受限：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm13" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">总分：</span>
+                <span id="FallBenQScore">0</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">预防跌倒护理措施：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm14" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-12">
+                <span class="span1">【结果评值】</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">是否跌倒：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm15" />
+                <p class="pFormItem" data-bean="FallBenQForm17" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">是否了解造成跌倒危险因素：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm16" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12 col-md-2">
+                <span class="span1">病患或照护者：</span>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <p class="pFormItem" data-bean="FallBenQForm18" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-2 col-md-2">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pt-pa-info">?</button>
+            </div>
+            <div align="center" class="col-xs-5  col-md-3">
+                <input type="button" value=" 保 存 " onclick="dynamicFormSave(this)" />
+            </div>
+            <div align="center" class="col-xs-4  col-md-3">
+                <a class="" href="javascript: return false;" onclick="doURL('AppLIST.html')">
+                    <input type="button" value=" 清 除 " /></a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+</head>
+
+<body>
+    mbnisAPI測試頁...
+    <input type="button" value="顯示儲存物件" onclick="console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log((dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[3].itemValue));console.log(JSON.parse(dynamicFormSave_getItems(this)[2].itemValue));console.log(JSON.parse(dynamicFormSave_getItems(this)[3].itemValue));console.log(JSON.parse(dynamicFormSave_getItems(this)[4].itemValue))"/>
+    <style>
+        .tableType1>thead tr th{
+            color: rgb(26,100,195);
+            background-color: rgb(189,189,252);
+            border:solid 1px rgb(122,40,81);
+            border-radius: 2px;
+            min-width:80px;
+            padding:2px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #div_SHIFTNAME input[type=radio]{
+            width: 0px;
+            float: left;
+        }
+
+        #div_SHIFTNAME label{
+            padding:0px 3px;
+        }
+
+        #div_SHIFTNAME input[type=radio] + label{
+            color: rgb(26,100,195);
+            background-color: rgb(189,189,252);
+            border:solid 1px rgb(122,40,81);
+            border-radius: 2px;
+            min-width:80px;
+            padding:2px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .labelChecked{
+            color: rgb(122,40,81) !important;
+            background-color: rgb(204,102,153) !important;
+            cursor: pointer;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="../customFormV3/css/CDS.css?csSvnVersion=">
+    <table class="tableType1" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th>班別</th>
+                <td>
+                    <p class="pFormItem" data-bean="SHIFTNAME" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}" />
+                </td>
+                <th>點班日期</th>
+                <td>
+                    <p class="pFormItem" data-bean="OCCURDATE" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}" />
+                </td>
+            </tr>
+            <tr>
+            <th colspan="4">管制藥明細</th>
+            </tr>
+            <tr>
+            <td colspan="4" ><br>
+                <table class="tableType2" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th colspan="9" bgcolor=#ffffff>【一級】</th>
+                        </tr>
+                        <tr>
+                            <th>藥品名稱</th>
+                            <th>基本量</th>
+                            <th>短期借入量</th>
+                            <th>暫缺量</th>
+                            <th>破損量</th>
+                            <th>使用量</th>
+                            <th>空瓶/廢片量</th>
+                            <th>結存量</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pFormItemGroup" data-bean="LevelOne">
+                            <td>
+                                <p class="pFormItem" data-bean="DrugName" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="ControlBasicQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="ShortDrugsQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="TemporaryQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="DamagedQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="UsageQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="DiscardQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="InventoryQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="LevelOne-removeButton" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="pFormItem" data-bean="LevelOne-button"></label></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table class="tableType2" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th colspan="9" bgcolor=#ffffff>【二級】</th>
+                        </tr>
+                        <tr>
+                            <th>藥品名稱</th>
+                            <th>基本量</th>
+                            <th>短期借入量</th>
+                            <th>暫缺量</th>
+                            <th>破損量</th>
+                            <th>使用量</th>
+                            <th>空瓶/廢片量</th>
+                            <th>結存量</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pFormItemGroup" data-bean="LevelTwo">
+                            <td>
+                                <p class="pFormItem" data-bean="DrugName" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="ControlBasicQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="ShortDrugsQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="TemporaryQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="DamagedQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="UsageQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="DiscardQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="InventoryQty" />
+                            </td>
+                            <td>
+                                <p class="pFormItem" data-bean="LevelTwo-removeButton" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="pFormItem" data-bean="LevelTwo-button"></label></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            </tr>
+        </thead>
+    </table>
+    <br>
+    <table class="tableType1" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th>點班者</th>
+                <th>覆核者</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p class="pFormItem" data-bean="USERNAME" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}" />
+                </td>
+
+                <td>
+                    <p class="pFormItem" data-bean="ReviewerName" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}" />
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+//創建group底下的元件
+function createFormItemGroup(ele, groupBean){
+    var $groupEle;
+    if (ele instanceof Element){
+        var parentNode = getDataset(ele).parentnode;
+        var parent = getDataset(ele).parent;
+        if (parentNode!=undefined){
+            $groupEle = $(".pFormItemGroup[data-bean='"+groupBean+"'][data-parentnode='"+parentNode+"'][data-grouptemplate='true']");
+        }else if (parent==""){
+            $groupEle = $(".pFormItemGroup[data-bean='"+groupBean+"'][data-grouptemplate='true']");
+        }
+    }else{
+        alert("沒給ele的 createFormItemGroup() 尚未完成....");
+    }
+    if ($groupEle.length>0){
+        dynamicForm.groupCreate(-1, groupBean, $groupEle, dynamicFormTemplate.hashItems);
+    }else{
+        alert("找不到formItemGroup");
+    }
+}
+//刪除group底下的元件
+function removeFormItemGroup(ele, groupBean){
+    var $groupEle;
+    if (ele instanceof Element){
+        var parentNode = getDataset(ele).parentnode;
+        $groupEle = $(".pFormItemGroup[data-bean='"+groupBean+"'][data-nodeid='"+parentNode+"']");
+    }else{
+        alert("沒給ele的 createFormItemGroup() 尚未完成....");
+    }
+    if ($groupEle.length>0){
+        dynamicForm.groupRemove($groupEle);
+    }else{
+        alert("找不到formItemGroup");
+    }
+}
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+dynamicForm.searchParamDF.formType = "PDR1";
+dynamicForm.searchParamDF.frameModel = "xxxx";
+// basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, function(formFrame) {
+//     if (formFrame != null) {
+//         var newVersionNo = parseFloat(formFrame.newVersionNo);
+//         versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+//         appendInit(formFrame.content);
+//     }
+// }, function() {});
+//gForm
+var gFormJS = nursing.createGForm();
+//查詢該sourceId和formType下的所有數據
+//     3ab36859ee644ae4b5af77415e618128
+// 8bb330e61d894a30a7d9608dc9c2fc5c
+gFormJS.searchParamGF.sourceIds = ["formTemplate"];
+gFormJS.searchParamGF.formType = "formTemplate";
+gFormJS.searchParamGF.formId = "7135975e30734999b26429ad34cf43eb";
+gFormJS.searchParamGF.beginDate = "2019-6-4 03:16:04";
+gFormJS.searchParamGF.endDate = "2019-09-31";
+// gFormJS.searchParamGF.beginTotalScore = "1";
+// gFormJS.searchParamGF.endTotalScore = "1";
+gFormJS.searchParamGF.beginCreateTime = "2019-01-01";
+gFormJS.searchParamGF.endCreateTime = "2019-09-31";
+gFormJS.searchParamGF.status = "D";
+// gFormJS.searchParamGF.statusArr = ["Y","N"];
+gFormJS.searchParamGF.modifyUserId = "administrator";
+gFormJS.searchParamGF.modifyUserName = "管理员";
+gFormJS.searchParamGF.beginModifyTime = "2019-01-01";
+gFormJS.searchParamGF.endModifyTime = "2019-09-31";
+gFormJS.searchParamGF.beginVersionNo = 0;
+gFormJS.searchParamGF.endVersionNo = 300;
+gFormJS.searchParamGF.itemCondition = "(gfi2.itemkey='ftFormType' AND gfi2.itemvalue = 'mjAdultForm_V3') OR (gfi2.itemkey='ftFormName' AND gfi2.itemvalue = '入院护理评估-成人')";
+gFormJS.searchParamGF.itemConditionHitCounts = 2;
+// gFormJS.getGFormListWithCondition(gFormJS, successCall2, function() {});
+
+//查詢動態表單
+var call2 = false;
+
+function successCall2(result) {
+    if (call2) return;
+    else call2 = true;
+    $("#tableList").find("tr:has(td)").remove();
+    gForms = result;
+    if (window.console) console.log(gForms);
+}
+
+var dynamicFormTemplate = {
+    "formVersionId": "8c0a616a-bfcc-4007-b085-adfabddd02db",
+    "formName": "點班",
+    "formType": "CDSControlCheck",
+    "formModel": "CDSControlCheck",
+    "hashItems":
+    {
+        "LevelOne":{
+            "name": "LevelOne",
+            "children":"DrugName,ControlBasicQty,ShortDrugsQty,TemporaryQty,DamagedQty,DiscardQty,InventoryQty",
+            "controlType":"group"
+        },
+        "LevelOne-button":{
+            "name": "LevelOne-button",
+            "controlType":"button",
+            "uiDesc": ["新增 LevelOne"],
+            "show": true,
+            "click": "createFormItemGroup(this,'LevelOne')"
+        },
+        "LevelOne-removeButton":{
+            "name": "LevelOne-removeButton",
+            "controlType":"button",
+            "uiDesc": ["刪除 LevelOne"],
+            "show": true,
+            "click": "removeFormItemGroup(this,'LevelOne')"
+        },
+        "LevelTwo":{
+            "name": "LevelTwo",
+            "children":"DrugName,ControlBasicQty,ShortDrugsQty,TemporaryQty,DamagedQty,DiscardQty,InventoryQty",
+            "controlType":"group"
+        },
+        "LevelTwo-button":{
+            "name": "LevelTwo-button",
+            "controlType":"button",
+            "uiDesc": ["新增 LevelTwo"],
+            "show": true,
+            "click": "createFormItemGroup(this,'LevelTwo')"
+        },
+        "LevelTwo-removeButton":{
+            "name": "LevelTwo-removeButton",
+            "controlType":"button",
+            "uiDesc": ["刪除 LevelTwo"],
+            "show": true,
+            "click": "removeFormItemGroup(this,'LevelTwo')"
+        },
+        "UsageQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "UsageQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "使用量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "ControlBasicQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "ControlBasicQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "基本量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "OCCURDATE":
+        {
+            "controlType": "text",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "OCCURDATE",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "點班日期",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "ReviewerName":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "ReviewerName",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "覆核者",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "DamagedQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "DamagedQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "破損量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "DrugName":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "DrugName",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "藥品名稱",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "ShortDrugsQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "ShortDrugsQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "短期借入量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "USERNAME":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "USERNAME",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "點班者",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "UsageQtyUnit":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "UsageQtyUnit",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "使用量單位",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "DiscardQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "DiscardQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "空瓶/廢片量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "InventoryQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "InventoryQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "結存量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "TemporaryQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "TemporaryQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "暫缺量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "SHIFTNAME":
+        {
+            "controlType": "radio",
+            "educationNos": [null],
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "SHIFTNAME",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "班別",
+            "totalScoreType": "total",
+            "uiDesc": ["白班", "晚班", "夜班"],
+            "uiScore": [null],
+            "uiValue": ["白班", "晚班", "夜班"]
+        },
+        "LevelOne-DrugName":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-DrugName",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "藥品名稱",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-ControlBasicQty":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-ControlBasicQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "基本量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-ShortDrugsQty":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-ShortDrugsQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "短期借入量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-TemporaryQty":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-TemporaryQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "暫缺量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-DamagedQty":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-DamagedQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "破損量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-DiscardQty":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-DiscardQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "空瓶/廢片量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-InventoryQty":
+        {
+            "parent":"LevelOne",
+            "name": "LevelOne-InventoryQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "結存量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelOne-UsageQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "UsageQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "使用量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-DrugName":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-DrugName",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "藥品名稱",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-ControlBasicQty":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-ControlBasicQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "基本量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-ShortDrugsQty":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-ShortDrugsQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "短期借入量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-TemporaryQty":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-TemporaryQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "暫缺量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-DamagedQty":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-DamagedQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "破損量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-DiscardQty":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-DiscardQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "空瓶/廢片量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-InventoryQty":
+        {
+            "parent":"LevelTwo",
+            "name": "LevelTwo-InventoryQty",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "結存量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "LevelTwo-UsageQty":
+        {
+            "controlType": "text",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "UsageQty",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "使用量",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        }
+    },
+    "highRisk": 0,
+    "peopleCategory": "adult",
+    "version": 0
+};
+
+dynamicFormTemplate.items=[];
+for (var key in dynamicFormTemplate.hashItems) {
+    if (dynamicFormTemplate.hashItems.hasOwnProperty(key)){
+        dynamicFormTemplate.items.push(dynamicFormTemplate.hashItems[key]);
+    }
+}
+console.log(dynamicFormTemplate);
+
+var gForm = {};
+gForm.gformItems=[{"itemKey":"OCCURDATE","itemValue":"","otherValue":"","nodeId":""},{"itemKey":"USERNAME","itemValue":"","otherValue":"","nodeId":""},{"itemKey":"ReviewerName","itemValue":"","otherValue":"","nodeId":""},{"itemKey":"LevelTwo","itemValue":"{\"LevelTwo\":{\"0\":{\"InventoryQty\":{\"itemKey\":\"LevelTwo-0-InventoryQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-InventoryQty\"},\"DiscardQty\":{\"itemKey\":\"LevelTwo-0-DiscardQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-DiscardQty\"},\"UsageQty\":{\"itemKey\":\"LevelTwo-0-UsageQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-UsageQty\"},\"DamagedQty\":{\"itemKey\":\"LevelTwo-0-DamagedQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-DamagedQty\"},\"TemporaryQty\":{\"itemKey\":\"LevelTwo-0-TemporaryQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-TemporaryQty\"},\"ShortDrugsQty\":{\"itemKey\":\"LevelTwo-0-ShortDrugsQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-ShortDrugsQty\"},\"ControlBasicQty\":{\"itemKey\":\"LevelTwo-0-ControlBasicQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-ControlBasicQty\"},\"DrugName\":{\"itemKey\":\"LevelTwo-0-DrugName\",\"itemValue\":\"45grg\",\"otherValue\":\"\",\"nodeId\":\"LevelTwo-0-DrugName\"}}}}"},{"itemKey":"LevelOne","itemValue":"{\"LevelOne\":{\"0\":{\"InventoryQty\":{\"itemKey\":\"LevelOne-0-InventoryQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-InventoryQty\"},\"DiscardQty\":{\"itemKey\":\"LevelOne-0-DiscardQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-DiscardQty\"},\"UsageQty\":{\"itemKey\":\"LevelOne-0-UsageQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-UsageQty\"},\"DamagedQty\":{\"itemKey\":\"LevelOne-0-DamagedQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-DamagedQty\"},\"TemporaryQty\":{\"itemKey\":\"LevelOne-0-TemporaryQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-TemporaryQty\"},\"ShortDrugsQty\":{\"itemKey\":\"LevelOne-0-ShortDrugsQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-ShortDrugsQty\"},\"ControlBasicQty\":{\"itemKey\":\"LevelOne-0-ControlBasicQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-ControlBasicQty\"},\"DrugName\":{\"itemKey\":\"LevelOne-0-DrugName\",\"itemValue\":\"333\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-0-DrugName\"}},\"1\":{\"InventoryQty\":{\"itemKey\":\"LevelOne-1-InventoryQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-InventoryQty\"},\"DiscardQty\":{\"itemKey\":\"LevelOne-1-DiscardQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-DiscardQty\"},\"UsageQty\":{\"itemKey\":\"LevelOne-1-UsageQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-UsageQty\"},\"DamagedQty\":{\"itemKey\":\"LevelOne-1-DamagedQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-DamagedQty\"},\"TemporaryQty\":{\"itemKey\":\"LevelOne-1-TemporaryQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-TemporaryQty\"},\"ShortDrugsQty\":{\"itemKey\":\"LevelOne-1-ShortDrugsQty\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-ShortDrugsQty\"},\"ControlBasicQty\":{\"itemKey\":\"LevelOne-1-ControlBasicQty\",\"itemValue\":\"3\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-ControlBasicQty\"},\"DrugName\":{\"itemKey\":\"LevelOne-1-DrugName\",\"itemValue\":\"\",\"otherValue\":\"\",\"nodeId\":\"LevelOne-1-DrugName\"}}}}"}];
+gForm = gFormJS.setGFormItemMap(gForm);
+console.log(gForm.gformItemMap);
+
+var thisTimeIsDittoTime = false;
+
+createElement(dynamicFormTemplate.hashItems, pageReady);
+
+
+function pageReady(){
+    console.log("Ready GO!!");
+    $("#div_SHIFTNAME").find("input[type='radio']").click(function(){
+        if (this.checked){
+            $("#label_"+$(this).attr("id")).addClass("labelChecked");
+        }else{
+            $("#label_"+$(this).attr("id")).removeClass("labelChecked");
+        }
+    });
+    setElementValue_GForm();
+}
+</script>

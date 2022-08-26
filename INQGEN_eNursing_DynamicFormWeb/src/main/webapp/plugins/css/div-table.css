@@ -1,0 +1,37 @@
+.table{
+    display: table;
+    border-collapse: collapse;
+    word-break: break-all;
+}
+.caption {
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+}
+.colgroup{
+    display: table-column-group;
+}
+.col{
+    display: table-column;
+}
+.thead{
+    display: table-header-group;
+}
+.tbody{
+    display: table-row-group;
+}
+.tfoot{
+    display: table-footer-group;
+}
+.tr{
+    display: table-row;
+}
+.td, .th {
+    display: table-cell;
+    border: 1px solid gray;
+    text-align: left;
+    vertical-align: middle;
+}
+.th{
+    font-weight: bold;
+}

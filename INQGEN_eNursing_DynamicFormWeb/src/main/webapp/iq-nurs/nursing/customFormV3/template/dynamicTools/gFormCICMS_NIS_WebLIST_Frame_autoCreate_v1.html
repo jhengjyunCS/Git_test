@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="../../../style/styleNis.css?csSvnVersion=" />
+
+<!-- 将被种到#bodyContent的#targetForm里 -->
+<div class="iframe_page">
+    <div class="title between" style="z-index: 999">
+        <div class="flex-end">
+            <h4 style="text-align: center">{{$data.formName}}</h4>
+        </div>
+        <div class="btnAll" style="text-align: center">
+            <input type="button" class="clsButton" value="新增" onclick="doURL('gFormWebADD.html');">
+        </div>
+    </div>
+</div>
+
+<div id="showPageDiv" class="tableAll">
+    <div class="table-responsive">
+        <table id="tableList" class="etable" style="width: 100%">
+            <thead>
+                <tr>
+                    <th scope="col">記錄日期</th>
+                    <th scope="col">狀態</th>
+                    <th scope="col">記錄者</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script id="tableListTr_Template" type="text/html">
+    {{'{'+'{'}}each $data gForms idx{{'}'+'}'}}
+        {{'{'+'{'}}set gForm=gForms.gForm{{'}'+'}'}}
+        <tr>
+            <td class="etd" align=center>
+                {{'{'+'{'}}dateFormat (gForm.createTime, "yyyy/MM/dd HH:mm"){{'}'+'}'}}
+            </td>
+
+            <td class="etd" align=center>
+                {{'{'+'{'}}if gForm.status=="Y"{{'}'+'}'}}正式{{'{'+'{'}}else{{'}'+'}'}}暫存{{'{'+'{'}}/if{{'}'+'}'}}
+            </td>
+            <td class="etd" align=center>
+                {{'{'+'{'+'if gForm.modifyUserName'+'}'+'}'}}
+                    {{'{'+'{'}}gForm.modifyUserName{{'}'+'}'}}
+                {{'{'+'{'+'else'+'}'+'}'}}
+                    {{'{'+'{'}}gForm.creatorName{{'}'+'}'}}
+                {{'{'+'{'+'/if'+'}'+'}'}}
+            </td>
+            <td class="etd" align=center>
+                <a href="javascript: void(0)" onclick="updateForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="{{'{'+'{'}}if gForm.status=="N"{{'}'+'}'}}編輯{{'{'+'{'}}else{{'}'+'}'}}檢視{{'{'+'{'}}/if{{'}'+'}'}}" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="javascript: void(0)" onclick="deleteForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="javascript: void(0)" onclick="printForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="列印" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    {{'{'+'{'}}/each{{'}'+'}'}}
+</script>

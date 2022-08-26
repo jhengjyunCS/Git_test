@@ -1,0 +1,979 @@
+<style>
+    .pageTitle table {
+        width: 100%;
+        border: 1px solid;
+    }
+</style>
+<div class="resultGroup">
+    <div class="pageHeader model">
+        <div class="left">定磐科技</div>
+        <div class="middle">XXX評估表</div>
+        <div class="right">${now.yyyy/MM/dd HH:mm}</div>
+    </div>
+    <div class="pageTitle model">
+        <table class="table table-striped table-bordered">
+            <tbody>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        床號
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="bedno" data-bean="bedno" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;bedno&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;bedno\&quot;,\&quot;data-bean\&quot;:\&quot;bedno\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入床號\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;床號\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;床號\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;605c40df-f900-4936-9854-c467224c52f8\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170221\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;床號\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170221&quot;}"><div class="divFormItem txDivFormItem" id="div_bedno" style=""><label type="label" class="formItem textFormItem " id="bedno" name="bedno" size="0" maxlength="" placeholder="床號" autocomplete="off" data-title="床號" data-bean="bedno" data-id="bedno" data-parent="" data-required="true" data-prompttips="請輸入床號" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="E1021-2" data-othervalue="">E1021-2</label></div></div>
+                </td>
+                <td class="text-center table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        病歷號
+                    </label>
+                </td>
+                <td class="text-center" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="patientid" data-bean="patientid" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;patientid&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;patientid\&quot;,\&quot;data-bean\&quot;:\&quot;patientid\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入病歷號\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;病歷號\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;病歷號\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;377405dd-6209-455d-a2ac-031d95c4e01f\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170245\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;病歷號\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170245&quot;}"><div class="divFormItem txDivFormItem" id="div_patientid" style=""><label type="label" class="formItem textFormItem " id="patientid" name="patientid" size="0" maxlength="" placeholder="病歷號" autocomplete="off" data-title="病歷號" data-bean="patientid" data-id="patientid" data-parent="" data-required="true" data-prompttips="請輸入病歷號" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="0001966922" data-othervalue="">0001966922</label></div></div>
+                </td>
+                <td class="text-center table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        主治醫師
+                    </label>
+                </td>
+                <td class="text-center" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="HVDOCNM" data-bean="HVDOCNM" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;HVDOCNM&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;HVDOCNM\&quot;,\&quot;data-bean\&quot;:\&quot;HVDOCNM\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入主治醫師\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;主治醫師\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;主治醫師\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;b8b84500-9112-4421-8da7-6ebca7443b84\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170315\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;主治醫師\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170315&quot;}"><div class="divFormItem txDivFormItem" id="div_HVDOCNM" style=""><label type="label" class="formItem textFormItem " id="HVDOCNM" name="HVDOCNM" size="0" maxlength="" placeholder="主治醫師" autocomplete="off" data-title="主治醫師" data-bean="HVDOCNM" data-id="HVDOCNM" data-parent="" data-required="true" data-prompttips="請輸入主治醫師" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="張立平" data-othervalue="">張立平</label></div></div>
+                </td>
+                <td class="text-center table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        住院科別
+                    </label>
+                </td>
+                <td class="text-center" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="CURSVCL" data-bean="CURSVCL" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;CURSVCL&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;CURSVCL\&quot;,\&quot;data-bean\&quot;:\&quot;CURSVCL\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入住院科別\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;住院科別\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;住院科別\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;7f62ec1b-0b36-4b9c-a60c-0ff4503e6cae\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170401\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;住院科別\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170401&quot;}"><div class="divFormItem txDivFormItem" id="div_CURSVCL" style=""><label type="label" class="formItem textFormItem " id="CURSVCL" name="CURSVCL" size="0" maxlength="" placeholder="住院科別" autocomplete="off" data-title="住院科別" data-bean="CURSVCL" data-id="CURSVCL" data-parent="" data-required="true" data-prompttips="請輸入住院科別" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="放射腫瘤科            " data-othervalue="">放射腫瘤科            </label></div></div>
+                </td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        姓名
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="patientName" data-bean="patientName" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;patientName&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;patientName\&quot;,\&quot;data-bean\&quot;:\&quot;patientName\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入姓名\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;姓名\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;姓名\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;764abe5d-3cb7-477a-ac78-34f07d2e81fc\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170526\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;姓名\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170526&quot;}"><div class="divFormItem txDivFormItem" id="div_patientName" style=""><label type="label" class="formItem textFormItem " id="patientName" name="patientName" size="0" maxlength="" placeholder="姓名" autocomplete="off" data-title="姓名" data-bean="patientName" data-id="patientName" data-parent="" data-required="true" data-prompttips="請輸入姓名" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="陳O芳" data-othervalue="">陳O芳</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        生日(年齡)
+                    </label>
+                </td>
+                <td class="" colspan="2" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="birthday" data-bean="birthday" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;birthday&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;birthday\&quot;,\&quot;data-bean\&quot;:\&quot;birthday\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;100px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入生日\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;生日\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;生日\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default drag-hover\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;8595dcfd-9f54-442a-8abe-f5403660bd5e\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170534\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;生日\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 100px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170534&quot;}"><div class="divFormItem txDivFormItem" id="div_birthday" style=""><label type="label" class="formItem textFormItem " id="birthday" name="birthday" maxlength="" placeholder="生日" autocomplete="off" data-title="生日" data-bean="birthday" data-id="birthday" data-parent="" data-required="true" data-prompttips="請輸入生日" data-upload="true" style="border-radius: 4px;width:100px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="1967-12-05" data-othervalue="">1967-12-05</label></div></div>
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="age" data-bean="age" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;age&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;age\&quot;,\&quot;data-bean\&quot;:\&quot;age\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;40px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入年齡\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;年齡\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;年齡\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;(\\\&quot;}},{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;764af92d-dce7-4d96-82d8-27a6cd31c124\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170555\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;年齡\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 40px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}},{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;歲)\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170555&quot;}"><div class="divFormItem txDivFormItem" id="div_age" style=""><label class="h6 canEditDiv" draggable="false" data-edit="true">(</label><label type="label" class="formItem textFormItem " id="age" name="age" maxlength="" placeholder="年齡" autocomplete="off" data-title="年齡" data-bean="age" data-id="age" data-parent="" data-required="true" data-prompttips="請輸入年齡" data-upload="true" style="border-radius: 4px;/* width: 30px; */" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="54" data-othervalue="">54</label><label class="h6 canEditDiv" draggable="false" data-edit="true">歲)</label></div></div>
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="table-data-title" colspan="1" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        住院日期
+                    </label>
+                </td>
+                <td class="" colspan="2" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="HADMDT" data-bean="HADMDT" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;HADMDT&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;HADMDT\&quot;,\&quot;data-bean\&quot;:\&quot;HADMDT\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入住院日期\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;住院日期\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;住院日期\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-width\&quot;:\&quot;90px\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default drag-hover\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;c6a8ab57-9078-4bdb-b0c1-26c5e94c80ca\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170651\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;住院日期\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 90px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170651&quot;}"><div class="divFormItem txDivFormItem" id="div_HADMDT" style=""><label type="label" class="formItem textFormItem " id="HADMDT" name="HADMDT" maxlength="" placeholder="住院日期" autocomplete="off" data-title="住院日期" data-bean="HADMDT" data-id="HADMDT" data-parent="" data-required="true" data-prompttips="請輸入住院日期" data-upload="true" style="border-radius: 4px;/* width:90px; */" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="20211210" data-othervalue="">20211210</label></div></div>
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="inDays" data-bean="inDays" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;inDays&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem \&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;inDays\&quot;,\&quot;data-bean\&quot;:\&quot;inDays\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;30px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入住院天數\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;住院天數\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;住院天數\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;(\\\&quot;}},{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;fc96791b-e304-42d5-b304-1e3e64951e51\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170740\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;住院天數\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 30px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}},{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;天)\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170740&quot;}"><div class="divFormItem txDivFormItem" id="div_inDays" style=""><label class="h6 canEditDiv" draggable="false" data-edit="true">(</label><label type="label" class="formItem textFormItem " id="inDays" name="inDays" maxlength="" placeholder="住院天數" autocomplete="off" data-title="住院天數" data-bean="inDays" data-id="inDays" data-parent="" data-required="true" data-prompttips="請輸入住院天數" data-upload="true" style="border-radius: 4px;/* width:30px; */" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="20" data-othervalue="">20</label><label class="h6 canEditDiv" draggable="false" data-edit="true">天)</label></div></div>
+                </td>
+                <td class="text-center hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        申請人員
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteUser" data-bean="noteUser" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteUser&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteUser\&quot;,\&quot;data-bean\&quot;:\&quot;noteUser\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入申請人員\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;申請人員\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;申請人員\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;8d8cfb6a-51db-400f-807a-2935b8c8d619\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171014\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;申請人員\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171014&quot;}"><div class="divFormItem txDivFormItem" id="div_noteUser" style=""><label type="label" class="formItem textFormItem " id="noteUser" name="noteUser" size="0" maxlength="" placeholder="申請人員" autocomplete="off" data-title="申請人員" data-bean="noteUser" data-id="noteUser" data-parent="" data-required="true" data-prompttips="請輸入申請人員" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="administrator" data-othervalue="">administrator</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        申請單位
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="stationid" data-bean="stationid" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;stationid&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;stationid\&quot;,\&quot;data-bean\&quot;:\&quot;stationid\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入申請單位\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;申請單位\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;申請單位\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;2d981d56-4da6-4859-a62f-a5d5fccd61b3\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171016\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;申請單位\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171016&quot;}"><div class="divFormItem txDivFormItem" id="div_stationid" style=""><label type="label" class="formItem textFormItem " id="stationid" name="stationid" size="0" maxlength="" placeholder="申請單位" autocomplete="off" data-title="申請單位" data-bean="stationid" data-id="stationid" data-parent="" data-required="true" data-prompttips="請輸入申請單位" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="10E" data-othervalue="">10E</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        申請時間
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteTime" data-bean="noteTime" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteTime&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteTime\&quot;,\&quot;data-bean\&quot;:\&quot;noteTime\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入申請時間\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;申請時間\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;申請時間\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;0592ec87-44ab-44a3-a16c-a76141032509\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171332\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;申請時間\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171332&quot;}"><div class="divFormItem txDivFormItem" id="div_noteTime" style=""><label type="label" class="formItem textFormItem " id="noteTime" name="noteTime" size="0" maxlength="" placeholder="申請時間" autocomplete="off" data-title="申請時間" data-bean="noteTime" data-id="noteTime" data-parent="" data-required="true" data-prompttips="請輸入申請時間" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="2021/12/18 22:00" data-othervalue="">2021/12/18 22:00</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        照會團隊
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteTeam" data-bean="noteTeam" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteTeam&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteTeam\&quot;,\&quot;data-bean\&quot;:\&quot;noteTeam\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入照會團隊\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;照會團隊\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;照會團隊\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;37daf3da-1925-4108-9c83-6f0924088917\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171020\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;照會團隊\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171020&quot;}"><div class="divFormItem txDivFormItem" id="div_noteTeam" style=""><label type="label" class="formItem textFormItem " id="noteTeam" name="noteTeam" size="0" maxlength="" placeholder="照會團隊" autocomplete="off" data-title="照會團隊" data-bean="noteTeam" data-id="noteTeam" data-parent="" data-required="true" data-prompttips="請輸入照會團隊" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="營養師" data-othervalue="">營養師</label></div></div>
+                </td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        照會原因
+                    </label>
+                </td>
+                <td class="" colspan="7" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteReason" data-bean="noteReason" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteReason&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteReason\&quot;,\&quot;data-bean\&quot;:\&quot;noteReason\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;500px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入照會原因\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;照會原因\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;照會原因\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;28fe478d-a3b0-4b2d-9cdb-bb30c0f8c99b\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171027\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;照會原因\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 500px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false}"><div class="divFormItem txDivFormItem" id="div_noteReason" style=""><label type="label" class="formItem textFormItem " id="noteReason" name="noteReason" maxlength="" placeholder="照會原因" autocomplete="off" data-title="照會原因" data-bean="noteReason" data-id="noteReason" data-parent="" data-required="true" data-prompttips="請輸入照會原因" data-upload="true" style="border-radius: 4px;width:500px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value=""></label></div></div>
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pageFooter model">
+        <div class="left">病歷號</div>
+        <div class="middle">病人姓名</div>
+        <div class="right">第${page.count}頁，共${page.total}頁</div>
+    </div>
+    <table class="resultTable">
+        <thead>
+        <!-- 設定每個tbody>td可容納幾個中文字(僅允許一格為空) -->
+        <tr class="trWordCountSetting">
+            <td data-word-count="18">&nbsp;</td>
+            <td data-word-count="8">&nbsp;</td>
+            <td data-word-count="3">&nbsp;</td>
+            <td data-word-count="15">&nbsp;</td>
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        <tr>
+            <td class="">台南</td>
+            <td class="" colspan="2">王王王王王王王王王</td>
+            <td class="" colspan="2">ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</td>
+        </tr>
+        <tr style="background-color: blue">
+            <td class="">台333北</td>
+            <td class="">8.0%</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="" colspan="2">王王王王王王王王王</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="resultTable">
+        <thead>
+        <!-- 設定每個tbody>td可容納幾個中文字(僅允許一格為空) -->
+        <tr class="trWordCountSetting">
+            <td data-word-count="8">&nbsp;</td>
+            <td data-word-count="8">&nbsp;</td>
+            <td data-word-count="5">&nbsp;</td>
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        <!--        -->
+        <tr>
+            <td class="">縣市</td>
+            <td class="">GDP(億)</td>
+            <td class="">增長率</td>
+            <td class="">排名</td>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中2</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="" colspan="100%"><p style="page-break-after: always;"></p></td>
+        </tr>
+        <tr>
+            <td class="">台中3</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="dontCut">中央氣象局表示，明日水氣偏多，台灣北部及東半部地區有局部短暫雨，中部地區及南部山區亦有零星短暫雨，其他地區及澎湖、金門、馬祖為多雲。
+
+                <img src="../customFormV3/plugins/canvas_BodyRegion/img/baby_640.jpg" alt="" style="width: 100%;">
+                週六冷氣團南下，北台灣率先有冷的感覺，其他地方高溫也會下降，週六至下週二（28日）清晨在冷氣團影響下，各地不論白天、黑夜都有不同程度冷的感覺，這段期間配合華南雲雨區東移，北部及東北部容易下雨，其他地區也有局部短暫雨，尤其下週一（27日）雨勢有機會較為全面，週六至下週一基隆北海岸、大台北山區及東北部地區有局部較大雨勢發生的機率。
+
+                中央氣象局指出，此波冷空氣將持續至下週二清晨，最冷時段預估是週日至下週二清晨，北台灣最低溫可能僅12度或更低，南台灣最低溫可能僅14度或更低，空曠、沿海之感受將更冷​，另外，這波冷空氣不排除來到強烈大陸冷氣團等級，低溫加降雨，冷的感受更加明顯；週六晚間至下週一水氣增多、氣溫下降，若兩個條件有配合，3000公尺以上高山有機會下雪，北台灣2500公尺以上山區亦不排除，其中下雪機率最高的時間預計在下週一。</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">全台高收入一族都在哪？
+
+                在這個物價快速通膨，什麼都漲只有薪水凍漲的年代，大家最希望的就是可以有一份收入不錯，人人稱羨的好工作。不過，根據主計總處110年公布的全台受僱勞工8月平均薪資，可是高達4.3萬元左右的水平，消息一出讓不少網友驚呼「抱歉是我拉低水平」，但同時也引來許多人好奇，究竟是誰把平均拉到這麼高啊！
+
+                今天《DailyView網路溫度計》將根據行政院主計總處公布的「109年全台各縣市每戶可支配所得平均數」排名，告訴大家全台哪些縣市是最富有，不只說到高薪、高收入的有錢人網友往往第一個提到它，另外也一起來看，除了台北市之外，名列前茅的還有誰？
+                No.1 台北市
+
+                身為台灣首都的「天龍國」，不少年輕人願意離鄉背井北漂打拚，甚至不惜承擔高額的房租、生活開銷，看上的就是台北市擁有豐富的工作機會，以及平均高於其他縣市的收入，薪資水平放眼全台，依然是傲視群雄，難怪大家都想搶當天龍人。
+
+                不過，台北市雖然平均薪資高，但生活開銷也大，近幾年來已不再是人人稱羨或是想移居的城市首選，甚至還出現「全員逃走」的現象，根據中信房屋109年六都內遷徙調查，台北市遷出率是六都之冠，脫「北」者似乎有增加的趨勢，若想北上打拚，除了薪水問題之外，恐怕得要更全方位考量，再做決定才不會後悔。
+                No.2 新竹縣
+
+                說到有錢縣市，大家通常第一個想到「天龍國」台北市，但其實新竹縣的薪資、可支配所得一點也不遜色，不僅每戶可支配所得平均僅次於台北市，進一步觀察全台各村里所得中位數，新竹縣上榜的村里數就佔了一半，更是全台之冠！
+
+                新竹縣經濟發展極具潛力，加上近年來楊文科縣府團隊積極招商，定調先有民生經濟發展，才能使產業繁榮的政策方向，這幾年成效陸續浮現。新竹縣在政治、經濟大環境都有優勢的情況下，帶動外縣市的優秀人才不斷移入，使新竹縣整體收入不斷成長，產生正向循環，還有不少網友看好，認為未來超越台北市都有可能。
+                No.3 新竹市
+
+                日前有住新竹市的網友表示，想要加入當地「竹科媽媽群組」須雙親待過上市櫃公司5年，或是持有3間以上不動產等條件，還有竹科媽媽建議雙薪沒有300萬不要來新竹生活，讓不少網友驚呼「新竹市真的都是有錢人」。
+
+                近期因為新竹市長林智堅拋出新竹市、新竹縣合併議題，使新竹成為討論焦點，不過也引來部分網友不滿，表示新竹縣竹北發展比新竹市還好，留言「竹北完勝」、「新竹市區有夠落後」，不少網友質疑大新竹合併議題的背後，恐怕是政治上的考量啊。
+                No.4 桃園市
+
+                身為全台工業重鎮，桃園市在2013年升格為直轄市後，整體經濟發展速度加快，工作機會越來越多，收入也不算太差，吸引越來越多網友針在職涯發展上的討論。
+
+                尤其相較於台北市、新北市令人不敢奢望的高房價，桃園市的房價在北台灣顯得相對合理，加上生活機能完善，如今還有桃園機場捷運，補上最後一塊交通網路拼圖，增加不少人移居桃園的意願，不少網友都說「桃園工作機會頗多」、「桃園的工作機會超多好嗎，尤其是化學畢業的」。
+                No.5 新北市
+
+                討論平均所得高的縣市時，大家都會提到台北市，卻常常忽略緊鄰在旁的新北市，兩者生活圈高度重疊，現在越來越多人選擇居住在新北市，減少房貸、房租的負擔，平日再通勤去台北上班，形成台北工作、新北生活的現象。
+
+                近幾年來新北市移入人口快速增加，移入人口數更一躍成為六都之冠，不難發現在房價相對便宜，同屬台北生活圈的情況下，新北市逐漸成為許多人「安居樂業」的首選縣市了。
+                No.6 台中市
+
+                台中是台灣工具機產業重鎮，機械產業相關的工作不少，雖然整體薪資可能不如北部亮眼，但選對產業依舊能有不錯的發展，近年來台中市府也大力招商，創造不少額外工作機會，整體薪水與北部的差距也慢慢縮小。
+
+                此外，相較於台北冬天濕冷、步調快的生活環境，台中市整體來說步調較慢，生活起來比較不會讓人有緊湊的壓迫感，氣候一年四季也相當宜人，使得不少網友大讚「台中氣候完勝」、「我是曾在台北工作的台中人，我回台中10年了」。</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排44名</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="resultTable">
+        <thead>
+        <!-- 設定每個tbody>td可容納幾個中文字(僅允許一格為空) -->
+        <tr class="trWordCountSetting">
+            <td data-word-count="18">&nbsp;</td>
+            <td data-word-count="8">&nbsp;</td>
+            <td data-word-count="15">&nbsp;</td>
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        <!--        -->
+        <tr style="background-color: red">
+            <td class="">縣33市</td>
+            <td class="">GDP(億)</td>
+            <td class="">增長率</td>
+            <td class="">排名</td>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        <tr>
+            <td class="">台333北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="resultGroup">
+    <div class="pageHeader model">
+        <div class="left">定磐2科技</div>
+        <div class="middle">XXX評估表</div>
+        <div class="right">${now.yyyy/MM/dd HH:mm}</div>
+    </div>
+    <div class="pageFooter model">
+        <div class="left">病歷號</div>
+        <div class="middle">病人姓名</div>
+        <div class="right">第${page.count}頁，共${page.total}頁</div>
+    </div>
+    <table class="resultTable">
+        <thead>
+        <!-- 設定每個tbody>td可容納幾個中文字(僅允許一格為空) -->
+        <tr class="trWordCountSetting">
+            <td data-word-count="8">&nbsp;</td>
+            <td data-word-count="8">&nbsp;</td>
+            <td data-word-count="5">&nbsp;</td>
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        <!--        -->
+        <tr>
+            <td class="">縣市</td>
+            <td class="">GDP(億)</td>
+            <td class="">增長率</td>
+            <td class="">排名</td>
+        </tr>
+        </thead>
+        <tbody class="tbody">
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中2</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="" colspan="100%"><p style="page-break-after: always;"></p></td>
+        </tr>
+        <tr>
+            <td class="">台中3</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="dontCut">中央氣象局表示，明日水氣偏多，台灣北部及東半部地區有局部短暫雨，中部地區及南部山區亦有零星短暫雨，其他地區及澎湖、金門、馬祖為多雲。
+
+                <img src="../customFormV3/plugins/canvas_BodyRegion/img/baby_640.jpg" alt="" style="width: 100%;">
+                週六冷氣團南下，北台灣率先有冷的感覺，其他地方高溫也會下降，週六至下週二（28日）清晨在冷氣團影響下，各地不論白天、黑夜都有不同程度冷的感覺，這段期間配合華南雲雨區東移，北部及東北部容易下雨，其他地區也有局部短暫雨，尤其下週一（27日）雨勢有機會較為全面，週六至下週一基隆北海岸、大台北山區及東北部地區有局部較大雨勢發生的機率。
+
+                中央氣象局指出，此波冷空氣將持續至下週二清晨，最冷時段預估是週日至下週二清晨，北台灣最低溫可能僅12度或更低，南台灣最低溫可能僅14度或更低，空曠、沿海之感受將更冷​，另外，這波冷空氣不排除來到強烈大陸冷氣團等級，低溫加降雨，冷的感受更加明顯；週六晚間至下週一水氣增多、氣溫下降，若兩個條件有配合，3000公尺以上高山有機會下雪，北台灣2500公尺以上山區亦不排除，其中下雪機率最高的時間預計在下週一。</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">全台高收入一族都在哪？
+
+                在這個物價快速通膨，什麼都漲只有薪水凍漲的年代，大家最希望的就是可以有一份收入不錯，人人稱羨的好工作。不過，根據主計總處110年公布的全台受僱勞工8月平均薪資，可是高達4.3萬元左右的水平，消息一出讓不少網友驚呼「抱歉是我拉低水平」，但同時也引來許多人好奇，究竟是誰把平均拉到這麼高啊！
+
+                今天《DailyView網路溫度計》將根據行政院主計總處公布的「109年全台各縣市每戶可支配所得平均數」排名，告訴大家全台哪些縣市是最富有，不只說到高薪、高收入的有錢人網友往往第一個提到它，另外也一起來看，除了台北市之外，名列前茅的還有誰？
+                No.1 台北市
+
+                身為台灣首都的「天龍國」，不少年輕人願意離鄉背井北漂打拚，甚至不惜承擔高額的房租、生活開銷，看上的就是台北市擁有豐富的工作機會，以及平均高於其他縣市的收入，薪資水平放眼全台，依然是傲視群雄，難怪大家都想搶當天龍人。
+
+                不過，台北市雖然平均薪資高，但生活開銷也大，近幾年來已不再是人人稱羨或是想移居的城市首選，甚至還出現「全員逃走」的現象，根據中信房屋109年六都內遷徙調查，台北市遷出率是六都之冠，脫「北」者似乎有增加的趨勢，若想北上打拚，除了薪水問題之外，恐怕得要更全方位考量，再做決定才不會後悔。
+                No.2 新竹縣
+
+                說到有錢縣市，大家通常第一個想到「天龍國」台北市，但其實新竹縣的薪資、可支配所得一點也不遜色，不僅每戶可支配所得平均僅次於台北市，進一步觀察全台各村里所得中位數，新竹縣上榜的村里數就佔了一半，更是全台之冠！
+
+                新竹縣經濟發展極具潛力，加上近年來楊文科縣府團隊積極招商，定調先有民生經濟發展，才能使產業繁榮的政策方向，這幾年成效陸續浮現。新竹縣在政治、經濟大環境都有優勢的情況下，帶動外縣市的優秀人才不斷移入，使新竹縣整體收入不斷成長，產生正向循環，還有不少網友看好，認為未來超越台北市都有可能。
+                No.3 新竹市
+
+                日前有住新竹市的網友表示，想要加入當地「竹科媽媽群組」須雙親待過上市櫃公司5年，或是持有3間以上不動產等條件，還有竹科媽媽建議雙薪沒有300萬不要來新竹生活，讓不少網友驚呼「新竹市真的都是有錢人」。
+
+                近期因為新竹市長林智堅拋出新竹市、新竹縣合併議題，使新竹成為討論焦點，不過也引來部分網友不滿，表示新竹縣竹北發展比新竹市還好，留言「竹北完勝」、「新竹市區有夠落後」，不少網友質疑大新竹合併議題的背後，恐怕是政治上的考量啊。
+                No.4 桃園市
+
+                身為全台工業重鎮，桃園市在2013年升格為直轄市後，整體經濟發展速度加快，工作機會越來越多，收入也不算太差，吸引越來越多網友針在職涯發展上的討論。
+
+                尤其相較於台北市、新北市令人不敢奢望的高房價，桃園市的房價在北台灣顯得相對合理，加上生活機能完善，如今還有桃園機場捷運，補上最後一塊交通網路拼圖，增加不少人移居桃園的意願，不少網友都說「桃園工作機會頗多」、「桃園的工作機會超多好嗎，尤其是化學畢業的」。
+                No.5 新北市
+
+                討論平均所得高的縣市時，大家都會提到台北市，卻常常忽略緊鄰在旁的新北市，兩者生活圈高度重疊，現在越來越多人選擇居住在新北市，減少房貸、房租的負擔，平日再通勤去台北上班，形成台北工作、新北生活的現象。
+
+                近幾年來新北市移入人口快速增加，移入人口數更一躍成為六都之冠，不難發現在房價相對便宜，同屬台北生活圈的情況下，新北市逐漸成為許多人「安居樂業」的首選縣市了。
+                No.6 台中市
+
+                台中是台灣工具機產業重鎮，機械產業相關的工作不少，雖然整體薪資可能不如北部亮眼，但選對產業依舊能有不錯的發展，近年來台中市府也大力招商，創造不少額外工作機會，整體薪水與北部的差距也慢慢縮小。
+
+                此外，相較於台北冬天濕冷、步調快的生活環境，台中市整體來說步調較慢，生活起來比較不會讓人有緊湊的壓迫感，氣候一年四季也相當宜人，使得不少網友大讚「台中氣候完勝」、「我是曾在台北工作的台中人，我回台中10年了」。</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台北</td>
+            <td class="">72812</td>
+            <td class="">8.0%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台南</td>
+            <td class="">37010</td>
+            <td class="">8.3%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        <tr>
+            <td class="">台中</td>
+            <td class="">70116</td>
+            <td class="">8.5%</td>
+            <td class="">排名</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

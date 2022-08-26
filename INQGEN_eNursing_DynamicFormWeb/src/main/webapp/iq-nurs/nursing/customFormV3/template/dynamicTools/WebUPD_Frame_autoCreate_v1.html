@@ -1,0 +1,57 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div style="overflow:auto; width: 100%">
+    <table align="center" height="51px">
+      <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center"><h4 align="center">{{$data.formName}}</h4></td>
+            <td nowrap width="20%"></td>
+      </tr>
+      <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" id="btnhold"  name="btnhold" value="暫存" class="clsButton" onclick="dynamicForm.states='N';dynamicFormSave(this);">
+                <input type="button" id="btnAdd"  name="btnAdd" value="保存" class="clsButton" onclick="dynamicForm.states='Y';dynamicFormSave(this)">
+                <input type="button" value="清除" class="clsButton" onclick="doURL('WebLIST.html')"/>
+            </td>
+            <td nowrap width="20%"></td>
+      </tr>
+    </table>
+    <table width="90%" class="etable" cellspacing="0" cellpadding="0">
+        <tr class="nurstr1">
+            <td width="20%" align="left" height="25"><b>记录日期</b></td>
+            <td height="25">
+                <table>
+                    <tr>
+                        <td width="100px">
+                            <input type="text" class="form-control" id="datetimepicker1" readonly />
+                        </td>
+                        <td width="100px">
+                            <input type="text" class="form-control" id="datetimepicker2" readonly />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        {{each $data.items item idx}}
+        <tr style="/*{{if !item.show}}*/display: none;/*{{/if}}*/">
+            <th class="nurstr1" align="left">{{if !item.showTitle}}{{item.title}}{{/if}}</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="{{item.name}}" />
+                </span>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <table align="center" height="51px">
+      <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" id="btnhold2"  name="btnhold" value="暫存" class="clsButton" onclick="dynamicForm.states='N';dynamicFormSave(this);">
+                <input type="button" id="btnAdd2"  name="btnAdd" value="保存" class="clsButton" onclick="dynamicForm.states='Y';dynamicFormSave(this);">
+                <input type="button" value="清除" class="clsButton"onclick="doURL('WebLIST.html')"/>
+            </td>
+            <td nowrap width="20%"></td>
+      </tr>
+    </table>
+</div>

@@ -1,0 +1,458 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "bootstrap-icons";
+  src: url("../../../../customFormV3/plugins/bootstrap/bootstrap-icons/font/fonts/bootstrap-icons.woff2?8bd4575acf83c7696dc7a14a966660a3") format("woff2"), url("../../../../customFormV3/plugins/bootstrap/bootstrap-icons/font/fonts/bootstrap-icons.woff?8bd4575acf83c7696dc7a14a966660a3") format("woff");
+}
+#divToolBar {
+  overflow: hidden !important;
+}
+#divToolBar .btn {
+  color: white;
+  height: 24px;
+  margin: 5px 0px 5px 5px;
+  line-height: 12px;
+  padding: 0 6px;
+  width: auto;
+}
+#divToolBar .btn:hover, #divToolBar .btn:hover.active {
+  background-color: #5779f6;
+}
+#divToolBar .btn:active, #divToolBar .btn.active, #divToolBar .btn.active:active {
+  background-color: #2453fe;
+}
+#divToolBar .btn.text {
+  margin-left: -5px;
+  border: white 1px solid;
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#divToolBar .btn.text:first-child {
+  margin-left: 5px;
+}
+#divToolBar .btn.text label {
+  font-style: italic;
+  color: #bfbfbf;
+  display: unset;
+  margin-bottom: auto;
+  cursor: pointer;
+}
+
+#divNodeStr {
+  font-size: 1rem;
+  padding: 2px 5px;
+  overflow: hidden !important;
+}
+
+#divJsonViewer {
+  font-size: 1.3rem;
+  border: #343A40 1px solid;
+  height: calc(100% - 42px);
+  padding: 0 5px;
+}
+#divJsonViewer div {
+  display: inline-block;
+}
+#divJsonViewer[data-type=object]:before {
+  content: " {";
+}
+#divJsonViewer[data-type=object]:after {
+  content: "}";
+}
+#divJsonViewer[data-type=array]:before {
+  content: " [";
+}
+#divJsonViewer[data-type=array]:after {
+  content: "]";
+}
+#divJsonViewer .node {
+  display: block;
+  padding-left: 2em;
+  padding-top: 8px;
+  border-left: 1px solid lightgrey;
+  /**輸出資料 receiveParam 不顯示參數來源 source**/
+  /**調用api方式sendMethod = xmlApi**/
+}
+#divJsonViewer .node > .btnBar {
+  width: 24px;
+}
+#divJsonViewer .node > .btnBar.expanded:before, #divJsonViewer .node > .btnBar.collapsed:before {
+  display: inline-block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -0.225em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#divJsonViewer .node > .btnBar.expanded:before {
+  content: "\f229";
+}
+#divJsonViewer .node > .btnBar.collapsed:before {
+  content: "\f231";
+}
+#divJsonViewer .node .key, #divJsonViewer .node .type, #divJsonViewer .node .desc, #divJsonViewer .node .value {
+  padding: 0 5px;
+}
+#divJsonViewer .node .key:empty, #divJsonViewer .node .type:empty, #divJsonViewer .node .desc:empty, #divJsonViewer .node .value:empty {
+  background-color: white;
+  color: gray;
+  font-style: italic;
+}
+#divJsonViewer .node .source {
+  padding: 0 5px;
+}
+#divJsonViewer .node .source[data-method=""] {
+  background-color: white;
+  color: gray;
+  font-style: italic;
+}
+#divJsonViewer .node .type, #divJsonViewer .node .desc, #divJsonViewer .node .value, #divJsonViewer .node .source, #divJsonViewer .node .setting {
+  min-height: 24px;
+  font-size: 1rem;
+}
+#divJsonViewer .node .key {
+  min-width: 4em;
+}
+#divJsonViewer .node .key:empty:after {
+  content: "key值";
+}
+#divJsonViewer .node .key:before {
+  content: "";
+}
+#divJsonViewer .node .key[data-is-bean]:before {
+  content: "";
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 18px;
+  width: 10px;
+  padding-left: 0;
+  margin-right: 7px;
+  border-bottom: 4px solid #78b13f;
+  border-right: 5px solid #78b13f;
+}
+#divJsonViewer .node .key[data-bean-mapping]:after {
+  content: " ->" attr(data-bean-mapping);
+  color: #78b13f;
+}
+#divJsonViewer .node .type {
+  min-width: 3em;
+  color: #a092ec;
+}
+#divJsonViewer .node .type:empty:after {
+  content: "型態";
+}
+#divJsonViewer .node .type[data-value=array]:after {
+  content: "[ ]";
+  padding-left: 3px;
+}
+#divJsonViewer .node .type[data-value=object]:after {
+  content: "{ }";
+  padding-left: 3px;
+}
+#divJsonViewer .node .desc {
+  min-width: 5em;
+  background-color: #fad6aa;
+}
+#divJsonViewer .node .desc:empty {
+  background-color: #ffffff;
+}
+#divJsonViewer .node .desc:empty:after {
+  content: "範例值說明";
+}
+#divJsonViewer .node .desc[data-is-check]:before {
+  content: "狀態查核點 ";
+}
+#divJsonViewer .node .desc[data-is-check-message]:before {
+  content: "狀態查核提示說明點 ";
+}
+#divJsonViewer .node .desc[data-is-check]:before, #divJsonViewer .node .desc[data-is-check-message]:before {
+  color: #e4e4e4;
+  font-style: normal;
+  padding-right: 5px;
+  background-color: #a092ec;
+}
+#divJsonViewer .node .desc[data-show-ui-value]:after {
+  content: "-> " attr(data-show-ui-value);
+  padding-left: 3px;
+}
+#divJsonViewer .node .value {
+  min-width: 3em;
+  color: #ff8c00;
+}
+#divJsonViewer .node .value:empty:after {
+  content: "範例值";
+}
+#divJsonViewer .node .source {
+  min-width: 3em;
+  color: #a092ec;
+  /**method沒填的話，連value也不顯示**/
+}
+#divJsonViewer .node .source[data-method]:before {
+  color: #a092ec;
+  background-color: #efefef;
+}
+#divJsonViewer .node .source[data-method=local]:before {
+  content: "localStorage";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=form]:before {
+  content: "表單元件";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=eleId]:before {
+  content: "element";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=fixed]:before {
+  content: "固定值";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=gFormData]:before {
+  content: "gFormData";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=externalData]:before {
+  content: "彈出外部資料傳參";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=urlParameters]:before {
+  content: "url傳參";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-method=gFormJspUrlParameters]:before {
+  content: "gForm.jsp傳參";
+  padding-left: 3px;
+}
+#divJsonViewer .node .source[data-value]:after {
+  content: " -> " attr(data-value);
+}
+#divJsonViewer .node .source[data-value=""]:after {
+  content: " -> (empty)";
+  font-style: italic;
+}
+#divJsonViewer .node .source[data-method=""]:before {
+  content: "參數來源";
+}
+#divJsonViewer .node .source[data-method=""]:after {
+  content: "";
+}
+#divJsonViewer .node .setting {
+  display: none;
+  padding: 0 5px;
+  color: #d5d1ea;
+  background-color: #080808;
+}
+#divJsonViewer .node .setting:hover {
+  cursor: pointer;
+  background-color: #454545;
+}
+#divJsonViewer .node.editMode > .key, #divJsonViewer .node.editMode > .desc, #divJsonViewer .node.editMode > .value {
+  -webkit-user-modify: read-write;
+  -moz-user-modify: read-write;
+  user-modify: read-write;
+  white-space: pre-wrap;
+}
+#divJsonViewer .node.editMode > .key:hover, #divJsonViewer .node.editMode > .desc:hover, #divJsonViewer .node.editMode > .value:hover {
+  cursor: text;
+  background-color: #eaebf5;
+}
+#divJsonViewer .node.editMode > .type:hover, #divJsonViewer .node.editMode > .source:hover {
+  cursor: pointer;
+  background-color: #eaebf5;
+}
+#divJsonViewer .node.receiveParam > .source {
+  display: none;
+}
+#divJsonViewer .node.sendParam.xmlApi:not(:nth-child(1), :nth-child(2)) > .type, #divJsonViewer .node.sendParam.xmlApi:not(:nth-child(1), :nth-child(2)) > .desc, #divJsonViewer .node.sendParam.xmlApi:not(:nth-child(1), :nth-child(2)) > .value {
+  display: none;
+}
+#divJsonViewer .node.sendParam.xmlApi.arrayIndex > .source {
+  display: none;
+}
+#divJsonViewer .node.sendParam.xmlApi.arrayIndex > .node:nth-child(8) > .desc, #divJsonViewer .node.sendParam.xmlApi.arrayIndex > .node:nth-child(8) > .value {
+  display: inline-block !important;
+}
+#divJsonViewer .node.sendParam.xmlApi:nth-child(1) > .value {
+  display: none;
+}
+#divJsonViewer .node.sendParam.xmlApi:nth-child(1) > .setting {
+  display: inline-block;
+}
+#divJsonViewer .node.sendParam.xmlApi:nth-child(1) > .setting:before {
+  content: "設定";
+}
+#divJsonViewer .node.sendParam.xmlApi:nth-child(2) > .value, #divJsonViewer .node.sendParam.xmlApi:nth-child(2) > .source {
+  display: none;
+}
+#divJsonViewer .node.sendParam.xmlApi:nth-child(2) > .setting {
+  display: inline-block;
+}
+#divJsonViewer .node.sendParam.xmlApi:nth-child(2) > .setting:before {
+  content: "設定";
+}
+
+.dropdown-menu, #divJsonViewer .dropdown-menu {
+  display: none;
+}
+.dropdown-menu.show, #divJsonViewer .dropdown-menu.show {
+  display: block;
+}
+
+#modal_editUiValue #modal_editUiValue_subTitle {
+  background-color: #fad6aa;
+}
+#modal_editUiValue #modal_editUiValue_body > .row {
+  display: flex;
+  justify-content: space-around;
+}
+#modal_editUiValue #modal_editUiValue_body > .row:first-child {
+  background-color: #343a40;
+  color: white;
+}
+#modal_editUiValue #modal_editUiValue_body > .row:first-child > label {
+  flex: 2;
+  text-align: center;
+  border: white 1px solid;
+}
+#modal_editUiValue #modal_editUiValue_body > .row:first-child > #modal_checkType_title {
+  flex: 1;
+}
+#modal_editUiValue #modal_editUiValue_body > .row:not(:first-child) > .modal_uiValue, #modal_editUiValue #modal_editUiValue_body > .row:not(:first-child) > .modal_uiDesc {
+  flex: 2;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#modal_editUiValue #modal_editUiValue_body > .row:not(:first-child) > .modal_checkType {
+  flex: 1;
+  margin-left: 20px;
+  margin-right: 10px;
+}
+#modal_editUiValue #modal_editUiValue_body > .row:not(:first-child) > .modal_uiValue, #modal_editUiValue #modal_editUiValue_body > .row:not(:first-child) > .modal_uiDesc, #modal_editUiValue #modal_editUiValue_body > .row:not(:first-child) > .modal_checkType {
+  line-height: 37px;
+  text-align: center;
+  border-radius: 6px;
+  border: #343a40 1px solid;
+  height: 37px;
+  overflow: hidden;
+}
+
+#modal_editSource #modal_editSource_subTitle {
+  background-color: #fad6aa;
+}
+#modal_editSource #modal_editSource_body {
+  /**方法**/
+  /**備註**/
+}
+#modal_editSource #modal_editSource_body > .row {
+  display: flex;
+  justify-content: space-around;
+}
+#modal_editSource #modal_editSource_body > .row:first-child {
+  background-color: #343a40;
+  color: white;
+}
+#modal_editSource #modal_editSource_body > .row:first-child > label {
+  flex: 1;
+  text-align: center;
+  border: white 1px solid;
+}
+#modal_editSource #modal_editSource_body > .row:not(:first-child) {
+  /**gFormData**/
+}
+#modal_editSource #modal_editSource_body > .row:not(:first-child) > .modal_sourceMethod, #modal_editSource #modal_editSource_body > .row:not(:first-child) > .modal_sourceValue, #modal_editSource #modal_editSource_body > .row:not(:first-child) > .modal_sourceValue_localStorage, #modal_editSource #modal_editSource_body > .row:not(:first-child) > .modal_sourceValue_gFormData {
+  flex: 1;
+  margin-right: 20px;
+  line-height: 37px;
+  text-align: center;
+  border-radius: 6px;
+  border: #343a40 1px solid;
+  height: 37px;
+  overflow: hidden;
+}
+#modal_editSource #modal_editSource_body > .row:not(:first-child) > .modal_sourceValue_localStorage, #modal_editSource #modal_editSource_body > .row:not(:first-child) > .modal_sourceValue_gFormData {
+  line-height: 20px !important;
+  font-size: 0.95rem;
+}
+#modal_editSource #modal_editSource_body .modal_sourceMethod {
+  line-height: 20px !important;
+  font-size: 0.95rem;
+}
+#modal_editSource #modal_editSource_body #modal_editSource_remark {
+  font-weight: bold;
+}
+
+#modal_clickSetting_configFiles .modal-title, #modal_clickSetting_params .modal-title {
+  background-color: #fad6aa;
+}
+#modal_clickSetting_configFiles .modal-body > .row, #modal_clickSetting_params .modal-body > .row {
+  display: flex;
+  justify-content: space-around;
+}
+#modal_clickSetting_configFiles .modal-body > .row:first-child, #modal_clickSetting_params .modal-body > .row:first-child {
+  background-color: #343a40;
+  color: white;
+}
+#modal_clickSetting_configFiles .modal-body > .row:first-child > label, #modal_clickSetting_params .modal-body > .row:first-child > label {
+  flex: 2;
+  text-align: center;
+  border: white 1px solid;
+}
+#modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_value, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_file_extension, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_key, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_type, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_format, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_value, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_file_extension, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_key, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_type, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_format {
+  flex: 1;
+  margin-left: 20px;
+  margin-right: 20px;
+  line-height: 37px;
+  text-align: center;
+  height: 37px;
+  overflow: hidden;
+}
+#modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_value, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_key, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_type, #modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_format, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_value, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_key, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_type, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_format {
+  border-radius: 6px;
+  border: #343a40 1px solid;
+}
+#modal_clickSetting_configFiles .modal-body > .row:not(:first-child) > .modal_type, #modal_clickSetting_params .modal-body > .row:not(:first-child) > .modal_type {
+  line-height: 20px !important;
+  font-size: 0.95rem;
+}
+
+#divJsonEditor {
+  height: calc(100% - 42px);
+  overflow: hidden;
+}
+#divJsonEditor .CodeMirror {
+  height: 100%;
+}
+
+.modal-body .CodeMirror {
+  height: 65vh;
+}
+
+.CodeMirror-vscrollbar {
+  scrollbar-color: #000 #F5F5F5;
+}
+.CodeMirror-vscrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+.CodeMirror-vscrollbar::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5;
+}
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #000;
+}
+.CodeMirror-vscrollbar::-webkit-scrollbar-track {
+  border-radius: 0 !important;
+}
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
+  border-radius: 0 !important;
+}
+
+/*# sourceMappingURL=csApiDefine.css.map */

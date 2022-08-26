@@ -1,0 +1,58 @@
+<div
+        class="divFormItem"
+        id="div_{{$data.name}}"
+        style="display: inline"
+>
+    {{if $data.showTitle}}
+    <span
+            class="spanFormItem"
+            id="span_{{$data.name}}"
+    >
+        {{$data.title}}：
+    </span>
+    {{/if}}
+    <!--{{$data.hasOther=$data.hasOther||[]}}-->
+    <!--{{$data.uiScore=$data.uiScore||[]}}-->
+    {{each $data.uiDesc uiDesc i}}
+    <label>
+        <input
+                type="checkbox"
+                class="formItem"
+                id="{{$data.name}}_{{i}}"
+                name="{{$data.name}}"
+                value="{{$data.uiValue[i]}}"
+                data-bean="{{$data.name}}"
+                data-id="{{$data.name}}_{{i}}"
+                data-uiscore="{{$data.uiScore[i]}}"
+                data-required="{{$data.required}}"
+                data-promptTips="{{$data.promptTips}}"
+                data-disabled="{{!$data.show}}"
+                data-maxItemTotalScore="{{if $data.maxItemTotalScore}}{{$data.maxItemTotalScore}}{{/if}}"
+                {{if $data.hasOther[i]}}data-hasother="{{$data.name}}_{{i}}_otherText"{{/if}}
+                style=""
+                onclick="{{if $data.hasOther[i]}}showOther(this);{{/if}}{{$data.click}}"
+                onblur="checkHandler.checkSelf(this);"
+        >
+        {{uiDesc}}</label>
+
+    {{if $data.hasOther[i]}}
+    <input
+            type="text"
+            id="{{$data.name}}_{{i}}_otherText"
+            name="{{$data.name}}other{{i}}"
+            disabled="disabled"
+            data-disabled="true"
+            data-promptTips="{{$data.promptTips}}其他內容"
+            onblur="checkHandler.checkSelf(this);"
+            style="display: none;width:5em;"
+    >
+    {{/if}}
+
+    {{if $data.displayMode=="wrap"}}
+    <br>
+    {{/if}}
+    {{if !!$data.formTemplates&&!!$data.formTemplates[i]}}
+        {{@ajaxInclude('form',$data.formTemplates[i])}}
+    {{/if}}
+    {{/each}}
+</div>

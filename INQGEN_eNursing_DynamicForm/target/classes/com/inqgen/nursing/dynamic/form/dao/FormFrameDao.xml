@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.inqgen.nursing.dynamic.form.dao.FormFrameDao">
+    
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="FormFrameMap">
+        <result property="id" column="ID"/>
+        <result property="formType" column="formType"/>
+        <result property="frameModel" column="frameModel"/>
+        <result property="content" column="content"/>
+        <result property="version" column="version"/>
+		<result property="note" column="note"/>
+		<result property="ts" column="ts"/>
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="FormFrameMap2">
+        <result property="id" column="ID"/>
+        <result property="formType" column="formType"/>
+        <result property="frameModel" column="frameModel"/>
+        <result property="version" column="version"/>
+        <result property="note" column="note"/>
+    </resultMap>
+    
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="FormFrameMap3">
+        <result property="id" column="ID"/>
+        <result property="formType" column="formType"/>
+        <result property="frameModel" column="frameModel"/>
+        <result property="content" column="content"/>
+        <result property="version" column="version"/>
+        <result property="note" column="note"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="FormFrameMap4">
+        <result property="id" column="ID"/>
+        <result property="formType" column="FORMTYPE"/>
+        <result property="frameModel" column="FRAMEMODEL"/>
+        <result property="version" column="VERSION"/>
+        <result property="ts" column="TS"/>
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="FormFrameModel">
+        <result property="frameModel" column="frameModel"/>
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="FormFrameTypeTs">
+		<result property="formType" column="formType"/>
+		<result property="ts" column="ts"/>
+    </resultMap>
+    
+    
+    <parameterMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="addFormFrameParam">
+        <parameter property="id" />
+         <parameter property="formType" />
+          <parameter property="frameModel" />
+           <parameter property="content" />
+            <parameter property="version" />
+             <parameter property="note" />
+              <parameter property="ts" jdbcType="TIMESTAMP"/>
+               <parameter property="creatorId" jdbcType="VARCHAR"/>
+                <parameter property="creatorName" jdbcType="VARCHAR"/>
+                 <parameter property="createTime" jdbcType="TIMESTAMP"/>
+                  <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+                   <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+                    <parameter property="modifyTime" jdbcType="TIMESTAMP"/>
+        
+    </parameterMap>
+    
+    
+    <insert id="addFormFrame" parameterMap="addFormFrameParam">
+        INSERT INTO ${FORMFRAME}
+        	(ID, formType, frameModel, content, version , note, ts,userId,userName,createTime,modifyId,modifyName,modifyTime)
+        VALUES
+        	(
+        	?,?,?,?,?,?,?,?,?,?,?,?,?
+        )
+    </insert>
+    
+    <parameterMap class="com.inqgen.nursing.dynamic.form.bean.FormFrame" id="updateFormFrameByFormTypeFrameModelVesionParam">
+        <parameter property="content" />
+         <parameter property="note" />
+          <parameter property="ts" jdbcType="TIMESTAMP"/>
+           <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+            <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+             <parameter property="modifyTime" jdbcType="TIMESTAMP"/>
+              <parameter property="formType" />
+               <parameter property="frameModel" />
+                <parameter property="version" />
+    </parameterMap>
+	<update id="updateFormFrameByFormTypeFrameModelVesion" parameterMap="updateFormFrameByFormTypeFrameModelVesionParam">
+	    update ${FORMFRAME} 
+	    set   content=?, note=?, ts=?,modifyId=?,modifyName=?,modifyTime=?
+	    where formType=?
+	    and	  frameModel=?
+	    and   version=?
+	</update>
+    
+    <select id="selectFormFrame" parameterClass="java.util.HashMap" resultMap="FormFrameMap">
+        SELECT ID, formType, frameModel, content, version , note, ts
+        FROM ${FORMFRAME}
+        WHERE 
+        	formType=#formType#
+			AND frameModel=#frameModel#
+			AND version=#version# ${WITHUR}
+    </select>
+    
+	<select id="selectFormFrameMaxVersion" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		SELECT MAX(version) as version
+		FROM ${FORMFRAME} 
+		WHERE 
+			formType=#formType#
+			AND frameModel=#frameModel#
+			AND <![CDATA[ version<=999998 ]]> ${WITHUR}
+	</select>
+    
+	<select id="selectFormFrameMaxVersionByVersionNo" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		SELECT MAX(version) as version
+		FROM ${FORMFRAME} 
+		WHERE 
+			formType=#formType#
+			AND frameModel=#frameModel#
+			AND <![CDATA[ version<=#versionNo# ]]> ${WITHUR}
+	</select>
+
+	<select id="selectFormFrameMaxVersionByFormType" parameterClass="java.util.HashMap" resultClass="java.lang.Integer">
+		SELECT MAX(version) as version
+		FROM ${FORMFRAME} 
+		WHERE 
+			formType=#formType#
+			AND <![CDATA[ version<=999998 ]]> ${WITHUR}
+	</select>
+
+	<select id="selectFormFrameModelListByFormType" parameterClass="java.util.HashMap" resultMap="FormFrameModel">
+		SELECT frameModel
+		FROM ${FORMFRAME} 
+		WHERE 
+			formType=#formType#
+            AND <![CDATA[ frameModel not LIKE('%_INIT') ]]>
+        GROUP BY frameModel
+        ORDER BY frameModel ${WITHUR}
+	</select>
+
+	<select id="selectFormFrameListByFormTypeFrameModel" parameterClass="java.util.HashMap" resultMap="FormFrameMap2">
+	    SELECT ID, formType, frameModel, version , note
+        FROM ${FORMFRAME}
+        WHERE 
+        	formType=#formType#
+			AND frameModel=#frameModel#
+        ORDER BY version desc ${WITHUR}
+	</select>
+
+	<select id="selectFormFrameListByFormTypeTs" parameterClass="java.util.HashMap" resultMap="FormFrameMap3">
+		SELECT ID, formType, frameModel, content, version , note, ts
+        FROM ${FORMFRAME}
+		<isEqual property="isLastFormFrame" compareValue="true">
+		, (
+			SELECT max(version) as vs, formType as ft, frameModel as model
+			FROM ${FORMFRAME}
+			WHERE
+			<iterate property="versions" conjunction="or">
+				(
+					<![CDATA[ FORMTYPE = #versions[].formType# ]]>
+					and <![CDATA[ TS > #versions[].ts# ]]>
+				)
+			</iterate> 
+			group by FORMTYPE, frameModel
+		) maxVersion
+		WHERE
+	   		FORMTYPE = maxVersion.ft
+	   		AND version = maxVersion.vs
+	   		AND frameModel = maxVersion.model
+		</isEqual>
+	    <isEqual property="isLastFormFrame" compareValue="false">
+        WHERE 
+			<iterate property="versions" conjunction="or">
+				(
+					<![CDATA[ FORMTYPE = #versions[].formType# ]]>
+					and <![CDATA[ TS > #versions[].ts# ]]>
+				)
+	        </iterate>
+	    </isEqual>
+        ORDER BY TS ${WITHUR}
+	</select>
+	<select id="selectAllFormFrameByFormType" parameterClass="java.util.HashMap" resultMap="FormFrameMap3">
+		SELECT ID, FORMTYPE, FRAMEMODEL, CONTENT, VERSION , NOTE, TS
+        FROM ${FORMFRAME}
+        WHERE 	FORMTYPE = #formType# ORDER BY TS ${WITHUR}
+	</select>
+
+	<delete id="deleteFormFrameByFormTypeFrameModelVersion" parameterClass="com.inqgen.nursing.dynamic.form.bean.FormFrame">
+	    DELETE 
+	    FROM ${FORMFRAME} 
+	    WHERE 
+	    	FORMTYPE=#formType#
+			AND FRAMEMODEL=#frameModel#
+			AND VERSION=#version#
+	</delete>
+
+	<select id="selectFormFrameListMaxTsByFormType" resultMap="FormFrameTypeTs">
+        select FORMTYPE, max(ts) as TS
+		from ${FORMFRAME} 
+		where FORMTYPE in 
+		<iterate open="(" close=")" conjunction=",">
+            <![CDATA[
+                 #[]# 
+            ]]> 
+       </iterate> 
+		group by FORMTYPE
+    </select>
+    <select id="selectFormFrameListVersionByFormType" parameterClass="java.util.HashMap" resultMap="FormFrameMap4">
+		SELECT  ID, FORMTYPE, FRAMEMODEL, VERSION , TS FROM ${FORMFRAME} WHERE FORMTYPE=#formType#
+        <dynamic prepend="">
+            <isNotNull property="diffTs"> <![CDATA[ and TS > #diffTs# ]]></isNotNull>
+        </dynamic>
+		 ${WITHUR}
+	</select>
+</sqlMap>

@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="../customFormV3/css/CDS.css?csSvnVersion=">
+<input type="button" value="顯示儲存物件" onclick="console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log((dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[0].itemValue));console.log(JSON.parse(dynamicFormSave_getItems(this)[1].itemValue));console.log(JSON.parse(dynamicFormSave_getItems(this)[2].itemValue));console.log(JSON.parse(dynamicFormSave_getItems(this)[3].itemValue))"/><br/>
+{{each $data.items item idx}}
+    {{if item.controlType=="group"}}
+    {{set childrens=item.children.split(",")}}
+    <label>{{item.name}}</label><br/>
+    <table class="tableType1" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+            	{{each childrens children idx2}}<th>{{$data.hashItems[children].title}}</th>
+            	{{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="pFormItemGroup" data-bean="{{item.name}}">{{each childrens children idx2}}
+                <td>
+                    <p class="pFormItem" data-bean="{{$data.hashItems[children].name}}"/>
+                </td>{{/each}}
+            </tr>
+            <tr>
+                <td>
+                    <input class="createGroupBtn" type="button" data-parent onclick="createFormItemGroup(this,'{{item.name}}')" value="新增 {{item.name}}">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tableType2" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                {{each childrens children idx2}}<th>{{$data.hashItems[children].title}}</th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="pFormItemGroup" data-bean="{{item.name}}">{{each childrens children idx2}}
+                <td>
+                    <p class="pFormItem" data-bean="{{$data.hashItems[children].name}}"/>
+                </td>{{/each}}
+            </tr>
+            <tr>
+                <td>
+                    <input class="createGroupBtn" type="button" data-parent onclick="createFormItemGroup(this,'{{item.name}}')" value="新增 {{item.name}}">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {{/if}}
+{{/each}}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>csCanvas人形圖Demo</title>
+	<link rel="icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/csCanvas.css?csSvnVersion=">
+	<!-- 必要 start-->
+    <script src="js/fabric.min.js?csSvnVersion="></script>
+	<script src="js/csCanvas.js?csSvnVersion="></script>
+	<!-- 必要 end-->
+	<script src="../../js2/jquery.js?csSvnVersion="></script>
+	<script src="data/data_type1.js?csSvnVersion="></script>
+    <script src="data/data_type2.js?csSvnVersion="></script>
+    <script src="data/data_type3.js?csSvnVersion="></script>
+    <script src="data/data_pain_human.js?csSvnVersion="></script>
+    <script src="data/data_pain_child.js?csSvnVersion="></script>
+    <script src="data/data_pain_baby.js?csSvnVersion="></script>
+    <script src="data/data_footRight_nerve.js?csSvnVersion="></script>
+    <script src="data/data_footLeft_nerve.js?csSvnVersion="></script>
+</head>
+
+<body style="background-color: #FAFAFA;">
+	<select id="selType" onchange="changeType(this);">
+		<option value="傷口" selected>傷口 data_type1</option>
+		<option value="手術、外傷、蜂窩性組織炎、DM Foot、其他">手術、外傷、蜂窩性組織炎、DM Foot、其他 data_type2</option>
+		<option value="燙傷">燙傷 data_type3</option>
+		<option value="疼痛-成人">疼痛-成人 data_pain_human</option>
+		<option value="疼痛-兒童">疼痛-兒童 data_pain_child</option>
+		<option value="疼痛-嬰兒">疼痛-嬰兒 data_pain_baby</option>
+		<option value="單股尼龍纖維測試-右腳">單股尼龍纖維測試-右腳 data_footRight_nerve</option>
+		<option value="單股尼龍纖維測試-左腳">單股尼龍纖維測試-左腳 data_footLeft_nerve</option>
+	</select>
+	<button onclick="console.log(document.getElementById('mycanvas').csCanvas.getAllAreaObj());">console區域內容</button>
+	<button onclick="doSwitch();" id="btn_showname">操作/編輯/變形/排序 模式</button>
+	(alt+b)
+	<!-- 座標：<label id="mousePos"></label> -->
+	<label id="label_value">itemValue=</label>
+	<br/>
+	<label id="label_mode" style="color: #2222FF;">操作模式</label>
+	<button class="notNormalMode" style="display:none;" onclick="document.getElementById('mycanvas').csCanvas.addTempAreaRect(true);">新增方形區域</button>
+	<button class="notNormalMode" style="display:none;" onclick="document.getElementById('mycanvas').csCanvas.addTempAreaCircle(false);">新增圓形區域</button>
+	<button class="notNormalMode" style="display:none;" onclick="document.getElementById('mycanvas').csCanvas.addTextObj();">新增文字</button>
+	<button class="notNormalMode" style="display:none;" onclick="document.getElementById('mycanvas').csCanvas.drawPain.drawStartAndEnd()">鋼筆</button>
+	<label class="notNormalMode" style="display:none;">(ctrl+z可復原上一點、double click可完成畫圖、ctrl+b可開啟畫筆)</label>
+	<br/>
+	<table>
+		<tr>
+			<td style="width: 100%;">
+				<canvas id="mycanvas" class="csCanvas" style="/*border: 1px #000 solid;*/" onchange=""></canvas>
+			</td>
+			<td>
+				<!-- 模板，用於複製後產生上方的連動元件 checkbox-->
+				<div id="mycanvas_targetDiv_template" class="csCanvasBeanDiv_template">
+					<div class="csCanvasBeanDiv2_template"><!--選填-->
+						<input type="checkbox" class="csCanvasBean_template"/>
+						<label class="csCanvasBeanLabel_template"/>
+					</div>
+				</div>
+
+				<!-- 模板，用於複製後產生上方的連動元件 radio-->
+				<div id="mycanvas_targetDiv_template" class="csCanvasBeanDiv_template">
+					<div class="csCanvasBeanDiv2_template" style="display: inline-block;"><!--選填-->
+						<input type="radio" class="csCanvasBean_template"/>
+						<label class="csCanvasBeanLabel_template"/>
+					</div>
+				</div>
+
+				<!-- 模板，用於複製後產生上方的連動元件 select-->
+				<div id="mycanvas_targetDiv_template" class="csCanvasBeanDiv_template">
+					<select class="csCanvasBean_template">
+						<option value="">請選擇</option><!--選填，將保留至上方連動元件-->
+					</select>
+				</div>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+<script>
+//切換模式
+function doSwitch(mode){
+	var objCvs = document.getElementById("mycanvas").csCanvas;
+	objCvs.switchMode(mode);
+}
+//顯示工具列
+function showToolsBar(){
+	var objCvs = document.getElementById("mycanvas").csCanvas;
+	var eles = document.getElementsByClassName("notNormalMode");
+	var display = (objCvs.isNowMode("normal")) ? "none" : "unset";
+	for (var i=0, len=eles.length; i<len; ++i){
+		eles[i].style.display=display;
+	}
+	var st = "操作模式";
+	st = (objCvs.isNowMode("edit")) ? "編輯模式" : st;
+	st = (objCvs.isNowMode("changeShap")) ? "變形模式" : st;
+	st = (objCvs.isNowMode("sort")) ? "排序模式" : st;
+	document.getElementById("label_mode").innerHTML=st;
+}
+
+//切換操作模式
+csCanvas.switchModeComplete = function(){
+	showToolsBar();
+}
+
+var objCvs;
+changeType(document.getElementById("selType"));
+function changeType(that){
+	var v = (that) ? that.value : "單股尼龍纖維測試-左腳";
+	var getJson = {
+		"傷口":									data_type1,
+		"手術、外傷、蜂窩性組織炎、DM Foot、其他":	data_type2,
+		"燙傷":									data_type3,
+		"疼痛-成人":								data_pain_human,
+		"疼痛-兒童":								data_pain_child,
+		"疼痛-嬰兒":								data_pain_baby,
+		"單股尼龍纖維測試-右腳":					data_footRight_nerve,
+		"單股尼龍纖維測試-左腳":					data_footLeft_nerve
+	}
+	var data = getJson[v];
+	objCvs = new csCanvas("mycanvas", 1280, 1280, data, {
+		"mouseupEnable": true,
+		"selectMode": "checkbox",
+		"templateDiv": {
+			// "id": 					"mycanvas_targetDiv_template",
+			"displayMode": 			"vertical", // horizontal | vertical
+			"position": 			"right",
+			"isShowDiv": 			true
+		},
+		"click": function(v, desc, obj){
+			document.getElementById("label_value").innerHTML="itemValue="+v;
+		},
+		"change": function(v, desc, obj){
+            // objCvs.resetAllFill();
+            // objCvs.setFill(obj, "rgba(155, 155, 254, 0.65)");
+		},
+		"complete": function(){
+			objCvs.cvs.backgroundColor="white";
+			objCvs.cvs.renderAll();
+			//設定預設值
+			// objCvs.doSetDefaultValue("P07,P15", "other1|:|asasf,other2,other3|:|");
+		}
+	});
+}
+
+//監聽鍵盤事件 (在canvas的onkeydown事件之後)
+// document.onkeyup = function(e) {
+// 	var evtobj = window.event? event : e;
+// 	//切換操作模式
+// 	if (evtobj.keyCode == 66 && evtobj.altKey){ //alt+b
+// 		showToolsBar();
+// 		return;
+// 	}
+// };
+
+// var canvas = objCvs.canvas;
+// canvas.isDrawingMode=false; //可否自由繪圖
+
+// var objcvs = document.getElementsByTagName('canvas')[1];
+// objcvs.addEventListener('mousemove', function (evt) {
+//     var mousePos = getMousePos(objcvs, evt);
+//     var message = mousePos.x + ',' + mousePos.y;
+//     document.querySelector("#mousePos").innerHTML=message;
+// }, false);
+
+// function getMousePos(canvas, evt) {
+//     var rect = canvas.getBoundingClientRect();
+//     return {
+//         x: evt.clientX - rect.left,
+//         y: evt.clientY - rect.top
+//     };
+// }
+// 
+</script>

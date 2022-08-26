@@ -1,0 +1,101 @@
+{{if $data.controlMode=="readOnly"}}
+	{{if $data.showTitle==true}}
+	<font
+			class=			"fontFormItem dtFontFormItem"
+			id=				"font_{{$data.name}}"
+			style=			"{{if !$data.show}}display:none;{{/if}}"
+	>
+		{{$data.title}}：
+	</font>
+	{{/if}}
+	<label
+		type=			"label"
+		class=			"formItem dtLabelFormItem {{$data.uiClass}}"
+		id=				"{{$data.name}}"
+		name=			"{{$data.name}}"
+		size=			"{{$data.textSize}}"
+		data-bean=		"{{$data.name}}"
+		data-id=		"{{$data.name}}"
+		data-parent=	"{{$data.parent}}"
+		data-required=	"{{$data.required}}"
+		data-prompttips="{{if $data.promptTips==undefined||$data.promptTips==""}}請輸入「{{$data.title}}」{{/if}}{{if $data.promptTips!=undefined}}{{$data.promptTips}}{{/if}}"
+		{{if isHor}}
+			data-upload="false"
+		{{else if $data.upload||$data.upload==false}}
+			data-upload="{{$data.upload}}"
+		{{else}}
+			data-upload="{{$data.show}}"
+		{{/if}}
+		style=			"{{if !$data.show}}display:none;{{/if}}"
+		onclick=		"{{$data.click}}"
+	>{{$data.defaultValue}}</label>
+{{else}}
+	{{set isHor=($data.isHorFormItem===true)}}
+	{{set isVer=($data.isVerFormItem===true)}}
+	<div
+			class=			"divFormItem dtDivFormItem{{if isHor}} isHorDivFormItem{{/if}}{{if isVer}} isVerDivFormItem{{/if}}"
+			id=				"div_{{$data.name}}"
+			style=			"{{if isHor}}display:inline;{{else if !$data.show}}display:none;{{/if}}"
+	>
+	{{if $data.showTitle==true}}
+		<font
+			class=			"fontFormItem dtFontFormItem"
+			id=				"font_{{$data.name}}"
+		>
+			{{$data.title}}：
+		</font>
+	{{/if}}
+	<input
+		type=				"checkbox"
+		class=				"formItem dtFormItem"
+		id=					"{{$data.name}}Checkbox"
+		name=				"{{$data.name}}"
+		size=				"{{$data.textSize}}"
+		data-minLimit= 		'{{if $data.minLimit}}{{$data.minLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		data-maxLimit= 		'{{if $data.maxLimit}}{{$data.maxLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		data-crashMinLimit= '{{if $data.crashMinLimit}}{{$data.crashMinLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		data-crashMaxLimit= '{{if $data.crashMaxLimit}}{{$data.crashMaxLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		style=				"border-radius: 4px;"
+	>
+	</input>
+	<label
+		class=				"dtTimeBkFormItem"
+		id=					"label_backTitle_{{$data.name}}"
+		for=				"{{$data.name}}Checkbox"
+		data-minLimit=  	'{{if $data.minLimit}}{{$data.minLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		data-maxLimit= 		'{{if $data.maxLimit}}{{$data.maxLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		data-crashminlimit= '{{if $data.crashMinLimit}}{{$data.crashMinLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+		data-crashmaxlimit= '{{if $data.crashMaxLimit}}{{$data.crashMaxLimit}}{{else}}{"default":true,"date":"-0y-0m-0d", "time":"00:00"}{{/if}}'
+	>
+		當機補輸
+	</label>
+	</div>
+	<script>
+		$("#{{$data.name}}Checkbox").change(function(){
+			$dtpicker = $('#{{$data.name}}_date');
+			var minLimit = ''
+			var maxLimit = ''
+			if($(this).prop('checked')){
+				// 當有勾選當機補輸時
+				minLimit = $(this).attr('data-crashminlimit')
+				maxLimit = $(this).attr('data-crashmaxlimit')
+			}else{
+				// 一般情況下
+				minLimit = $(this).attr('data-minlimit')
+				maxLimit = $(this).attr('data-maxlimit')
+			}
+			$("#{{$data.name}}_date").attr('data-minlimit', minLimit)
+			$("#{{$data.name}}_time").attr('data-minlimit', minLimit)
+			$("#{{$data.name}}_date").attr('data-maxlimit', maxLimit)
+			$("#{{$data.name}}_time").attr('data-maxlimit', maxLimit)
+
+			// 重新檢查日期是否符合範圍內
+			// 編輯時，以evaluationTime為基準日期時間
+			setDatetimeLimit($dtpicker[0], gForm!=null?gForm.evaluationTime:null);
+			// 重新檢查時間是否符合範圍內
+			// 編輯時，以evaluationTime為基準日期時間
+			setDatetimeLimit($("#{{$data.name}}_time")[0], gForm!=null?gForm.evaluationTime:null);
+			$dtpicker.change();
+		})
+	</script>
+{{/if}}

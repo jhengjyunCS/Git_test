@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.inqgen.nursing.file.dao.FileDao">
+
+    <parameterMap id="FileStoreParam" class="com.inqgen.nursing.file.bean.FileStore">
+        <parameter property="id" />
+        <parameter property="fileStoreSetId" />
+        <parameter property="fileName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <parameter property="rootPath" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="path" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="content" jdbcType="BLOB" typeHandler="org.springframework.orm.ibatis.support.BlobTypeHandlerCallback"/>
+        <parameter property="states" />
+    </parameterMap>
+
+    <insert id="addFileStore" parameterMap="FileStoreParam">
+        INSERT INTO ${FILESTORE} (ID, FILESTORESETID,FILENAME,ROOTPATH, PATH, CONTENT,STATES)
+        VALUES (?,?,?,?,?,?,?)
+    </insert>
+
+
+    <update id="deleteFileStore" parameterClass="java.util.HashMap">
+        update  ${FILESTORE} set STATES =#states# WHERE
+        <isNotEmpty property="ids">
+            ID IN
+            <iterate property="ids" open="(" close=")" conjunction=",">
+                #ids[]#
+            </iterate>
+        </isNotEmpty>
+    </update>
+
+
+    <resultMap class="com.inqgen.nursing.file.bean.FileStore" id="fileStoreResult">
+        <result property="id" column="ID" />
+        <result property="fileStoreSetId" column="FILESTORESETID" />
+        <result property="fileName" column="FILENAME"
+                javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="rootPath" column="ROOTPATH" />
+        <result property="path" column="PATH" />
+        <result property="content" column="CONTENT" />
+        <result property="states" column="STATES" />
+        <result property="sysModel" column="SYSMODEL" />
+        <result property="storeType" column="STORETYPE" />
+    </resultMap>
+
+    <select id="selectFileStore" parameterClass="java.util.HashMap" resultMap="fileStoreResult">
+        SELECT a.ID, a.FILESTORESETID,a.FILENAME,a.ROOTPATH, a.PATH, a.CONTENT,a.STATES,b.SYSMODEL,b.STORETYPE
+        FROM ${FILESTORE} a left join ${FILESTORESET} b on a.FILESTORESETID=b.ID  where
+        <isNotEmpty property="ids">
+             a.ID IN
+            <iterate property="ids" open="(" close=")" conjunction=",">
+                #ids[]#
+            </iterate>
+        </isNotEmpty>
+        ${WITHUR}
+    </select>
+
+    <resultMap class="com.inqgen.nursing.file.bean.FileStore" id="fileStoreResult2">
+        <result property="fileStoreSetId" column="FILESTORESETID" />
+        <result property="sysModel" column="SYSMODEL" />
+        <result property="storeType" column="STORETYPE" />
+    </resultMap>
+    <select id="selectFileStoreSet" parameterClass="java.util.HashMap" resultMap="fileStoreResult2">
+        SELECT ID AS FILESTORESETID ,SYSMODEL,STORETYPE
+        FROM ${FILESTORESET} where SYSMODEL=#sysModel# ${WITHUR}
+    </select>
+    <select id="selectFileStoreSetProps" parameterClass="java.util.Map" resultClass="org.apache.commons.collections.map.CaseInsensitiveMap">
+        SELECT attr ,attrValue
+        FROM ${FILESTORESETPROP} where FILESTORESET_ID=#fileStoreSetId# ${WITHUR}
+    </select>
+
+
+</sqlMap>

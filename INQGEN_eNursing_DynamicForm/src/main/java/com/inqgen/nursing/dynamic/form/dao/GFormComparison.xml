@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.inqgen.nursing.dynamic.form.dao.GFormComparison">
+
+    <resultMap id="gFormComparisonItem" class="com.inqgen.nursing.dynamic.form.bean.comparison.GFormComparisonItem">
+        <result property="eventType" column="EVENT_TYPE"/>
+        <result property="xmlOrder" column="XMLORDER"/>
+        <result property="itemKey" column="ITEMKEY"/>
+        <result property="itemTitle" column="ITEMTITLE"/>
+        <result property="oKey" column="OKEY"/>
+        <result property="itemType" column="ITEMTYPE"/>
+        <result property="xmlName" column="XMLNAME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="tm" column="TM"/>
+    </resultMap>
+
+    <resultMap id="gFormComparisonValue" class="com.inqgen.nursing.dynamic.form.bean.comparison.GFormComparisonValue">
+        <result property="eventType" column="EVENT_TYPE"/>
+        <result property="xmlOrder" column="XMLORDER"/>
+        <result property="itemKey" column="ITEMKEY"/>
+        <result property="itemTitle" column="ITEMTITLE"/>
+        <result property="itemType" column="ITEMTYPE"/>
+        <result property="vKey" column="VKEY"/>
+        <result property="uiValue" column="UIVALUE"/>
+        <result property="tm" column="TM"/>
+    </resultMap>
+
+    <select id="selectGFormComparisonItemList" resultMap="gFormComparisonItem">
+        select EVENT_TYPE,XMLORDER,ITEMKEY,ITEMTITLE,OKEY,ITEMTYPE,XMLNAME,REMARK,TM
+        from ${GFORMCOMPARISONITEM}
+        where EVENT_TYPE is not null and ITEMKEY is not null ${WITHUR}
+    </select>
+
+    <select id="selectGFormComparisonValueList" parameterClass="java.util.HashMap" resultMap="gFormComparisonValue">
+        select EVENT_TYPE,XMLORDER,ITEMKEY,ITEMTITLE,ITEMTYPE,VKEY,UIVALUE,TM
+        from ${GFORMCOMPARISONVALUE}
+        where EVENT_TYPE = #eventType# and ITEMKEY = #itemKey# ${WITHUR}
+    </select>
+
+</sqlMap>

@@ -1,0 +1,365 @@
+<script>
+</script>
+<link rel="stylesheet" href="../../../_css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../_css/fontawesome.min.css">
+<link rel="stylesheet" href="../../../_css/style.css">
+<!--JS -->
+<script src="../../../puglin/bootstrap.min.js"></script>
+<!-- <script src="../../../puglin/jquery.twzipcode32.beta.js"></script> -->
+<script src="../../../js/custom.js"></script>
+<script>
+
+//正式保存時，被disabled的物件
+var onDisabledEles = ".formItem, .dtDateFormItem, .dtTimeFormItem, #county, #district, #street, #zipcode";
+//頁面載入完成
+function pageReady(){
+    $("#loadeffect").hide();
+    if (window.console) console.log("頁面載入完成...");
+
+    //修改儲存按鈕字樣
+    $("#btn_update").html(gForm.ud_ID ? "送出修改" : "新增儲存");
+    //賦值
+    if (gForm.ud_ID!=null){
+        $("#img").attr("src", gForm.ud_IMG);
+        $("#name").val(gForm.ud_NAME);
+        $("#userID").val(gForm.ud_USERID);
+        $("#ORG_ID").val(gForm.ud_UNIT);
+        $("#div_AVAILAVEL").find(".formItem[value='"+gForm.ud_AVAILABLE+"']").click();
+        $("#tel").val(gForm.ud_TEL);
+        $("#handPhone").val(gForm.ud_HANDPHONE);
+        $("#email").val(gForm.ud_EMAIL);
+        $("#address").val(gForm.ud_ADDRESS);
+        $("#userID").parents(".form-group:first").hide();
+        $("#label_psw").hide();
+        $("#btn_psw").show();
+    }else{
+        $("#ORG_ID").val(USER.ud_UNIT);
+        $("#label_psw").show();
+        $("#btn_psw").hide();
+    }
+}
+
+//重置密碼
+function resetPassword(){
+    if (confirm("確定將密碼重置為1234嗎?")){
+        $.ajax({
+            url: "/TSR/userInfo/resetPassword.do",
+            data: { "uid" : gForm.ud_ID
+            },
+            type: "POST",
+            async: false,
+            success: function(result) {
+                var rsCode = result.resultCode;
+                if (rsCode=="500"){
+                    alert("不明原因錯誤，請聯繫資訊人員");
+                    console.log(result);
+                }else if (rsCode=="200"){
+                    alert("密碼重置成功！");
+                }
+            },
+            error: function(e) {
+                console.log(e);
+                alert("不明原因錯誤，請聯繫資訊人員");
+            }
+        });
+    }
+}
+
+//檢查email格式
+function checkEmail(){
+    var $emaill = $("#email");
+    var v = $emaill.val();
+    var pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (v != "" && !pattern.test(v)){
+        $emaill.addClass("rejectedItem");
+        return true;
+    }
+    $emaill.removeClass("rejectedItem");
+    return false;
+}
+//新增或儲存
+function addOrUpdateUser(){
+    var param = $.extend(true, {}, gForm);
+    param.ud_NAME = $("#name").val();
+    param.ud_USERID = $("#userID").val();
+    param.ud_UNIT = $("#ORG_ID").val();
+    param.ud_TEL = $("#tel").val();
+    param.ud_ADDRESS = $("#address").val();
+    param.ud_HANDPHONE = $("#handPhone").val();
+    param.ud_RIGHT = $("#sh_UD_RIGHT").val();
+    param.ud_EMAIL = $("#email").val();
+    param.ud_AVAILABLE = $("#div_AVAILAVEL .formItem:checked").val();
+    param.ud_IMG = $("#img").attr("src");
+
+    if (param.ud_NAME.trim()==""){
+        alert("請輸入 姓名");
+        return;
+    }else if (param.ud_USERID.trim()==""){
+        alert("請輸入 帳號");
+        return;
+    }else if (["","-1","-2","-3","-4"].indexOf(param.ud_UNIT.trim())>-1){
+        alert("請選擇 醫院別");
+        return;
+    }else if (param.ud_RIGHT.trim()==""){
+        alert("請選擇 使用者群組");
+        return;
+    }else if (param.ud_AVAILABLE==undefined || param.ud_AVAILABLE.trim()==""){
+        alert("請輸入 有無效");
+        return;
+    }
+    // else if (param.ud_TEL.trim()==""){
+    //     alert("請輸入 聯絡電話");
+    //     return;
+    // }else if (param.ud_ADDRESS.trim()==""){
+    //     alert("請輸入 地址");
+    //     return;
+    // }else if (param.ud_HANDPHONE.trim()==""){
+    //     alert("請輸入 手機號碼");
+    //     return;
+    // }else if (param.ud_EMAIL.trim()==""){
+    //     alert("請輸入 信箱");
+    //     return;
+    // }
+
+    param.ud_NAME = encodeURIComponent(encodeURIComponent(param.ud_NAME));
+    param.ud_ADDRESS = encodeURIComponent(encodeURIComponent(param.ud_ADDRESS));
+    param.ud_UPDATEID = encodeURIComponent(encodeURIComponent(USER.ud_NAME));
+
+    //key值轉大寫
+    param = jsonKeysToCase(param, 1);
+    console.log(param);
+
+    $.ajax({
+        url: "/TSR/userInfo/addOrUpdateUser.do",
+        data: param,
+        type: "POST",
+        async: false,
+        success: function(result) {
+            var rsCode = result.resultCode;
+            if (rsCode=="500"){
+                alert("不明原因錯誤，請聯繫資訊人員");
+                console.log(result);
+            }else if (rsCode=="404"){
+                alert("帳號重複");
+                console.log(result);
+            }else if (rsCode=="200"){
+                if (gForm.ud_ID!=null){
+                    alert("修改成功！");
+                }else{
+                    alert("新增成功！");
+                }
+                $("#btn_back").click();
+            }
+        },
+        error: function(e) {
+            console.log(e);
+            alert("不明原因錯誤，請聯繫資訊人員");
+        }
+    });
+}
+
+//照片轉base64
+function getBase64Img(that){
+    var files = that;
+    try{
+        if (files.files.length==0){
+            alert("請選擇檔案");
+            return false;
+        }
+        var file = files.files[0];
+        //FileReader可直接将上传文件转化为二进制流
+        var reader = new FileReader();
+        reader.onload = function() { //完成后this.result为二进制流
+            var base64Str = this.result;
+            $("#img").attr("src", base64Str);
+            // USER.ud_IMG = base64Str;
+        };
+        reader.readAsDataURL(file); //转化二进制流，异步方法
+    }catch(e){
+        console.error(e);
+        alert("瀏覽器不支援圖片上傳");
+        return "";
+    }
+
+}
+
+
+//被選取的表單資料
+var gForm = null;
+//基础参数
+var basicParam = null;
+//動態表單
+var dynamicForm = null;
+//gForm
+var gFormJS = null;
+//動態表單模板
+var dynamicFormTemplate = null;
+
+var completeCount=0;
+
+//在動態表單都會用到的JS、CSS在這邊一併引入
+includeHead(function(){
+    //在動態表單都會共用的JS程式，在這邊統一執行
+    includeFoot(completeFoot);
+},"default"); //拿掉預設UI
+
+//foot運行完了之後再執行
+function completeFoot() {
+    //病患資料
+    patient=nursing.getPatient().getCurrent();
+
+    //基础参数
+    basicParam = nursing.getBasicParam();
+    //動態表單
+    dynamicForm = nursing.getDynamicForm();
+    //gForm
+    gFormJS = nursing.createGForm();
+    if (window.localStorage["gForm"+multiLevel]){
+        gForm = JSON.parse(window.localStorage["gForm"+multiLevel]);
+        $.ajax({
+            url: "/TSR/userInfo/getUser.do",
+            data: { "uid" : gForm.ud_ID},
+            type: "POST",
+            async: false,
+            success: function(result) {
+                var rsCode = result.resultCode;
+                if (rsCode=="500"){
+                    alert("不明原因錯誤，請聯繫資訊人員");
+                    console.log(result);
+                }else if (rsCode=="200"){
+                    gForm = result.result;
+                }
+            },
+            error: function(e) {
+                console.log(e);
+                alert("不明原因錯誤，請聯繫資訊人員");
+            }
+        });
+        // gForm = {"resultMsg":"success","resultCode":"200","result":{"ud_ID":"0000000239","totalCounts":1,"ud_ID":"0000000239","ud_NAME":"中國醫4","ud_USERID":"test24","ud_UNIT":"022","ud_TEL":"1  中國醫4","ud_ADDRESS":"小三通","ud_HANDPHONE":"2s 中國醫4","ud_RIGHT":"4","ud_EMAIL":"aaa@aa.aa","ud_AVAILABLE":"1","ud_CREATEID":"管理者","ud_CREATEDT":"2020-04-23","ud_UPDATE":"2020-08-18","ud_IMG":"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMy4wLjMsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0i5ZyW5bGkXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDp1cmwoI1NWR0lEXzFfKTt9DQoJLnN0MXtmaWxsOiNGRkU4RDk7fQ0KCS5zdDJ7ZmlsbDojRkZEQzBEO30NCjwvc3R5bGU+DQo8Zz4NCgkNCgkJPGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF8xXyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxNiIgeTE9IjM5LjA1OTIiIHgyPSIxNiIgeTI9IjguNzIwMyIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgxIDAgMCAtMSAwIDM5Ljg4OTgpIj4NCgkJPHN0b3AgIG9mZnNldD0iMCIgc3R5bGU9InN0b3AtY29sb3I6I0ZDNUU0RiIvPg0KCQk8c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojQzkwMDFCIi8+DQoJPC9saW5lYXJHcmFkaWVudD4NCgk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzEuOSw3LjRjLTAuMi0wLjMtMC41LTAuNS0wLjktMC41aDBoMGwtMC45LDBsMS40LTIuNGMwLjItMC4zLDAuMi0wLjYsMC0wLjljLTAuMi0wLjMtMC41LTAuNS0wLjgtMC41TDI2LDMNCgkJaDBoMGMtMC40LDAtMC44LDAuMy0wLjksMC43bC0wLjIsMC43Yy0yLjYtMi4yLTYtMy42LTkuOC0zLjZDNi44LDAuOCwwLDcuNiwwLDE2czYuOCwxNS4yLDE1LjIsMTUuMlMzMC4zLDI0LjQsMzAuMywxNg0KCQljMC0xLjctMC4zLTMuNC0wLjgtNWwyLjMtMi42QzMyLDguMSwzMi4xLDcuNywzMS45LDcuNHogTTMxLjIsNy45bC0yLDIuM2MtMC44LTItMi4xLTMuOC0zLjYtNS4zbDAuMy0xLjFjMC0wLjEsMC4xLTAuMiwwLjItMC4yDQoJCWwwLDBsNC43LDAuMWMwLjEsMCwwLjEsMCwwLjIsMC4xYzAsMC4xLDAsMC4xLDAsMC4yTDI5LDcuNGMwLDAuMSwwLDAuMSwwLDAuMmMwLDAuMSwwLjEsMC4xLDAuMiwwLjFoMEwzMSw3LjZoMA0KCQljMC4xLDAsMC4yLDAsMC4yLDAuMUMzMS4zLDcuOCwzMS4zLDcuOSwzMS4yLDcuOXoiLz4NCgk8Zz4NCgkJPGc+DQoJCQk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjUuNiwxNy42Yy0wLjItMC4zLTAuNS0wLjYtMC44LTAuOGMtMC4xLDAtMC4yLTAuMS0wLjItMC4xaDBjLTAuMSwwLTAuMiwwLTAuMy0wLjFjLTAuMiwwLTAuMywwLTAuNSwwDQoJCQkJYy0wLjUsMC0wLjksMC4yLTEuMywwLjVjLTAuMSwwLjEtMC4yLDAuMS0wLjMsMC4xYy0wLjEsMC0wLjMtMC4xLTAuNC0wLjJjLTAuMS0wLjEtMC4xLTAuMi0wLjEtMC4zYzAtMC4xLDAuMS0wLjIsMC4yLTAuMw0KCQkJCWMwLjUtMC40LDEuMi0wLjcsMS45LTAuN2MwLjIsMCwwLjQsMCwwLjcsMC4xYzAuNC0wLjMsMC43LTAuOCwwLjctMS4zYzAtMC4xLDAtMC4yLDAtMC4yYzAtMC41LTAuMi0wLjktMC41LTEuMw0KCQkJCWMtMC4zLTAuNC0wLjgtMC42LTEuMi0wLjdjLTAuMSwwLTAuMSwwLTAuMiwwYzAsMC0wLjEsMC4xLTAuMSwwLjFjLTAuMiwwLjItMC40LDAuNC0wLjcsMC41Yy0wLjIsMC4xLTAuNSwwLjItMC43LDAuMw0KCQkJCWMtMC41LDAuMi0wLjgsMC4zLTAuOCwwLjNjMCwwLTAuMSwwLTAuMSwwYy0wLjIsMC0wLjQtMC4yLTAuNS0wLjRjMC0wLjEsMC0wLjMsMC4xLTAuNHMwLjItMC4yLDAuMy0wLjJoMGwwLjEsMC4ybC0wLjEtMC4yDQoJCQkJbDAuMSwwYzAuMSwwLDAuMi0wLjEsMC4zLTAuMWMwLjItMC4xLDAuNi0wLjIsMC45LTAuNGMwLjItMC4xLDAuNC0wLjIsMC41LTAuNGMwLjEtMC4xLDAuMS0wLjIsMC4yLTAuMmwwLDANCgkJCQljMC4zLTAuNCwwLjUtMC45LDAuNS0xLjRjMC0wLjUtMC4yLTEtMC41LTEuM2MtMC40LTAuNC0xLTAuNy0xLjYtMC43Yy0wLjUsMC0xLDAuMi0xLjQsMC41Yy0wLjEsMC4xLTAuMiwwLjEtMC4zLDAuMQ0KCQkJCWMtMC4xLDAtMC4zLTAuMS0wLjQtMC4yYy0wLjEtMC4xLTAuMS0wLjItMC4xLTAuM2MwLTAuMSwwLjEtMC4yLDAuMi0wLjNjMC4yLTAuMiwwLjQtMC4zLDAuNy0wLjVjLTAuMS0wLjUtMC4zLTAuOS0wLjYtMS4yDQoJCQkJYy0wLjQtMC40LTAuOS0wLjYtMS41LTAuNmMtMC42LDAtMS4xLDAuMi0xLjUsMC42Yy0wLjQsMC40LTAuNiwwLjktMC42LDEuNXYzLjRoMmMwLjMsMCwwLjUsMC4yLDAuNSwwLjVjMCwwLjMtMC4yLDAuNS0wLjUsMC41DQoJCQkJaC0ydjIuM2MwLjYsMCwxLDAuMSwxLjUsMC4yYzAuNSwwLjIsMC45LDAuNCwxLjIsMC43YzAuMiwwLjIsMC4zLDAuNCwwLjUsMC42YzAuMiwwLjMsMC4yLDAuNiwwLjMsMC45YzAsMC4xLDAuMSwwLjMsMC4xLDAuNA0KCQkJCWMwLDAuMiwwLjEsMC40LDAuMSwwLjZjMCwwLjIsMC4xLDAuMywwLjIsMC40YzAuMSwwLjEsMC4yLDAuMiwwLjMsMC4zYzAuMiwwLjEsMC40LDAuMiwwLjgsMC4yYzAuMSwwLDAuMiwwLjEsMC4zLDAuMg0KCQkJCXMwLjEsMC4yLDAuMSwwLjNjMCwwLjItMC4yLDAuNC0wLjUsMC40bC0wLjEsMGMtMC40LDAtMC43LTAuMi0xLTAuM2MtMC4zLTAuMS0wLjUtMC4zLTAuNy0wLjZjLTAuMS0wLjEtMC4yLTAuMy0wLjMtMC41DQoJCQkJYy0wLjEtMC4yLTAuMS0wLjQtMC4yLTAuNmMwLTAuMS0wLjEtMC4zLTAuMS0wLjRjMC0wLjEtMC4xLTAuMy0wLjEtMC40Yy0wLjEtMC40LTAuMi0wLjYtMC4zLTAuOGMtMC4xLTAuMS0wLjItMC4zLTAuNC0wLjQNCgkJCQljLTAuMi0wLjEtMC40LTAuMi0wLjctMC4zYy0wLjMtMC4xLTAuNi0wLjEtMS0wLjJ2OC43YzAsMC42LDAuMiwxLjEsMC42LDEuNWMwLjQsMC40LDAuOSwwLjYsMS41LDAuNnMxLjEtMC4yLDEuNS0wLjYNCgkJCQljMC40LTAuNCwwLjYtMC45LDAuNi0xLjVjMC0wLjMtMC4xLTAuNi0wLjItMC45Yy0wLjItMC4zLTAuNC0wLjYtMC43LTAuN2MtMC4yLTAuMS0wLjUtMC4yLTAuOC0wLjJjLTAuMywwLTAuNS0wLjItMC41LTAuNQ0KCQkJCXMwLjItMC41LDAuNS0wLjVjMC4zLDAsMC42LDAuMSwwLjksMC4yYzAuMywwLjEsMC41LDAuMiwwLjcsMC40YzAuNCwwLjMsMC43LDAuOCwwLjgsMS4yYzAuMSwwLjMsMC4yLDAuNiwwLjIsMC45DQoJCQkJYzAsMC4yLDAsMC41LTAuMSwwLjdjMC4yLDAuMSwwLjUsMC4xLDAuNywwLjFjMC41LDAsMS0wLjIsMS40LTAuNWMwLjQtMC40LDAuNy0xLDAuNy0xLjZjMC0wLjMsMC0wLjUtMC4xLTAuNw0KCQkJCWMtMC4xLTAuMi0wLjItMC41LTAuNC0wLjdjLTAuMi0wLjItMC4yLTAuNSwwLTAuN2MwLjEtMC4xLDAuMi0wLjEsMC4zLTAuMWMwLjEsMCwwLjMsMC4xLDAuNCwwLjJsMCwwaDBjMCwwLDAsMCwwLDANCgkJCQljMCwwLDAsMCwwLjEsMGMwLjYsMCwxLjEtMC4yLDEuNS0wLjZjMC40LTAuNCwwLjYtMC45LDAuNi0xLjVDMjUuOSwxOC4zLDI1LjgsMTgsMjUuNiwxNy42eiIvPg0KCQk8L2c+DQoJCTxnPg0KCQkJPHBhdGggY2xhc3M9InN0MSIgZD0iTTEyLjUsNS42Yy0wLjYsMC0xLjEsMC4yLTEuNSwwLjZjLTAuMywwLjMtMC41LDAuOC0wLjYsMS4yYzAuMiwwLjEsMC41LDAuMywwLjcsMC41bDAsMGwwLDBMMTEuMyw4DQoJCQkJYzAuMSwwLjEsMC4yLDAuMiwwLjMsMC4zQzExLjcsOC41LDEyLDguOCwxMi40LDljMC4yLDAuMiwwLjQsMC4zLDAuNiwwLjRjMC4xLDAsMC4yLDAuMSwwLjIsMC4xYzAuMSwwLDAuMiwwLjEsMC4zLDAuMg0KCQkJCWMwLjEsMC4xLDAuMSwwLjIsMC4xLDAuM2MwLDAuMi0wLjIsMC40LTAuNSwwLjRoLTAuMWMtMC4yLDAtMC4zLTAuMS0wLjUtMC4xYy0wLjItMC4xLTAuMy0wLjEtMC41LTAuMmMtMC4zLTAuMi0wLjUtMC40LTAuOC0wLjYNCgkJCQljLTAuNC0wLjQtMC44LTAuNy0wLjgtMC44Yy0wLjQtMC4zLTAuOS0wLjUtMS40LTAuNWMtMC42LDAtMS4yLDAuMy0xLjYsMC43QzcuMiw5LjIsNyw5LjYsNywxMC4yYzAsMC4zLDAuMSwwLjcsMC4zLDFoMA0KCQkJCWMwLjIsMCwwLjMsMCwwLjUsMGMwLjMsMCwwLjQsMC4zLDAuNCwwLjVjMCwwLjItMC4yLDAuNC0wLjUsMC40YzAsMCwwLDAtMC4xLDBjLTAuMSwwLTAuMiwwLTAuMywwYzAsMCwwLDAtMC4xLDANCgkJCQljLTAuNSwwLTEuMSwwLjItMS40LDAuNmMtMC40LDAuNC0wLjYsMC45LTAuNiwxLjVjMCwwLDAsMCwwLDAuMWMwLDAuNiwwLjMsMS4xLDAuNywxLjVjMC4yLDAsMC40LTAuMSwwLjYtMC4xDQoJCQkJYzAuNywwLDEuNCwwLjIsMS45LDAuN2wwLDBsMCwwYzAsMCwwLDAsMC4xLDAuMWMwLjEsMC4xLDAuMiwwLjIsMC4zLDAuM2MwLjIsMC4yLDAuNiwwLjUsMSwwLjZjMC4zLDAuMSwwLjYsMC4yLDAuOSwwLjINCgkJCQljMC4zLDAsMC41LDAuMiwwLjUsMC41YzAsMC4zLTAuMiwwLjUtMC41LDAuNWMtMC40LDAtMC44LTAuMS0xLjItMC4yYy0wLjMtMC4xLTAuNi0wLjMtMC45LTAuNWMtMC40LTAuMy0wLjctMC42LTAuOC0wLjcNCgkJCQljLTAuNC0wLjMtMC44LTAuNC0xLjMtMC40Yy0wLjMsMC0wLjcsMC4xLTEsMC4yYy0wLjMsMC4yLTAuNiwwLjQtMC44LDAuOGMtMC4yLDAuMy0wLjMsMC43LTAuMywxLjFjMCwwLjYsMC4yLDEuMSwwLjYsMS41DQoJCQkJYzAuNCwwLjQsMC45LDAuNiwxLjUsMC42YzAuMSwwLDAuMSwwLDAuMSwwaDBsMCwwYzAuMS0wLjEsMC4yLTAuMiwwLjQtMC4yYzAuMSwwLDAuMiwwLDAuMywwLjFjMC4xLDAuMSwwLjIsMC4yLDAuMiwwLjMNCgkJCQljMCwwLjEsMCwwLjItMC4xLDAuM2MtMC4yLDAuMi0wLjMsMC40LTAuNCwwLjdjLTAuMSwwLjItMC4xLDAuNS0wLjEsMC43YzAsMC42LDAuMywxLjIsMC43LDEuNmMwLjQsMC4zLDAuOSwwLjUsMS40LDAuNQ0KCQkJCWMwLjIsMCwwLjUsMCwwLjctMC4xYy0wLjEtMC4yLTAuMS0wLjUtMC4xLTAuN2MwLTAuNCwwLjEtMC44LDAuMi0xLjFjMC4yLTAuNCwwLjQtMC44LDAuNy0xYzAuMS0wLjEsMC4yLTAuMSwwLjMtMC4xDQoJCQkJYzAuMSwwLDAuMywwLjEsMC40LDAuMmMwLjIsMC4yLDAuMSwwLjUtMC4xLDAuN2MtMC4yLDAuMi0wLjQsMC40LTAuNSwwLjdjLTAuMSwwLjItMC4yLDAuNS0wLjIsMC44YzAsMC42LDAuMiwxLjEsMC42LDEuNQ0KCQkJCWMwLjQsMC40LDAuOSwwLjYsMS41LDAuNmMwLjYsMCwxLjEtMC4yLDEuNS0wLjZjMC40LTAuNCwwLjYtMC45LDAuNi0xLjV2LTMuOGgtMS44Yy0wLjMsMC0wLjUtMC4yLTAuNS0wLjUNCgkJCQljMC0wLjMsMC4yLTAuNSwwLjUtMC41aDEuOHYtMi45Yy0wLjItMC4xLTAuNC0wLjEtMC42LTAuMWMtMC4yLDAtMC4zLDAtMC41LDAuMWMtMC40LDAuMS0wLjgsMC4yLTEuMiwwLjINCgkJCQljLTAuNywwLTEuNC0wLjMtMS45LTAuN2MtMC41LTAuNS0wLjctMS4xLTAuNy0xLjdjMC0wLjYsMC4yLTEuMSwwLjYtMS42YzAuMS0wLjEsMC4yLTAuMiwwLjQtMC4yYzAuMSwwLDAuMiwwLDAuMywwLjENCgkJCQljMC4yLDAuMiwwLjIsMC41LDAuMSwwLjdjLTAuMiwwLjMtMC40LDAuNi0wLjQsMC45YzAsMC40LDAuMiwwLjgsMC40LDFjMC4zLDAuMywwLjcsMC41LDEuMiwwLjVjMC4zLDAsMC42LTAuMSwwLjktMC4yDQoJCQkJYzAuMy0wLjEsMC41LTAuMSwwLjgtMC4xYzAuMiwwLDAuNCwwLDAuNiwwLjFWNy43YzAtMC42LTAuMi0xLjEtMC42LTEuNUMxMy42LDUuOCwxMy4xLDUuNiwxMi41LDUuNnoiLz4NCgkJPC9nPg0KCTwvZz4NCgk8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMjUuOCwzLjljMC0wLjEsMC4xLTAuMiwwLjItMC4ybDQuNywwLjFjMC4xLDAsMC4xLDAsMC4yLDAuMWMwLDAuMSwwLDAuMSwwLDAuMkwyOSw3LjRjMCwwLjEsMCwwLjEsMCwwLjINCgkJYzAsMC4xLDAuMSwwLjEsMC4yLDAuMUwzMSw3LjZjMC4xLDAsMC4yLDAsMC4yLDAuMWMwLDAuMSwwLDAuMiwwLDAuMmwtNi42LDcuNmMtMC4xLDAuMS0wLjIsMC4xLTAuMywwYy0wLjEtMC4xLTAuMS0wLjItMC4xLTAuMw0KCQlsMi40LTUuMWMwLTAuMSwwLTAuMiwwLTAuMmMwLTAuMS0wLjEtMC4xLTAuMi0wLjFsLTEuOCwwLjVjLTAuMSwwLTAuMSwwLTAuMiwwYy0wLjEsMC0wLjEtMC4xLTAuMS0wLjJMMjUuOCwzLjl6Ii8+DQo8L2c+DQo8L3N2Zz4NCg==","ud_UPDATEID":"中國醫42"}}.result;
+    }else{
+        gForm = {"ud_ID":null,"ud_NAME":null,"ud_USERID":null,"ud_UNIT":"","ud_TEL":"","ud_ADDRESS":"","ud_HANDPHONE":"","ud_RIGHT":"","ud_EMAIL":"","ud_AVAILABLE":"1","ud_CREATEID":null,"ud_CREATEDT":null,"ud_UPDATE":null,"ud_IMG":"","ud_UPDATEID":USER.ud_NAME};
+    }
+    console.log(gForm);
+
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.frameModel = frameModel;
+    if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_Frame");
+        successCall(JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_Frame_context")));
+        // successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+        window.localStorage.removeItem("loadEditorFrame_Frame_context");
+    }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+        $.ajax({url: "frame/gFormWebADD_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }else{//讀取資料庫frame
+        basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+    }
+    //查詢formFrame(表單外框)
+    var call = false;
+    function successCall (formFrame) {
+        if (call) return; else call=true;
+        //沒有模板資料
+        if (formFrame==null){
+            $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表单模板未配对...</div></div>');
+            $("#loadeffect").hide();
+        }else{
+            var newVersionNo = parseInt(formFrame.newVersionNo);
+            versionNo = (newVersionNo>versionNo) ? newVersionNo : versionNo;
+            //將資料庫的formFrame 引入到body裡面的#targetForm
+            $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+            successCall3();
+        }
+    }
+
+    dynamicForm.searchParamDF.formType = "TSR-Form";
+    basicParam.getCurrDynamicFormTemplateV3(dynamicForm, createSuccess, function() {});
+
+    //查詢動態表單
+    var callCreateSuccess = false;
+    function createSuccess(dFTemplate){
+        if (callCreateSuccess) return; else callCreateSuccess=true;
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        $(".pFormItem2").each(function() {
+            var bean = getDataset(this).bean;
+            var formItemTemplate = dynamicFormTemplate.hashItems[bean];
+            dynamicForm.createElement(this, formItemTemplate, dynamicFormTemplate.hashItems);
+        });
+    }
+
+    //查詢動態表單模板
+    dynamicForm.searchParamDF.formType = formType;
+    if (window.localStorage["loadEditorFrame_formVersion"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_formVersion");
+        successCall2(JSON.parse(window.localStorage["loadEditorFrame_formVersion_dFTemplate"]));
+        window.localStorage.removeItem("loadEditorFrame_formVersion_dFTemplate");
+    }else{//讀取資料庫formVersion
+        basicParam.getCurrDynamicFormTemplateV3(dynamicForm, successCall2, function() {});
+    }
+
+    //查詢動態表單
+    var call2 = false;
+    function successCall2 (dFTemplate) {
+        if (call2) return; else call2=true;
+        //顯示XML模板
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        successCall3();
+    }
+
+    function successCall3(){
+        if (++completeCount<2) return;
+        var formItemsTemplate = dynamicFormTemplate.hashItems;
+        pageReady();
+        // createElement(formItemsTemplate, pageReady);
+        //取得版本號 (如果前兩個frame的versionNo皆為0，就以xml的版本為versionNo)
+        var version = parseInt(dynamicFormTemplate.version);
+        versionNo = (version>versionNo) ? version : versionNo;
+    }
+}
+
+/**
+ * @param {Object} json
+ * @param {Object} type： 默认不传 ==>全部小写;传1 ==>全部大写;传2 ==>首字母大写
+ * 将json的key值进行大小写转换
+ */
+function jsonKeysToCase(json,type){
+    if(typeof json == 'object'){
+        var tempJson = JSON.parse(JSON.stringify(json));
+        toCase(tempJson);
+        return tempJson;
+    }else{
+        return json;
+    }
+    function toCase(json){
+        if(typeof json == 'object'){
+            if(Array.isArray(json)){
+                json.forEach(function(item){
+                    toCase(item);
+                })
+            }else{
+                for (var key in json){
+                    var item = json[key];
+                    if(typeof item == 'object'){
+                        toCase(item);
+                    }
+                    delete(json[key]);
+                    switch (type){
+                        case 1:
+                            //key值全部大写
+                            json[key.toLocaleUpperCase()] = item;  
+                            break;
+                        case 2:
+                            //key值首字母大写，其余小写
+                            json[key.substring(0,1).toLocaleUpperCase() + key.substring(1).toLocaleLowerCase()] = item;  
+                            break;
+                        default:
+                            //默认key值全部小写
+                            json[key.toLocaleLowerCase()] = item;  
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+</script>

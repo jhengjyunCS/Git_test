@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定磐api設計工具 (csApiDefinder)</title>
+    <link rel="icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-4.6.0-dist/css/bootstrap.min.css?csSvnVersion=">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-4.6.0-dist/css/bstreeview.min.css?csSvnVersion=">
+    <link rel="stylesheet" href="../bootstrap/bootstrap-icons/font/bootstrap-icons_forCanvas.css?csSvnVersion=">
+    <link rel="stylesheet" href="css/form.css?csSvnVersion=">
+    <!--    <script src="../../../../../../../../../../tw_minsheng民生/INQGEN_eNursing_Web/src/main/webapp/META-JS/properties.js?csSvnVersion="></script>-->
+    <!-- 基礎參數設定 -->
+    <script src="../../../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../../js2/jquery.js?csSvnVersion="></script>
+    <script src="../bootstrap/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js?csSvnVersion="></script>
+    <script src="../bootstrap/bootstrap-4.6.0-dist/js/bstreeview.min.js?csSvnVersion="></script>
+    <script src="../../../customFormV3/js/common.js?csSvnVersion="></script>
+    <script src="js/formFile.js?csSvnVersion="></script>
+    <!-- 右鍵選單 -->
+    <link rel="stylesheet" href="css/jquery.contextMenu.css?csSvnVersion=">
+    <script src="js/jquery.contextMenu.js?csSvnVersion="></script>
+    <!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+    <script src="../../../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/apiModule.js?csSvnVersion="></script>
+    <script src="../../../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+    <script src="../../js/addAndUpd.js?csSvnVersion="></script>
+    <!-- codemirror 文字編輯器 -->
+    <script src="../codemirror-5.57.0/lib/codemirror.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="../codemirror-5.57.0/lib/codemirror.css?csSvnVersion=">
+    <link rel="stylesheet" href="../codemirror-5.57.0/theme/monokai.css?csSvnVersion=">
+    <script src="../codemirror-5.57.0/mode/javascript/javascript.js?csSvnVersion="></script>
+    <script src="../codemirror-5.57.0/mode/htmlmixed/htmlmixed.js?csSvnVersion="></script>
+    <script src="../codemirror-5.57.0/mode/xml/xml.js?csSvnVersion="></script>
+    <script src="../codemirror-5.57.0/mode/css/css.js?csSvnVersion="></script>
+    <!-- csApiDefine -->
+    <script src="js/config.js?csSvnVersion="></script>
+    <script src="js/csApiDefine.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="css/csApiDefine.css?csSvnVersion=">
+    <!-- 測試 -->
+    <script src="data/data_api_normal.js?csSvnVersion="></script>
+    <script src="data/data_api_array.js?csSvnVersion="></script>
+    <script src="data/data_api_array_full.js?csSvnVersion="></script>
+    <script src="data/data_api_heightWeight_full.js?csSvnVersion="></script>
+    <script>
+        var $divNodeStr
+        let leftMenu, leftTopBox, leftBottomBox
+        $(document).ready(function () {
+            $divNodeStr = $('#divNodeStr')
+            eNursing.showLog = function () {
+            }; //關閉showLog功能
+            leftMenu = document.getElementById('leftMenu')
+            leftTopBox = document.querySelector('.left-top-box')
+            leftBottomBox = document.querySelector('.left-bottom-box')
+            console.log(leftMenu)
+            // 畫面初始化
+            leftMenu.addEventListener('mouseenter', leftMenuHover)
+            leftMenu.addEventListener('mousemove', leftMenuHover)
+            leftMenu.addEventListener('mouseleave', leftBoxHover)
+            leftMenu.addEventListener('click', leftMenuClick)
+            leftTopBox.addEventListener('mouseenter', leftBoxHover)
+            leftTopBox.addEventListener('mousemove', leftBoxHover)
+            leftTopBox.addEventListener('click', leftMenuClick)
+            leftBottomBox.addEventListener('mousemove', leftBoxHover)
+            leftBottomBox.addEventListener('mousemove', leftBoxHover)
+            leftBottomBox.addEventListener('click', leftMenuClick)
+
+            //判斷是否有get參數，有則跳轉頁面
+            let getFormId = eNursing.getUrlParameter("formId")
+            console.log(`getFormId============${getFormId}`)
+            if (getFormId) {
+                formFile.openFormByGetParam()
+            }
+
+            //取得api
+            // formFile.apiModule = nursing.createApiModule()
+            // formFile.apiModule.fn.init({
+            //     sourceId: '',
+            //     apiName: 'updateCicCase'
+            // }, function(){
+            //     console.log("formFile.apiModule----------")
+            //     console.log(formFile.apiModule)
+            //     $('#materialList').find('.switchMode-div:eq(2)').click()
+            //     // objApi = new csApiDefine('drawPageJson', formFile.apiModule.receiveParam)
+            //     $('#li-environment').click()
+            // }, function(e){
+            //     console.error(e)
+            // })
+
+            //實例化
+            // objApi = new csApiDefine('drawPageJson', data_api_array_full)
+            // objApi = new csApiDefine('drawPageJson', data_api_heightWeight_full)
+
+
+            //右鍵選單
+            $.contextMenu({
+                selector: `#drawPageNormal .domain`,
+                callback: function (key, options, event) {
+                    let m = "clicked: " + key;
+                    let $target = options.$trigger
+                    if (key == "setDomainLocal") {
+                        $target.html('{dynamicUrl}').blur()
+                    }
+                },
+                items:    {
+                    "setDomainLocal": {
+                        name: "設為動態的domain -> ex: " + location.origin + '/' + location.pathname.split('/')[1],
+                        icon: "setDomainLocal"
+                    },
+                    "sep2":           "---------",
+                    "quit":           {
+                        name: "離開", icon: function () {
+                            // return 'context-menu-icon context-menu-icon-quit';
+                        }
+                    }
+                }
+            })
+
+            //
+            window.addEventListener('paste', function (e) {
+                if (e.target.nodeName=='TEXTAREA') return false
+                e.preventDefault()
+                var text = e.clipboardData.getData('text/plain')
+                document.execCommand('insertText', false, text)
+            })
+        })
+
+        /**
+         * 左側菜單滑入效果
+         * @param {Event} e
+         */
+        function leftMenuHover(e) {
+            if (e.target === leftMenu) {
+                e.target.classList.add('hover')
+            }
+        }
+
+        /**
+         * 左側區塊滑入效果
+         * @param {Event} e
+         */
+        function leftBoxHover(e) {
+            leftMenu.classList.remove('hover')
+        }
+
+        /**
+         * 左側菜單點擊縮放效果
+         * @param {Event} e
+         */
+        function leftMenuClick(e) {
+            if (e.target === leftTopBox || e.target === leftBottomBox || e.target === leftMenu) {
+                if (leftMenu.classList.contains('active')) {
+                    leftMenu.classList.remove('active')
+                } else {
+                    leftMenu.classList.add('active')
+                }
+                leftBoxHover(e)
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="mask hide"></div>
+<div class="loading-mask fade hide"></div>
+<div class="spinner-container fade hide">
+    <div class="spinner-border m-5 loading-spinner" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="d-flex flex-column h-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">csApiDefine</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="navbarFileDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-default" title="檔案" onclick="return false;">
+                            <i class="bi bi-folder text-white"></i>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarFileDropdown">
+                        <a class="dropdown-item" href="#" onclick="formFile.newForm(); return false">開新檔案</a>
+                        <a class="dropdown-item" href="#" onclick="formFile.openForm(); return false">開啟舊檔</a>
+                        <a class="dropdown-item" href="#" onclick="formFile.saveForm(true); return false">儲存表單</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="navbarHelpDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-default" title="幫助" onclick="return false;">
+                            <i class="bi bi-question text-white"></i>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarHelpDropdown">
+                        <a class="dropdown-item" href="#"
+                           onclick="formFile.showCodeAnnotation(); return false">程式註解</a>
+                        <a class="dropdown-item" href="#"
+                           onclick="formFile.showConnectProperties(); return false">連線參數</a>
+                        <a class="dropdown-item" href="#"
+                           onclick="formFile.showCsApiDefineProperties(); return false">csApiDefine物件</a>
+                        <a class="dropdown-item" href="#"
+                           onclick="formFile.localStorageProp.showList(); return false">localStorage管理</a>
+                        <a class="dropdown-item disabled" href="#">版本 ver1.0 (Beta)</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown hide" id="toolBar">
+                    <button class="btn btn-default" id="btn_recover" disabled="disabled" title="復原上一步(ctrl+z)"
+                            onclick="formFile.btn_recover(this)">
+                        <i class="bi bi-arrow-left text-white"></i>
+                    </button>
+                    <button class="btn btn-default" id="btn_redo" disabled="disabled" title="重作下一步(ctrl+y)"
+                            onclick="formFile.btn_redo(this)">
+                        <i class="bi bi-arrow-right text-white"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-page container-fluid row d-flex flex-fill border no-padding">
+        <div class="left-block active" id="leftMenu">
+            <div class="left-top-box">
+                <ul class="nav nav-tabs" id="bean-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="li-environment" data-toggle="tab" href="#div-environment"
+                           role="tab"
+                           aria-controls="div-environment" aria-selected="true" onclick="formFile.setEnvironmentHTML()">api參數</a>
+                    </li>
+                </ul>
+                <div class="tab-content border flex-fill scrollbar-black square" id="bean-tabContent">
+                    <div class="tab-pane fade show active" id="div-environment" role="tabpanel"
+                         aria-labelledby="li-environment"
+                         style="padding: 0;">
+                        <div class="materialTitle container row no-padding">
+                            <div class="col-5">醫院</div>
+                            <div class="col-7" id="div-environment-sourceId" contenteditable="false"
+                                 onblur="formFile.setValue('sourceId', this.innerHTML)"></div>
+                            <div class="col-5">API名稱</div>
+                            <div class="col-7" id="div-environment-apiName" contenteditable="true"
+                                 onblur="formFile.setValue('apiName', this.innerHTML)"></div>
+                            <div class="col-5">API中文描述</div>
+                            <div class="col-7" id="div-environment-apiDescription" contenteditable="true"
+                                 onblur="formFile.setValue('apiDescription', this.innerHTML)"></div>
+                            <div class="col-5">執行模式</div>
+                            <div class="col-7" id="div-environment-runMode">
+                                <input class="checkbox" type="checkbox" value="F" id="ckb_runMode_F" name="ckb_runMode"
+                                       onclick="formFile.setValueRunMode()"><label for="ckb_runMode_F">表單前帶值</label>
+                                <br/>
+                                <input class="checkbox" type="checkbox" value="M" id="ckb_runMode_M" name="ckb_runMode"
+                                       onclick="formFile.setValueRunMode()"><label for="ckb_runMode_M">表單中查詢</label>
+                                <br/>
+                                <input class="checkbox" type="checkbox" value="B" id="ckb_runMode_B" name="ckb_runMode"
+                                       onclick="formFile.setValueRunMode()"><label for="ckb_runMode_B">表單後拋轉</label>
+                                <br/>
+                                <input class="checkbox" type="checkbox" value="BY" id="ckb_runMode_BY" name="ckb_runMode"
+                                       onclick="formFile.setValueRunMode()"><label for="ckb_runMode_BY">表單正式保存後拋轉</label>
+                                <br/>
+                                <input class="checkbox" type="checkbox" value="D" id="ckb_runMode_D" name="ckb_runMode"
+                                       onclick="formFile.setValueRunMode()"><label for="ckb_runMode_D">表單刪除後拋轉</label>
+                                <br/>
+                                <input class="checkbox" type="checkbox" value="DY" id="ckb_runMode_DY" name="ckb_runMode"
+                                       onclick="formFile.setValueRunMode()"><label for="ckb_runMode_DY">表單正式刪除後拋轉</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="left-bottom-box">
+                <div class="materialTitle container row no-padding">
+                    <div class="col-12 bg-dark text-white attributeTitle">設定</div>
+                </div>
+                <div class="row attributeContent flex-fill scrollbar-black square" id="materialList">
+                    <div class="col-12 subTitle switchMode-div active" onclick="formFile.switchMode(this, 'testAPI')">
+                        <label class="switchMode-label">測試連線</label>
+                        <label class="hotKey hide">(alt + 0)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'normal')">
+                        <label class="switchMode-label">環境參數</label>
+                        <label class="hotKey hide">(alt + 1)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'sendParam')">
+                        <label class="switchMode-label">傳入參數</label>
+                        <label class="hotKey hide">(alt + 2)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'sendReplacing')">
+                        <label class="switchMode-label">轉換傳入參數值</label>
+                        <label class="hotKey hide">(alt + 3)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'sendPreProcessing')">
+                        <label class="switchMode-label">傳入參數前處理</label>
+                        <label class="hotKey hide">(alt + 4)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'receivePreProcessing')">
+                        <label class="switchMode-label">輸出資料前處理</label>
+                        <label class="hotKey hide">(alt + 5)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'receiveParam')">
+                        <label class="switchMode-label">輸出資料</label>
+                        <label class="hotKey hide">(alt + 6)</label>
+                    </div>
+                    <div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'receiveReplacing')">
+                        <label class="switchMode-label">轉換輸出資料值</label>
+                        <label class="hotKey hide">(alt + 7)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-block scrollbar-black square">
+            <!-- 測試連線 -->
+            <div class="col-12 h-100 d-flex flex-column drawPage scrollbar-black square show" id="drawPageTestApi">
+                <iframe name="iframeTestAPI" class="iframeTestAPI col-12 h-100" src="testAPI.html"></iframe>
+            </div>
+            <!-- 環境參數 -->
+            <div class="col-12 h-100 d-flex flex-column drawPage scrollbar-black square hide" id="drawPageNormal">
+                <div class="row">
+                    <div class="col-5"><label class="h5">調用api方式(sendMethod)</label></div>
+                    <div class="input-group col-7">
+                        <input type="radio" class="btn-check" name="rdo_sendMethod" id="rdo_sendMethod_http_json" value="httpJson"
+                               autocomplete="off" onclick="formFile.setValueSendMethod(this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_sendMethod_http_json">httpJson</label>
+                        <input type="radio" class="btn-check" name="rdo_sendMethod" id="rdo_sendMethod_apiTransAddOrUpdateGForm" value="apiTransAddOrUpdateGForm"
+                               autocomplete="off" onclick="formFile.setValueSendMethod(this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_sendMethod_apiTransAddOrUpdateGForm">gForm-拋轉 (新增/更新)</label>
+                        <input type="radio" class="btn-check" name="rdo_sendMethod" id="rdo_sendMethod_apiTransDeleteGForm" value="apiTransDeleteGForm"
+                               autocomplete="off" onclick="formFile.setValueSendMethod(this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_sendMethod_apiTransDeleteGForm">gForm-拋轉 (刪除)</label>
+                        <input type="radio" class="btn-check" name="rdo_sendMethod" id="rdo_sendMethod_xmlApi" value="xmlApi"
+                               autocomplete="off" onclick="formFile.setValueSendMethod(this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_sendMethod_xmlApi">xmlApi</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5"><label class="h5">方法(method)</label></div>
+                    <div class="input-group col-7">
+                        <input type="radio" class="btn-check" name="rdo_method" id="rdo_method_GET" value="GET"
+                               autocomplete="off" onclick="formFile.setValue('method', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_method_GET">GET</label>
+                        <input type="radio" class="btn-check" name="rdo_method" id="rdo_method_POST" value="POST"
+                               autocomplete="off" onclick="formFile.setValue('method', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_method_POST">POST</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5"><label class="h5">傳入參數類型(contentType)</label></div>
+                    <div class="input-group col-7">
+                        <input type="radio" class="btn-check" name="rdo_contentType" id="rdo_contentType_JSON"
+                               value="application/json; charset=utf-8" autocomplete="off"
+                               onclick="formFile.setValue('contentType', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_contentType_JSON">JSON</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5"><label class="h5">同步/非同步(async)</label></div>
+                    <div class="input-group col-7">
+                        <input type="radio" class="btn-check" name="rdo_async" id="rdo_async_true" value="true"
+                               autocomplete="off" onclick="formFile.setValue('async', (this.value=='true'))">
+                        <label class="btn btn-outline-secondary" for="rdo_async_true">同步</label>
+                        <input type="radio" class="btn-check" name="rdo_async" id="rdo_async_false" value="false"
+                               autocomplete="off" onclick="formFile.setValue('async', (this.value=='true'))">
+                        <label class="btn btn-outline-secondary" for="rdo_async_false">非同步</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5"><label class="h5">接收參數類型(dataType)</label></div>
+                    <div class="input-group col-7">
+                        <input type="radio" class="btn-check" name="rdo_dataType" id="rdo_dataType_xml" value="xml"
+                               autocomplete="off" onclick="formFile.setValue('dataType', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_dataType_xml">xml</label>
+                        <input type="radio" class="btn-check" name="rdo_dataType" id="rdo_dataType_json" value="json"
+                               autocomplete="off" onclick="formFile.setValue('dataType', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_dataType_json">json</label>
+                        <input type="radio" class="btn-check" name="rdo_dataType" id="rdo_dataType_script"
+                               value="script" autocomplete="off" onclick="formFile.setValue('dataType', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_dataType_script">script</label>
+                        <input type="radio" class="btn-check" name="rdo_dataType" id="rdo_dataType_html" value="html"
+                               autocomplete="off" onclick="formFile.setValue('dataType', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_dataType_html">html</label>
+                        <input type="radio" class="btn-check" name="rdo_dataType" id="rdo_dataType_text" value="text"
+                               autocomplete="off" onclick="formFile.setValue('dataType', this.value)">
+                        <label class="btn btn-outline-secondary" for="rdo_dataType_text">text</label>
+                    </div>
+                </div>
+                <div class="row" id="div_domain_url">
+                    <div class="col-2 bg-dark"><label class="h5 text-light" title="設於properties.js -> const_apiDomainSetting">變數-prop.</label></div>
+                    <div class="col-5 bg-dark"><label class="h5 text-light">網域(domain)</label></div>
+                    <div class="col-5 bg-dark"><label class="h5 text-light">API路徑(url)</label></div>
+
+                    <div class="col-2 canEdit var" onblur="formFile.setValueDomainUrl()"></div>
+                    <div class="col-5 canEdit domain" onblur="formFile.setValueDomainUrl()"></div>
+                    <div class="col-5 canEdit url" onkeyup="formFile.addOrRemoveDomainUrl(this)"
+                         onblur="formFile.setValueDomainUrl()"></div>
+                </div>
+            </div>
+            <!-- 傳入參數、輸出資料 -->
+            <div class="col-12 h-100 d-flex flex-column drawPage scrollbar-black square hide" id="drawPageJson">
+            </div>
+            <!-- 轉換傳入參數值、轉換輸出資料值 -->
+            <div class="col-12 h-100 flex-column drawPage scrollbar-black square hide" id="drawPageReplacing">
+                <div class="row raplacingTitle">
+                    <div class="col-2 bg-dark" style="border-right: white 1px solid;">
+                        <label class="h5 text-light">bean/參數</label>
+                    </div>
+                    <div class="col-2 bg-dark" style="border-right: white 1px solid;"><label
+                            class="h5 text-light">描述</label></div>
+                    <div class="col-2 bg-dark"><label class="h5 text-light">方法(method)</label></div>
+                    <div class="col-6 bg-dark"><label class="h5 text-light">配置</label></div>
+                </div>
+                <div class="row rowReplacing">
+                    <div class="col-2 bean" data-type="string"></div>
+                    <div class="col-2 desc">狀態說明</div>
+                    <div class="col-8 rows no-padding">
+                        <div class="row">
+                            <div class="col-3">
+                                <select class="method custom-select custom-select-lg mb-3"
+                                        onchange="formFile.changeReplacing(this)">
+                                    <option value="">請選擇</option>
+                                    <option value="trim">清除空白</option>
+                                    <option value="replace">取代</option>
+                                </select>
+                            </div>
+                            <div class="col-9 no-padding col-setting">
+                                <div class="row">
+                                    <div class="col-5 canEdit replaceFrom"></div>
+                                    <div class="col-2 replaceArrow text-center align-middle"><i
+                                            class="bi bi-arrow-right text-dark"></i></div>
+                                    <div class="col-5 canEdit replaceTo"
+                                         onkeyup="formFile.addOrRemoveReplace(this)"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5 canEdit replaceFrom"></div>
+                                    <div class="col-2 replaceArrow text-center align-middle"><i
+                                            class="bi bi-arrow-right text-dark"></i></div>
+                                    <div class="col-5 canEdit replaceTo"
+                                         onkeyup="formFile.addOrRemoveReplace(this)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <select class="method custom-select custom-select-lg mb-3"
+                                        onchange="formFile.changeReplacing(this)">
+                                    <option value="">請選擇</option>
+                                    <option value="trim">清除空白</option>
+                                    <option value="replace">取代</option>
+                                </select>
+                            </div>
+                            <div class="col-9 no-padding col-setting">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 h-100 d-flex flex-column drawPage scrollbar-black square hide" id="drawPagePreProcessing">
+                <div class="row preProcessingTitle">
+                    <div class="col-2 bg-dark" style="border-right: white 1px solid;"><label
+                            class="h5 text-light">順序</label></div>
+                    <div class="col-10 bg-dark"><label class="h5 text-light">方法</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-2 idx">1</div>
+                    <div class="col-10">
+                        <select class="processing custom-select custom-select-lg mb-3"
+                                onchange="formFile.changeProcessing(this, null)">
+                            <option value="">請選擇</option>
+                            <option value="base64 decode">反解base64 - base64 decode</option>
+                            <option value="url decode">反解url編碼 - url decode</option>
+                            <option value="String to JSON">字串 to JSON - String to JSON</option>
+                            <option value="base64 encode">base64編碼 - base64 encode</option>
+                            <option value="url encode">url編碼 - url encode</option>
+                            <option value="JSON to String">JSON to 字串 - JSON to String</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal 新增表單-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_newForm"
+     aria-modal="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black" id="modal_newForm_title">開新檔案</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body scrollbar-black square" id="modal_newForm_body">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="modal_newForm_formType">formType</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="modal_newForm_formType" name="modal_newForm_formType" placeholder="formType" value="propCsCanvas" disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="modal_newForm_sourceId">醫院(sourceID)*</label>
+                    <div class="col-sm-9">
+                        <select class="custom-select" id="modal_newForm_sourceId" name="modal_newForm_sourceId">
+                            <option value="test">測試test</option>
+                            <option value="定磐通用API" selected>定磐通用API</option>
+                            <option value="AIAI">爱爱院</option>
+                            <option value="高雄民生">高雄民生</option>
+                            <option value="台北榮總">台北榮總</option>
+                            <option value="忠港醫院">忠港醫院</option>
+                            <option value="xindian">新店耕莘</option>
+                            <option value="HY">华育</option>
+                            <option value="KCH">高基醫院</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="modal_newForm_apiName">API名稱*</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="modal_newForm_apiName" name="modal_newForm_apiName" placeholder="insertCicCase" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="modal_newForm_apiDescription">API中文敘述</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="modal_newForm_apiDescription" name="modal_newForm_apiDescription" placeholder="ex. 新增 CICCASE" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="modal_newForm_footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <button class="btn btn-success" type="button" onclick="formFile.newForm_btn()">新增</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal 程式註解-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+     id="modal_codeAnnotation" aria-modal="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black">程式註解</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body scrollbar-black square" style="max-height: none">
+                <label for="propCodeAnnotation_editor"></label><textarea id="propCodeAnnotation_editor" class="editor" style="height: 500px; display: none"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal 連線參數-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+     id="modal_connectProperties" aria-modal="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black">連線參數</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body scrollbar-black square">
+                <div class="form-group row" id="modal_title_const_socketUrl">
+                    <label class="col-sm-3 col-form-label">webSocket接口</label>
+                    <label class="col-sm-9" style="user-select: text; cursor: auto;" id="modal_label_const_socketUrl"></label>
+                </div>
+                <div class="form-group row" id="modal_title_const_webserviceUrl">
+                    <label class="col-sm-3 col-form-label">webService接口</label>
+                    <label class="col-sm-9" style="user-select: text; cursor: auto;" id="modal_label_const_webserviceUrl"></label>
+                </div>
+                <div class="form-group row" id="modal_title_const_gformServiceUrl">
+                    <label class="col-sm-3 col-form-label">gForm接口</label>
+                    <label class="col-sm-9" style="user-select: text; cursor: auto;" id="modal_label_const_gformServiceUrl"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal csApiDefine物件-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+     id="modal_csApiDefineProperties" aria-modal="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black">csApiDefine物件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="formFile.showCsApiDefinePropertiesOnClose()"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body scrollbar-black square">
+                <textarea id="propCsApiDefine_editor" class="editor" style="height: 500px; display: none"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal"
+                        onclick="formFile.showCsApiDefinePropertiesOnClose()">關閉
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal 提示-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_alert"
+     aria-modal="true" style="padding-right: 17px; display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">提示</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body scrollbar-black square">
+                <p class="modal-body-paragraph" style="color:black" id="modal_alert_msg">施工中</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal 開啟舊檔-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+     id="modal_gFormList" aria-modal="true" style="padding-right: 17px; display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black">開啟舊檔</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body scrollbar-black square">
+                <table class="table table-striped table-borderless">
+                    <thead id="modal_gFormList_thead">
+                    <tr class="table-info">
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">醫院(sourceId)</th>
+                        <th scope="col" class="text-center">API名稱</th>
+                        <th scope="col" class="text-center">API中文描述</th>
+                        <th scope="col" class="text-center">執行模式</th>
+                        <th scope="col" class="text-center historyRec hide">上傳日期</th>
+                        <th scope="col" class="text-center">功能</th>
+                    </tr>
+                    </thead>
+                    <tbody id="modal_gFormList_tbody">
+                    <tr class="text-center">
+                        <td>1</td>
+                        <td>XX醫院</td>
+                        <td>XXAPI名稱</td>
+                        <td>XXAPI中文描述</td>
+                        <td>XX執行模式</td>
+                        <td class="historyRec hide">XX上傳日期</td>
+                        <td>
+                            <button class="btn btn-success" type="button" onclick="formFile.chooseThisForm(0); return false">選擇
+                            </button>
+                            <button class="btn btn-success historyBtn" type="button" onclick="formFile.openForm(0); return false">歷次紀錄
+                            </button>
+                            <button class="btn btn-success historyBtn" type="button" onclick="formFile.deleteForm(0); return false">刪除
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!--modal localStorage管理-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_localStorage" aria-modal="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black" id="modal_localStorage_title">localStorage管理</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body scrollbar-black square">
+                <table class="table table-striped table-borderless">
+                    <thead id="modal_localStorage_thead">
+                    <tr class="table-info">
+                        <th scope="col" class="text-center">#</th>
+                        <th scope="col" class="text-center">醫院(sourceId)</th>
+                        <th scope="col" class="text-center">最後修改日</th>
+                        <th scope="col" class="text-center">功能<button class="btn btn-secondary" type="button" style="float: right;" onclick="formFile.localStorageProp.showModify('add'); return false">新增</button></th>
+                    </tr>
+                    </thead>
+                    <tbody id="modal_localStorage_tbody">
+                    <tr class="text-center">
+                        <td>1</td>
+                        <td>XX醫院</td>
+                        <td>XX最後修改日</td>
+                        <td>
+                            <button class="btn btn-success" type="button" onclick="formFile.chooseThisForm(0); return false">選擇
+                            </button>
+                            <button class="btn btn-success historyBtn" type="button" onclick="formFile.openForm(0); return false">歷次紀錄
+                            </button>
+                            <button class="btn btn-success historyBtn" type="button" onclick="formFile.deleteForm(0); return false">刪除
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!--modal localStorage管理-新增/修改-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_localStorage_modify" aria-modal="true" style="display: none;">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:black" id="modal_localStorage_modify_title">localStorage管理-新增/修改</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body scrollbar-black square" id="modal_localStorage_modify_body">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="modal_localStorage_modify_sourceId">醫院(sourceID)*</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="modal_localStorage_modify_sourceId" placeholder="醫院名稱" value="">
+                    </div>
+                </div>
+                <table class="table table-striped table-borderless">
+                    <thead id="modal_localStorage_modify_thead">
+                        <tr class="table-info">
+                            <th scope="col" class="text-center">參數名</th>
+                            <th scope="col" class="text-center">範例值</th>
+                            <th scope="col" class="text-center">備註說明</th>
+                            <th scope="col" class="text-center">設定時機</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal_localStorage_modify_tbody">
+                        <tr class="text-center">
+                            <td><input type="text" class="form-control modal_localStorage_modify_paramName" placeholder="參數名" value="" onkeyup="formFile.localStorageProp.modifyParamOnKeyUp(this)"></td>
+                            <td><input type="text" class="form-control modal_localStorage_modify_example" placeholder="範例值" value=""></td>
+                            <td><input type="text" class="form-control modal_localStorage_modify_remark" placeholder="備註說明" value=""></td>
+                            <td><input type="text" class="form-control modal_localStorage_modify_whenSetting" placeholder="設定時機" value=""></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-center modal_localStorage_modify_tfoot">
+                            <td>gForm_userId</td>
+                            <td>nurs_00001</td>
+                            <td>登入者ID</td>
+                            <td>登入時</td>
+                        </tr>
+                        <tr class="text-center modal_localStorage_modify_tfoot">
+                            <td>gForm_userName</td>
+                            <td>王大帥</td>
+                            <td>登入者姓名</td>
+                            <td>登入時</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer" id="modal_localStorage_modify_footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+                <button class="btn btn-success" type="button" onclick="formFile.localStorageProp.save(this)">新增</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    // $("#onlineMode").click()
+    // chooseThisFormOnlineMode('7391823262bf4c9886ec42a6ccdd1edc', 'MStest');
+    // setTimeout(function(){
+    // 	switchFormat()
+    // 	setTimeout(function(){
+    // 		$("#formFormatFormType").val("list")
+    // 		$("#mosal_alert").find(".btn.btn-success").click()
+    // 	}, 500)
+    // }, 500)
+</script>

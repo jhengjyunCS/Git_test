@@ -1,0 +1,71 @@
+<table align="center" height="51px">
+    <tr>
+        <td nowrap width="20%"></td>
+        <td nowrap align="center">
+            <input type="button" id="btnAddTemp" name="btnAddTemp" value="暫存" class="clsButton" onclick="gFormJS.status = 'N';gFormSave(this, function(rsGForms){
+                    doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+                });
+            ">
+            <input type="button" id="btnAdd" name="btnAdd" value="新增" class="clsButton" onclick="gFormJS.status = 'Y';gFormSave(this, function(rsGForms){
+                    doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+                });
+            ">
+        </td>
+        <td nowrap width="20%"></td>
+    </tr>
+</table>
+<table width="90%" cellspacing="0" cellpadding="0">
+    {{each $data.items item idx}}
+    {{if item.controlType!="group" && item.parent==null}}
+    <tr style="/**/">
+        <td class="nurstr1">{{item.title}} : </td>
+        <td class="etd_executeA">
+            <p class="pFormItem" data-bean="{{item.name}}" />
+        </td>
+    </tr>
+    {{else if item.controlType=="group"}}
+    {{set childrens=item.children.split(",")}}
+    <tr style="/**/">
+        <td class="nurstr1"><label>{{item.name}}</label></td>
+        <td class="etd_executeA">
+            <table cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        {{each childrens children idx2}}<th>{{$data.hashItems[children].title}}</th>
+                        {{/each}}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pFormItemGroup" data-bean="{{item.name}}">{{each childrens children idx2}}
+                        <td>
+                            <p class="pFormItem" data-bean="{{$data.hashItems[children].name}}"/>
+                        </td>{{/each}}
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="createGroupBtn" type="button" data-parent onclick="createFormItemGroup(this,'{{item.name}}')" value="新增 {{item.name}}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    {{/if}}
+    {{/each}}
+</table>
+<table align="center" height="51px">
+    <tr>
+        <td nowrap width="20%"></td>
+        <td nowrap align="center">
+            <input type="button" id="btnAddTemp2" name="btnAddTemp2" value="暫存" class="clsButton" onclick="gFormJS.status = 'N';gFormSave(this, function(rsGForms){
+                    doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+                });
+            ">
+            <input type="button" id="btnAdd2" name="btnAdd2" value="新增" class="clsButton" onclick="gFormJS.status = 'Y';gFormSave(this, function(rsGForms){
+                    doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+                });
+            ">
+        </td>
+        <td nowrap width="20%"></td>
+    </tr>
+</table>

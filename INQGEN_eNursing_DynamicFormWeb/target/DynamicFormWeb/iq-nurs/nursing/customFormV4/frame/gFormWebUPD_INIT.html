@@ -1,0 +1,1645 @@
+<script>
+</script>
+<link rel="stylesheet" href="../../../TSR/_css/bootstrap.min.css?csSvnVersion=">
+<link rel="stylesheet" href="../../../TSR/_css/fontawesome.min.css?csSvnVersion=">
+<link rel="stylesheet" href="../../../TSR/_css/style.css?csSvnVersion=">
+<!--JS -->
+<script src="../../../TSR/puglin/bootstrap.min.js?csSvnVersion="></script>
+<script src="../../../TSR/js/custom.js?csSvnVersion="></script>
+<script>
+//頁面載入完成
+function pageReady(){
+    $("#loadeffect").hide();
+    if (window.console) console.log("頁面載入完成...");
+
+    /**
+     *預設隱藏 start==================
+     **/
+    //TIA / ICH / ICH LOCATION / SAH
+    ruleTools.hideEle($("#div_ICD_TIA").parents(".column:first").find(".subChoice"));
+    //defaultHide
+    // ruleTools.hideEle($(".defaultHide"));
+    /**
+     *預設隱藏 end==================
+     **/
+
+    setDittoValue();
+
+    eNursing.showLog=function(){}; //關閉showLog功能
+
+    // $("#headingOne").find("div").click();
+    // $("#headingEleven").find("div").click();
+
+    // setTimeout(function(){location.reload();}, 30000);
+    //
+
+    //改變 tabcontent 被點擊時的子項btn的ID (控制讓表單檢查的程式可以展開div)
+    $(".tabcontent").find(".titel_btn:first").click(function(){
+        if (this.id.indexOf("btn")===0){
+            $(this).attr("id", this.id.replace(/^btn/, "isOpen"));
+        }else{
+            $(this).attr("id", this.id.replace(/^isOpen/, "btn"));
+        }
+    });
+
+    /**
+     *輸入檢查 start==================
+     **/
+     var ifs=[], op="||", events=[], etar="", eifs=[], eop="||", evts=[], eval_true="", eval_false="";
+     //ICD10 ICD_TX
+    $("#ICD_TX").keyup(function(event) {
+        var v = this.value;
+        var $chk = $("#div_ICD_ID").find(":checked");
+        var ckv = ",";
+        var reg;
+        $chk.each(function(){
+            ckv += this.value + ",";
+        });
+        if (ckv.indexOf(","+"1"+",")>-1){
+            reg = /^I63\w*/;
+            ruleTools.reject($(this), !reg.test(v), {"hint":"ICD10前三碼必須是 I63"});
+        }else if (ckv.indexOf(","+"2"+",")>-1){
+            reg = /(^G45\w*)|(^G46\w*)/;
+            ruleTools.reject($(this), !reg.test(v), {"hint":"ICD10前三碼必須是 G45 或 G46"});
+        }else if (ckv.indexOf(","+"3"+",")>-1){
+            reg = /^I61\w*/;
+            ruleTools.reject($(this), !reg.test(v), {"hint":"ICD10前三碼必須是 I61"});
+        }else if (ckv.indexOf(","+"4"+",")>-1){
+            reg = /^I60\w*/;
+            ruleTools.reject($(this), !reg.test(v), {"hint":"ICD10前三碼必須是 I60"});
+        }else if (ckv.indexOf(","+"99"+",")>-1){
+            reg = /(^I67\.89\w*)|(^I67\.9\w*)\w*/;
+            ruleTools.reject($(this), !reg.test(v), {"hint":"ICD10只允許 I67.89 或 I67.9"});
+        }
+    });
+    $("#div_ICD_ID").find(".formItem").click(function(){$("#ICD_TX").keyup();});
+
+    //身分證 PTID
+    op="||", etar="", eop="||";
+    etar="PTID";
+    eifs.push({
+        "checktype" : "function",      //string, number, regex, function, array, eval
+        "condition": "checkTwID",   //function
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "身分證格式錯誤"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //科別 DCTYPE24_ID
+    op="||", etar="", eop="||";
+    etar="DCTYPE24_ID";
+    eifs.push({
+        "checktype" : "regex",      //string, number, regex, function, array, eval
+        "condition": "^(?:([1-7,9])(?!.*?\\1))+$",   //regex
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "請輸入不重複數字\n1=神經內科\n2=神經外科\n3=複健科\n4=內科\n5=外科\n6=其他\n7=急\n9=未填\n可輸入多個代碼例如726"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //身高 HEIGHT_NM
+    op="||", etar="", eop="&&";
+    etar="HEIGHT_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "20",               //number
+        "max": "250"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NA"          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入數字\n20~250,NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //體重 WEIGHT_NM
+    op="||", etar="", eop="&&";
+    etar="WEIGHT_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "0",               //number
+        "max": "400"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NA"          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入數字\n0~400,NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //GCS-E GCSE_NM
+    op="||", etar="", eop="&&";
+    etar="GCSE_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "1",               //number
+        "max": "4"          //number
+    });
+    eifs.push({
+        "checktype" : "string",      //string, number, regex, function, array, eval
+        "min": "NA",               //string
+        "max": "NA"          //string
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入1~4、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //GCS-V GCSV_NM
+    op="||", etar="", eop="&&";
+    etar="GCSV_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "1",               //number
+        "max": "5"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "E,T,A,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入1~5、E、T、A、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //GCS-M GCSM_NM
+    op="||", etar="", eop="&&";
+    etar="GCSM_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "1",               //number
+        "max": "6"          //number
+    });
+    eifs.push({
+        "checktype" : "string",      //string, number, regex, function, array, eval
+        "min": "NA",               //string
+        "max": "NA"          //string
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入1~6、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+    //HB_NM
+    op="||", etar="", eop="&&";
+    etar="HB_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.0",               //number
+        "max": "20.0"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.N,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.0~20.0、NN.N、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //HCT_NM
+    op="||", etar="", eop="&&";
+    etar="HCT_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.0",               //number
+        "max": "60.0"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.N,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.0~60.0、NN.N、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //PLATELET_NM
+    op="||", etar="", eop="&&";
+    etar="PLATELET_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "0000",               //number
+        "max": "1200"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0000~1200.0、NNNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //WBC_NM
+    op="||", etar="", eop="&&";
+    etar="WBC_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.00",               //number
+        "max": "30.00"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.NN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.0~30.0、NN.NN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //PTT1_NM
+    op="||", etar="", eop="&&";
+    etar="PTT1_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.0",               //number
+        "max": "100.0"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN.N,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000.0~100.0、NNN.N、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //PTT2_NM
+    op="||", etar="", eop="&&";
+    etar="PTT2_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.00",               //number
+        "max": "35.00"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.N,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.0~35.0、NN.N、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //PTINR_NM
+    op="||", etar="", eop="&&";
+    etar="PTINR_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.00",               //number
+        "max": "20.00"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.NN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.0~20.0、NN.NN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //ER_NM
+    op="||", etar="", eop="&&";
+    etar="ER_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "600"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~600、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //BUN_NM
+    op="||", etar="", eop="&&";
+    etar="BUN_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "200"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~200、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //CRE_NM
+    op="||", etar="", eop="&&";
+    etar="CRE_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.00",               //number
+        "max": "15.00"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.NN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.00~15.00、NN.NN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //HBAC_NM
+    op="||", etar="", eop="&&";
+    etar="HBAC_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "00.0",               //number
+        "max": "20.0"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.N,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入00.0~20.0、NN.N、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //AC_NM
+    op="||", etar="", eop="&&";
+    etar="AC_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "800"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~800、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //TCHO_NM
+    op="||", etar="", eop="&&";
+    etar="TCHO_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "500"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~500、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //TG_NM
+    op="||", etar="", eop="&&";
+    etar="TG_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "0000",               //number
+        "max": "2000"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0000~2000、NNNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //HDL_NM
+    op="||", etar="", eop="&&";
+    etar="HDL_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "200"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~200、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //LDL_NM
+    op="||", etar="", eop="&&";
+    etar="LDL_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "400"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~400、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //GOT_NM
+    op="||", etar="", eop="&&";
+    etar="GOT_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "500"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~500、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //GPT_NM
+    op="||", etar="", eop="&&";
+    etar="GPT_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "500"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~500、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //SBP_NM
+    op="||", etar="", eop="&&";
+    etar="SBP_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "300"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~300、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //DBP_NM
+    op="||", etar="", eop="&&";
+    etar="DBP_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "000",               //number
+        "max": "300"          //number
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入000~300、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //BT_NM
+    op="||", etar="", eop="&&";
+    etar="BT_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "33.0",               //string
+        "max": "43.0"          //string
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN.N,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入33.0~43.0、NN.N、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //HR_NM
+    op="||", etar="", eop="&&";
+    etar="HR_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "50",               //string
+        "max": "150"          //string
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NNN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入50~150、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //RR_NM
+    op="||", etar="", eop="&&";
+    etar="RR_NM";
+    eifs.push({
+        "checktype" : "number",      //string, number, regex, function, array, eval
+        "min": "15",               //string
+        "max": "35"          //string
+    });
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "NN,NA",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入15~35、NNN、NA"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //住院處置-SAH(H&H score)-分數 TRMICH_score
+    op="||", etar="", eop="||";
+    etar="TRMICH_score";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,5",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,5,6"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM1a
+    op="||", etar="", eop="||";
+    etar="NID_NM1a";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM1a
+    op="||", etar="", eop="||";
+    etar="NIDS_NM1a";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM1b
+    op="||", etar="", eop="||";
+    etar="NID_NM1b";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM1b
+    op="||", etar="", eop="||";
+    etar="NIDS_NM1b";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM1c
+    op="||", etar="", eop="||";
+    etar="NID_NM1c";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM1c
+    op="||", etar="", eop="||";
+    etar="NIDS_NM1c";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM2
+    op="||", etar="", eop="||";
+    etar="NID_NM2";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM2
+    op="||", etar="", eop="||";
+    etar="NIDS_NM2";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM3
+    op="||", etar="", eop="||";
+    etar="NID_NM3";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM3
+    op="||", etar="", eop="||";
+    etar="NIDS_NM3";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM4
+    op="||", etar="", eop="||";
+    etar="NID_NM4";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM4
+    op="||", etar="", eop="||";
+    etar="NIDS_NM4";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM5a
+    op="||", etar="", eop="||";
+    etar="NID_NM5a";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM5a
+    op="||", etar="", eop="||";
+    etar="NIDS_NM5a";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM5b
+    op="||", etar="", eop="||";
+    etar="NID_NM5b";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM5b
+    op="||", etar="", eop="||";
+    etar="NIDS_NM5b";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM6a
+    op="||", etar="", eop="||";
+    etar="NID_NM6a";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM6a
+    op="||", etar="", eop="||";
+    etar="NIDS_NM6a";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM6b
+    op="||", etar="", eop="||";
+    etar="NID_NM6b";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM6b
+    op="||", etar="", eop="||";
+    etar="NIDS_NM6b";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,96",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,96(不計分)"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM7
+    op="||", etar="", eop="||";
+    etar="NID_NM7";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM7
+    op="||", etar="", eop="||";
+    etar="NIDS_NM7";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM7
+    op="||", etar="", eop="||";
+    etar="NID_NM7";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM7
+    op="||", etar="", eop="||";
+    etar="NIDS_NM7";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM9
+    op="||", etar="", eop="||";
+    etar="NID_NM9";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM9
+    op="||", etar="", eop="||";
+    etar="NIDS_NM9";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM10
+    op="||", etar="", eop="||";
+    etar="NID_NM10";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM10
+    op="||", etar="", eop="||";
+    etar="NIDS_NM10";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NID_NM11
+    op="||", etar="", eop="||";
+    etar="NID_NM11";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //NIHSS NIDS_NM11
+    op="||", etar="", eop="||";
+    etar="NIDS_NM11";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //出院mRS OFFMRS
+    op="||", etar="", eop="||";
+    etar="OFFMRS";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2,3,4,5,6",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2,3,4,5,6"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //離院日期 OH_DT 不可早於 住院日期 IH_DT 除非未住院 IH_FL-0
+    op="||", etar="", eop="||";
+    etar="OH_DT";
+    eifs.push({
+        "checktype" : "function",      //string, number, regex, function, array, eval
+        "condition": "check_OH_DT",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "離院日期不可早於住院日期"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+    $("#IH_DT").change(function(){$("#OH_DT").blur()});
+    $("#div_IH_FL").find(".formItem").click(function(){$("#OH_DT").blur()});
+
+    //危險因子 HT_ID
+    op="||", etar="", eop="||";
+    etar="HT_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 DM_ID
+    op="||", etar="", eop="||";
+    etar="DM_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 PCVA_ID
+    op="||", etar="", eop="||";
+    etar="PCVA_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 PTIA_ID
+    op="||", etar="", eop="||";
+    etar="PTIA_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 HD_ID
+    op="||", etar="", eop="||";
+    etar="HD_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 UR_ID
+    op="||", etar="", eop="||";
+    etar="UR_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 PAD_ID
+    op="||", etar="", eop="||";
+    etar="PAD_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 FAHIID_ID
+    op="||", etar="", eop="||";
+    etar="FAHIID_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 HC_ID
+    op="||", etar="", eop="||";
+    etar="HC_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 SM_ID
+    op="||", etar="", eop="||";
+    etar="SM_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 AL_ID
+    op="||", etar="", eop="||";
+    etar="AL_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 CA_ID
+    op="||", etar="", eop="||";
+    etar="CA_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+    //危險因子 Others_ID
+    op="||", etar="", eop="||";
+    etar="Others_ID";
+    eifs.push({
+        "checktype" : "array",      //string, number, regex, function, array, eval
+        "condition": "0,1,2",          //array
+    });
+    evts.push({
+        "mode" : "reject",           //onblur時會有紅框提示,保存時會跳hint訊息
+        "hint" : "僅能輸入0,1,2"                  //提示訊息
+    });
+    pushEvents();
+    pushViryRules();
+
+
+
+    //SecCT 有填写就一定要填写 SecCT_RESULT
+    $("#SecCT").change(function(){
+        var v = this.value;
+        if (v!=" "){
+            $("#div_SecCT_RESULT").find(".radioFormItem").attr("data-required", "true");
+        }else{
+            $("#div_SecCT_RESULT").find(".radioFormItem").attr("data-required", "false");
+        }
+    });
+
+
+    //events.push
+    function pushEvents(){
+        events.push({"tar":etar,"ifs":eifs,"operator":eop,"evts":evts,"eval_true":eval_true,"eval_false":eval_false});
+        eifs=[], evts=[], eval_true="", eval_false="";
+    }
+    //viryRules.push
+    function pushViryRules(){
+        viryRules.push({"ifs":ifs,"operator":op,"events":events});
+        ifs=[], events=[], eifs=[], evts=[];
+    }
+
+    ruleTools.viryRules_compiler();
+    /**
+     *輸入檢查 end==================
+     **/
+
+    /**
+     *計分 start==================
+     **/
+    //NIHSS 第一次評估
+    $(".NID").find(".formItem").change(function(){
+        var score=0;
+        $(".NID").find(".formItem").each(function(){
+            var v=parseInt(this.value);
+            if (!isNaN(v) && v!=96){
+                score+=v;
+            }
+        });
+        $("#NID_TOTAL").val(score);
+    });
+    //NIHSS 第二次評估
+    $(".NIDS").find(".formItem").change(function(){
+        var score=0;
+        $(".NIDS").find(".formItem").each(function(){
+            var v=parseInt(this.value);
+            if (!isNaN(v) && v!=96){
+                score+=v;
+            }
+        });
+        $("#NIDS_TOTAL").val(score);
+    });
+    /**
+     *計分 end==================
+     **/
+    /**
+     *其他 start==================
+     **/
+    //確認診斷之CT 及 MRI(DWI) 只需填寫一項即可
+    $("#CT_D, #CT_T, #MRI_D, #MRI_T").change(function(){
+        CT_MRI_check();
+    });
+    $("#div_CT_FL .checkboxFormItem, .CT_FL_N .checkboxFormItem").click(function(){
+        CT_MRI_check();
+    });
+    $("#other_CT_text").change(function(){
+        CT_MRI_check();
+    });
+    $("#div_MRI_FL .checkboxFormItem, .MRI_FL_N .checkboxFormItem").click(function(){
+        CT_MRI_check();
+    });
+    $("#other_MRI_text").change(function(){
+        CT_MRI_check();
+    });
+    function CT_MRI_check(){
+        var CT_D = $("#CT_D").val(), CT_T = $("#CT_T").val();
+        var MRI_D = $("#MRI_D").val(), MRI_T = $("#MRI_T").val();
+        var CT_FL_0 = $("#CT_FL_0")[0].checked, CT_FL_1 = $("#CT_FL_1")[0].checked;
+        var MRI_FL_0 = $("#MRI_FL_0")[0].checked, MRI_FL_1 = $("#MRI_FL_1")[0].checked;
+        var hasCT_DT = (CT_D!="" && CT_T!="") ? true : false;
+        var hasCT_OP = ($(".CT_FL_N .checkboxFormItem:checked").length>0) ? true : false;
+            hasCT_OP = (hasCT_OP || $("#other_CT_text").val()!="") ? true : false;
+        var hasMRI_DT = (MRI_D!="" && MRI_T!="") ? true : false;
+        var hasMRI_OP = ($(".MRI_FL_N .checkboxFormItem:checked").length>0) ? true : false;
+            hasMRI_OP = (hasMRI_OP || $("#other_MRI_text").val()!="") ? true : false;
+
+        //如果CT的任一選項有填，讓CT變必填，讓MRI變非必填
+        if (hasCT_DT || CT_FL_1 || hasCT_OP || CT_FL_0){
+            $("#CT_D, #CT_T, .CT_FL_N .checkboxFormItem, #other_CT_text").attr("data-required", "true");
+            $("#MRI_D, #MRI_T, .MRI_FL_N .checkboxFormItem, #other_MRI_text").attr("data-required", "false");
+
+            //勾選外片，日期時間可不填
+            if (CT_FL_1){
+                $("#CT_D, #CT_T").attr("data-required", "false");
+            }
+
+            //如果CT的任一選項或 No finding 有勾選，其餘選項非必填
+            if (hasCT_OP || CT_FL_0){
+                $(".CT_FL_N .checkboxFormItem, #other_CT_text").attr("data-required", "false");
+            }else{
+                $(".CT_FL_N .checkboxFormItem, #other_CT_text").attr("data-required", "true");
+            }
+        }
+        //如果MRI的任一選項有填，讓CT變必填，讓MRI變非必填
+        else if (hasMRI_DT || MRI_FL_1 || hasMRI_OP || MRI_FL_0){
+            $("#CT_D, #CT_T, .CT_FL_N .checkboxFormItem, #other_CT_text").attr("data-required", "false");
+            $("#MRI_D, #MRI_T, .MRI_FL_N .checkboxFormItem, #other_MRI_text").attr("data-required", "true");
+
+            //勾選外片，日期時間可不填
+            if (MRI_FL_1){
+                $("#MRI_D, #MRI_T").attr("data-required", "false");
+            }
+
+            //如果MRI的任一選項或 No finding 有勾選，其餘選項非必填
+            if (hasMRI_OP || MRI_FL_0){
+                $(".MRI_FL_N .checkboxFormItem, #other_MRI_text").attr("data-required", "false");
+            }else{
+                $(".MRI_FL_N .checkboxFormItem, #other_MRI_text").attr("data-required", "true");
+            }
+        }else{
+            $("#CT_D, #CT_T, .CT_FL_N .checkboxFormItem, #other_CT_text").attr("data-required", "true");
+            $("#MRI_D, #MRI_T, .MRI_FL_N .checkboxFormItem, #other_MRI_text").attr("data-required", "true");
+        }
+    }
+
+    /**
+     *其他 end==================
+     **/
+
+    //依照現行所有物件狀態判斷並執行顯示規則
+    ruleTools.showRules_runAll();
+
+     if (gForm!=null){
+        console.log("======gForm");
+        console.log(gForm);
+        $("#addSpan").hide();
+        $("#updSpan").show();
+        setElementValue_GForm();
+     }
+}
+
+//返回上一頁
+function location_Prev(){
+    if (gForm!=null){
+        parent.$("a.main_btn.active").click();
+    }else{
+        doURL('../../../_page/page02_2.html');
+    }
+}
+
+//離院日期 OH_DT 不可早於 住院日期 IH_DT 除非未住院 IH_FL-0 (符合規定回傳false)
+function check_OH_DT(OH_DT){
+    var IH_DT = $("#IH_DT").val();
+    var IH_FL = $("#div_IH_FL").find(".formItem:checked").val();
+    if ((IH_FL!=undefined && IH_FL==0) || OH_DT=="" || IH_DT==""){
+        return false;
+    }else if (OH_DT<IH_DT){
+        return true;
+    }
+    return false;
+}
+
+//全部展開/全部隱藏
+function openOrCloseAll(that){
+    if (that.checked){
+        $(".titel_btn.collapsed").click();
+    }else{
+        $(".titel_btn").click();
+    }
+}
+
+//全為必填項，無資料時，於[全部儲存]時未填写项目系統自動填入[NA]
+function dittoNA(){
+    $(".dittoNA").find(".formItem").each(function(){
+        if (this.value=="") this.value="NA";
+    });
+}
+
+//ajax取得patient資料並填入
+function fillPatient(){
+    var PATIENT_ID = $("#PATIENT_ID").val();
+    $.ajax({
+    url: "../../../userInfo/login.do",
+    data: {"hisnum" : PATIENT_ID},
+    success: function(result) {
+        console.log(result);
+        var rsCode = result.resultCode;
+        if (rsCode=="404"){
+            alert("查無病歷資料\n\n測試用病歷號:\n12903964\n12903965\n12903966\n12903967\n12903968\n12903969");
+        }else if (rsCode=="500"){
+            alert("不明原因錯誤，請聯繫資訊人員");
+        }else if (rsCode=="200"){
+            var rs = result.result[0];
+            // hhisnum: "12903964"
+            // hname: "test"
+            // hnamec: "水*"
+            // hidno: "12345667"
+            // hbldtype: "O"
+            // hsex: "M"
+            // hbirthdt: "1999-01-01"
+            // hpatadr: "？陲陔？ 誚陲誰耋 誚陲陔游 8瘍7-8"
+            // hpatadr2: "誚陲笢貌婖摒ㄗ摩芶ㄘ衄癹鼠侗"
+            // hphonhm1: null
+            // hphonhm2: null
+            $("#PTNAME").val(rs.hnamec); //姓名
+            $("#PTID").val(rs.hidno); //身分證
+            $("#div_GENDER_TX").find(".radioFormItem:checked").click(); //性別
+            $("#div_GENDER_TX").find(".radioFormItem[value='"+rs.hname+"']").click();
+            $("#BIRTH_DT").val(rs.hbirthdt); //生日
+        }
+    },
+    error: function(e) {
+        console.log(e);
+        alert("不明原因錯誤，請聯繫資訊人員");
+    }
+});
+}
+
+
+// 檢查日期格式
+//     $("#BIRTH_DT").change(function(){
+//         var that=getDataset(this), v=this.value;
+//         console.log(that.dateformat);
+//         console.log(v);
+//         console.log(new Date());
+//         var dateformatArr = that.dateformat.split("-");
+//     });
+// function validateDate (originalYear, originalMonth, originalDay) {
+//     var date = new Date(originalYear, originalMonth - 1, originalDay);
+//     var year = date.getFullYear();
+//     var month = date.getMonth()   1;
+//     var day = date.getDate();
+//     return year == originalYear && month == originalMonth && day == originalDay;
+// }
+
+
+//被選取的表單資料
+var gForm = null;
+//基础参数
+var basicParam = null;
+//動態表單
+var dynamicForm = null;
+//gForm
+var gFormJS = null;
+//動態表單模板
+var dynamicFormTemplate = null;
+
+var completeCount=0;
+
+//在動態表單都會用到的JS、CSS在這邊一併引入
+includeHead(function(){
+    //在動態表單都會共用的JS程式，在這邊統一執行
+    includeFoot(completeFoot);
+},"default"); //拿掉預設UI
+
+//foot運行完了之後再執行
+function completeFoot() {
+    //病患資料
+    patient=nursing.getPatient().getCurrent();
+
+    //基础参数
+    basicParam = nursing.getBasicParam();
+    //動態表單
+    dynamicForm = nursing.getDynamicForm();
+    //gForm
+    gFormJS = nursing.createGForm();
+    if (window.localStorage["gForm"+multiLevel]){
+        gForm = JSON.parse(window.localStorage["gForm"+multiLevel]);
+        gFormJS.leftJoin(gForm);
+    }
+    gFormJS.formType = formType;
+    gFormJS.searchParamGF.sourceId = sourceId;
+    gFormJS.searchParamGF.userId = userId;
+    gFormJS.searchParamGF.userName = userName;
+
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.frameModel = frameModel;
+    if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_Frame");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+        window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        //2022.04.08之後改用
+        successCall(JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_Frame_context")));
+    }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+        $.ajax({url: "frame/gFormWebADD_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }else{//讀取資料庫frame
+        basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+    }
+    //查詢formFrame(表單外框)
+    var call = false;
+    function successCall (formFrame) {
+        if (call) return; else call=true;
+        //沒有模板資料
+        if (formFrame==null){
+            $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表单模板未配对...</div></div>');
+            $("#loadeffect").hide();
+        }else{
+            var newVersionNo = parseInt(formFrame.newVersionNo);
+            versionNo = (newVersionNo>versionNo) ? newVersionNo : versionNo;
+            //將資料庫的formFrame 引入到body裡面的#targetForm
+            $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+            successCall3();
+        }
+    }
+
+    //查詢動態表單模板
+    dynamicForm.searchParamDF.formType = formType;
+    if (window.localStorage["loadEditorFrame_formVersion"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_formVersion");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall2(JSON.parse(window.localStorage["loadEditorFrame_formVersion_dFTemplate"]));
+        window.localStorage.removeItem("loadEditorFrame_formVersion_dFTemplate");
+        //2022.04.08之後改用
+        successCall2(JSON.parse(parent.$("#previewIframe").attr("loadEditorFrame_formVersion_dFTemplate")));
+    }else{//讀取資料庫formVersion
+        basicParam.getCurrDynamicFormTemplateV3(dynamicForm, successCall2, function() {});
+    }
+
+    //查詢動態表單
+    var call2 = false;
+    function successCall2 (dFTemplate) {
+        if (call2) return; else call2=true;
+        //顯示XML模板
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        successCall3();
+    }
+
+    function successCall3(){
+        if (++completeCount<2) return;
+        var formItemsTemplate = dynamicFormTemplate.hashItems;
+        createElement(formItemsTemplate, pageReady);
+        //取得版本號 (如果前兩個frame的versionNo皆為0，就以xml的版本為versionNo)
+        var version = parseInt(dynamicFormTemplate.version);
+        versionNo = (version>versionNo) ? version : versionNo;
+    }
+}
+
+//保存gForm 不跳轉頁面 可重複覆蓋保存多次
+function saveForm(status){
+    gFormJS.status = status;
+    gFormSave(this, function(rsGForms){
+        console.log(rsGForms);
+        gFormJS.leftJoin(rsGForms[0].gForm);
+        if (status=='N'){
+            alert("資料暫存成功");
+        }else if (status=='Y'){
+            alert("資料已正式保存");
+        }
+        // doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+    });
+    // gFormJS.leftJoin(gForm);
+}
+
+// gFormJS.status = 'N';gFormSave(this, function(rsGForms){
+//                     doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+//                 });
+
+</script>

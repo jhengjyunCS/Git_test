@@ -1,0 +1,81 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div class="form-group">
+    <div class="col-xs-2 col-md-2">
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pt-pa-info">?</button>
+    </div>
+    <div class="modal fade main-contrnt" id="pt-pa-info" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">分数说明</h3>
+                </div>
+                <div class="modal-body">
+                    <p>每个项目皆为1分。累计分值≤2分为低危险，3-4分为中度危险，≥5分为高度危险。<br />持续评估要求: 高危1次/3d，中危1次/5d，低危1次/7d。<br />
+                        预防措施: ①在病人床头悬挂&ldquo;预防跌倒、坠床&rdquo;警示牌 <br />②呼叫器及用物放置病人易取处，教会使用呼叫器<br /> ③使用床栏 ④使用约束带 ⑤使用助行器 <br />⑥需要时协助病人上、下床 ⑦协助病人如厕 ⑧其他。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 col-md-offset-3 col-md-2">
+        <a onclick="doURL('AppADD.html');">
+            <input type="button" value="新增" /></a>
+        <a href="javascript: return false;" onclick="doURL('AppLIST.html');"><input type="button" value="刷新" /></a>
+    </div>
+</div>
+<table id="tableList" style="border: 1px #41CAC0 solid;text-align: center;">
+    <tr style="border: 1px #41CAC0 solid;text-align: center;">
+        <th rowspan="2" width="60px" style="border: 1px #41CAC0 solid;text-align: center;">
+            &nbsp;
+        </th>
+        <th rowspan="2" width="60px" style="border: 1px #41CAC0 solid;text-align: center;">
+            &nbsp;
+        </th>
+        <th rowspan="2" style="border: 1px #41CAC0 solid;text-align: center;">
+            记录日期
+        </th>
+        <th rowspan="2" style="border: 1px #41CAC0 solid;text-align: center;">
+            陪伴者
+        </th>
+        <th style="border: 1px #41CAC0 solid;text-align: center;">
+            总分
+        </th>
+        <th rowspan="2" style="border: 1px #41CAC0 solid;text-align: center;">
+            评估者
+        </th>
+    </tr>
+    <tr style="border: 1px #41CAC0 solid;text-align: center;">
+        <th style="border: 1px #41CAC0 solid;text-align: center; background-color: #F2F2F2;">
+            2分以上高危
+        </th>
+    </tr>
+    <script id="tableListTr_Template" type="text/html">
+        {{each $data dForms idx}}
+            {{set dForm=dForms.dynamicForm}}
+            <tr>
+                <td width="60px" align="center" style="border: 1px #41CAC0 solid;">
+                    <a href="AppUPD.html" onclick="updateForm('{{idx}}');">
+                        <input type="button" value="編輯" />
+                    </a>
+                </td>
+                <td width="60px" align="center" style="border: 1px #41CAC0 solid;">
+                    <a href="#" onclick="deleteForm('{{idx}}');">
+                        <input type="button" value="刪除" />
+                    </a>
+                </td>
+                <td align="center" style="border: 1px #41CAC0 solid;">
+                    {{dForm.evaluationTime}}
+                </td>
+                <td align="center" style="border: 1px #41CAC0 solid;">
+                    <font class="pFormItem" data-bean="FallBenQForm1" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+                </td>
+                <td align="center" style="border: 1px #41CAC0 solid;">{{@dForm.totalScore}}</td>
+                <td align="center" style="border: 1px #41CAC0 solid;">{{dForm.createUserName}}</td>
+            </tr>
+        {{/each}}
+    </script>
+
+</table>

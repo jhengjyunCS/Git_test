@@ -1,0 +1,110 @@
+.tableType1>thead>tr>th {
+    background-color: #B3E3ED;
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: #1AB39F;
+    text-align: center;
+    height: 38px;
+}
+
+.tableType1,
+.tableType1 tbody tr td {
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: #1AB39F;
+    vertical-align: middle;
+}
+
+.tableType2>thead>tr>th {
+    background-color: #FFE497;
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: #FCD360;
+    text-align: center;
+}
+
+.tableType2,
+.tableType2>tbody>tr>td {
+    border-style: solid;
+    border-width: 2.5px;
+    border-color: #FCD360;
+    height: 38px;
+    text-align: center;
+}
+
+input {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+}
+
+.btn {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.btn {
+    border: none;
+    display: inline-block;
+    padding: 8px 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: #D3D3D3;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap
+}
+
+.btn {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.btn {
+    text-align: left;
+    padding: 8px 8px
+}
+
+.btn {
+    white-space: normal;
+}
+
+.btn:hover {
+    color: #000;
+    background-color: #ccc;
+}
+
+.btn-blue {
+    color: #fff;
+    background-color: #2196F3;
+}
+
+.btn-blue:hover {
+    color: #fff;
+    background-color: #000000;
+}
+
+button {
+    font: inherit;
+    margin: 0
+}
+
+.modal-header-blue{
+    background-color: #5BB9FF;
+}

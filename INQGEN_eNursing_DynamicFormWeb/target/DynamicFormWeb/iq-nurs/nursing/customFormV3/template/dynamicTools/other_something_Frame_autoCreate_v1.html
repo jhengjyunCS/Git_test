@@ -1,0 +1,13 @@
+        <table width="90%" calss="etable" cellspacing="0" cellpadding="0">
+
+{{each $data.items item idx}}
+            <tr style="/**/">
+                <th class="nurstr1" align="left" width="20%">{{item.title}}</th>
+                <td class="etd_executeA" height="38">
+                    <span style="font-weight: 400">
+                        <p class="pFormItem" data-bean="{{item.name}}" />
+                    </span>
+                </td>
+            </tr>{{/each}}
+
+        </table>

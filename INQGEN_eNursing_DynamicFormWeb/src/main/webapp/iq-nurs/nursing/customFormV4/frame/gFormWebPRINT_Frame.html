@@ -1,0 +1,308 @@
+<link rel="stylesheet" href="../../../style/styleNis.css?csSvnVersion=" />
+<style>
+    .patb {
+        font-weight: bold;
+        color: darkblue;
+    }
+</style>
+<!-- 将被种到#bodyContent的#targetForm里 -->
+<div class="iframe_page">
+    <div class="title between" style="z-index: 999">
+        <div class="flex-end">
+            <h4 style="text-align: center">出院照護摘要</h4>
+        </div>
+        <div class="btnAll" style="text-align: center">
+            <input type="button" class="clsButton" value="列印" onclick="doPrint();">
+            <input type="button" class="clsButton" value="返回" onclick="doURL('gFormWebLIST.html?multiLevel='+multiLevel);">
+        </div>
+    </div>
+</div>
+<div id="showPageDiv">
+    <!-- 病人資訊 -->
+    <table class="etable" width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="patb">床號: <span id="bedNo"></span></td>
+            <td class="patb">病歷號: <span id="patientId"></span></td>
+            <td class="patb">主治醫師: <span id="doctorId"></span> <span id="doctorName"></span></td>
+            <td class="patb">住院科別: <span id="division"></span></td>
+        </tr>
+        <tr>
+            <td class="patb">姓名: <span id="name"></span> (<span id="sex"></span>)</td>
+            <td class="patb">生日(年齡): <span id="birthday"></span> (<span id="age"></span>)</td>
+            <td class="patb" colspan="2">住院日期: <span id="inHospitalDate"></span> (<span id="inHospitalNum"></span>)</td>
+        </tr>
+    </table>
+    <!-- 沒有頁簽 -->
+    <table class="etable" width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="nurstr1 col-1" rowspan="1">出院日期</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultexitdate"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="1">出院情況</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultexit"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="1" colspan="1">出院居住狀態</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultexitstatus"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="1" colspan="1">項目</td>
+            <td class="nurstr1 col-1" rowspan="1" colspan="1">護理指導</td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="2" colspan="1">預防跌倒</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultfallscore"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultfallnursingcare"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="3" colspan="1">活動能力</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultactivitylimit"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultactivitynursingcare"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultactivityother"></span>
+                <font color="#CC0000">&#9733</font>如需要專業人員協助進行復健活動諮詢，可預約本院復健醫學科門診。
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="3" colspan="1">飲食指導</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulteattype"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulteatnursingcare"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulteatother"></span>
+                <font color="#CC0000">&#9733</font>如需要專業人員協助進行飲食諮詢，可預約本院營養諮詢門診。
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="3" colspan="1">傷口照護</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultwound"></span>
+                <table style="display: none" id="WoundTable" class="etable" width="70%" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="etd_executeA col-9" colspan="4">
+                            <table class="etable" width="100%" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <th class="nurstr1 col-1" style="text-align: center;">傷口種類</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">部位</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">大小</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">換藥頻率（天/次）</th>
+                                </tr>
+                                <tr class="pFormItemGroup pFormItemGroupCenter" data-bean="WoundData">
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true" style="text-align: center;" data-bean="woundType"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true" style="text-align: center;" data-bean="woundRegion"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true" style="text-align: center;" data-bean="woundSize"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: left;">
+                                        <p class="pFormItem" data-controlMode="" data-upload="true" style="text-align: left;" data-bean="frequency"/>
+                                        <table style="display: none">
+                                            <tr>
+                                                <td>
+                                                    <p class="pFormItem" data-controlMode="" data-upload="true" data-bean="frequencyDay"/>
+                                                </td>
+                                                <td>
+                                                    <p class="pFormItem" data-controlMode="" data-upload="true" data-bean="frequencyTime"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <p>1.保持傷口清潔乾燥，維持身體清爽，避免高溫悶溼環境。</p>
+                <p>2.觀察傷口有無發炎症狀，如紅腫、滲出液、惡臭等。</p>
+                <p>3.需換藥請準備優碘、棉籤、紗布及紙膠，並注意無菌技術。</p>
+                <p>4.當紗布滲濕或掉落需立即換藥。</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultwoundnursingcare"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultwoundother"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="3" colspan="1">管路照護</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulttube"></span>
+                <table style="display: none" id="tubeTable" width="70%" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="etd_executeA col-9" colspan="4">
+                            <table class="etable" width="100%" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <th class="nurstr1 col-1" style="text-align: center;">管路種類</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">部位</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">置放日期</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">尺寸</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">固定長度</th>
+                                    <th class="nurstr1 col-1" style="text-align: center;">材質</th>
+                                </tr>
+                                <tr class="pFormItemGroup pFormItemGroupCenter" data-bean="TubeData">
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true" style="text-align: center;" data-bean="tubeName"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true" style="text-align: center;" data-bean="bodyPart"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true"
+                                           style="text-align: center;"
+                                           data-bean="tubeInsertionDate"
+                                        />
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <font class="pFormItem" data-controlMode="readOnly" data-upload="true" style="display: inline-block;text-align: center;" data-bean="tubeProductNumberValue"/>
+                                        <font class="pFormItem" data-controlMode="readOnly" data-upload="true" style="display: inline-block;text-align: center;" data-bean="tubeProductNumber"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <font class="pFormItem" data-controlMode="readOnly" data-upload="true" style="display: inline-block;text-align: center;" data-bean="tubeLength"/>
+                                        <font class="pFormItem" data-controlMode="readOnly" data-upload="true" style="display: inline-block;text-align: center;" data-bean="tubeUnit"/>
+                                    </td>
+                                    <td class="etd_executeA col-9" style="text-align: center;">
+                                        <p class="pFormItem" data-controlMode="readOnly" data-upload="true" style="text-align: center;" data-bean="tubeMaterial"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <p>1.請注意管路需固定妥當，預留可活動之安全長度，避免不慎鬆脫、拉扯或滑落。</p>
+                <p>2.需注意管路周圍皮膚有無紅、腫、疼痛、皮膚顏色異常或有異常分泌物等。</p>
+                <p>3.若引流管路有引流量，需注意流量的變化，如果突然明顯增加、減少、無引流量或是引流液顏色突然改變時，需立即就醫。</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulttubenursingcare"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulttubeother"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="3" colspan="1">藥物指導</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultdrugself"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultdrugout"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adultdrugnursingcare"></span>
+                <font color="#CC0000">&#9733</font>如需要專業人員協助進行藥物諮詢，可致電本院藥物諮詢室。
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="10" colspan="1">健康照護(依據病人狀況進行科別屬性勾選)</td>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealth"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealthinternaltitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealthsurgicaltitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealthchemotitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealthskintitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealthbonetitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="AdulthealthENTtitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealtheyestitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <span class="pFormItem" data-bean="Adulthealthexittitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="etd_executeA col-9" colspan="1">
+                <font color="#CC0000">&#9733</font>如需要專業人員協助諮詢，可致電本院安寧病房(02)8792-3311轉51003。
+                <span class="pFormItem" data-bean="Adulthealthhospicetitle"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="1" colspan="1">需緊急就醫</td>
+            <td class="etd_executeA col-9">
+                <P>若返家發生持續發燒(>38℃)、急性疼痛、傷口紅腫、不正常出血、分泌物、意識不清、胸痛、嚴重呼吸短促、痰液黃稠有惡臭味、解血便、吐血等狀況，請立即就醫。</P>
+            </td>
+        </tr>
+        <tr>
+            <td class="nurstr1 col-1" rowspan="1" colspan="1">其他資訊</td>
+            <td class="etd_executeA col-9">
+                <P>1.出院準備諮詢電話：(02)8792-3311轉88171(週一至週五08:00~12:00、13:00~17:00)。</P>
+                <P>2.藥物諮詢電話：(02)8792-3311轉88105(週一至週五08:00~12:00、13:00~17:00；週六08:00~12:00)。</P>
+                <P>3.人工掛號專線：(02)8792-7222(週一至週五 08:00~17:00；週六08:00~12:00)。</P>
+                <P>4.語音掛號專線：(02)8792-7111(共20線自動跳線)。</P>
+                <P>5.若有長期照顧相關問題請洽1966長照服務專線；若有輔具相關問題請洽詢各縣市輔具資源中心或社會局。</P>
+            </td>
+        </tr>
+    </table>
+</div>

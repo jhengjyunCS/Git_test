@@ -1,0 +1,298 @@
+<style>
+    .pageTitle table {
+        width: 100%;
+        border: 1px solid;
+    }
+</style>
+<div class="resultGroup">
+    <div class="pageHeader model">
+        <div class="left">新店耕莘醫院</div>
+        <div class="middle">出院準備服務個案紀錄單</div>
+        <div class="right">列印日期:${now.yyyy/MM/dd HH:mm}</div>
+    </div>
+    <div class="pageTitle model">
+        <table class="apiResultTable" data-api-structure="{&quot;apiName&quot;:&quot;CTHgetNoteApplyInfo&quot;,&quot;runMode&quot;:&quot;F&quot;,&quot;sourceId&quot;:&quot;xindian&quot;}">
+            <tbody>
+            <tr class="">
+                <td>
+                    <label>床號</label>
+                </td>
+                <td class="pFormItem" data-bean="bedno">
+                </td>
+                <td>
+                    <label>病歷號</label>
+                </td>
+                <td class="pFormItem" data-bean="patientid">
+                </td>
+                <td>
+                    <label>主治醫師</label>
+                </td>
+                <td class="pFormItem" data-bean="HVDOCNM">
+                </td>
+                <td>
+                    <label>住院科別</label>
+                </td>
+                <td class="pFormItem" data-bean="CURSVCL">
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    <label>姓名</label>
+                </td>
+                <td class="pFormItem" data-bean="patientName">
+                </td>
+                <td>
+                    <label>生日(年齡)</label>
+                </td>
+                <td class="pFormItem" data-bean="birthday">
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <label>住院日期</label>
+                </td>
+                <td class="pFormItem" data-bean="age">
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    <label>申請人員</label>
+                </td>
+                <td class="pFormItem" data-bean="HADMDT">
+                </td>
+                <td>
+                    <label>申請單位</label>
+                </td>
+                <td class="pFormItem" data-bean="inDays">
+                </td>
+                <td>
+                    <label>申請時間</label>
+                </td>
+                <td class="pFormItem" data-bean="noteUser">
+                </td>
+                <td>
+                    <label>照會團隊</label>
+                </td>
+                <td class="pFormItem" data-bean="stationid">
+                </td>
+            </tr>
+            <tr class="">
+                <td>
+                    <label>照會原因</label>
+                </td>
+                <td class="pFormItem" data-bean="noteTime">
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pageFooter model">
+        <div class="left"></div>
+        <div class="middle"></div>
+        <div class="right">第${page.count}頁，共${page.total}頁</div>
+    </div>
+    <table class="resultTable" data-is-only-show="true">
+        <thead>
+        <tr class="trWordCountSetting">
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="border: none;">＊收案原因</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="resultTable" data-search-param-g-f="{&quot;counts&quot;:&quot;1&quot;}" data-merge-param="{&quot;formType&quot;:&quot;CTHDPSecondScreen&quot;, &quot;frameModel&quot;:&quot;gFormWebPRINT2&quot;}">
+    </table>
+    <table class="resultTable" data-is-only-show="true">
+        <thead>
+        <tr class="trWordCountSetting">
+            <td data-word-count="">&nbsp;</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="border: none;">＊日常活動功能量表ADLs</td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="resultTable" data-search-param-g-f="{&quot;counts&quot;:&quot;1&quot;}" data-merge-param="{&quot;formType&quot;:&quot;CTHADLS&quot;, &quot;frameModel&quot;:&quot;gFormWebPRINT2&quot;}">
+    </table>
+</div>
+
+<div class="resultGroup">
+    <div class="pageHeader model">
+        <div class="left">定磐科技</div>
+        <div class="middle">XXX評估表</div>
+        <div class="right">${now.yyyy/MM/dd HH:mm}</div>
+    </div>
+    <div class="pageTitle model">
+        <table class="table table-striped table-bordered">
+            <tbody>
+            <tr>
+                <td colspan="8">出院準備複篩表</td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        床號
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="bedno" data-bean="bedno" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;bedno&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;bedno\&quot;,\&quot;data-bean\&quot;:\&quot;bedno\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入床號\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;床號\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;床號\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;605c40df-f900-4936-9854-c467224c52f8\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170221\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;床號\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170221&quot;}"><div class="divFormItem txDivFormItem" id="div_bedno" style=""><label type="label" class="formItem textFormItem " id="bedno" name="bedno" size="0" maxlength="" placeholder="床號" autocomplete="off" data-title="床號" data-bean="bedno" data-id="bedno" data-parent="" data-required="true" data-prompttips="請輸入床號" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="E1021-2" data-othervalue="">E1021-2</label></div></div>
+                </td>
+                <td class="text-center table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        病歷號
+                    </label>
+                </td>
+                <td class="text-center" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="patientid" data-bean="patientid" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;patientid&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;patientid\&quot;,\&quot;data-bean\&quot;:\&quot;patientid\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入病歷號\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;病歷號\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;病歷號\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;377405dd-6209-455d-a2ac-031d95c4e01f\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170245\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;病歷號\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170245&quot;}"><div class="divFormItem txDivFormItem" id="div_patientid" style=""><label type="label" class="formItem textFormItem " id="patientid" name="patientid" size="0" maxlength="" placeholder="病歷號" autocomplete="off" data-title="病歷號" data-bean="patientid" data-id="patientid" data-parent="" data-required="true" data-prompttips="請輸入病歷號" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="0001966922" data-othervalue="">0001966922</label></div></div>
+                </td>
+                <td class="text-center table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        主治醫師
+                    </label>
+                </td>
+                <td class="text-center" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="HVDOCNM" data-bean="HVDOCNM" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;HVDOCNM&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;HVDOCNM\&quot;,\&quot;data-bean\&quot;:\&quot;HVDOCNM\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入主治醫師\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;主治醫師\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;主治醫師\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;b8b84500-9112-4421-8da7-6ebca7443b84\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170315\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;主治醫師\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170315&quot;}"><div class="divFormItem txDivFormItem" id="div_HVDOCNM" style=""><label type="label" class="formItem textFormItem " id="HVDOCNM" name="HVDOCNM" size="0" maxlength="" placeholder="主治醫師" autocomplete="off" data-title="主治醫師" data-bean="HVDOCNM" data-id="HVDOCNM" data-parent="" data-required="true" data-prompttips="請輸入主治醫師" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="張立平" data-othervalue="">張立平</label></div></div>
+                </td>
+                <td class="text-center table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        住院科別
+                    </label>
+                </td>
+                <td class="text-center" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="CURSVCL" data-bean="CURSVCL" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;CURSVCL&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;CURSVCL\&quot;,\&quot;data-bean\&quot;:\&quot;CURSVCL\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入住院科別\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;住院科別\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;住院科別\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;7f62ec1b-0b36-4b9c-a60c-0ff4503e6cae\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170401\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;住院科別\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170401&quot;}"><div class="divFormItem txDivFormItem" id="div_CURSVCL" style=""><label type="label" class="formItem textFormItem " id="CURSVCL" name="CURSVCL" size="0" maxlength="" placeholder="住院科別" autocomplete="off" data-title="住院科別" data-bean="CURSVCL" data-id="CURSVCL" data-parent="" data-required="true" data-prompttips="請輸入住院科別" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="放射腫瘤科            " data-othervalue="">放射腫瘤科            </label></div></div>
+                </td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        姓名
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="patientName" data-bean="patientName" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;patientName&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;patientName\&quot;,\&quot;data-bean\&quot;:\&quot;patientName\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入姓名\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;姓名\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;姓名\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;764abe5d-3cb7-477a-ac78-34f07d2e81fc\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170526\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;姓名\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170526&quot;}"><div class="divFormItem txDivFormItem" id="div_patientName" style=""><label type="label" class="formItem textFormItem " id="patientName" name="patientName" size="0" maxlength="" placeholder="姓名" autocomplete="off" data-title="姓名" data-bean="patientName" data-id="patientName" data-parent="" data-required="true" data-prompttips="請輸入姓名" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="陳O芳" data-othervalue="">陳O芳</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        生日(年齡)
+                    </label>
+                </td>
+                <td class="" colspan="2" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="birthday" data-bean="birthday" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;birthday&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;birthday\&quot;,\&quot;data-bean\&quot;:\&quot;birthday\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;100px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入生日\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;生日\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;生日\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default drag-hover\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;8595dcfd-9f54-442a-8abe-f5403660bd5e\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170534\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;生日\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 100px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170534&quot;}"><div class="divFormItem txDivFormItem" id="div_birthday" style=""><label type="label" class="formItem textFormItem " id="birthday" name="birthday" maxlength="" placeholder="生日" autocomplete="off" data-title="生日" data-bean="birthday" data-id="birthday" data-parent="" data-required="true" data-prompttips="請輸入生日" data-upload="true" style="border-radius: 4px;width:100px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="1967-12-05" data-othervalue="">1967-12-05</label></div></div>
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="age" data-bean="age" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;age&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;age\&quot;,\&quot;data-bean\&quot;:\&quot;age\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;40px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入年齡\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;年齡\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;年齡\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;(\\\&quot;}},{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;764af92d-dce7-4d96-82d8-27a6cd31c124\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170555\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;年齡\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 40px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}},{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;歲)\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170555&quot;}"><div class="divFormItem txDivFormItem" id="div_age" style=""><label class="h6 canEditDiv" draggable="false" data-edit="true">(</label><label type="label" class="formItem textFormItem " id="age" name="age" maxlength="" placeholder="年齡" autocomplete="off" data-title="年齡" data-bean="age" data-id="age" data-parent="" data-required="true" data-prompttips="請輸入年齡" data-upload="true" style="border-radius: 4px;/* width: 30px; */" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="54" data-othervalue="">54</label><label class="h6 canEditDiv" draggable="false" data-edit="true">歲)</label></div></div>
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="table-data-title" colspan="1" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        住院日期
+                    </label>
+                </td>
+                <td class="" colspan="2" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="HADMDT" data-bean="HADMDT" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;HADMDT&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;HADMDT\&quot;,\&quot;data-bean\&quot;:\&quot;HADMDT\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入住院日期\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;住院日期\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;住院日期\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-width\&quot;:\&quot;90px\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default drag-hover\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;c6a8ab57-9078-4bdb-b0c1-26c5e94c80ca\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170651\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;住院日期\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 90px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170651&quot;}"><div class="divFormItem txDivFormItem" id="div_HADMDT" style=""><label type="label" class="formItem textFormItem " id="HADMDT" name="HADMDT" maxlength="" placeholder="住院日期" autocomplete="off" data-title="住院日期" data-bean="HADMDT" data-id="HADMDT" data-parent="" data-required="true" data-prompttips="請輸入住院日期" data-upload="true" style="border-radius: 4px;/* width:90px; */" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="20211210" data-othervalue="">20211210</label></div></div>
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="inDays" data-bean="inDays" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;inDays&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem \&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;inDays\&quot;,\&quot;data-bean\&quot;:\&quot;inDays\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;30px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入住院天數\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;住院天數\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;住院天數\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;(\\\&quot;}},{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;fc96791b-e304-42d5-b304-1e3e64951e51\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_170740\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;住院天數\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 30px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}},{\\\&quot;label\\\&quot;:{\\\&quot;class\\\&quot;:\\\&quot;h6 canEditDiv\\\&quot;,\\\&quot;draggable\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;data-edit\\\&quot;:\\\&quot;true\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;天)\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_170740&quot;}"><div class="divFormItem txDivFormItem" id="div_inDays" style=""><label class="h6 canEditDiv" draggable="false" data-edit="true">(</label><label type="label" class="formItem textFormItem " id="inDays" name="inDays" maxlength="" placeholder="住院天數" autocomplete="off" data-title="住院天數" data-bean="inDays" data-id="inDays" data-parent="" data-required="true" data-prompttips="請輸入住院天數" data-upload="true" style="border-radius: 4px;/* width:30px; */" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="20" data-othervalue="">20</label><label class="h6 canEditDiv" draggable="false" data-edit="true">天)</label></div></div>
+                </td>
+                <td class="text-center hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        申請人員
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteUser" data-bean="noteUser" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteUser&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteUser\&quot;,\&quot;data-bean\&quot;:\&quot;noteUser\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入申請人員\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;申請人員\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;申請人員\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;8d8cfb6a-51db-400f-807a-2935b8c8d619\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171014\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;申請人員\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171014&quot;}"><div class="divFormItem txDivFormItem" id="div_noteUser" style=""><label type="label" class="formItem textFormItem " id="noteUser" name="noteUser" size="0" maxlength="" placeholder="申請人員" autocomplete="off" data-title="申請人員" data-bean="noteUser" data-id="noteUser" data-parent="" data-required="true" data-prompttips="請輸入申請人員" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="administrator" data-othervalue="">administrator</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        申請單位
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="stationid" data-bean="stationid" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;stationid&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;stationid\&quot;,\&quot;data-bean\&quot;:\&quot;stationid\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入申請單位\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;申請單位\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;申請單位\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;2d981d56-4da6-4859-a62f-a5d5fccd61b3\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171016\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;申請單位\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171016&quot;}"><div class="divFormItem txDivFormItem" id="div_stationid" style=""><label type="label" class="formItem textFormItem " id="stationid" name="stationid" size="0" maxlength="" placeholder="申請單位" autocomplete="off" data-title="申請單位" data-bean="stationid" data-id="stationid" data-parent="" data-required="true" data-prompttips="請輸入申請單位" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="10E" data-othervalue="">10E</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        申請時間
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteTime" data-bean="noteTime" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteTime&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteTime\&quot;,\&quot;data-bean\&quot;:\&quot;noteTime\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入申請時間\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;申請時間\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;申請時間\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;0592ec87-44ab-44a3-a16c-a76141032509\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171332\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;申請時間\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171332&quot;}"><div class="divFormItem txDivFormItem" id="div_noteTime" style=""><label type="label" class="formItem textFormItem " id="noteTime" name="noteTime" size="0" maxlength="" placeholder="申請時間" autocomplete="off" data-title="申請時間" data-bean="noteTime" data-id="noteTime" data-parent="" data-required="true" data-prompttips="請輸入申請時間" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="2021/12/18 22:00" data-othervalue="">2021/12/18 22:00</label></div></div>
+                </td>
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        照會團隊
+                    </label>
+                </td>
+                <td class="" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteTeam" data-bean="noteTeam" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteTeam&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteTeam\&quot;,\&quot;data-bean\&quot;:\&quot;noteTeam\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入照會團隊\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;照會團隊\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;照會團隊\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;37daf3da-1925-4108-9c83-6f0924088917\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171020\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;照會團隊\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false,&quot;originName&quot;:&quot;base_text_171020&quot;}"><div class="divFormItem txDivFormItem" id="div_noteTeam" style=""><label type="label" class="formItem textFormItem " id="noteTeam" name="noteTeam" size="0" maxlength="" placeholder="照會團隊" autocomplete="off" data-title="照會團隊" data-bean="noteTeam" data-id="noteTeam" data-parent="" data-required="true" data-prompttips="請輸入照會團隊" data-upload="true" style="border-radius: 4px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value="" data-itemvalue="營養師" data-othervalue="">營養師</label></div></div>
+                </td>
+            </tr>
+            <tr class="">
+                <td class="table-data-title" data-role="drag-drop-container">
+                    <label class="h6 canEditDiv" draggable="false">
+                        照會原因
+                    </label>
+                </td>
+                <td class="" colspan="7" data-role="drag-drop-container">
+                    <div class="form-row-div pFormItem" draggable="false" data-is-bean="Y" data-name="noteReason" data-bean="noteReason" data-form-tool-attribute="{&quot;isBean&quot;:&quot;Y&quot;,&quot;bean&quot;:&quot;noteReason&quot;,&quot;maxItemTotalScore&quot;:&quot;0&quot;,&quot;maxTotalScore&quot;:&quot;0&quot;,&quot;printShowTitle&quot;:&quot;false&quot;,&quot;textSize&quot;:&quot;0&quot;,&quot;showTitle&quot;:&quot;false&quot;,&quot;edit&quot;:&quot;true&quot;,&quot;structure&quot;:&quot;{\&quot;div\&quot;:{\&quot;class\&quot;:\&quot;form-row-div pFormItem\&quot;,\&quot;draggable\&quot;:\&quot;true\&quot;,\&quot;data-is-bean\&quot;:\&quot;Y\&quot;,\&quot;data-name\&quot;:\&quot;noteReason\&quot;,\&quot;data-bean\&quot;:\&quot;noteReason\&quot;,\&quot;data-control-type\&quot;:\&quot;text\&quot;,\&quot;data-control-mode\&quot;:\&quot;readOnly\&quot;,\&quot;data-width\&quot;:\&quot;500px\&quot;,\&quot;data-dont-ditto\&quot;:\&quot;false\&quot;,\&quot;data-max-item-total-score\&quot;:\&quot;0\&quot;,\&quot;data-max-total-score\&quot;:\&quot;0\&quot;,\&quot;data-print-show-title\&quot;:\&quot;false\&quot;,\&quot;data-prompt-tips\&quot;:\&quot;請輸入照會原因\&quot;,\&quot;data-text-size\&quot;:\&quot;0\&quot;,\&quot;data-placeholder\&quot;:\&quot;照會原因\&quot;,\&quot;data-required\&quot;:\&quot;true\&quot;,\&quot;data-show\&quot;:\&quot;true\&quot;,\&quot;data-show-title\&quot;:\&quot;false\&quot;,\&quot;data-title\&quot;:\&quot;照會原因\&quot;,\&quot;data-edit\&quot;:\&quot;true\&quot;,\&quot;data-abandoned\&quot;:\&quot;false\&quot;,\&quot;data-structure\&quot;:\&quot;[{\\\&quot;input\\\&quot;:{\\\&quot;type\\\&quot;:\\\&quot;text\\\&quot;,\\\&quot;class\\\&quot;:\\\&quot;form-control input-default\\\&quot;,\\\&quot;id\\\&quot;:\\\&quot;28fe478d-a3b0-4b2d-9cdb-bb30c0f8c99b\\\&quot;,\\\&quot;name\\\&quot;:\\\&quot;base_text_171027\\\&quot;,\\\&quot;placeholder\\\&quot;:\\\&quot;照會原因\\\&quot;,\\\&quot;style\\\&quot;:\\\&quot;width: 500px;\\\&quot;,\\\&quot;readonly\\\&quot;:\\\&quot;readonly\\\&quot;,\\\&quot;text\\\&quot;:\\\&quot;\\\&quot;}}]\&quot;}}&quot;,&quot;abandoned&quot;:false}"><div class="divFormItem txDivFormItem" id="div_noteReason" style=""><label type="label" class="formItem textFormItem " id="noteReason" name="noteReason" maxlength="" placeholder="照會原因" autocomplete="off" data-title="照會原因" data-bean="noteReason" data-id="noteReason" data-parent="" data-required="true" data-prompttips="請輸入照會原因" data-upload="true" style="border-radius: 4px;width:500px;" onclick="" onblur="ruleTools.showElement(this);ruleTools.viryElement(this);" value=""></label></div></div>
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+                <td class="hide" data-role="drag-drop-container">
+                    &nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pageFooter model">
+        <div class="left">病歷號</div>
+        <div class="middle">病人姓名</div>
+        <div class="right">第${page.count}頁，共${page.total}頁</div>
+    </div>
+    <table class="resultTable" data-search-param-g-f="{&quot;counts&quot;:&quot;1&quot;}" data-merge-param="{&quot;formType&quot;:&quot;CTHADLS&quot;, &quot;frameModel&quot;:&quot;gFormWebPRINT2&quot;}">
+    </table>
+</div>

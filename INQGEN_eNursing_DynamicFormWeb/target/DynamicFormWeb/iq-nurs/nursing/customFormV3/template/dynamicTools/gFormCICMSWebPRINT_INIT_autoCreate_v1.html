@@ -1,0 +1,146 @@
+<script src="../../../js/custom.js?csSvnVersion="></script>
+<script>
+//頁面載入完成
+function pageReady(){
+    $("#loadeffect").hide();
+    if (window.console) console.log("頁面載入完成...");
+
+    {{if $data.hasTab}}
+    $(".tablinks:first").click();
+    {{/if}}
+
+    //依照現行所有物件狀態判斷並執行顯示規則
+    ruleTools.showRules_runAll();
+
+    if (gFormJS.status=="Y"){
+        $("input, textarea").attr("readonly", "readonly");
+        $("#btnAddTemp, #btnAdd, #btnAddTemp2, #btnAdd2").hide();
+    }
+
+    getPatient();
+}
+
+    function getPatient() {
+        var encId       = window.localStorage["gFormWebUPD_encId"];			// 住院號
+        var patientId   = window.localStorage["gFormWebUPD_patientId"];		// 病歷號
+        var obj = {"encId": encId, "patientId": patientId};
+        $.ajax({
+            url: '請輸入取得病患資訊api url',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(obj),
+            async: true,
+            type: "post",
+            success: function(result) {
+                console.log(result);
+                // 自由取用
+            },
+            error: function(error) {
+
+            }
+        });
+    }
+
+
+//被選取的表單資料
+var gForm = null;
+//基础参数
+var basicParam = null;
+//動態表單
+var dynamicForm = null;
+//gForm
+var gFormJS = null;
+//動態表單模板
+var dynamicFormTemplate = null;
+//formId
+var formId = null;
+
+var completeCount=0;
+
+//在動態表單都會用到的JS、CSS在這邊一併引入
+includeHead(function(){
+    //在動態表單都會共用的JS程式，在這邊統一執行
+    includeFoot(completeFoot);
+}, "nurse_event");
+
+//foot運行完了之後再執行
+function completeFoot() {
+    //病患資料
+    patient=nursing.getPatient().getCurrent();
+
+    //基础参数
+    basicParam = nursing.getBasicParam();
+    //動態表單
+    dynamicForm = nursing.getDynamicForm();
+    //gForm
+    gFormJS = nursing.createGForm();
+    gForm = JSON.parse(window.localStorage["gForm"+multiLevel]);
+    gFormJS.leftJoin(gForm);
+    gFormJS.formType = formType;
+    gFormJS.searchParamGF.sourceId = sourceId;
+    gFormJS.searchParamGF.userId = userId;
+    gFormJS.searchParamGF.userName = userName;
+
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.frameModel = frameModel;
+    dynamicForm.searchParamDF.versionNo = gFormJS.versionNo;
+    if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_Frame");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+        window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        //2022.04.08之後改用
+        successCall(JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_Frame_context")));
+    }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+        $.ajax({url: "frame/gFormWebPRINT_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }else{//讀取資料庫frame
+        basicParam.getDynamicFormFrameByformTypeFrameModelVersionNo(dynamicForm, successCall, function() {});
+    }
+    //查詢formFrame(表單外框)
+    var call = false;
+    function successCall (formFrame) {
+        if (call) return; else call=true;
+        //沒有模板資料
+        if (formFrame==null){
+            $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表单模板未配对...</div></div>');
+            $("#loadeffect").hide();
+        }else{
+            //將資料庫的formFrame 引入到body裡面的#targetForm
+            $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+            successCall3();
+        }
+    }
+
+    //查詢動態表單模板
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.versionNo = gFormJS.versionNo;
+    if (window.localStorage["loadEditorFrame_formVersion"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_formVersion");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall2(JSON.parse(window.localStorage["loadEditorFrame_formVersion_dFTemplate"]));
+        window.localStorage.removeItem("loadEditorFrame_formVersion_dFTemplate");
+        //2022.04.08之後改用
+        successCall2(JSON.parse(parent.$("#previewIframe").attr("loadEditorFrame_formVersion_dFTemplate")));
+    }else{//讀取資料庫formVersion
+        basicParam.getDynamicFormTemplateByFormModelVersionNo(dynamicForm, successCall2, function() {});
+    }
+
+    //查詢動態表單
+    var call2 = false;
+    function successCall2 (dFTemplate) {
+        if (call2) return; else call2=true;
+        //顯示XML模板
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        successCall3();
+    }
+
+    function successCall3(){
+        if (++completeCount<2) return;
+        //顯示元件資料 (打印)
+        dynamicForm.showElementUiDesc_Print($(".pFormItem"), $(".pFormItemGroup"), dynamicFormTemplate, gForm.gformItemMap);
+        goPageReady(pageReady);
+    }
+}
+
+</script>

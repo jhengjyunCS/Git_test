@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl"?>
+<Form NAME="透析室跌倒風險評估單">
+    <ID>
+        <FormID>9546bfdf-9f80-4321-b632-a06486e32562</FormID>
+        <FormVersionID>1dc94660-44ea-4db9-a5bb-17be66e7b2fc</FormVersionID>
+        <TR_DATE>20191101</TR_DATE>
+        <TME>45E93041-9570-4013-BFD4-DD5162B04EB2</TME>
+        <PAT>37E9E2B0-0462-41BC-80BE-B70303FA742E</PAT>
+        <HISNO>34419922</HISNO>
+    </ID>
+    <HOSPITAL>童綜合醫療社團法人童綜合醫院</HOSPITAL>
+    <PATIENT PATID="5076">
+        <NAME>劉慶木</NAME>
+        <PT_GENDER>男性</PT_GENDER>
+        <PT_BIRTH_DAY>1940/11/05</PT_BIRTH_DAY>
+        <AGE>78</AGE>
+        <BED>沙20</BED>
+    </PATIENT>
+    <EVALUATION>
+        <REPORT_TIME>2019/11/01 13:14</REPORT_TIME>
+        <EVALUATION_TIME>2019/11/01 12:22</EVALUATION_TIME>
+        <EVALUATOR ID="t31499">李怡儒</EVALUATOR>
+        <fallTumble7 TITLE="意識狀況" uiValue="0">意識清楚/昏迷 (GCS&lt;7)(0分)</fallTumble7>
+        <fallTumble10 TITLE="附加條件評估" uiValue="0">無</fallTumble10>
+        <fallTumble4 TITLE="有第二種診斷" uiValue="1">有二種(含以上)診斷(1分)</fallTumble4>
+        <fallTumble9 TITLE="自我認識" uiValue="0">清楚自己的能力，如下床前請求協助(0分)</fallTumble9>
+        <fallTumble6 TITLE="機械或環境限制" uiValue="0">無機械或環境上限制(0分)</fallTumble6>
+        <fallTumble2 TITLE="跌倒病史" uiValue="0">沒有(0分)</fallTumble2>
+        <fallTumble8 TITLE="（檢查、治療）期間使用影響意識及活動之藥物" uiValue="1">偶而使用安眠藥/麻醉止痛/利尿/降血壓/鎮靜/抗癌藥物(1分)</fallTumble8>
+        <fallTumble1 TITLE="年齡" uiValue="2">≧75-84歲(2分)</fallTumble1>
+        <fallTumble5 TITLE="活動狀態--需協助程度" uiValue="0">不需協助/臥床無法移動(0分)</fallTumble5>
+        <fallTumble3 TITLE="自我照顧能力--排泄" uiValue="0">自行處理(0分)</fallTumble3>
+        <TotalScore>4</TotalScore>
+    </EVALUATION>
+    <FOOTER>
+        <SHT_NO>MR00-25</SHT_NO>
+        <MTN_DEPT>3058</MTN_DEPT>
+        <VERSION_NO />
+        <NOTE>2018.05.02經病委會同意新增CF1070505</NOTE>
+        <nam_a>腎臟科</nam_a>
+        <nam_f>腎臟內科</nam_f>
+    </FOOTER>
+</Form>
+

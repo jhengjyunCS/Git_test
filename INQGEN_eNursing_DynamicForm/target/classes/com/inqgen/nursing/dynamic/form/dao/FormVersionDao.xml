@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap  PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="com.inqgen.nursing.dynamic.form.dao.FormVersionDao">
+    
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="FormVersionMap">
+        <result property="id" column="ID"/>
+        <result property="formType" column="FORMTYPE"/>
+        <result property="formModel" column="formModel"/>
+        <result property="title" column="TITLE"/>	
+        <result property="content" column="CONTENT"/>
+        <result property="version" column="VERSION"/>
+    </resultMap>
+
+	<resultMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="FormVersionMap21">
+		<result property="id" column="ID"/>
+		<result property="formType" column="FORMTYPE"/>
+		<result property="title" column="TITLE"/>
+		<result property="version" column="VERSION"/>
+	</resultMap>
+
+	<resultMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="FormVersionMap22">
+		<result property="id" column="ID"/>
+		<result property="formType" column="FORMTYPE"/>
+		<result property="title" column="TITLE"/>
+		<result property="version" column="VERSION"/>
+		<result property="content" column="CONTENT"/>
+	</resultMap>
+
+	<resultMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="FormVersionMap3">
+		<result property="formType" column="FORMTYPE"/>
+		<result property="ts" column="TS"/>
+	</resultMap>
+    
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="FormVersionMap4">
+        <result property="id" column="ID"/>
+        <result property="formType" column="FORMTYPE"/>
+        <result property="formModel" column="formModel"/>
+        <result property="title" column="TITLE"/>	
+        <result property="content" column="CONTENT"/>
+        <result property="version" column="VERSION"/>
+		<result property="ts" column="TS"/>
+    </resultMap>
+    <resultMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="FormVersionMap5">
+        <result property="id" column="ID"/>
+        <result property="formType" column="FORMTYPE"/>
+        <result property="title" column="TITLE"/>
+        <result property="version" column="VERSION"/>
+        <result property="ts" column="TS"/>
+    </resultMap>
+    <select id="selectFormVersion" parameterClass="java.util.HashMap" resultMap="FormVersionMap">
+        select  * from ${FORMVERSION} where FORMTYPE=#formType# and VERSION=#version# ${WITHUR}
+    </select>
+    
+    <select id="selectFormVersionById" parameterClass="java.lang.String" resultMap="FormVersionMap">
+        select * from ${FORMVERSION} where id=#value# ${WITHUR}
+    </select>
+    
+    
+     <parameterMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="addFormVersionParam">
+        <parameter property="id" />
+         <parameter property="formType" />
+          <parameter property="formModel" />
+           <parameter property="title" />
+            <parameter property="content" />
+            <parameter property="version"/>
+              <parameter property="ts" jdbcType="TIMESTAMP"/>
+               <parameter property="creatorId" jdbcType="VARCHAR"/>
+                <parameter property="creatorName" jdbcType="VARCHAR"/>
+                 <parameter property="createTime" jdbcType="TIMESTAMP"/>
+                  <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+                   <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+                    <parameter property="modifyTime" jdbcType="TIMESTAMP"/>
+        
+    </parameterMap>
+    
+    
+	<insert id="addOrUpdate" parameterMap="addFormVersionParam">
+	    insert into ${FORMVERSION} (ID,FORMTYPE,FORMMODEL,TITLE,CONTENT,VERSION,TS,userId,userName,createTime,modifyId,modifyName,modifyTime)
+	    values(
+	   ?,?,?,?,?,?,?,?,?,?,?,?,?
+	    
+	    )
+	</insert>
+	
+	<select id="selectMaxFormVersion" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+	    select max(VERSION) from ${FORMVERSION} where FORMTYPE=#formType#  ${WITHUR}
+	</select>
+	
+	<select id="selectMaxFormVersionId" parameterClass="java.lang.String" resultClass="java.lang.String">
+        select ID from ${FORMVERSION} where FORMTYPE=#formType# and VERSION = (
+	    select max(VERSION) from ${FORMVERSION} where FORMTYPE=#formType# ) ${WITHUR}
+	</select>
+
+	<select id="selectFormVersionMax" parameterClass="java.lang.String" resultMap="FormVersionMap">
+        select * from ${FORMVERSION} where FORMTYPE=#formType# and VERSION = (
+	    select max(VERSION) from ${FORMVERSION} where FORMTYPE=#formType# ) ${WITHUR}
+	</select>
+
+     <parameterMap class="com.inqgen.nursing.dynamic.form.bean.FormVersion" id="updateFormVersionByFormTypeFormModelVersionParam">
+        <parameter property="title" />
+         <parameter property="content" />
+          <parameter property="ts" jdbcType="TIMESTAMP"/>
+           <parameter property="modifyUserId" jdbcType="VARCHAR"/>
+            <parameter property="modifyUserName" jdbcType="VARCHAR"/>
+             <parameter property="modifyTime" jdbcType="TIMESTAMP"/>
+              <parameter property="formType" />
+               <parameter property="formModel" />
+                <parameter property="version"/>
+    </parameterMap>
+    <update id="updateFormVersionByFormTypeFormModelVersion" parameterMap="updateFormVersionByFormTypeFormModelVersionParam">
+	    update ${FORMVERSION}
+	    set    TITLE=?, CONTENT=?, TS=?,modifyId=?,modifyName=?,modifyTime=?
+	    where  FORMTYPE=?
+	    and    FORMMODEL=?
+	    and    VERSION=?
+	</update>
+
+	<select id="selectFormVersionAllList" parameterClass="java.util.Map" resultMap="FormVersionMap22">
+        select t.*
+		from (
+			 select ID, FORMTYPE, TITLE, VERSION,
+			      <isEqual property="hasContent" compareValue="true">CONTENT</isEqual>
+			      <isNotEqual property="hasContent" compareValue="true">null as CONTENT</isNotEqual>
+			      , row_number() over (partition by FORMTYPE order by VERSION desc) rowN
+			 from ${FORMVERSION}
+			 ) t
+		where rowN = 1 ${WITHUR}
+    </select>
+
+	<select id="selectFormVersionListMaxTsByFormType" resultMap="FormVersionMap3">
+        select FORMTYPE, max(ts) as TS
+		from ${FORMVERSION} 
+		where FORMTYPE in 
+		<iterate open="(" close=")" conjunction=",">
+            <![CDATA[
+                 #[]# 
+            ]]> 
+       </iterate> 
+		group by FORMTYPE
+    </select>
+
+	<select id="selectFormVersionListByFormTypeTs" parameterClass="java.util.HashMap" resultMap="FormVersionMap4">
+		SELECT ID, FORMTYPE, formModel, TITLE, CONTENT, VERSION, TS
+        FROM ${FORMVERSION}
+		<isEqual property="isLastFormVersion" compareValue="true">
+		, (
+			SELECT max(VERSION) as vs, FORMTYPE as ft
+			FROM ${FORMVERSION}
+			WHERE
+			<iterate property="versions" conjunction="or">
+				(
+					<![CDATA[ FORMTYPE = #versions[].formType# ]]>
+					and <![CDATA[ TS > #versions[].ts# ]]>
+				)
+			</iterate> 
+			group by FORMTYPE
+		) maxVersion
+		WHERE
+	   		FORMTYPE = maxVersion.ft and version = maxVersion.vs
+		</isEqual>
+	    <isEqual property="isLastFormVersion" compareValue="false">
+        WHERE 
+			<iterate property="versions" conjunction="or">
+				(
+					<![CDATA[ FORMTYPE = #versions[].formType# ]]>
+					and <![CDATA[ TS > #versions[].ts# ]]>
+				)
+	        </iterate>
+	    </isEqual>
+        ORDER BY TS
+    </select>
+	<select id="selectAllFormVersionFormType" parameterClass="java.util.HashMap" resultMap="FormVersionMap4">
+		SELECT ID, FORMTYPE, formModel, TITLE, CONTENT, VERSION, TS
+        FROM ${FORMVERSION}  WHERE FORMTYPE = #formType# ORDER BY TS
+    </select>
+
+	<select id="selectFormVersionListByFormType" parameterClass="java.lang.String" resultMap="FormVersionMap21">
+        select ID,FORMTYPE,TITLE,VERSION from ${FORMVERSION} where FORMTYPE=#value# ${WITHUR}
+    </select>
+
+	<select id="selectFormVersionByFormModelVersionNo" parameterClass="java.util.Map" resultMap="FormVersionMap">
+		select t.*
+		from (
+				 SELECT ID,
+						FORMTYPE,
+						FORMMODEL,
+						TITLE,
+						CONTENT,
+						VERSION,
+						row_number() over (partition by FORMTYPE order by VERSION desc) rowN
+				 FROM ${FORMVERSION}
+				 WHERE FORMTYPE = #formType#
+				   AND FORMMODEL = #formModel#
+				   AND <![CDATA[ VERSION<=#versionNo# ]]>
+			 ) t
+		where rowN = 1 ${WITHUR}
+    </select>
+
+	<delete id="deleteFormVersionListByFormTypeVersion" parameterClass="com.inqgen.nursing.dynamic.form.bean.FormVersion">
+	    DELETE 
+	    FROM ${FORMVERSION} 
+	    WHERE 
+	    	FORMTYPE=#formType#
+			AND VERSION=#version#
+	</delete>
+    <select id="selectFormVersionListVersionByFormType" parameterClass="java.util.HashMap" resultMap="FormVersionMap5">
+        SELECT  ID, FORMTYPE, TITLE, VERSION,TS FROM ${FORMVERSION} WHERE FORMTYPE=#formType#
+        <dynamic prepend="">
+            <isNotNull property="diffTs"> <![CDATA[ and TS > #diffTs# ]]></isNotNull>
+        </dynamic>
+        ${WITHUR}
+    </select>
+	
+</sqlMap>

@@ -1,0 +1,339 @@
+/* 動態表單基礎css */
+
+/* reject時的提示框 */
+.hintMsg {
+    display: none;
+    width: 140px !important;
+    background-color: #ff1818;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    opacity: 0.9;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 100;
+}
+
+/* reject時的提示框 (hover及focus時顯示) */
+.divFormItem:hover .hintMsg,
+.rejectedItem:focus+.hintMsg{
+  display: block;
+}
+
+/* reject時的提示框 (focus時不顯示) */
+.dontFocusHintMsg .rejectedItem:focus+.hintMsg{
+  display: none;
+}
+
+/* reject時的元件醒目顯示 */
+.rejectedItem{
+    /* background-color: #E46666; */
+    border-width:3px;
+    border-style:dashed;
+    border-color:#D63A3A;
+}
+div.rejectedItem{
+    background-color: transparent;
+}
+/* Chrome */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .rejectedItem{
+        background-color: transparent;
+    }
+}
+
+/* info提示框 */
+.infoMsg {
+    display: none;
+    width: 285px !important;
+    background-color: #444;
+    color: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    opacity: 0.8;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 99;
+}
+/* info提示框 凸排*/
+.infoMsg p {
+    margin-left : 2em;
+    text-indent : -2em;
+}
+
+/*  info提示框 (hover時顯示)
+    舊版IE必須放到pFormItem底下
+*/
+.pFormItem:hover+.infoMsg,
+.pFormItem:hover .infoMsg {
+  display: block;
+}
+
+/* 隱藏時間控件的上方年 */
+.datetimepicker-minutes .table-condensed thead,
+.datetimepicker-hours .table-condensed thead{
+    background-color: white;
+}
+.datetimepicker-minutes .table-condensed thead .switch,
+.datetimepicker-hours .table-condensed thead{
+    color: white;
+}
+/* 年份的前後設為黑色 */
+.datetimepicker table tr td span.old {
+    color: #212529;
+}
+.datetimepicker table tr td span.old.disabled {
+    color: #999999;
+}
+
+.checkboxFormItem,
+.radioFormItem {
+	vertical-align: top;
+}
+.ckLabelFormItem,
+.rdLabelFormItem {
+    padding-left: 5px;
+    max-width: 95%;
+    max-width: calc(100% - 20px);
+}
+
+/* 地址 */
+.addrTWZipcodeFormItem {
+    min-width: 90px;
+    max-width: 90px;
+}
+.addrTWCountyFormItem {
+    min-width: 160px;
+    max-width: 160px;
+}
+.addrTWDistrictFormItem {
+    min-width: 160px;
+    max-width: 160px;
+}
+.addrTWStreetFormItem {
+    min-width: 300px;
+    max-width: 300px;
+}
+.twzipcode32-container{position:absolute;width:100px;height:auto;max-height:240px;border:1px solid #222;/* display:none; */overflow:auto;list-style:none;padding:0;margin:0;background:rgba(60,60,60,0.7);color:rgba(255,255,255,1.0);}
+.twzipcode32-container li{padding:.25em;cursor:pointer}
+.twzipcode32-container li:hover,
+.twzipcode32-container li.selected{background:rgba(180,180,180,0.8);color:rgba(0,0,0,1)}
+.twzipcode32-container li:hover{font-weight:700}
+/*左上角顯示處理狀態*/
+#div_eNursingProcessStatus.div_eNursingProcessStatus {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: arial,'Microsoft JhengHei','微軟正黑體',sans-serif !important;
+    z-index: 99999 !important;
+    color: #FF0000 !important;
+    background-color: #FDFF9F !important;
+    position: fixed !important;
+    left: 35% !important;
+    top: 0px !important;
+    padding: 0 2em !important;
+}
+/*吉大护理管理-轮转情况-至今上下*/
+#label_changeQ7_0 {
+    width: 80px;
+}
+
+/*
+元件：含管理功能的檔案上傳 樣式 begin
+*/
+.Layer{
+    background-color: black;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -moz-opacity: 0.4;
+    opacity: .40;
+    filter: alpha(opacity=40); /* 只支持IE6、7、8、9 */
+}
+/*背景層*/
+.fileListLayer {
+    display: none;
+    z-index: 1100;
+}
+.addFileLayer{
+    display: none;
+    z-index: 1120;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=50); /* 只支持IE6、7、8、9 */
+}
+.imageLayer{
+    z-index: 1125;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=50); /* 只支持IE6、7、8、9 */
+}
+.imageStyle{
+    z-index: 1140;
+    height: calc(100vh);
+    width: calc(80vw);
+    left: calc(10vw);
+    top: calc(2vw);
+    overflow-y: scroll;
+    text-align: center;
+}
+.fileBox{
+    background-color: #FFFFFF;
+    position: fixed;
+
+}
+
+.fileListBox {
+    display: none;
+    z-index: 1110;
+    height: calc(80vh);
+    width: calc(80vw);
+    left: calc(10vw);
+    top: calc(10vh);
+}
+.addFileBox{
+    display: none;
+    z-index: 1130;
+    min-height: 300px;
+    height: calc(40vh);
+    width: calc(50vw);
+    left: calc(25vw);
+    top: calc(30vh);
+}
+.fileBox td,.fileBox th{
+    text-align: center;
+}
+/*Radio Checkbox Button Style*/
+.checkbox-radio-style-1+label{
+    background: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 10px;
+    border: 2px solid lightgrey;
+    transition: all 0.3s ease;
+    font-family: 'Source Sans Pro', sans-serif; 
+    font-size: 18px; 
+    line-height: 32px; 
+    margin:0px 5px;
+    float:left;    
+}
+.checkbox-radio-style-1+label:hover,
+.checkbox-radio-style-1+label:focus {
+box-shadow: 0 0.5em 0.5em -0.4em ;
+transform: translateY(-0.25em);
+background: orange;
+}
+.checkbox-radio-style-1 {
+display: none;
+}
+.checkbox-radio-style-1:checked+label {
+    border: 2px solid black;
+    transition: all 0.3s ease;
+    background: orange;
+}
+.iframeFormItem {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+/*
+元件：含管理功能的檔案上傳 樣式 end
+*/
+
+/*
+externalData 元件 start
+*/
+.externalDataButton {
+    cursor: pointer;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.externalDataButton:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc
+}
+
+.externalDataButton:focus {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+    box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5)
+}
+
+.externalDataButton:disabled {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff
+}
+/* 彈出iframe div遮罩*/
+.externalDataMaskDiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}
+.externalDataMaskDiv.backdrop {
+    z-index: 1040;
+    background-color: #000;
+    opacity: 0.5;
+}
+.externalDataMaskDiv > .content {
+    position: relative;
+    width: 75%;
+    max-height: 90%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 0.3rem;
+    outline: 0;
+    margin: 1.75rem auto;
+}
+.externalDataMaskDiv > .content > .body {
+    height: calc(100vh - 3.5rem - 76px);
+    overflow: hidden;
+    padding: 5px;
+}
+.externalDataMaskDiv > .content > .footer {
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+    text-align: right;
+}
+.externalDataMaskDiv > .content > .body > .externalDataFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+/*externalData元件下的data*/
+.externalDataShowDataDiv {
+    max-width: 100%;
+}
+.externalDataShowDataDiv .externalData:not(.show) {
+    display: none;
+}
+/*
+externalData 元件 end
+*/

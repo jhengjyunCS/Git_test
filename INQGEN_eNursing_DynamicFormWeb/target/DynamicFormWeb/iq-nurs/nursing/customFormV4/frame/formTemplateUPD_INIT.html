@@ -1,0 +1,1030 @@
+<script>
+//頁面載入完成
+function pageReady(){
+    $("#loadeffect").hide();
+    if (window.console) console.log("頁面載入完成...");
+
+    $('#ftInterlocking').change(function() {
+        var func = $(this).val();
+        if (func === "" || func === undefined || func === null) {
+            return false;
+        }
+        $('#conditionConnectList').html('');
+        var json = JSON.parse(func);
+        for (var i = 0; i < json.length; i++) {
+            var button = '<button class="w3-button w3-dark-gray w3-margin" onclick="editConditionModal(' + i + '); return false;">' + (json[i].name ||json[i].name)+ '</button>';
+            $('#conditionConnectList').append(button);
+        }
+    });
+
+    setElementValue_GForm();
+    $("#td_formItem").height(document.body.clientHeight-$("#tr_button")[0].offsetTop-30);
+}
+
+//被選取的表單資料
+var gForm = null;
+var gForms = null;
+//基础参数
+var basicParam = null;
+//動態表單
+var dynamicForm = null;
+//gForm
+var gFormJS = null;
+//動態表單模板
+var dynamicFormTemplate = null;
+
+var completeCount=0;
+
+//在動態表單都會用到的JS、CSS在這邊一併引入
+includeHead(function(){
+    //在動態表單都會共用的JS程式，在這邊統一執行
+    includeFoot(completeFoot);
+});
+
+//foot運行完了之後再執行
+function completeFoot() {
+    //基础参数
+    basicParam = nursing.getBasicParam();
+    //動態表單
+    dynamicForm = nursing.getDynamicForm();
+    //gForm
+    gFormJS = nursing.createGForm();
+    gForm = JSON.parse(window.localStorage["gForm"]);
+    gFormJS.leftJoin(gForm);
+    gFormJS.formType = formType;
+    gFormJS.searchParamGF.sourceId = "formItemTemplate";
+    gFormJS.searchParamGF.userId = userId;
+    gFormJS.searchParamGF.userName = userName;
+
+    // gFormJS.getGFormList(gFormJS, successCall4, function() {});
+
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.frameModel = frameModel;
+    dynamicForm.searchParamDF.versionNo = gForm.versionNo;
+    if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_Frame");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+        window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        //2022.04.08之後改用
+        successCall(JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_Frame_context")));
+    }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+        $.ajax({url: "frame/formTemplateUPD_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }else{//讀取資料庫frame
+        basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+    }
+    //查詢formFrame(表單外框)
+    var call = false;
+    function successCall (formFrame) {
+        if (call) return; else call=true;
+        //沒有模板資料
+        if (formFrame==null){
+            $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表单模板未配对...</div></div>');
+            $("#loadeffect").hide();
+        }else{
+            //將資料庫的formFrame 引入到body裡面的#targetForm
+            $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+            successCall3();
+        }
+    }
+
+    //查詢動態表單模板
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.versionNo = gForm.versionNo;
+    if (window.localStorage["loadEditorFrame_formVersion"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_formVersion");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall2(JSON.parse(window.localStorage["loadEditorFrame_formVersion_dFTemplate"]));
+        window.localStorage.removeItem("loadEditorFrame_formVersion_dFTemplate");
+        //2022.04.08之後改用
+        successCall2(JSON.parse(parent.$("#previewIframe").attr("loadEditorFrame_formVersion_dFTemplate")));
+    }else{//讀取資料庫formVersion
+        basicParam.getCurrDynamicFormTemplateV3(dynamicForm, successCall2, function() {});
+    }
+
+    //查詢動態表單
+    var call2 = false;
+    function successCall2 (dFTemplate) {
+        if (call2) return; else call2=true;
+        //顯示XML模板
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        window.localStorage["gFormList"] = '';
+        successCall3();
+    }
+
+    function successCall3(){
+        if (++completeCount<2) return;
+        var formItemsTemplate = dynamicFormTemplate.hashItems;
+        createElement(formItemsTemplate, pageReady);
+        //取得版本號 (如果前兩個frame的versionNo皆為0，就以xml的版本為versionNo)
+        var version = parseInt(dynamicFormTemplate.version);
+        versionNo = (version>versionNo) ? version : versionNo;
+    }
+
+    function successCall4(result) {
+        gForms = result;
+        if (window.console) console.log(gForms);
+        successCall3();
+    }
+}
+
+//點選選擇表單子項
+function chooseItems(){
+    //重新整理
+    $("#frame_chooseFormItem").attr("src", function(index, attr){
+      return "formItemTemplateLIST.html?chooseFormItem=true";
+    });
+    //顯示
+    $("#div_chooseItems").show();
+}
+
+//關閉選擇表單子項
+function closeSelf(){
+    $("#div_chooseItems").hide();
+}
+
+//確定選擇表單子項
+var bean_chooseItems="";
+function confirm2(){
+    var v = "";
+    $("#frame_chooseFormItem").contents().find("input[name='showCheck']").each(function(){
+        if (this.checked){
+            v+=","+this.value;
+        }
+    });
+    v = (v.length>0) ? v.substring(1) : "";
+    $("#"+bean_chooseItems+":not([data-upload='false'])").val(v);
+    $("#div_chooseItems").hide();
+}
+
+//生成表單模板
+function doPublishFormTemplate(){
+    doURL(location.href.split("iq-nurs")[0]+"/m2/complexForm/publishFormTemplate?formType="+gFormJS.formType+"&formId="+gFormJS.formId+"");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********* 條 件 連 動 式 start *********/
+
+// Modal相關 Function
+var logicObject = {
+    "name": "",         //命名
+    "desc": "",          //備註
+    "ifs": [],          //當要主元件符合某些集合時，會影響到tar(次要元件)
+    "tar": [],          //次要元件(被影響的元件)，也可以是某id(以"#"開頭)，也可以是某class(以"."開頭)\
+    "parents" : [],     //指定至次要元件的某個parents，等同$().parents(parents[i]:first);
+    "childrens" : [],   //指定至次要元件的某個childrens，等同$().parents(parents[i]:first).find(childrens[i]);
+    "evt": [],          //符合規則(true)時，每個元件個別要顯示(show)或隱藏(hide)，為false則相反
+    "runMode" : "auto", //執行模式(auto [true時執行, false時逆執行] / onlyTrue [僅在true時執行] / onlyFalse [僅在false時執行])
+    "operator": "||",   // || / &&
+    "eval_true": "",    //符合規則(true)時，要執行的eval程式
+    "eval_false": ""   //不符合規則(false)時，要執行的eval程式
+};
+var targetItemNum = 0; //指定的元件idx
+var targetButton = null; //被選中的元件button
+var editMode = false;
+var editNumber = 0;
+var deleteMode = false;
+var beanObjectList = []; //表單子項
+
+// setting modal condition
+function editConditionModal(index) {
+    var func = $('#ftInterlocking').val();
+    var json = JSON.parse(func);
+    logicObject = json[index];
+    editMode = true;
+    editNumber = index;
+    showingModal();
+    return false;
+}
+
+// Step.1 顯示 (type不為空代表新增)
+function showingModal(type) {
+
+    var tempList = window.localStorage["gFormList"];
+    if (tempList !== undefined && tempList !== '' && tempList.length > 0) {
+        beanObjectList = JSON.parse(tempList); //表單子項
+        beanObjectList.sortJson({key:'gForm.gformItemMap.fitControlType.itemValue',orderby:'asc'},{key:'gForm.gformItemMap.fitName.itemValue',orderby:'asc'}); //排序 controlType[asc] -> beanName[asc]
+    }
+
+    //初始化 logicObject
+    if (type !== undefined) {
+        logicObject = {
+            "name": "",
+            "desc": "",
+            "ifs": [],
+            "tar": [],
+            "parents" : [],
+            "childrens" : [],
+            "evt": [],
+            "runMode" : "auto",
+            "operator": "||",
+            "eval_true": "",
+            "eval_false": ""
+        };
+    }
+
+    //填值
+    $('#conditionModal1').find('input:first').val(logicObject.name);
+    $('#conditionModal1').find('input:last').val(logicObject.desc);
+
+    document.getElementById('conditionModal1').style.display = 'block';
+    if (editMode){
+        $("#deleteLogic").show();
+    }else{
+        $("#deleteLogic").hide();
+    }
+
+    return false;
+}
+
+// Step.1 新增條件名稱 name
+function addName(that) {
+    var func = that.value;
+    logicObject.name = func;
+
+    console.log(logicObject);
+}
+// Step.1 備註新增 desc
+function addDesc(that) {
+    // logic
+    var func = that.value;
+    logicObject.desc = func;
+    //view
+    console.log(logicObject);
+}
+// Step.1 刪除邏輯
+function delLogic(that) {
+    if (confirm("確定要刪除嗎？")){
+        deleteMode = true;
+        submitJson();
+        $('#conditionModal1').css('display', 'none');
+    }
+    return false;
+}
+
+// Step.2 新增執行模式 runMode
+function addRunMode(that) {
+    // logic
+    var func = that.value;
+    logicObject.runMode = func;
+    //view
+    console.log(logicObject);
+}
+
+// Step.2 新增元件邏輯 operator
+function addOperator(that) {
+    // logic
+    var func = that.value;
+    logicObject.operator = func;
+    //view
+    console.log(logicObject);
+}
+
+// Step.2 按下"新增主元件"，顯示主元件編輯
+function addMainView(that) {
+    // Logic
+    var object = {
+        "datatype": "", // checked / number / string
+        "bean": "",
+        "uiValue": [], // checked
+        "operator": "||",  // || / &&
+        "min": "",  // number / string
+        "max": ""
+    };
+    logicObject.ifs.push(object);
+
+    //元件清單
+    var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusBean(this); return false;" id="' + (logicObject.ifs.length) + '"> 元件' + (logicObject.ifs.length) + ' </button>';
+
+    targetItemNum = logicObject.ifs.length - 1; //指定的元件idx (主元件)
+
+    //新增主元件選項清單
+    createMainSelectList();
+
+    // view
+    $('#close').html('取消新增');
+    buttonAndBarView(0); //展開並全部按鈕 disabled
+    $('#beanList').append(button);
+    targetButton = $('#' + logicObject.ifs.length); //被選中的元件button
+    $('#beanList').find('button').addClass('disabled').attr('disabled', true);
+
+    //超過兩個主元件才可選擇 "元件邏輯"
+    if ($('#beanList').find('button').length > 1) {
+        $('#mainLogic').attr('disabled', false);
+        $('#mainLogic').removeClass('w3-disabled');
+    }
+
+    console.log(logicObject);
+    return false;
+}
+
+// Step.2 新增主元件選項清單
+function createMainSelectList(){
+    //重置主元件(下拉選項)
+    var $beanMain=$('#beanMain');
+    $beanMain.html('<option value="0" selected>請選擇</option>');
+    //清空主元件(搜尋列表)
+    var $beanMainDataList=$('#beanMainDataList');
+    $beanMainDataList.html('');
+    //創建主元件選項
+    if (beanObjectList.length > 0) { //表單子項有資料
+        console.log(beanObjectList);
+        var showBeanType = ""; //要顯示的beanType
+        var bakBeanType = ""; //(增加效能) 比對是否和上一個beanType一樣
+        var words="王ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890()%$℃./, !@#^&*_-+=\\[]{}'\":;?<>~`|"; //計算文字寬度係數
+        var wordsWid=[4.50,3.00,3.00,3.20,3.20,3.00,2.83,3.60,3.20,1.29,2.25,3.00,2.57,3.75,3.20,3.60,3.00,3.60,3.20,3.00,2.83,3.20,3.00,4.25,3.00,3.00,2.83,2.57,2.57,2.25,2.57,2.57,1.20,2.57,2.57,1.00,1.00,2.25,1.00,3.75,2.57,2.57,2.57,2.57,1.50,2.25,1.29,2.57,2.25,3.20,2.25,2.25,2.25,2.25,2.57,2.57,2.57,2.57,2.57,2.57,2.57,2.57,2.57,1.50,1.50,4.00,2.57,4.67,1.29,1.29,1.29,1.29,1.29,4.50,2.57,2.13,3.00,1.80,2.57,1.50,2.67,2.67,1.29,1.29,1.29,1.50,1.50,0.86,1.64,1.29,1.29,2.57,2.67,2.67,2.67,1.50,1.20]; //計算文字寬度係數
+        var W = 0;
+        //建立表單子項
+        for(var i = 0, len=beanObjectList.length; i < len; ++i) {
+            var beanName = beanObjectList[i].gForm.gformItemMap.fitName.itemValue;
+            var beanTitle = beanObjectList[i].gForm.gformItemMap.fitTitle.itemValue;
+            var beanType = beanObjectList[i].gForm.gformItemMap.fitControlType.itemValue;
+            var option = '', option2='';
+            //和上一個beanType不同
+            if (bakBeanType!==beanType){
+                showBeanType = bakBeanType = beanType;
+                W = 0;
+                //計算beanType寬度係數
+                for (var i2=0, len2=showBeanType.length; i2<len2; ++i2){
+                    var s=showBeanType.substring(i2+1,i2+2);
+                    W+=(words.indexOf(s)==-1)?wordsWid[0]:wordsWid[words.indexOf(s)];
+                }
+                //增加空白縮排 (大寫A係數=3)(&nbsp;係數=1.29)
+                for (var i3=0, len3=parseInt((3*8-W)/(1.29)); i3<len3; ++i3){
+                    if (i3%2==0) showBeanType += "&nbsp;";
+                    else showBeanType = "&nbsp;" + showBeanType;
+                }
+            }
+            option += '<option value="' + beanType + ',' + beanName + '">';
+            option2 += '['+showBeanType+'] '+beanName + '(' + beanTitle + ')';
+            option2 += '</option>';
+            $beanMain.append(option+option2); //主元件(下拉選項)
+
+            option2 = '<option value="' + beanName + '" >' + option2;
+            $beanMainDataList.append(option2); //主元件(搜尋列表)
+        }
+    }
+}
+
+// Step.2 主元件選取
+function focusBean(that) {
+    // 被選中 => 取消選中
+    if ($(that).hasClass('active')) {
+        $(that).removeClass('active');
+        targetButton = null; //被選中的元件button
+        buttonAndBarView(1); //收起 disabled 修改&刪除
+        targetItemNum = -1; //指定的元件idx
+    }
+    // 選中
+    else {
+        $(that).parent().find('button').removeClass('active');
+        $(that).addClass('active');
+        targetButton = $(that); //被選中的元件button
+        buttonAndBarView(2); //收起 disabled 新增
+        targetItemNum = parseInt($(that).attr('id')) - 1; //指定的元件idx
+    }
+    return false;
+}
+
+// Step.2 主元件切換 判斷類型
+function formItemChange(that) {
+    // logic
+    var func = that.value;
+    var tempArr = func.split(',');
+    var beanType = tempArr[0];
+    var beanName = tempArr[1];
+    //找到 formTemplate
+    var tplMap = {};
+    for (var i2=0, len2=beanObjectList.length; i2<len2; ++i2){
+        if (beanObjectList[i2].gForm.gformItemMap.fitName.itemValue===beanName){
+            tplMap = beanObjectList[i2].gForm.gformItemMap;
+            i2=len2;
+        }
+    }
+    // view
+    $('.mainItem').css('display', 'none');
+    if (beanType === 'checkbox' || beanType === 'radio' || beanType === 'select') {
+        for(var i = 0; i < beanObjectList.length; i++) { //表單子項
+            var tempName = beanObjectList[i].gForm.gformItemMap.fitName.itemValue; //表單子項
+            if (tempName === beanName) {
+                var beanUiValue = beanObjectList[i].gForm.gformItemMap.fitUiValue.itemValue; //表單子項
+                var beanUiDesc = beanObjectList[i].gForm.gformItemMap.fitUiDesc.itemValue; //表單子項(desc)
+                var items = beanUiValue.split(',');
+                var itemsDesc = beanUiDesc.split(',');
+                var checkBoxhtml = '';
+                for (var j = 0; j < items.length; j++) {
+                    checkBoxhtml += '<input class="w3-check" id="' + beanName + j + '" type="checkbox" name="' + beanName + '" value="' + items[j] + '">';
+                    checkBoxhtml += '<label for="' + beanName + j + '">' + items[j] + '(' + itemsDesc[j] + ')' + '</label>';
+                }
+                $('#checkboxGroup').html(checkBoxhtml);
+            }
+        }
+        $('.chk').css('display', 'block');
+    } else if (beanType === 'text' || beanType === 'textarea') {
+        $('.ipt').css('display', 'block');
+        $('#beanMin').attr("placeholder", "");
+    } else if (beanType === 'datetime') {
+        $('.commingSoon').css('display', 'block');
+    } else if (beanType === 'date') {
+        $('.ipt').css('display', 'block');
+        // ex. yyyy-mm-dd => yyyy-MM-dd
+        var format = JSON.parse(tplMap.fitTypeFormat.itemValue).date.format;
+        format = format.replace("mm", "MM");
+        $('#beanMin, #beanMax').attr("placeholder", format);
+    } else if (beanType === 'time') {
+        $('.ipt').css('display', 'block');
+        // ex. hh-ii => HH:mm
+        var format2 = JSON.parse(tplMap.fitTypeFormat.itemValue).time.format;
+        format2 = format2.replace("hh", "HH").replace("ii", "mm");
+        $('#beanMin, #beanMax').attr("placeholder", format2);
+    } else if (beanType === 'file') {
+
+    }
+}
+
+// Step.2 取消新增主要元件
+function cancelAdd(that) {
+    // logic
+    if (!targetButton.hasClass('active')) { //被選中的元件button
+        logicObject.ifs[targetItemNum] = null; //指定的元件idx
+        targetButton.remove(); //被選中的元件button
+        targetButton = null; //被選中的元件button
+    }
+    cleanMainBeanView();  // 清畫面
+    return false;
+}
+
+// Step.2 按下"完成"，收起展開的主元件新增頁，記錄 ifs[].XXX
+function addMainItem(that) {
+    //主元件相關參數
+    var tempArr = $('#beanMain').val().split(',') || $('#beanMain').val().split(',');
+    var beanType = tempArr[0];
+    var beanName = tempArr[1];
+
+    //設定值
+    var o_datatype='',o_bean='',o_uiValue='',o_operator='',o_min='',o_max='';
+    o_bean = tempArr[1];
+    if (beanType === 'checkbox' || beanType === 'radio' || beanType === 'select') {
+        o_datatype = 'checked';
+        o_operator = $("#beanLogic").val();
+        o_uiValue = '';
+        $("#checkboxGroup").find(":checked").each(function(){
+            o_uiValue += ","+this.value;
+        });
+        o_uiValue = (o_uiValue.length>0) ? o_uiValue.substring(1) : "";
+    } else if (beanType === 'text' || beanType === 'textarea' || beanType === 'date' || beanType === 'time') {
+        o_datatype = $("#beanType").val(); // number / string
+        o_min = $("#beanMin").val();
+        o_max = $("#beanMax").val();
+    }else if (beanType === 'file' || beanType === 'datetime') {
+        console.error("未完成");
+        alert("未完成")
+        return false;
+    }
+
+    //儲存 login[ifs]
+    logicObject.ifs[targetItemNum].datatype = o_datatype;
+    logicObject.ifs[targetItemNum].bean = o_bean;
+    logicObject.ifs[targetItemNum].uiValue = o_uiValue;
+    logicObject.ifs[targetItemNum].operator = o_operator;
+    logicObject.ifs[targetItemNum].min = o_min;
+    logicObject.ifs[targetItemNum].max = o_max;
+    //改變 元件清單 的div顯示名聲
+    targetButton.html(o_bean); //被選中的元件button
+    // logic
+    cleanMainBeanView();  // 清畫面
+    targetButton = null; //被選中的元件button
+    // view
+    console.log(logicObject);
+    return false;
+}
+
+// Step.2 按下"修改主元件"，顯示主元件編輯
+function editMainView(that) {
+    //新增主元件選項清單
+    createMainSelectList();
+
+    // logic
+    var object = logicObject.ifs[targetItemNum]; //指定的元件idx
+    //找到 主元件的 fitControlType 和 fitName
+    var sTxt = '';
+    for(var i = 0; i < beanObjectList.length; i++) { //表單子項
+        var tempName = beanObjectList[i].gForm.gformItemMap.fitName.itemValue; //表單子項
+        var tempType = beanObjectList[i].gForm.gformItemMap.fitControlType.itemValue; //表單子項
+        if (tempName === object.bean) {
+            sTxt = tempType + ',' + tempName;
+        }
+    }
+    // 主元件(下拉選單).val(fitControlType + ',' + fitName)
+    $('#beanMain').val(sTxt).change();
+    switch(object.datatype) {
+        case "checked":
+            $('.chk').css('display', 'block');
+            for (var i = 0; i < object.uiValue.length; i++) {
+                $('.chk').find('input[value="' + object.uiValue[i] + '"]').prop('checked', 'checked');
+                $('#beanLogic').val(object.operator);
+            }
+            break;
+        case "string":
+            $('.ipt').css('display', 'block');
+            $('#beanType').val(object.datatype);
+            $('#beanMin').val(object.min);
+            $('#beanMax').val(object.max);
+            break;
+        case "number":
+            $('.ipt').css('display', 'block');
+            $('#beanType').val(object.datatype);
+            $('#beanMin').val(object.min);
+            $('#beanMax').val(object.max);
+            break;
+    }
+    // view
+    buttonAndBarView(0); //展開並全部按鈕 disabled
+    $('#close').html('關閉');
+    $('#beanList').find('button').addClass('disabled').attr('disabled', true);
+    return false;
+}
+
+// Step.2 按下"刪除主要元件"
+function delMainView(that) {
+    // logic
+    logicObject.ifs[targetItemNum] = null; //指定的元件idx
+    targetButton.remove(); //被選中的元件button
+    targetButton = null; //被選中的元件button
+    cleanMainBeanView();  // 清畫面
+    // view
+    buttonAndBarView(1); //收起 disabled 修改&刪除
+
+    if ($('#beanList').find('button').length < 2) {
+        $('#mainLogic').attr('disabled', true);
+        $('#mainLogic').addClass('w3-disabled');
+    }
+    console.log(logicObject);
+    return false;
+}
+
+// Step.3 新增次元件 - 顯示次元件
+function addSubItem(that) {
+
+    //重置次要元件(下拉選項)
+    var $itemTemp = $('#itemTemp');
+    $itemTemp.html('<option value="0" selected>請選擇</option>');
+    //清空次要元件(搜尋列表)
+    var $itemTempDataList = $('#itemTempDataList');
+    $itemTempDataList.html('');
+    //創建主元件選項
+    if (beanObjectList.length > 0) { //表單子項有資料
+        console.log(beanObjectList);
+        var showBeanType = ""; //要顯示的beanType
+        var bakBeanType = ""; //(增加效能) 比對是否和上一個beanType一樣
+        var words="王ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890()%$℃./, !@#^&*_-+=\\[]{}'\":;?<>~`|"; //計算文字寬度係數
+        var wordsWid=[4.50,3.00,3.00,3.20,3.20,3.00,2.83,3.60,3.20,1.29,2.25,3.00,2.57,3.75,3.20,3.60,3.00,3.60,3.20,3.00,2.83,3.20,3.00,4.25,3.00,3.00,2.83,2.57,2.57,2.25,2.57,2.57,1.20,2.57,2.57,1.00,1.00,2.25,1.00,3.75,2.57,2.57,2.57,2.57,1.50,2.25,1.29,2.57,2.25,3.20,2.25,2.25,2.25,2.25,2.57,2.57,2.57,2.57,2.57,2.57,2.57,2.57,2.57,1.50,1.50,4.00,2.57,4.67,1.29,1.29,1.29,1.29,1.29,4.50,2.57,2.13,3.00,1.80,2.57,1.50,2.67,2.67,1.29,1.29,1.29,1.50,1.50,0.86,1.64,1.29,1.29,2.57,2.67,2.67,2.67,1.50,1.20]; //計算文字寬度係數
+        var W = 0;
+        //建立表單子項
+        for(var i = 0, len=beanObjectList.length; i < len; ++i) {
+            var beanName = beanObjectList[i].gForm.gformItemMap.fitName.itemValue;
+            var beanTitle = beanObjectList[i].gForm.gformItemMap.fitTitle.itemValue;
+            var beanType = beanObjectList[i].gForm.gformItemMap.fitControlType.itemValue;
+            var option = '', option2='';
+            //和上一個beanType不同
+            if (bakBeanType!==beanType){
+                showBeanType = bakBeanType = beanType;
+                W = 0;
+                //計算beanType寬度係數
+                for (var i2=0, len2=showBeanType.length; i2<len2; ++i2){
+                    var s=showBeanType.substring(i2+1,i2+2);
+                    W+=(words.indexOf(s)==-1)?wordsWid[0]:wordsWid[words.indexOf(s)];
+                }
+                //增加空白縮排 (大寫A係數=3)(&nbsp;係數=1.29)
+                for (var i3=0, len3=parseInt((3*8-W)/(1.29)); i3<len3; ++i3){
+                    if (i3%2==0) showBeanType += "&nbsp;";
+                    else showBeanType = "&nbsp;" + showBeanType;
+                }
+            }
+            option += '<option value="' + beanName + '">';
+            option2 += '['+showBeanType+'] '+beanName + '(' + beanTitle + ')';
+            option2 += '</option>';
+            $itemTemp.append(option+option2); //主元件(下拉選項)
+
+            option2 = '<option value="' + beanName + '" >' + option2;
+            $itemTempDataList.append(option2); //主元件(搜尋列表)
+        }
+    }
+    // view
+    $(that).css('display', 'none');
+    $('#itemTemp').val(0);
+    $('#itemTemp').css('display', 'inline-block');
+    $('#itemTempTxt').val("");
+    $('#itemTempTxt').css('display', 'inline-block');
+    return false;
+}
+
+// Step.3 次元件(搜尋)按下Enter時檢查首字是否為 # 或 . 然後新增次元件
+function addSubItemEnter(that){
+    var e = window.event || arguments.callee.caller.arguments[0];
+    if(e && e.keyCode==13){ // 按 enter
+        var v = that.value;
+        if ((v.indexOf("#")===0 || v.indexOf(".")===0)){
+            var $itemTemp = $('#itemTemp');
+            $itemTemp.append('<option value="' + v + '">'+v+'</option');
+            $itemTemp.val(v).change();
+        }else{
+            alert("首字必須為\"#\"或\".\"");
+        }
+    }
+    return false;
+}
+
+// Step.3 次元件轉換並新增
+function itemTempChange(that) {
+    // logic
+    var v = that.value;
+    var num = logicObject.tar.length;
+    var tarDesc = ((v.indexOf("#")===0 || v.indexOf(".")===0)) ? v : ($('#itemTemp :selected').text()||$('#itemTemp :selected').text());
+    logicObject.tar.push(v);
+    logicObject.parents.push('');
+    logicObject.childrens.push('');
+    logicObject.evt.push('show');
+    // view
+    var htmlElement = '<div>';
+    htmlElement += '<span class="w3-padding">';
+    htmlElement += tarDesc;
+    htmlElement += '</span>';
+    htmlElement += '<select class="w3-select w3-border" onchange="addItemEvent(this, ' + num + ')">';
+    htmlElement += '<option value="show">顯示</option>';
+    htmlElement += '<option value="hide">隱藏</option>';
+    htmlElement += '<option value="available">啟用 (未開放)</option>';
+    htmlElement += '<option value="unavailable">不啟用 (未開放)</option>';
+    htmlElement += '<option value="readonly">僅讀取 (未開放)</option>';
+    htmlElement += '</select>';
+    //parent
+    htmlElement += '<input id="itemTempParent_'+num+'" type="text" onchange="addItemParents(this, ' + num + ')" placeholder="尋找父層(parent)" style="width: 120px; display: none; border: 1px solid #2566FD;" value="" >';
+    //children
+    htmlElement += '<input id="itemTempChildren_'+num+'" type="text" onchange="addItemChildrens(this, ' + num + ')" placeholder="尋找子層(children)" style="width: 120px; display: none; border: 1px solid #FA1E33;" value="" >';
+    //進階選項 (點擊後隱藏按鈕、顯示parent及children)
+    htmlElement += '<button id="itemTempBtn_'+num+'" class="w3-btn w3-light-violet" onclick="$(this).hide(); $(\'#itemTempParent_'+num+', #itemTempChildren_'+num+'\').show(); return false;">進階選項</button>';
+    htmlElement += '<strong class="w3-btn w3-red" onclick="deleteItemTemp(this, ' + num + '); return false;">';
+    htmlElement += 'X';
+    htmlElement += '</strong>';
+    htmlElement += '<br>';
+    htmlElement += '</div>';
+    $('#itemTempList').append(htmlElement);
+    $(that).css('display', 'none');
+    $("#itemTempTxt").css('display', 'none');
+    $('#addItemTempBtn').css('display', 'inline-block');
+    console.log(logicObject);
+    return false;
+}
+
+// Step.3 次元件事件 evt 修改 (顯示 / 隱藏 / ...)
+function addItemEvent(that, tarNum) {
+    //logic
+    var func = that.value;
+    logicObject.evt[tarNum] = func;
+    //view
+    console.log(logicObject);
+    return false;
+}
+
+// Step.3 次元件 parents 修改
+function addItemParents(that, tarNum) {
+    //logic
+    var func = that.value;
+    logicObject.parents[tarNum] = func;
+    //view
+    console.log(logicObject);
+    return false;
+}
+// Step.3 次元件 childrens 修改
+function addItemChildrens(that, tarNum) {
+    //logic
+    var func = that.value;
+    logicObject.childrens[tarNum] = func;
+    //view
+    console.log(logicObject);
+    return false;
+}
+
+// Step.3 最終觸發事件 - 成立 eval_true
+function addEvalTrueEvent(that) {
+    //logic
+    var func = that.value;
+    logicObject.eval_true = func;
+    //view
+    console.log(logicObject);
+}
+
+// Step.3 最終觸發事件 - 不成立 eval_false
+function addEvalFalseEvent(that) {
+    //logic
+    var func = that.value;
+    logicObject.eval_false = func;
+    //view
+    console.log(logicObject);
+}
+
+// Step.3 刪除事件 刪除元件
+function deleteItemTemp(that, tarNum) {
+    // logic
+    logicObject.tar[tarNum] = null;
+    logicObject.parents[tarNum] = null;
+    logicObject.childrens[tarNum] = null;
+    logicObject.evt[tarNum] = null;
+    // view
+    $(that).parent().remove();
+    console.log(logicObject);
+    return false;
+}
+
+
+// 按鈕畫面控制
+function buttonAndBarView(type) {
+    /**
+        0: 展開並全部按鈕 disabled
+        1: 收起 disabled 修改&刪除
+        2: 收起 disabled 新增
+    **/
+    switch(type) {
+        case 0:
+            $('#mainItemList').css('height', '300px');
+            $('#mainItemList').css('visibility', 'visible');
+            $('#editMain').addClass('w3-disabled');
+            $('#editMain').attr('disabled', true);
+            $('#delMain').addClass('w3-disabled');
+            $('#delMain').attr('disabled', true);
+            $('#addMain').addClass('w3-disabled');
+            $('#addMain').attr('disabled', true);
+            break;
+        case 1:
+            $('#mainItemList').css('visibility', 'hidden');
+            $('#mainItemList').css('height', '0');
+            $('#editMain').addClass('w3-disabled');
+            $('#editMain').attr('disabled', true);
+            $('#delMain').addClass('w3-disabled');
+            $('#delMain').attr('disabled', true);
+            $('#addMain').removeClass('w3-disabled');
+            $('#addMain').attr('disabled', false);
+            break;
+        case 2:
+            $('#mainItemList').css('visibility', 'hidden');
+            $('#mainItemList').css('height', '0');
+            $('#editMain').removeClass('w3-disabled');
+            $('#editMain').attr('disabled', false);
+            $('#delMain').removeClass('w3-disabled');
+            $('#delMain').attr('disabled', false);
+            $('#addMain').addClass('w3-disabled');
+            $('#addMain').attr('disabled', true);
+            break;
+    }
+}
+
+// 送出
+function submitJson() {
+    // logic
+    for (var i = logicObject.ifs.length; i >= 0; i--) {
+        if (logicObject.ifs[i] === null) {
+            logicObject.ifs.splice(i, 1);
+        }
+    }
+    for (var i = logicObject.tar.length; i >= 0; i--) {
+        if (logicObject.tar[i] === null) {
+            logicObject.tar.splice(i, 1);
+            logicObject.parents.splice(i, 1);
+            logicObject.childrens.splice(i, 1);
+            logicObject.evt.splice(i, 1);
+        }
+    }
+    if (deleteMode) {
+        var func = $('#ftInterlocking').val();
+        array = JSON.parse(func);
+        array.splice(editNumber,1);
+        editMode = false;
+        deleteMode = false;
+    } else if (editMode) {
+        var func = $('#ftInterlocking').val();
+        array = JSON.parse(func);
+        array[editNumber] = logicObject;
+        editMode = false;
+    } else {
+        var func = $('#ftInterlocking').val();
+        var array = [];
+        if (func !== '' && func !== undefined && func !== null) {
+            array = JSON.parse(func);
+        }
+        array.push(logicObject);
+    }
+
+    // view
+    $('#conditionModal3').css('display', 'none');
+    $('#ftInterlocking').val(JSON.stringify(array));
+    $('#ftInterlocking').trigger("change");
+    console.log(array);
+    return false;
+}
+
+
+// 換頁
+function nextPage(that, Page) {
+    var point = $(that).parent().parent().parent();
+    cleanMainBeanView();  // 清畫面
+    if (targetButton !== null) { //被選中的元件button
+        if (!targetButton.hasClass('active')) { //被選中的元件button
+            logicObject.ifs[targetItemNum] = null; //指定的元件idx
+            targetButton.remove(); //被選中的元件button
+            targetButton = null; //被選中的元件button
+        }
+    }
+    //step.1 輸入判斷規則名稱及相關說明 => step.2 新增主要驗證規則的元件
+    if (Page === 2) {
+        var ifs = logicObject.ifs;
+        $('#beanList').html('');
+        for (var i = 0; i < ifs.length; i++) {
+            if (ifs[i] !== null) {
+                var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusBean(this); return false;" id="' + (i + 1) + '"> ' + ifs[i].bean + ' </button>';
+                $('#beanList').append(button);
+            }
+
+        }
+        if ($('#beanList').find('button').length > 1) {
+            $('#mainLogic').attr('disabled', false);
+            $('#mainLogic').removeClass('w3-disabled');
+        }
+        $('#mainLogic').val(logicObject.operator);
+        $('#mainRunMode').val(logicObject.runMode);
+
+        //強迫第一次會打開 info
+        if (!window.localStorage["step2AleadyView"]){
+            $("#step2_open").click();
+            window.localStorage["step2AleadyView"] = true;
+        }
+    }
+    //step.2 新增主要驗證規則的元件 => step.3 新增次要元件條件及事件
+    else if (Page === 3) {
+        var tars = logicObject.tar;
+        var parents = logicObject.parents;
+        var childrens = logicObject.childrens;
+        var evts = logicObject.evt;
+            // option2 += '['+showBeanType+'] '+beanName + '(' + beanTitle + ')';
+        $('#itemTempList').html('');
+        $('#conditionModal3').find('button:last').text('新增');
+        $('#itemTempList').append('<input id="none" type="text" placeholder="防止itemTempParent_0的值出不來" style="display: none;" value="none" >');
+        for (var i = 0, len = tars.length; i < len; ++i) {
+            if (tars[i] !== null && evts[i] !== null) {
+                var tarDesc = tars[i];
+                if ((tarDesc.indexOf("#")!==0 && tarDesc.indexOf(".")!==0)){
+                    for (var i2=0, len2=beanObjectList.length; i2<len2; ++i2){
+                        var gMap = beanObjectList[i2].gForm.gformItemMap;
+                        if (gMap.fitName.itemValue===tarDesc){
+                            tarDesc = '['+gMap.fitControlType.itemValue+'] '+tarDesc + '(' + gMap.fitTitle.itemValue + ')';
+                            i2=len2;
+                        }
+                    }
+                }
+                var htmlElement = '<div>';
+                htmlElement += '<span class="w3-padding">';
+                htmlElement += tarDesc;
+                htmlElement += '</span>';
+                htmlElement += '<select class="w3-select w3-border" onchange="addItemEvent(this, ' + i + ')">';
+                htmlElement += '<option value="show" ' + (evts[i] === 'show' ? 'selected' : '') + '>顯示</option>';
+                htmlElement += '<option value="hide" ' + (evts[i] === 'hide' ? 'selected' : '') + '>隱藏</option>';
+                htmlElement += '<option value="available" ' + (evts[i] === 'available' ? 'selected' : '') + '>啟用 (未開放)</option>';
+                htmlElement += '<option value="unavailable" ' + (evts[i] === 'unavailable' ? 'selected' : '') + '>不啟用 (未開放)</option>';
+                htmlElement += '<option value="readonly" ' + (evts[i] === 'readonly' ? 'selected' : '') + '>僅讀取 (未開放)</option>';
+                htmlElement += '</select>';
+                //parent
+                htmlElement += '<input id="itemTempParent_'+i+'" type="text" onchange="addItemParents(this, ' + i + ')" placeholder="尋找父層(parent)" style="width: 120px; display: none; border: 1px solid #2566FD;" value="'+parents[i]+'" >';
+                //children
+                htmlElement += '<input id="itemTempChildren_'+i+'" type="text" onchange="addItemChildrens(this, ' + i + ')" placeholder="尋找子層(children)" style="width: 120px; display: none; border: 1px solid #FA1E33;" value="'+childrens[i]+'" >';
+                //進階選項 (點擊後隱藏按鈕、顯示parent及children)
+                htmlElement += '<button id="itemTempBtn_'+i+'" class="w3-btn w3-light-violet" onclick="$(this).hide(); $(\'#itemTempParent_'+i+', #itemTempChildren_'+i+'\').show(); return false;">進階選項</button>';
+                htmlElement += '<strong class="w3-btn w3-red" onclick="deleteItemTemp(this, ' + i + '); return false;">';
+                htmlElement += 'X';
+                htmlElement += '</strong>';
+                htmlElement += '<br/>';
+                htmlElement += '</div>';
+                $('#itemTempList').append(htmlElement);
+                //parents 或 childrens 有值就點及進階選項按鈕
+                if (parents[i]!="" || childrens[i]!=""){
+                    $('#itemTempBtn_'+i+'').click();
+                }
+                $('#conditionModal3').find('button:last').text('修改');
+            }
+
+        }
+
+        $('#evalTrueEventTxt').val(logicObject.eval_true);
+        $('#evalFalseEventTxt').val(logicObject.eval_false);
+
+        //強迫第一次會打開 info
+        if (!window.localStorage["step3AleadyView"]){
+            $("#step3_open").click();
+            window.localStorage["step3AleadyView"] = true;
+        }
+    }
+
+    $(point).css('display', 'none');
+    $('#conditionModal' + Page).css('display', 'block');
+    return false;
+}
+
+
+// 清畫面
+function cleanMainBeanView() {
+
+    $('#beanMain').val(0); //Step.2 主元件(下拉選項)
+    $('#beanMainTxt').val(); //Step.2 主元件(搜尋)
+    // $('#beanLogic').val(0); //Step.2 邏輯運算(下拉選項)
+    // $('#beanType').val(0); //Step.2 類型
+    $('#beanMin').val(''); //Step.2 最小值
+    $('#beanMax').val(''); //Step.2 最大值
+    $('.chk').find('input').attr('checked', false);
+
+    $('#mainItemList').css('visibility', 'hidden');
+    $('#mainItemList').css('height', '0');
+    $('#addMain').removeClass('w3-disabled');
+    $('#addMain').attr('disabled', false);
+    $('.mainItem').css('display', 'none');
+    $('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+}
+
+/********* 條 件 連 動 式 end *********/
+</script>

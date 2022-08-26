@@ -1,0 +1,208 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div style="overflow:auto; width: 100%">
+    <table align="center" height="51px">
+      <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center"><h4 align="center">住院病患预防跌倒护理评估单</h4></td>
+            <td nowrap width="20%"></td>
+      </tr>
+      <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" id="btnAdd"  name="btnAdd" value="保存" class="clsButton" onclick="dynamicFormSave(this)">
+                <input type="button" value="清除" class="clsButton"onclick="doURL('WebLIST.html')"/>
+            </td>
+            <td nowrap width="20%"></td>
+      </tr>
+    </table>
+    <table width="90%" class="etable" cellspacing="0" cellpadding="0">
+        <tr class="nurstr1">
+            <td width="20%" align="left" height="25"><b>记录日期</b></td>
+            <td height="25">
+                <table>
+                    <tr>
+                        <td width="100px">
+                            <input type="text" class="form-control" id="datetimepicker1" readonly />
+                        </td>
+                        <td width="100px">
+                            <input type="text" class="form-control" id="datetimepicker2" readonly />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">陪伴者</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm1" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">年龄≧65岁 ≦4岁</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm2" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">意识状态：GCS：7-14分</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm3" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">Hb值偏低 ≤80g／l或Hct≤24%</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm4" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">头晕、晕眩</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm5" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">过去半年有跌倒经验</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm6" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">病患身上有管路留置</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm7" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">主诉视觉不良</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm8" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">辅具使用</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm9" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">医嘱下达需陪护1人，实际却无陪</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm10" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">排泄情形</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm11" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">使用增加跌倒风险药物</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm12" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left">步态不稳或肢体活动受限</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm13" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left"></th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm14" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left"></th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm15" />
+                </span>
+            </td>
+        </tr>
+        
+        <tr>
+            <th class="nurstr1" align="left"></th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm16" />
+                </span>
+            </td>
+        </tr>
+
+        <tr>
+            <th class="nurstr1" align="left">跌倒发生日期</th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm17" />
+                </span>
+            </td>
+        </tr>
+
+        <tr>
+            <th class="nurstr1" align="left"></th>
+            <td class="etd_executeA" height="38">
+                <span style="font-weight: 400">
+                    <p class="pFormItem" data-bean="FallBenQForm18" />
+                </span>
+            </td>
+        </tr>
+
+    </table>
+    <table align="center" height="51px">
+      <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" id="btnAdd"  name="btnAdd" value="保存" class="clsButton" onclick="dynamicFormSave(this)">
+                <input type="button" value="清除" class="clsButton"onclick="doURL('WebLIST.html')"/>
+            </td>
+            <td nowrap width="20%"></td>
+      </tr>
+    </table>
+</div>

@@ -1,0 +1,180 @@
+<script>
+//頁面載入完成
+function pageReady(){
+    $("#loadeffect").hide();
+    if (window.console) console.log("頁面載入完成...");
+    if (window.console) console.log(dForms);
+
+    //設置紀錄日期限制
+    $("#datetimepicker1").change(function() {
+        var d1 = new Date();
+        var year = d1.getFullYear();
+        var month = d1.getMonth() + 1;
+        var day = d1.getDate();
+
+        if (year < 10) year = "0" + year;
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+
+        var currdate = year + "-" + month + "-" + day;
+
+        var day1 = document.getElementById("datetimepicker1").value.substr(8, 2);
+
+        if (day1 < day) {
+            alert("选用日期不得早于系统日期");
+            document.getElementById("datetimepicker1").value = currdate;
+            return;
+        }
+
+        if (day1 > day) {
+            alert("选用日期不得大于系统日期");
+            document.getElementById("datetimepicker1").value = currdate;
+
+        }
+    });
+
+    //初始化datetimepicker1的日期時間
+    $('#datetimepicker1').addClass("form-control");
+    $('#datetimepicker1').datetimepicker({
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        language: "zh-TW"
+    });
+    $('#datetimepicker1').val(new Date().format('yyyy-MM-dd'));
+
+    //初始化datetimepicker2的日期時間
+    $('#datetimepicker2').addClass("form-control");
+    $('#datetimepicker2').datetimepicker({
+        format: 'hh:ii',
+        startDate: new Date(new Date().getFullYear()+"/"+new Date().getMonth()+"/"+new Date().getDate()+" 00:00:00"),
+        datepicker: false,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0,
+        minuteStep: 1,
+        language:"zh-TW"
+    });
+    $('#datetimepicker2').val(new Date().format('HH:mm'));
+}
+
+
+//病患資料
+var patient = null;
+//基础参数
+var basicParam = null;
+//動態表單
+var dynamicForm = null;
+//動態表單模板
+var dynamicFormTemplate = null;
+var dForms = null;
+var completeCount=0;
+
+//在動態表單都會用到的JS、CSS在這邊一併引入
+includeHead(function(){
+    //在動態表單都會共用的JS程式，在這邊統一執行
+    includeFoot(completeFoot);
+});
+
+//foot運行完了之後再執行
+function completeFoot() {
+    //病患資料
+    WebADD_DataSet();
+    patient=nursing.getPatient();
+    patient=eNursing.extend({},patient,JSON.parse(window.localStorage["getSelectedPatient"]));
+    window.localStorage.removeItem("getSelectedPatient");
+    var station=nursing.getStation();
+    var zone=nursing.getZone();
+    var user=nursing.getUser();
+    user=eNursing.extend({},user,patient.parent.parent.parent);
+    zone=eNursing.extend({},zone,patient.parent.parent);
+    station=eNursing.extend({},station,patient.parent);
+    zone.setParent(user);
+    station.setParent(zone);
+    patient.setParent(station);
+
+    //基础参数
+    basicParam = nursing.getBasicParam();
+    //動態表單
+    dynamicForm = nursing.getDynamicForm();
+    dynamicForm.setParent(patient);
+    dynamicForm.formModel = formType;
+    dynamicForm.formType = formType;
+    dForms = null;
+
+
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.frameModel = frameModel;
+    if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_Frame");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+        window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        //2022.04.08之後改用
+        successCall(JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_Frame_context")));
+    }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+        $.ajax({url: "frame/WebADD_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }else{//讀取資料庫frame
+        basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+    }
+    //查詢formFrame(表單外框)
+    var call = false;
+    function successCall (formFrame) {
+        if (call) return; else call=true;
+        //沒有模板資料
+        if (formFrame==null){
+            $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表单模板未配对...</div></div>');
+            $("#loadeffect").hide();
+        }else{
+            //取得版本號
+            var newVersionNo = parseInt(formFrame.newVersionNo);
+            versionNo = (newVersionNo>versionNo) ? newVersionNo : versionNo;
+            //將資料庫的formFrame 引入到body裡面的#targetForm
+            $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+
+            successCall3();
+        }
+    }
+
+    //查詢動態表單模板
+    dynamicForm.searchParamDF.formType = formType;
+    if (window.localStorage["loadEditorFrame_formVersion"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_formVersion");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall2(JSON.parse(window.localStorage["loadEditorFrame_formVersion_dFTemplate"]));
+        window.localStorage.removeItem("loadEditorFrame_formVersion_dFTemplate");
+        //2022.04.08之後改用
+        successCall2(JSON.parse(parent.$("#previewIframe").attr("loadEditorFrame_formVersion_dFTemplate")));
+    }else{//讀取資料庫formVersion
+        basicParam.getCurrDynamicFormTemplateV3(dynamicForm, successCall2, function() {});
+    }
+
+    //查詢動態表單
+    var call2 = false;
+    function successCall2 (dFTemplate) {
+        if (call2) return; else call2=true;
+        //顯示XML模板
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        successCall3();
+    }
+
+    function successCall3(){
+        if (++completeCount<2) return;
+        var formItemsTemplate = dynamicFormTemplate.hashItems;
+        createElement(formItemsTemplate, pageReady);
+        //取得版本號 (如果前兩個frame的versionNo皆為0，就以xml的版本為versionNo)
+        var version = parseInt(dynamicFormTemplate.version);
+        versionNo = (versionNo==0) ? version : versionNo;
+    }
+}
+</script>

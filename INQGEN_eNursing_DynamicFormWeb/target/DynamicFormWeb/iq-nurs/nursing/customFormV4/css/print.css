@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/*externalData元件下的data*/
+.externalDataShowDataDiv {
+  max-width: 100%;
+}
+.externalDataShowDataDiv .externalData:not(.show) {
+  display: none;
+}
+
+/*# sourceMappingURL=print.css.map */

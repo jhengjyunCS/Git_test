@@ -1,0 +1,154 @@
+@charset "UTF-8";
+* {
+  font-family: "Microsoft JhengHei";
+  font-size: 14px;
+}
+
+.resultGroup {
+  display: none;
+}
+
+.page, .resultGroup {
+  width: 210mm;
+  max-width: 210mm;
+  min-height: 317mm;
+  padding: 0.27cm 1.5cm;
+  margin: 10mm 0;
+  page-break-after: always;
+  page-break-inside: avoid;
+  position: relative;
+  border: 1px solid;
+}
+.page .pageHeader, .resultGroup .pageHeader {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  height: 1cm;
+  padding-top: 0;
+}
+.page .pageHeader, .resultGroup .pageHeader {
+  width: 100%;
+}
+.page .pageBody, .resultGroup .pageBody {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1cm;
+}
+.page .pageBody .trWordCountSetting > td, .resultGroup .pageBody .trWordCountSetting > td {
+  height: 0;
+  line-height: 0;
+  color: rgba(255, 255, 255, 0);
+  word-break: keep-all;
+}
+.page .pageBody > table, .resultGroup .pageBody > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.page .pageBody > table > thead > tr:not(.trWordCountSetting) > td, .page .pageBody > table > tbody > tr > td, .resultGroup .pageBody > table > thead > tr:not(.trWordCountSetting) > td, .resultGroup .pageBody > table > tbody > tr > td {
+  border: 1px solid;
+}
+.page .pageFooter, .resultGroup .pageFooter {
+  width: 210mm;
+  max-width: 210mm;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 1cm;
+  bottom: 0;
+  position: absolute;
+}
+.page td, .resultGroup td {
+  word-break: break-all;
+  page-break-inside: avoid;
+  height: 1.9em;
+  vertical-align: middle;
+}
+
+.bottomBorderHide {
+  border-bottom: none !important;
+}
+
+.topBorderHide {
+  border-top: none !important;
+}
+
+.btnGroup {
+  background-color: white;
+  width: 100%;
+  z-index: 999;
+  height: 30px;
+  position: fixed;
+  top: 0;
+}
+.btnGroup > button {
+  align-items: center;
+  background-color: #fff;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  fill: #000;
+  font-size: 16px;
+  font-weight: 600;
+  height: 100%;
+  justify-content: center;
+  letter-spacing: -0.8px;
+  line-height: 24px;
+  min-width: 140px;
+  outline: 0;
+  padding: 0 17px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.btnGroup > button:focus {
+  color: #171e29;
+}
+.btnGroup > button:hover {
+  border-color: #06f;
+  color: #06f;
+  fill: #06f;
+}
+.btnGroup > button:active {
+  border-color: #06f;
+  color: #06f;
+  fill: #06f;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+    orphans: 2;
+    widows: 2;
+  }
+  * {
+    overflow: visible;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+
+  .page {
+    border: none;
+  }
+
+  .btnGroup, .noPrint {
+    display: none;
+  }
+}
+/*externalData元件下的data*/
+.externalDataShowDataDiv {
+  max-width: 100%;
+}
+.externalDataShowDataDiv .externalData:not(.show) {
+  display: none;
+}
+
+/*# sourceMappingURL=print2.css.map */

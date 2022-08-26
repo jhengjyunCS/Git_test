@@ -1,0 +1,263 @@
+<style>
+    html,body,td{
+        font-family:微軟正黑體;
+    }
+    p{
+        margin:0px;
+    }
+
+    .btn-ud{
+        background-color: rgb(254,222,189);
+        border-radius: 2px;
+        border:solid 1px #333333;
+    }
+
+    .span-patient-title{
+        padding:2px 5px;
+        background-color: rgb(255,255,153);
+        border:solid 1px #333333;
+        border-radius: 3px;
+    }
+    .pFormItem{
+         display:inline-block
+    }
+    .TableStyle  .td_col1, .TableStyle  .td_col2{
+        height:40px;
+        verticle-align:middle;
+        padding:3px 0px;
+    }
+
+    .TableStyle .td_col1{
+        width:130px;
+        text-align:right;
+        padding-right:10px;
+        font-weight:bolder;
+    }
+
+    .inside-table td{
+        border:solid 1px #aaa;
+        text-align: center;
+        width:120px;
+    }
+
+    .inside-table-th td{
+        background-color: #ccc;
+        font-weight: bolder;
+    }
+
+    .inside-table-tr td{
+        background-color: rgb(189,189,252);
+    }
+
+    .pl-50{
+        padding-left:50px;
+    }
+
+    /* Style the tab */
+    .tab {
+    overflow: hidden;
+    z-index:10;
+    padding-left:20px;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab input{
+    background-color: inherit;
+    background-color: #f1f1f1;
+    float: left;
+    border:solid 1px #ccc;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.3s;
+    position:relative;
+    top:1px;
+    z-index:11;
+    font-weight: bolder;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab input:hover {
+    background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab input.active {
+        background-color: rgb(180,211,253);
+       border-bottom:solid 1px rgb(230,241,253);
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 15px 10px;
+        border: 1px solid #ccc;
+        z-index:9;
+        background-color: rgb(230,241,253);
+    }
+
+    .tab_hidden{
+        display:none;
+    }
+
+    .tab_block{
+        display:block;
+    }
+
+    #div_CBL_CarryingDevice input[type=checkbox],#div_CBL_SpecialHandover input[type=checkbox]{
+        width: 0px;
+        float: left;
+    }
+
+    #div_CBL_CarryingDevice label,#div_CBL_SpecialHandover label{
+        padding:0px 3px;
+    }
+
+    #div_CBL_CarryingDevice input[type=checkbox] + label,#div_CBL_SpecialHandover input[type=checkbox] + label{
+        color: rgb(26,100,195);
+        background-color: rgb(189,189,252);
+        border:solid 1px rgb(122,40,81);
+        border-radius: 2px;
+        width:80px;
+        padding:2px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .labelChecked,#div_CBL_SpecialHandover input[type=checkbox]:checked + label{
+        color: rgb(122,40,81) !important;
+        background-color: rgb(204,102,153) !important;
+        cursor: pointer;
+    }
+
+</style>
+<span class="span-patient-title">林X紘 42671692 49歲(19700124) 男性 A191-2 </span><br />
+<table align="center" height="51px">
+    <tr>
+        <td nowrap width="20%"></td>
+        <td nowrap align="center">
+            <input type="button" id="btnAdd" name="btnAdd" value="修改並保存" class="clsButton" onclick="parent.gFormSave(this, function(rsGForms){
+                sourceId = rsGForms[0].gForm.formId;
+                gFormJS.searchParamGF.sourceId = sourceId;
+                window.localStorage['gFormWebADD_sourceId'+multiLevel] = sourceId;
+                window.localStorage['gFormWebUPD_sourceId'+multiLevel] = sourceId;
+                gFormSave(this, function(rsGForms){
+                    window.localStorage['gFormWebUPD_formId'+multiLevel] = rsGForms[0].gForm.formId;
+                    doURL('gFormWebUPD.html?multiLevel='+multiLevel);
+                });
+            });">
+        </td>
+        <td nowrap width="20%"></td>
+    </tr>
+</table>
+<table width="90%" class="TableStyle" cellspacing="0" cellpadding="0">
+    <tr style="/**/">
+        <td class="td_col1">紀錄時間 : </td>
+        <td class="td_col2">
+            <p class="pFormItem" data-bean="TB_RecordTime" />
+        </td>
+    </tr>
+    <tr style="/**/">
+        <td class="td_col1">生命徵象 : </td>
+        <td class="td_col2">
+            <table style="border-collapse:collapse; table-layout:fixed;" class="inside-table">
+                <tr class="inside-table-th">
+                    <td>體溫(°C)</td>
+                    <td>脈搏(次/分)</td>
+                    <td>呼吸(次/分)</td>
+                    <td>收縮壓(mmHg)</td>
+                    <td>舒張壓(mmHg)</td>
+                    <td>血氧濃度(%)</td>
+                </tr>
+                <tr class="inside-table-tr">
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_Temperature" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_Pulse" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_Breathe" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_SystolicBloodPressure" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_DiastolicBloodPressure" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_OxygenSaturationOfBlood" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="/**/">
+        <td class="td_col1">昏迷指數 : </td>
+        <td class="td_col2">
+            <table style="border-collapse:collapse; table-layout:fixed;" class="inside-table">
+                <tr class="inside-table-th">
+                    <td>睜眼反應(E)</td>
+                    <td>語言反應(V)</td>
+                    <td>肢體反應(M)</td>
+                </tr>
+                <tr class="inside-table-tr">
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_BlinkingReaction" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_LanguageReaction" />
+                    </td>
+                    <td>
+                        <p class="pFormItem" data-bean="TBL_VitalSigns_LimbReaction" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr style="/**/">
+        <td class="td_col1">各項管路 : </td>
+        <td class="td_col2">
+            <span>(自動帶NIS管路...)</span>&nbsp;
+            <p class="pFormItem" data-bean="TBL_VariousPipelines" />
+        </td>
+    </tr>
+    <tr style="/**/">
+        <td class="td_col1">攜帶設備 : </td>
+        <td class="td_col2">
+            <p class="pFormItem" data-bean="CBL_CarryingDevice" />
+        </td>
+    </tr>
+    <tr style="/**/">
+        <td class="td_col1">攜帶藥物 : <br />
+            <input type="button" value="帶入UD資料" class="btn-ud" />
+        </td>
+        <td class="td_col2">
+            <p class="pFormItem" data-bean="TB_CarryingDrugs" />
+        </td>
+    </tr>
+    <tr style="/**/">
+        <td class="td_col1">特殊交班事項 : </td>
+        <td class="td_col2">
+            <p class="pFormItem" data-bean="CBL_SpecialHandover" />
+        </td>
+    </tr>
+</table>
+<table align="center" height="51px">
+    <tr>
+        <td nowrap width="20%"></td>
+        <td nowrap align="center">
+            <input type="button" id="btnAdd" name="btnAdd" value="修改並保存" class="clsButton" onclick="parent.gFormSave(this, function(rsGForms){
+                sourceId = rsGForms[0].gForm.formId;
+                gFormJS.searchParamGF.sourceId = sourceId;
+                window.localStorage['gFormWebADD_sourceId'+multiLevel] = sourceId;
+                window.localStorage['gFormWebUPD_sourceId'+multiLevel] = sourceId;
+                gFormSave(this, function(rsGForms){
+                    window.localStorage['gFormWebUPD_formId'+multiLevel] = rsGForms[0].gForm.formId;
+                    doURL('gFormWebUPD.html?multiLevel='+multiLevel);
+                });
+            });">
+        </td>
+        <td nowrap width="20%"></td>
+    </tr>
+</table>

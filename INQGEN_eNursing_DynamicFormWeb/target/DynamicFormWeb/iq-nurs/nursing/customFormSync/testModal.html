@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+	<link rel="stylesheet" href="tempelate.css?csSvnVersion=">
+</head>
+<body>
+	<button onclick="document.getElementById('myModal1').style.display='block'">click me!</button>
+	<div id="myModal1" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+
+		    <header class="w3-container w3-mineral-blue">
+			    <span onclick="document.getElementById('myModal1').style.display='none'"
+			      	class="w3-button w3-hover-sky-blue w3-display-topright">&times;</span>
+			    <h2>新 增 判 斷 條 件 Step.1</h2>
+		    </header>
+		    <div class="w3-container w3-alice-blue w3-margin-large">
+		    	<h3>※ 輸入判斷規則名稱及相關說明 ※</h3>
+		    	<p>為了幫助後續維護及修改更為容易，加入詳細的說明更為妥善。</p>
+		    </div>
+		    <span class="w3-title">條件名稱</span>
+		    <div class="w3-container w3-block-1">
+				<div class="w3-main-block w3-border-top">
+					<div class="w3-main-item">
+						<div class="w3-left">
+				      		<span>條件名稱：</span>
+				      	</div>
+				      	<div class="w3-right">
+				      		<input class="w3-input w3-border w3-large" type="text" onblur="addName(this)" placeholder="請輸入規則名稱。 Ex: 判斷條件01">
+				      	</div>
+					</div>
+					<div class="w3-main-item">
+			      		<div class="w3-left">
+			      			<span>備註：</span>
+			      		</div>
+			      		<div class="w3-right">
+			      			<input class="w3-input w3-border w3-large" type="text" onchange="addDesc(this)" placeholder="(Optional)">
+			      		</div>
+			      	</div>
+				</div>
+		    </div>
+
+		    <footer class="w3-container w3-light-grey w3-padding">
+		    	<button class="w3-button w3-dark-gray w3-border w3-site-left" style="margin-left: 10px;" onclick="document.getElementById('myModal1').style.display='none'">
+		    		取消
+		    	</button>
+		    	<button class="w3-button w3-dodger-blue w3-hover-nany w3-border w3-site-right" style="margin-right: 10px;" onclick="nextPage(this, 2)">
+		    		下一步
+		    	</button>
+		    </footer>
+
+		</div>
+	</div>
+	<div id="myModal2" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+			<header class="w3-container w3-mineral-blue">
+			    <span onclick="document.getElementById('myModal2').style.display='none'"
+			      	class="w3-button w3-hover-sky-blue w3-display-topright">&times;</span>
+			    <h2>新 增 判 斷 條 件 Step.2</h2>
+		    </header>
+		    <div class="w3-container w3-alice-blue w3-margin-large">
+		    	<h3>※ 新增主要驗證規則的元件 ※</h3>
+		    	<p>選擇【主要元件】及【驗證規則】，若超過兩個主要元件需選擇【元件邏輯】</p>
+		    </div>
+		    <span class="w3-title">主要元件及邏輯</span>
+			<!-- <button class="w3-title-btn w3-button" onclick="addMainItem(this)">+</button> -->
+			<div class="w3-container w3-block-1" id="itemList">
+				<div class="w3-main-block w3-border-top">
+					<div class="w3-main-item">
+						<div class="w3-left">
+							<span>元件清單：</span>
+						</div>
+						<div class="w3-right" id="beanList">
+							<!-- <button class="w3-button w3-border w3-pale-green w3-hover-forst-green"> 元件001 </button> -->
+						</div>
+					</div>
+					<div class="w3-main-item">
+						<div class="w3-left">
+				      		<span>元件邏輯：</span>
+				      	</div>
+				      	<div class="w3-right">
+				      		<select class="w3-select w3-border" onchange="editMainEvent(this)">
+					     		<option>請選擇</option>
+					     		<option value="&&">且 (&&)</option>
+					     		<option value="||">或 (||)</option>
+					     	</select>
+				      	</div>
+					</div>
+				</div>
+			</div>
+			<div class="w3-container">
+				<button class="w3-button w3-border w3-bisque w3-hover-burly-wood w3-site-right" onclick="addMainView(this)" id="addMain">新增主元件</button>
+				<button class="w3-button w3-border w3-rose-red w3-hover-dark-violet w3-disabled" onclick="delMainView(this)" style="margin-left: 10px" id="delMain">刪除主元件</button>
+				<button class="w3-button w3-border w3-alice-blue w3-hover-alice-blue w3-site-left w3-disabled" onclick="editMainView(this)" id="editMain">修改主元件</button>
+			</div>
+			<br><hr>
+			<div class="w3-scrollbar w3-transfer" style="height: 0px;" id="mainItemList">
+				<div class="w3-container w3-block-1">
+					<!-- <button class="w3-title-btn w3-button" onclick="removeMainItem(this)"> X </button> -->
+				    <div class="w3-main-block">
+				   		<div class="w3-main-item">
+				      		<div class="w3-left">
+					      		<span>主元件：</span>
+					      	</div>
+					      	<div class="w3-right">
+					      		<select class="w3-select w3-border" onchange="formItemChange(this)" id="beanMain">
+						     		<option value="0">請選擇</option>
+						     		<option value="checkbox">checkbox Item</option>
+						      		<option value="radiobox">radiobox Item</option>
+						     		<option value="input">input Item</option>
+						      		<option value="select">select Item</option>
+						      		<option value="other">...</option>
+						      	</select>
+						      	<button class="w3-button w3-border w3-light-grey w3-site-right" onclick="cancelAdd(this)" id="close">關閉</button>
+					      	</div>
+					    </div>
+					    <div class="w3-main-item mainItem chk" style="display: none">
+					      	<div class="w3-left">
+					      		<span>觸發指定值：</span>
+					      	</div>
+					      	<div class="w3-right">
+					      		<div class="w3-checkbox-group">
+					      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值1">
+					      			<label>值1</label>
+					      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值2">
+					      			<label>值2</label>
+					      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值3">
+					      			<label>值3</label>
+					      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值4">
+					     			<label>值4</label>
+					     			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值5">
+					      			<label>值5</label>
+					      		</div>
+					      	</div>
+					    </div>
+					    <div class="w3-main-item mainItem chk" style="display: none">
+					    	<div class="w3-left">
+					    		<span>邏輯運算：</span>
+					    	</div>
+					    	<div class="w3-right">
+					    		<select class="w3-select w3-border" onchange="addMainLogic(this, 'o')" id="beanLogic">
+					    			<option value="0">請選擇</option>
+					    			<option value="&&">且 (&&)</option>
+					    			<option value="||">或 (||)</option>
+					    		</select>
+					    	</div>
+					    </div>
+					    <div class="w3-main-item mainItem ipt" style="display: none">
+					    	<div class="w3-left">
+					    		<span>類型：</span>
+					    	</div>
+					    	<div class="w3-right">
+					    		<select class="w3-select w3-border" onchange="addMainLogic(this, 't')" id="beanType">
+					    			<option value="0">請選擇</option>
+					    			<option value="string">文字</option>
+					    			<option value="number">數字</option>
+					    		</select>
+					    	</div>
+					    </div>
+					    <div class="w3-main-item mainItem ipt" style="display: none">
+					    	<div class="w3-left">
+					    		<span>最小值：</span>
+					    	</div>
+					    	<div class="w3-right">
+					    		<input class="w3-input w3-border" type="text" onchange="addMinAMax(this, 'min')" id="beanMin" />
+					    	</div>
+					    </div>
+					    <div class="w3-main-item mainItem ipt" style="display: none">
+					    	<div class="w3-left">
+					    		<span>最大值：</span>
+					    	</div>
+					    	<div class="w3-right">
+					    		<input class="w3-input w3-border" type="text" onchange="addMinAMax(this, 'max')" id="beanMax" />
+					    	</div>
+					    </div>
+					    <div class="w3-main-item mainItem chk ipt" style="display: none">
+					    	<div class="w3-left">
+					    	</div>
+					    	<div class="w3-right">
+					    		<button class="w3-button w3-border w3-hover-aqtique-white w3-aqtique-white" onclick="addMainItem(this);">完成</button>
+					    	</div>
+					    </div>
+				    </div> 	
+				</div>
+			</div>
+			<footer class="w3-container w3-light-grey w3-padding">
+		    	<button class="w3-button w3-dark-gray w3-border w3-site-left" style="margin-left: 10px;" onclick="document.getElementById('myModal2').style.display='none'">
+		    		取消
+		    	</button>
+		    	<button class="w3-button w3-light-violet w3-hover-dark-violet w3-border w3-site-left" style="margin-left: 10px;" onclick="nextPage(this, 1)">
+		    		上一步
+		    	</button>
+		    	<button class="w3-button w3-dodger-blue w3-hover-nany w3-border w3-site-right" style="margin-right: 10px;" onclick="nextPage(this, 3)">
+		    		下一步
+		    	</button>
+		    </footer>
+		</div>
+	</div>
+	<div id="myModal3" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+			<header class="w3-container w3-mineral-blue">
+			    <span onclick="document.getElementById('myModal3').style.display='none'"
+			      	class="w3-button w3-hover-sky-blue w3-display-topright">&times;</span>
+			    <h2>新 增 判 斷 條 件 Step.3</h2>
+		    </header>
+		    <div class="w3-container w3-alice-blue w3-margin-large">
+		    	<h3>※ 新增次要元件條件及事件 ※</h3>
+		    	<p>選擇【次要元件】，選擇事件及條件成立與不成立所觸發的事件</p>
+		    </div>
+		    <span class="w3-title">影響元件及觸發事件</span>
+			<div class="w3-container w3-block-1">
+		    	<div class="w3-main-block w3-border-top">
+		    		<div class="w3-main-item">
+			      		<div class="w3-left">
+			      			<span>次要元件：</span>
+			      		</div>
+			      		<div class="w3-right">
+			      			<div class="w3-item-list" id="itemTempList">
+			      				
+			      			</div>
+			      			<!-- <label class="w3-padding" for="subItem01" id="labelItem01">
+			      				<input class="w3-check" type="checkbox" id="subItem01">
+			      				元件 001
+			      				<strong class="w3-btn w3-red" onclick="document.getElementById('labelItem01').style.display='none'">
+			      				X
+			      				</strong>
+			      			</label> -->
+			      			<button class="w3-btn w3-pale-green" onclick="addSubItem(this)" id="addItemTempBtn">加入+</button>
+			      			<select class="w3-select w3-border" id="itemTemp" onchange="itemTempChange(this)" style="display: none">
+				      			<option value="0">請選擇</option>
+				      			<option value="1">元件 001</option>
+				      			<option value="2">元件 002</option>
+				      			<option value="3">元件 003</option>
+				      			<option value="4">元件 004</option>
+				      		</select>
+			      		</div>
+			      	</div>
+			      	<div class="w3-main-item">
+			      		<div class="w3-left">
+			      			<span>條件成立：</span>
+			      		</div>
+			      		<div class="w3-right">
+			      			<input class="w3-input w3-border w3-large" type="text" onchange="addEvalTrueEvent(this)" placeholder="觸發事件。 Ex: alert('成功!')">
+			      		</div>
+			      	</div>
+			      	<div class="w3-main-item">
+			      		<div class="w3-left">
+			      			<span>條件不成立：</span>
+			      		</div>
+			      		<div class="w3-right">
+			      			<input class="w3-input w3-border w3-large" type="text" onchange="addEvalFalseEvent(this)" placeholder="觸發事件。 Ex: alert('失敗!')">
+			      		</div>
+			      	</div>
+			      	<div class="w3-main-item eventBlock" style="display: none">
+						<div class="w3-left">
+							<span>觸發事件：</span>
+						</div>
+						<div class="w3-right">
+							<div class="w3-item-list" id="eventTempList">
+								
+							</div>
+							<!-- <span class="w3-padding" id="event01">
+								事件 001
+								<strong class="w3-btn w3-red" onclick="document.getElementById('event01').style.display='none'">
+			      				X
+			      				</strong>
+							</span> -->
+							<button class="w3-btn w3-pale-green" onclick="addEventTemp(this)" id="addEventTempBtn">加入+</button>
+							<select class="w3-select w3-border" id="eventTemp" style="display: none" onchange="eventTempChange(this)">
+				      			<option value="0">請選擇</option>
+				      			<!-- <option value="1">樣式改變 (style)</option> -->
+				      			<option value="2">顯示改變 (display)</option>
+				      			<!-- <option value="3">彈出視窗 (alert)</option>
+				      			<option value="4">其他 (function)</option> -->
+				      		</select>
+						</div>
+			      	</div>
+			      	<div class="w3-main-item eventBlock" style="display: none">
+			      		<div class="w3-left">
+			      			<span>詳細事件：</span>
+			      		</div>
+			      		<div class="w3-right">
+				      		<div class="event" id="eventStyle" style="display: none">
+				      			文字樣式：
+				      			<select class="w3-select w3-border" id="fontStyle">
+					      			<option>請選擇</option>
+					      			<option>顏色</option>
+					      			<option>大小</option>
+					      			<option>樣式</option>
+					      		</select>
+					      		<input class="w3-input w3-border" style="display: inline-block;" placeholder="value" type="text">
+					      		背景樣式：
+					      		<select class="w3-select w3-border" id="backgroundStyle">
+					      			<option>請選擇</option>
+					      			<option>顏色</option>
+					      			<option>框線</option>
+					      		</select>
+					      		<input class="w3-input w3-border" style="display: inline-block;" placeholder="value" type="text">
+				      		</div>
+					      	<div class="event" id="eventDisplay" style="display: none">
+					      		<input class="w3-radio" type="radio" name="display">
+					      		<label>顯示</label>
+					      		<input class="w3-radio" type="radio" name="display">
+					      		<label>隱藏</label>
+					      		<input class="w3-radio" type="radio" name="display">
+					      		<label>啟用</label>
+					      		<input class="w3-radio" type="radio" name="display">
+					      		<label>不啟用</label>
+					      		<input class="w3-radio" type="radio" name="display">
+					      		<label>僅讀取</label>
+					      	</div>
+					      	<div class="event" id="eventFunction" style="display: none">
+					      		彈出內容：<input class="w3-input w3-border" style="display: inline-block;" type="text">
+					      	</div>
+					      	<div class="event" id="eventOther" style="display: none">
+					      		函數：<input class="w3-input w3-border" style="display: inline-block;" type="text">
+					      	</div>
+			      		</div>
+			      	</div>
+			      	<div class="w3-main-item eventBlock" style="display: none">
+						<div class="w3-left">
+							
+						</div>
+						<div class="w3-right">
+							<button class="w3-btn w3-border" onclick="addEvent()">新增</button>
+						</div>
+			      	</div>
+		    	</div>
+		    </div>
+		    <footer class="w3-container w3-light-grey w3-padding">
+		    	<button class="w3-button w3-dark-gray w3-border w3-site-left" style="margin-left: 10px;" onclick="document.getElementById('myModal3').style.display='none'">
+		    		取消
+		    	</button>
+		    	<button class="w3-button w3-light-violet w3-hover-dark-violet w3-border w3-site-left" style="margin-left: 10px;" onclick="nextPage(this, 2)">
+		    		上一步
+		    	</button>
+		    	<button class="w3-button w3-light-violet w3-hover-dark-violet w3-border w3-site-right" style="margin-right: 10px;" onclick="submitJson()">
+		    		新增
+		    	</button>
+		    </footer>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var logicObject = {
+		"name": "",
+		"if": [],
+		"tar": [],
+		"evt": [],
+		"operation": "",
+		"eval_true": "",
+		"eval_false": "",
+		"desc": ""
+	};
+	var targetItemNum = 0;
+	var targetButton = null;
+	
+	// 新建主要元件
+	function addMainItem(that) {
+		// logic
+		$('#beanMain').val(0);
+		$('#beanLogic').val(0);
+		$('#beanType').val(0);
+		$('#beanMin').val('');
+		$('#beanMax').val('');
+		$('.chk').find('input').attr('checked', false);
+		targetButton = null;
+		// view
+		$('#mainItemList').css('visibility', 'hidden');
+		$('#mainItemList').css('height', '0');
+		$('#addMain').removeClass('w3-disabled');
+		$('#addMain').attr('disabled', false);
+		$('.mainItem').css('display', 'none');
+		$('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+		console.log(logicObject);
+		return false;
+	}
+	function addMainView(that) {
+		// Logic
+		var object = {
+			"datatype": "", // checked \ number \ string
+			"bean": "",
+			"uiValue": [],
+			"operation": "", // options (checked)
+			"min": "",	// number \ string
+			"max": ""
+		};
+		var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusBean(this)" id="' + (logicObject.if.length + 1) + '"> 元件' + (logicObject.if.length + 1) + ' </button>';
+		logicObject.if.push(object);
+
+		targetItemNum = logicObject.if.length - 1;
+		// view
+		$(that).addClass('w3-disabled');
+		$(that).attr('disabled', true);
+		$('#close').html('取消新增');
+		$('#mainItemList').css('height', '300px');
+		$('#mainItemList').css('visibility', 'visible');
+		$('#beanList').append(button);
+		targetButton = $('#' + logicObject.if.length);
+		$('#beanList').find('button').addClass('disabled').attr('disabled', true);
+		console.log(logicObject);
+		return false;
+	}
+
+	//修改主元件
+	function editMainView(that) {
+		// logic
+		var object = logicObject.if[targetItemNum];
+		$('#beanMain').val(object.bean);
+		switch(object.datatype) {
+			case "checked":
+				$('.chk').css('display', 'block');
+				for (var i = 0; i < object.uiValue.length; i++) {
+					$('.chk').find('input[value="' + object.uiValue[i] + '"]').prop('checked', 'checked');
+					$('#beanLogic').val(object.operation);
+				}
+				break;
+			case "string":
+			case "number":
+				$('.ipt').css('display', 'block');
+				$('#beanType').val(object.datatype);
+				if (object.min != undefined && object.min != "") {
+					$('#beanMin').val(object.min);
+				}
+				if (object.max != undefined && object.max != "") {
+					$('#beanMax').val(object.max);
+				}
+				break;	
+			case "select":
+				break;
+		}
+		// view
+		$('#mainItemList').css('height', '300px');
+		$('#mainItemList').css('visibility', 'visible');
+		$('#editMain').addClass('w3-disabled');
+		$('#editMain').attr('disabled', true);
+		$('#delMain').addClass('w3-disabled');
+		$('#delMain').attr('disabled', true);
+		$('#close').html('關閉');
+		$('#beanList').find('button').addClass('disabled').attr('disabled', true);
+	}
+
+	// 刪除主要元件
+	function delMainView(that) {
+		// logic
+		logicObject.if[targetItemNum] = null;
+		targetButton.remove();
+		targetButton = null;
+		$('#beanMain').val(0);
+		$('#beanLogic').val(0);
+		$('#beanType').val(0);
+		$('#beanMin').val('');
+		$('#beanMax').val('');
+		$('.chk').find('input').attr('checked', false);
+		// view
+		$('#editMain').addClass('w3-disabled');
+		$('#editMain').attr('disabled', true);
+		$('#delMain').addClass('w3-disabled');
+		$('#delMain').attr('disabled', true);
+		$('#addMain').removeClass('w3-disabled');
+		$('#addMain').attr('disabled', false);
+		$('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+		console.log(logicObject);
+		return false;
+	}
+
+	// 取消新增主要元件
+	function cancelAdd(that) {
+		// logic
+		if (!targetButton.hasClass('active')) {
+			logicObject.if[targetItemNum] = null;
+			targetButton.remove();
+			targetButton = null;
+		}
+		$('#beanMain').val(0);
+		$('#beanLogic').val(0);
+		$('#beanType').val(0);
+		$('#beanMin').val('');
+		$('#beanMax').val('');
+		$('.chk').find('input').attr('checked', false);
+		// view 
+		$('#mainItemList').css('visibility', 'hidden');
+		$('#mainItemList').css('height', '0');
+		$('#addMain').removeClass('w3-disabled');
+		$('#addMain').attr('disabled', false);
+		$('.mainItem').css('display', 'none');
+		$('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+		console.log(logicObject);
+		return false;
+	}
+
+	// 元件選取 
+	function focusBean(that) {
+		// logic
+		if ($(that).hasClass('active')) {
+			$(that).removeClass('active');
+			targetButton = null;
+			$('#editMain').addClass('w3-disabled');
+			$('#editMain').attr('disabled', true);
+			$('#delMain').addClass('w3-disabled');
+			$('#delMain').attr('disabled', true);
+			$('#addMain').removeClass('w3-disabled');
+			$('#addMain').attr('disabled', false);
+		} else {
+			$(that).parent().find('button').removeClass('active');
+			$(that).addClass('active');
+			targetButton = $(that);
+			$('#editMain').removeClass('w3-disabled');
+			$('#editMain').attr('disabled', false);
+			$('#delMain').removeClass('w3-disabled');
+			$('#delMain').attr('disabled', false);
+			$('#addMain').addClass('w3-disabled');
+			$('#addMain').attr('disabled', true);
+			targetItemNum = parseInt($(that).attr('id')) - 1;
+		}
+	}
+
+	// 新增條件名稱
+	function addName(that) {
+		var func = that.value;
+		logicObject.name = func;
+
+		console.log(logicObject);
+	}
+
+	// 主元件切換 判斷類型
+	function formItemChange(that) {
+		// logic
+		var func = that.value;
+		logicObject.if[targetItemNum].bean = func;
+		// view
+		$('.mainItem').css('display', 'none');
+		if (func == 'checkbox' || func == 'radiobox') {
+			logicObject.if[targetItemNum].datatype = 'checked';
+			$('.chk').css('display', 'block');
+		} else if (func == 'input') {
+			$('.ipt').css('display', 'block');
+		} else if (func == 'select') {
+
+		} else {
+
+		}
+		targetButton.html(func);
+		console.log(logicObject);
+	}
+
+	// 主元件值新增
+	function addMainItemValue(that) {
+		// logic
+		var checked = that.checked;
+		var func = that.value;
+		if (checked) {
+			if (logicObject.if[targetItemNum].uiValue.indexOf(func) == -1) {
+				logicObject.if[targetItemNum].uiValue.push(func);
+			}
+		} else {
+			if (logicObject.if[targetItemNum].uiValue.indexOf(func) > -1) {
+				var site = logicObject.if[targetItemNum].uiValue.indexOf(func);
+				logicObject.if[targetItemNum].uiValue.splice(site, 1);
+			}
+		}
+		// view
+		console.log(logicObject);
+	}
+
+	// 主元件新增物件
+	function addMainLogic(that, type) {
+		// logic
+		var func = that.value;
+		if (type == 'o') { // Checked
+			logicObject.if[targetItemNum].operation = func;
+		} else if (type == 't') { // string \ number
+			logicObject.if[targetItemNum].datatype = func;
+		}
+		
+		// view
+		console.log(logicObject);
+	}
+
+	// 主元件 - 最大最小值
+	function addMinAMax(that, type) {
+		var func = that.value;
+		if (type == 'min') {
+			logicObject.if[targetItemNum].min = func;
+		} else if (type == 'max') {
+			logicObject.if[targetItemNum].max = func;
+		}
+		console.log(logicObject);
+	}
+
+	// 多元件邏輯判斷
+	function editMainEvent(that) {
+		var func = that.value;
+		logicObject.operation = func;
+		console.log(logicObject);
+	}
+
+	// 次元件轉換並新增
+	function itemTempChange(that) {
+		// logic 
+		var func = that.value;
+		var num = logicObject.tar.length;
+		logicObject.tar.push(func);
+		logicObject.evt.push('show');
+		// view
+		var txt = $('#itemTemp :selected').text();
+		var htmlElement = '<div>';
+		htmlElement += '<span class="w3-padding">';
+		htmlElement += (txt || txt);
+		htmlElement += '</span>';
+		htmlElement += '<select class="w3-select w3-border" onchange="addItemEvent(this, ' + num + ')">';
+		htmlElement += '<option value="show">顯示</option>';
+		htmlElement += '<option value="hide">隱藏</option>';
+		htmlElement += '<option value="available">啟用</option>';
+		htmlElement += '<option value="unavailable">不啟用</option>';
+		htmlElement += '<option value="readonly">僅讀取</option>';
+		htmlElement += '</select>';
+		htmlElement += '<strong class="w3-btn w3-red" onclick="deleteItemTemp(this, ' + num + ')">';
+		htmlElement += 'X';
+		htmlElement += '</strong>';
+		htmlElement += '<br>';
+		htmlElement += '</div>';
+		$('#itemTempList').append(htmlElement);
+		$(that).css('display', 'none');
+		$('#addItemTempBtn').css('display', 'inline-block');
+		console.log(logicObject);
+	}
+
+	// 次元件事件修改
+	function addItemEvent(that, tarNum) {
+		//logic
+		var func = that.value;
+		logicObject.evt[tarNum] = func;
+		//view
+		console.log(logicObject);
+	}
+
+	// 最終觸發事件 - 成立
+	function addEvalTrueEvent(that) {
+		//logic
+		var func = that.value;
+		logicObject.eval_true = func;
+		//view
+		console.log(logicObject);
+	}
+
+	// 最終觸發事件 - 不成立
+	function addEvalFalseEvent(that) {
+		//logic
+		var func = that.value;
+		logicObject.eval_false = func;
+		//view
+		console.log(logicObject);
+	}
+
+	// 備註新增
+	function addDesc(that) {
+		// logic
+		var func = that.value;
+		logicObject.desc = func;
+		//view
+		console.log(logicObject);
+	}
+
+	// 次元件事件轉換
+	function eventTempChange(that) {
+		// logic
+		
+		// view
+		var func = that.value;
+		$('.event').css('display', 'none')
+		if (func == '1') {
+			$('#eventStyle').css('display', 'block');
+		} else if (func == '2') {
+			$('#eventDisplay').css('display', 'block');
+		} else if (func == '3') {
+			$('#eventFunction').css('display', 'block');
+		} else if (func == '4') {
+			$('#eventOther').css('display', 'block');
+		}
+	}
+
+	// 新增次元件 - 顯示次元件
+	function addSubItem(that) {
+		// logic 
+		
+		// view
+		$(that).css('display', 'none');
+		$('#itemTemp').val(0);
+		$('#itemTemp').css('display', 'inline-block');
+	}
+
+	// 新增事件 - 顯示事件
+	function addEventTemp(that) {
+		// logic 
+		
+		// view
+		$(that).css('display', 'none');
+		$('#eventTemp').val(0);
+		$('#eventTemp').css('display', 'inline-block');
+	}
+
+	// 顯示事件
+	function addEventSubItem(that) {
+		// logic 
+		
+		// view
+		$('.eventBlock').css('display', 'block');
+	}
+
+	// 新增事件
+	function addEvent() {
+		// logic 
+		
+		// view
+		var htmlElement = ''
+		htmlElement += '<span class="w3-padding" id="event01">';
+		htmlElement += '事件 001';
+		htmlElement += '<strong class="w3-btn w3-red" onclick="deleteItemTemp(this)">';
+		htmlElement += 'X';
+		htmlElement += '</strong>';
+		htmlElement += '</span>';
+		$('#eventTempList').append(htmlElement);
+		$('#addEventTempBtn').css('display', 'inline-block');
+		$('#eventTemp').css('display', 'none');
+		$('.event').css('display', 'none');
+	}
+
+	// 刪除事件 刪除元件
+	function deleteItemTemp(that, tarNum) {
+		// logic 
+		logicObject.tar[tarNum] = null;
+		logicObject.evt[tarNum] = null;
+		// view
+		$(that).parent().remove();
+		console.log(logicObject);
+	}
+
+	// 換頁
+	function nextPage(that, Page) {
+		var point = $(that).parent().parent().parent();
+		$(point).css('display', 'none');
+		$('#myModal' + Page).css('display', 'block');
+	}
+
+	// 送出
+	function submitJson() {
+		// logic
+		for (var i = logicObject.if.length; i >= 0; i--) {
+			if (logicObject.if[i] === null) {
+				logicObject.if.splice(i, 1);
+			}
+		}
+		for (var i = logicObject.tar.length; i >= 0; i--) {
+			if (logicObject.tar[i] === null) {
+				logicObject.tar.splice(i, 1);
+				logicObject.evt.splice(i, 1);
+			}
+		}
+
+		// view
+		// $('#myModal1').css('display', 'none');
+		console.log(logicObject);
+	}
+</script>
+</html>

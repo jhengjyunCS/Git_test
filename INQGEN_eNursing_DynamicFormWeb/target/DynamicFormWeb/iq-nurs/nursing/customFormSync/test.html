@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+</head>
+
+<body>
+    mbnisAPI測試頁...
+    <input type="button" value="顯示儲存物件" onclick="console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[2].itemValue))"/>
+    <label class="pFormItem" data-bean="A-button"></label>
+    <table border="1">
+        <tr>
+            <td>A-B1</td>
+            <td>A-B2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="pFormItemGroup" data-bean="A">
+            <td class="pFormItem" data-bean="A-B1"></td>
+            <td>
+                <div class="pFormItemGroup" data-bean="A-B2">
+                    <table border="1">
+                        <tr>
+                            <td>A-B2-C1</td>
+                            <td>A-B2-C2</td>
+                        </tr>
+                        <tr>
+                            <td><p class="pFormItem" data-bean="A-B2-C1"/></td>
+                            <td class="pFormItemGroup" data-bean="A-B2-C2"><p class="pFormItem" data-bean="A-B2-C2-D1"/></td>
+                            <td><p class="pFormItem" data-bean="A-B2-C2-button"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td><p class="pFormItem" data-bean="A-B2-button"/></td>
+            <td><p class="pFormItem" data-bean="A-removeButton"/></td>
+        </tr>
+        <tr>
+            <td>1234</td>
+        </tr>
+    </table>
+    <hr/>
+    <hr/>
+    <table border="1">
+        <tr>
+            <td>A-B1</td>
+            <td>A-B2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="pFormItemGroup" data-bean="A">
+            <td class="pFormItem" data-bean="A-B7"></td>
+            <td>
+                <div class="pFormItemGroup" data-bean="A-B2">
+                    <table>
+                        <tr>
+                            <td><p class="pFormItem" data-bean="A-B2-C3"/></td>
+                            <td class="pFormItemGroup" data-bean="A-B2-C2"><p class="pFormItem" data-bean="A-B2-C2-D2"/></td>
+                            <td><p class="pFormItem" data-bean="A-B2-C4-button"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>9876</td>
+        </tr>
+    </table>
+    <!-- <div class="pFormItemGroup" data-bean="A"><p class="pFormItem" data-bean="A-B3"/></div> -->
+    <p class="pFormItem" data-bean="Barthel_0001" data-controlType="select" data-hasother="true,true,false" data-displaymode="vertical" data-controlMode="readOnly2" data-upload="true" data-required="false" data-checKed="false,true,false"></p>
+    <!-- <p class="pFormItem" data-bean="A-B3"></p> -->
+    <label>
+        1<br/>2<br/>3
+    </label>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+dynamicForm.searchParamDF.formType = "PDR1";
+dynamicForm.searchParamDF.frameModel = "xxxx";
+// basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, function(formFrame) {
+//     if (formFrame != null) {
+//         var newVersionNo = parseFloat(formFrame.newVersionNo);
+//         versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+//         appendInit(formFrame.content);
+//     }
+// }, function() {});
+//gForm
+var gFormJS = nursing.createGForm();
+//查詢該sourceId和formType下的所有數據
+//     3ab36859ee644ae4b5af77415e618128
+// 8bb330e61d894a30a7d9608dc9c2fc5c
+gFormJS.searchParamGF.sourceIds = ["formTemplate"];
+gFormJS.searchParamGF.formType = "formTemplate";
+gFormJS.searchParamGF.formId = "7135975e30734999b26429ad34cf43eb";
+gFormJS.searchParamGF.beginDate = "2019-6-4 03:16:04";
+gFormJS.searchParamGF.endDate = "2019-09-31";
+// gFormJS.searchParamGF.beginTotalScore = "1";
+// gFormJS.searchParamGF.endTotalScore = "1";
+gFormJS.searchParamGF.beginCreateTime = "2019-01-01";
+gFormJS.searchParamGF.endCreateTime = "2019-09-31";
+gFormJS.searchParamGF.status = "D";
+// gFormJS.searchParamGF.statusArr = ["Y","N"];
+gFormJS.searchParamGF.modifyUserId = "administrator";
+gFormJS.searchParamGF.modifyUserName = "管理员";
+gFormJS.searchParamGF.beginModifyTime = "2019-01-01";
+gFormJS.searchParamGF.endModifyTime = "2019-09-31";
+gFormJS.searchParamGF.beginVersionNo = 0;
+gFormJS.searchParamGF.endVersionNo = 300;
+gFormJS.searchParamGF.itemCondition = "(gfi2.itemkey='ftFormType' AND gfi2.itemvalue = 'mjAdultForm_V3') OR (gfi2.itemkey='ftFormName' AND gfi2.itemvalue = '入院护理评估-成人')";
+gFormJS.searchParamGF.itemConditionHitCounts = 2;
+// gFormJS.getGFormListWithCondition(gFormJS, successCall2, function() {});
+
+//查詢動態表單
+var call2 = false;
+var thisTimeIsAddTime = true;
+var thisTimeIsDittoTime = false;
+function successCall2(result) {
+    if (call2) return;
+    else call2 = true;
+    $("#tableList").find("tr:has(td)").remove();
+    gForms = result;
+    if (window.console) console.log(gForms);
+}
+
+var dynamicFormTemplate = {
+    formName: "住院患者Barthel指数评定表",
+    formType: "Barthel_01Form",
+    formVersionId: "c0f796e3-94be-4921-bc40-728518f0fb5e",
+    hashItems: {
+
+        Barthel_0001: {
+            click: "console.log(this.id);",
+            controlType: "radio",
+            displayMode: "vertical",
+            hasOther: [false, false, false],
+            maxItemTotalScore: 2147483647,
+            maxTotalScore: 2147483647,
+            name: "Barthel_0001",
+            printShowTitle: false,
+            promptTips: "",
+            required: false,
+            show: true,
+            showTitle: false,
+            textSize: 8,
+            title: "对压迫有关的不适感受能力",
+            totalScoreType: "total",
+            uiDesc: ["可独立进食（10分）", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            uiDescSimple: ["可独立进食（10分）", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            uiScore: ["10", "5", "0"],
+            checked: [true,true,false],
+            uiValue: ["10", "5", "0"]
+        },
+        "A":{
+            "name": "A",
+            "children":"B1,B2",
+            "controlType":"group"
+        },
+        "A-button":{
+            "name": "A-button",
+            "controlType":"button",
+            "uiDesc": ["新增A group"],
+            "show": true,
+            "click": "createFormItemGroup(this,'A')"
+        },
+        "A-removeButton":{
+            "name": "A-removeButton",
+            "controlType":"button",
+            "uiDesc": ["移除A group"],
+            "show": true,
+            "click": "removeFormItemGroup(this,'A')"
+        },
+        "A-B1": {
+            "parent":"A",
+            "name": "A-B1",
+            "controlType": "radio",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "请输入[感觉_对压迫有关的不适感受能力]!",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B1", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiDescSimple": ["可独立进食（10分）", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B2": {
+            "parent":"A",
+            "name": "A-B2",
+            "children":"C1,C2",
+            "controlType":"group"
+        },
+        "A-B2-button":{
+            "name": "A-B2-button",
+            "controlType":"button",
+            "uiDesc": ["新增A-B2 group"],
+            "click": "createFormItemGroup(this,'A-B2')"
+        },
+        "A-B2-C1": {
+            "parent":"A-B2",
+            "name": "A-B2-C1",
+            "controlType": "radio",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "请输入[感觉_对压迫有关的不适感受能力]!",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B2-C1", "需部分帮助", "需极大帮助"],
+            "uiDescSimple": ["A-B2-C1", "需部分帮助", "需极大帮助"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B2-C2": {
+            "parent":"A-B2",
+            "name": "A-B2-C2",
+            "children":"D1",
+            "controlType":"group"
+        },
+        "A-B2-C2-button":{
+            "name": "A-B2-C2-button",
+            "controlType":"button",
+            "uiDesc": ["新增A-B2-C2 group"],
+            "click": "createFormItemGroup(this,'A-B2-C2')"
+        },
+        "A-B2-C2-D1": {
+            "parent":"A-B2-C2",
+            "name": "A-B2-C2-D1",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "AAAAA",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B2-C2-D1", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiDescSimple": ["A-B2-C2-D1", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B3": {
+            "parent":"A",
+            "name": "A-B3",
+            "controlType": "radio",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "请输入[感觉_对压迫有关的不适感受能力]!",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B3", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiDescSimple": ["A-B3", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B7": {
+            "parent":"A",
+            "name": "A-B7",
+            "controlType": "radio",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "请输入[感觉_对压迫有关的不适感受能力]!",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B7", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiDescSimple": ["可独立进食（10分）", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B2-C3": {
+            "parent":"A-B2",
+            "name": "A-B2-C3",
+            "controlType": "radio",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "请输入[感觉_对压迫有关的不适感受能力]!",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B2-C3", "需部分帮助", "需极大帮助"],
+            "uiDescSimple": ["A-B2-C3", "需部分帮助", "需极大帮助"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B2-C4-button":{
+            "name": "A-B2-C4-button",
+            "controlType":"button",
+            "uiDesc": ["新增A-B2-C4 group"],
+            "click": "createFormItemGroup(this,'A-B2-C2')"
+        },
+        "A-B2-C2-D2": {
+            "parent":"A-B2-C2",
+            "name": "A-B2-C2-D2",
+            "controlType": "text",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "AAAAA",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B2-C2-D2", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiDescSimple": ["A-B2-C2-D2", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        },
+        "A-B9": {
+            "parent":"A",
+            "name": "A-B9",
+            "controlType": "radio",
+            "click": "console.log(this.id);",
+            "displayMode": "vertical",
+            "hasOther": [false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "printShowTitle": false,
+            "promptTips": "请输入[感觉_对压迫有关的不适感受能力]!",
+            "required": false,
+            "show": true,
+            "showTitle": false,
+            "textSize": 8,
+            "title": "对压迫有关的不适感受能力",
+            "totalScoreType": "total",
+            "uiDesc": ["A-B9", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiDescSimple": ["A-B9", "需部分帮助（如协助夹菜等）（5分）", "需极大帮助或完全依赖他人（0分）"],
+            "uiScore": ["10", "5", "0"],
+            "uiValue": ["10", "5", "0"]
+        }
+    }
+};
+
+dynamicFormTemplate.items=[];
+for (var key in dynamicFormTemplate.hashItems) {
+    if (dynamicFormTemplate.hashItems.hasOwnProperty(key)){
+        dynamicFormTemplate.items.push(dynamicFormTemplate.hashItems[key]);
+    }
+}
+console.log(dynamicFormTemplate);
+
+var gForm = {};
+gForm.gformItems=[];
+gForm = gFormJS.setGFormItemMap(gForm);
+console.log(gForm.gformItemMap);
+
+
+createElement(dynamicFormTemplate.hashItems, pageReady);
+
+
+function pageReady(){
+    console.log("Ready GO!!");
+    setElementValue_GForm();
+}
+
+
+var json = [
+    {a:"ab"
+    ,b:"aab"
+    ,c:{a:"aaaa"}
+    },
+    {a:"aa"
+    ,b:"aac"
+    ,c:{a:"aaab"}
+    },
+    {a:"aa"
+    ,b:"aaa"
+    ,c:{a:"aaac"}
+    },
+];
+console.log(json);
+
+
+
+console.log([""].sortJson({key:"a",orderby:"index.html"}));
+console.log(json.sortJson({key:"c.a",orderby:"asc"},{key:"b",orderby:"asc"}));
+</script>

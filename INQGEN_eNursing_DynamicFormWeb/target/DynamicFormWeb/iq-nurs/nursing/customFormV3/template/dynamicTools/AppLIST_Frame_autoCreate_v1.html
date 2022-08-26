@@ -1,0 +1,60 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div class="form-group">
+    <div class="col-xs-4 col-md-offset-3 col-md-2">
+        <a onclick="doURL('AppADD.html');">
+            <input type="button" value="新增" /></a>
+        <a href="javascript: return false;" onclick="doURL('AppLIST.html');"><input type="button" value="刷新" /></a>
+    </div>
+</div>
+<table id="tableList" style="border: 1px #41CAC0 solid;text-align: center;">
+    <tr style="border: 1px #41CAC0 solid;text-align: center;">
+        <th rowspan="1" width="60px" style="border: 1px #41CAC0 solid;text-align: center;">
+            &nbsp;
+        </th>
+        <th rowspan="1" width="60px" style="border: 1px #41CAC0 solid;text-align: center;">
+            &nbsp;
+        </th>
+        <th rowspan="1" style="border: 1px #41CAC0 solid;text-align: center;">
+            记录日期
+        </th>
+        {{each $data.items item idx}}
+        <th rowspan="1" style="border: 1px #41CAC0 solid;text-align: center;">
+            {{item.title}}
+        </th>
+        {{/each}}
+        <th style="border: 1px #41CAC0 solid;text-align: center;">
+            总分
+        </th>
+        <th rowspan="1" style="border: 1px #41CAC0 solid;text-align: center;">
+            评估者
+        </th>
+    </tr>
+    <script id="tableListTr_Template" type="text/html">
+        {{'{'+'{'}}each $data dForms idx{{'}'+'}'}}
+            {{'{'+'{'}}set dForm=dForms.dynamicForm{{'}'+'}'}}
+            <tr>
+                <td width="60px" align="center" style="border: 1px #41CAC0 solid;">
+                    <a href="AppUPD.html" onclick="updateForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                        <input type="button" value="編輯" />
+                    </a>
+                </td>
+                <td width="60px" align="center" style="border: 1px #41CAC0 solid;">
+                    <a href="#" onclick="deleteForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                        <input type="button" value="刪除" />
+                    </a>
+                </td>
+                <td align="center" style="border: 1px #41CAC0 solid;">
+                    {{'{'+'{'}}dForm.evaluationTime{{'}'+'}'}}
+                </td>
+		        {{each $data.items item idx}}
+                <td align="center" style="border: 1px #41CAC0 solid;">
+                    <font class="pFormItem" data-bean="{{item.name}}" data-index="{{'{'+'{'}}idx{{'}'+'}'}}" data-formversionid="{{'{'+'{'}}dForm.formVersionId{{'}'+'}'}}"/>
+                </td>
+		        {{/each}}
+                <td align="center" style="border: 1px #41CAC0 solid;">{{'{'+'{'}}@dForm.totalScore{{'}'+'}'}}</td>
+                <td align="center" style="border: 1px #41CAC0 solid;">{{'{'+'{'}}dForm.createUserName{{'}'+'}'}}</td>
+            </tr>
+        {{'{'+'{'}}/each{{'}'+'}'}}
+    </script>
+
+</table>

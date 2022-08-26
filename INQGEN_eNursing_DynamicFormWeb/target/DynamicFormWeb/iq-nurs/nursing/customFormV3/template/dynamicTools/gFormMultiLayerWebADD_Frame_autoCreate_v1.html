@@ -1,0 +1,107 @@
+<style>
+    html,body,#targetForm,#pageResult{
+        width: 100%;
+        height: 100%;
+    }
+    .showFrame{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<style>
+    html,body,td{
+        font-family:微軟正黑體;
+    }
+
+    /* Style the tab */
+    .tab {
+        overflow: hidden;
+        z-index:10;
+        padding-left:20px;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab input{
+        background-color: inherit;
+        background-color: #f1f1f1;
+        float: left;
+        border:solid 1px #ccc;
+        outline: none;
+        cursor: pointer;
+        padding: 5px 10px;
+        transition: 0.3s;
+        position:relative;
+        top:1px;
+        z-index:11;
+        font-weight: bolder;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab input:hover {
+    background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab input.active {
+        background-color: rgb(180,211,253);
+       border-bottom:solid 1px rgb(230,241,253);
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 15px 10px;
+        border: 1px solid #ccc;
+        z-index:9;
+        background-color: rgb(230,241,253);
+    }
+
+    .tab_hidden{
+        display:none;
+    }
+
+    .tab_block{
+        display:block;
+    }
+</style>
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div style="overflow:auto; width: 100%">
+    <table align="center" height="51px">
+        <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <h4 align="center">{{$data.formName}}</h4>
+            </td>
+            <td nowrap width="20%"></td>
+        </tr>
+        <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" value="返回" class="clsButton" onclick="doURL('gFormWebLIST.html')" />
+            </td>
+            <td nowrap width="20%"></td>
+        </tr>
+    </table>
+    <!-- Tab links -->
+    <div class="tab">
+        <input type="button" class="tablinks active" onclick="openCusTab('tab_1')" value="a1" />
+        <input type="button" class="tablinks" onclick="openCusTab('tab_2')" value="b1" />
+    </div>
+    <!-- Tab content -->
+    <div id="tab_1" class="tabcontent">
+        <iframe class="showFrame" frameborder="0" src="" data-src="gFormWebADD.html?multiLevel=a1"></iframe>
+    </div>
+    <!-- Tab content -->
+    <div id="tab_2" class="tabcontent">
+        <iframe id="iFrame_b1" class="showFrame" frameborder="0" src="" data-src="gFormWebADD.html?multiLevel=b1"></iframe>
+    </div>
+    <table align="center" height="51px">
+        <tr>
+            <td nowrap width="20%"></td>
+            <td nowrap align="center">
+                <input type="button" value="返回" class="clsButton" onclick="doURL('gFormWebLIST.html')" />
+            </td>
+            <td nowrap width="20%"></td>
+        </tr>
+    </table>
+</div>

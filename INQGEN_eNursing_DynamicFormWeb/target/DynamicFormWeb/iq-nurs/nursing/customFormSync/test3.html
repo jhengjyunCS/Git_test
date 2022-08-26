@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+</head>
+
+<body>
+    mbnisAPI測試頁...
+    <input type="button" value="顯示儲存物件" onclick="console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[0].itemValue))"/>
+    <label class="pFormItem" data-bean="A1-button"></label>
+    <table border="1">
+        <tr>
+            <td>A1-B1</td>
+            <td>A1-B2</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class="pFormItemGroup" data-bean="A1" forEachBy="級別" orderBy="級別" where="">
+            <td class="pFormItem" data-bean="A1-B1"></td>
+            <td>
+                <div class="pFormItemGroup" data-bean="A1-B2">
+                    <table border="1">
+                        <tr>
+                            <td>A-B2-C1</td>
+                        </tr>
+                        <tr>
+                            <td><p class="pFormItem" data-bean="A1-B2-C1"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td><p class="pFormItem" data-bean="A1-B2-button"/></td>
+        </tr>
+    </table>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+dynamicForm.searchParamDF.formType = "PDR1";
+dynamicForm.searchParamDF.frameModel = "xxxx";
+// basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, function(formFrame) {
+//     if (formFrame != null) {
+//         var newVersionNo = parseFloat(formFrame.newVersionNo);
+//         versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+//         appendInit(formFrame.content);
+//     }
+// }, function() {});
+//gForm
+var gFormJS = nursing.createGForm();
+//查詢該sourceId和formType下的所有數據
+//     3ab36859ee644ae4b5af77415e618128
+// 8bb330e61d894a30a7d9608dc9c2fc5c
+gFormJS.searchParamGF.sourceIds = ["formTemplate"];
+gFormJS.searchParamGF.formType = "formTemplate";
+gFormJS.searchParamGF.formId = "7135975e30734999b26429ad34cf43eb";
+gFormJS.searchParamGF.beginDate = "2019-6-4 03:16:04";
+gFormJS.searchParamGF.endDate = "2019-09-31";
+// gFormJS.searchParamGF.beginTotalScore = "1";
+// gFormJS.searchParamGF.endTotalScore = "1";
+gFormJS.searchParamGF.beginCreateTime = "2019-01-01";
+gFormJS.searchParamGF.endCreateTime = "2019-09-31";
+gFormJS.searchParamGF.status = "D";
+// gFormJS.searchParamGF.statusArr = ["Y","N"];
+gFormJS.searchParamGF.modifyUserId = "administrator";
+gFormJS.searchParamGF.modifyUserName = "管理员";
+gFormJS.searchParamGF.beginModifyTime = "2019-01-01";
+gFormJS.searchParamGF.endModifyTime = "2019-09-31";
+gFormJS.searchParamGF.beginVersionNo = 0;
+gFormJS.searchParamGF.endVersionNo = 300;
+gFormJS.searchParamGF.itemCondition = "(gfi2.itemkey='ftFormType' AND gfi2.itemvalue = 'mjAdultForm_V3') OR (gfi2.itemkey='ftFormName' AND gfi2.itemvalue = '入院护理评估-成人')";
+gFormJS.searchParamGF.itemConditionHitCounts = 2;
+// gFormJS.getGFormListWithCondition(gFormJS, successCall2, function() {});
+
+//查詢動態表單
+var call2 = false;
+
+function successCall2(result) {
+    if (call2) return;
+    else call2 = true;
+    $("#tableList").find("tr:has(td)").remove();
+    gForms = result;
+    if (window.console) console.log(gForms);
+}
+
+var dynamicFormTemplate = {
+    "formVersionId": "18a510e7-d328-45a7-a895-2ffb4cc9b772",
+    "formName": "AAAA",
+    "formType": "AAAA",
+    "formModel": "AAAA",
+    "items": [
+        {
+            "click": "createFormItemGroup(this,'A1');",
+            "controlType": "button",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-button",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-button",
+            "totalScoreType": "total",
+            "uiDesc": ["A1-button"],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        {
+            "controlType": "group",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "children": "A1-B1,A1-B2",
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        {
+            "controlType": "text",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1",
+            "required": false,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B1",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        {
+            "controlType": "group",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B2",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1",
+            "children": "A1-B2-C1",
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B2",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": ["0", "0"],
+            "uiValue": [null]
+        },
+        {
+            "controlType": "radio",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false, true, false, false, false, false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B2-C1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1-B2",
+            "required": false,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B2-C1",
+            "totalScoreType": "total",
+            "uiDesc": ["A1-B2-C1", "test", "1.5% 5L(量_L)", "2.3% (量_L)", "2.5% (量_L)", "25% (量_L)", "7.5% (量_L)", "1.1% (量_L)"],
+            "uiScore": ["0", "0", "0", "0", "0", "0", "0", "0"],
+            "uiValue": ["A1-B2-C1", "test", "1.5% 5L(量_L)", "2.3% (量_L)", "2.5% (量_L)", "25% (量_L)", "7.5% (量_L)", "1.1% (量_L)"]
+        },
+        {
+            "click": "createFormItemGroup(this,'A1-B2');",
+            "controlType": "button",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B2-button",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B2-button",
+            "totalScoreType": "total",
+            "uiDesc": ["A1-B2-button"],
+            "uiScore": [null],
+            "uiValue": [null]
+        }
+    ],
+    "hashItems":
+    {
+        "A1-B2-button":
+        {
+            "click": "createFormItemGroup(this,'A1-B2');",
+            "controlType": "button",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B2-button",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B2-button",
+            "totalScoreType": "total",
+            "uiDesc": ["A1-B2-button"],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "A1":
+        {
+            "controlType": "group",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "children": "A1-B1,A1-B2",
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "A1-B2-C1":
+        {
+            "controlType": "radio",
+            "displayMode": "vertical",
+            "educationNos": [null],
+            "hasOther": [false, true, false, false, false, false, false, false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B2-C1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1-B2",
+            "required": false,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B2-C1",
+            "totalScoreType": "total",
+            "uiDesc": ["A1-B2-C1", "test", "1.5% 5L(量_L)", "2.3% (量_L)", "2.5% (量_L)", "25% (量_L)", "7.5% (量_L)", "1.1% (量_L)"],
+            "uiScore": ["0", "0", "0", "0", "0", "0", "0", "0"],
+            "uiValue": ["A1-B2-C1", "test", "1.5% 5L(量_L)", "2.3% (量_L)", "2.5% (量_L)", "25% (量_L)", "7.5% (量_L)", "1.1% (量_L)"]
+        },
+        "A1-B1":
+        {
+            "controlType": "text",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B1",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1",
+            "required": false,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B1",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": [null],
+            "uiValue": [null]
+        },
+        "A1-B2":
+        {
+            "controlType": "group",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-B2",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "parent": "A1",
+            "children": "A1-B2-C1",
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-B2",
+            "totalScoreType": "total",
+            "uiDesc": [null],
+            "uiScore": ["0", "0"],
+            "uiValue": [null]
+        },
+        "A1-button":
+        {
+            "click": "createFormItemGroup(this,'A1');",
+            "controlType": "button",
+            "educationNos": [null],
+            "hasOther": [false],
+            "maxItemTotalScore": 2147483647,
+            "maxTotalScore": 2147483647,
+            "name": "A1-button",
+            "otherBackTitle": [null],
+            "otherTitle": [null],
+            "planNos": [null],
+            "printShowTitle": false,
+            "required": true,
+            "show": true,
+            "showTitle": true,
+            "textSize": 8,
+            "title": "A1-button",
+            "totalScoreType": "total",
+            "uiDesc": ["A1-button"],
+            "uiScore": [null],
+            "uiValue": [null]
+        }
+    },
+    "highRisk": 0,
+    "peopleCategory": "adult",
+    "version": 0
+};
+
+dynamicFormTemplate.items=[];
+for (var key in dynamicFormTemplate.hashItems) {
+    if (dynamicFormTemplate.hashItems.hasOwnProperty(key)){
+        dynamicFormTemplate.items.push(dynamicFormTemplate.hashItems[key]);
+    }
+}
+console.log(dynamicFormTemplate);
+
+var gForm = {};
+gForm.gformItems=[];
+gForm = gFormJS.setGFormItemMap(gForm);
+console.log(gForm.gformItemMap);
+
+
+createElement(dynamicFormTemplate.hashItems, pageReady);
+
+
+function pageReady(){
+    console.log("Ready GO!!");
+    setElementValue_GForm();
+}
+</script>

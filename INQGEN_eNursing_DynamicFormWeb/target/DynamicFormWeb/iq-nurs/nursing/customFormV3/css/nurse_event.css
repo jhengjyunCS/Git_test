@@ -1,0 +1,470 @@
+body {
+    font-family: "Arial", "新细明体";
+    font-size: 12pt;
+    color: #000000;
+    background-color: #FFFFFF;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 5px
+}
+
+input:disabled {
+    border: 1px solid #DDD;
+    background-color: #F5F5F5;
+    color: #ACA899;
+}
+
+input {
+    z-index: -1;
+}
+
+select {
+    z-index: -1;
+}
+
+textarea {
+    z-index: -1;
+}
+
+button {
+    z-index: -1;
+}
+
+.etable {
+    font-family: "Arial", "新细明体";
+    font-size: 10pt;
+    background-color: #FFFFFF;
+    border: 1px #3A748F solid;
+    border-collapse: collapse
+}
+
+.etableForm {
+
+    font-size: 8pt;
+    background-color: #FFFFFF;
+    border: 1px #3A748F solid;
+    border-collapse: collapse
+}
+
+.bth {
+    font-family: "Arial", "新细明体";
+    font-size: 10pt;
+    background-image: url(../images/sub_menu/sub_menu_bk.jpg);
+    border: 1px #3A748F solid;
+    border-collapse: collapse
+}
+
+.etd {
+    font-family: "Arial", "新细明体";
+    border: 1px #3A748F solid;
+    font-size: 10pt;
+    padding: 2px
+}
+
+td {
+    font-family: "Arial", "新细明体";
+    border: 0px #3A748F solid;
+    font-size: 10pt;
+    padding: 0px
+}
+
+.etd_executeA {
+    font-family: "Arial", "新细明体";
+    color: #000000;
+    background-color: #FFFFFF;
+    border: 1px #3A748F solid;
+    padding: 2px;
+    font-size: 12pt;
+}
+
+.red_etd_executeA {
+    font-family: "Arial", "新细明体";
+    color: #FF0000;
+    font-weight: bold;
+    background-color: #FFFFFF;
+    border: 1px #3A748F solid;
+    padding: 2px;
+    font-size: 9pt;
+}
+
+.etd_executeB {
+    font-family: "Arial", "新细明体";
+    color: #0000CC;
+    font-size: 9pt;
+    background-color: #E9F1F5;
+    border: 1px #3A748F solid;
+    padding: 2px;
+}
+
+.etd_execute {
+    font-family: "Arial", "新细明体";
+    color: #0000FF;
+    font-size: 10pt;
+    border: 1px #3A748F solid;
+    padding: 2px;
+}
+
+.etd_execute2 {
+    font-family: "Arial", "新细明体";
+    color: #0000FF;
+    border: 1px #3A748F solid;
+    font-size: 10pt;
+    padding: 2px
+}
+
+.etd_executeYellow {
+    font-family: "Arial", "新细明体";
+    color: #0000CC;
+    background-color: #FFFF99;
+    font-size: 9pt;
+    border: 1px #3A748F solid;
+    padding: 2px;
+}
+
+.etd_execute1 {
+    font-family: "Arial", "新细明体";
+    color: #000000;
+    font-size: 9pt;
+    border: 1px #3A748F solid;
+    padding: 2px;
+}
+
+.etd_executeForm {
+
+    color: #000000;
+    font-size: 8pt;
+    border: 1px #3A748F solid;
+    padding: 2px;
+}
+
+.red_etd_executeB {
+    font-family: "Arial", "新细明体";
+    color: #FF0000;
+    font-weight: bold;
+    background-color: #e4e4e4;
+    border: 1px #3A748F solid;
+    padding: 2px;
+    font-size: 9pt;
+}
+
+th {
+    font-family: "Arial", "新细明体";
+    color: #004080;
+    font-size: 10pt;
+    background-color: #D5E4EC;
+    border: 1px #3A748F solid;
+    padding: 2px;
+}
+
+.eth {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: #9999FF;
+    padding: 2px;
+    border: 1px #3A748F solid;
+}
+
+.udth {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: #7DA8B8;
+    padding: 2px;
+
+    noWrap: noWrap;
+}
+
+.udthO {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: red;
+    padding: 2px;
+    border: 1px #3A748F solid;
+
+}
+
+.udthN {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: green;
+    padding: 2px;
+    border: 1px #3A748F solid;
+}
+
+.udthP {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: #0000CC;
+    padding: 2px;
+    border: 1px #3A748F solid;
+}
+
+
+
+.vth {
+    font-family: "Arial", "新细明体";
+    color: #3300FF;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #CCCCFF;
+    padding: 2px;
+}
+
+
+.thLeft {
+    font-family: "Arial", "新细明体";
+    color: #3300FF;
+    font-size: 10pt;
+    background-color: #CCCCFF;
+    text-align: left;
+    font-weight: 700;
+    padding: 2px;
+}
+
+.signth {
+    font-family: "Arial", "新细明体";
+    color: #000000;
+    font-weight: bold;
+    text-align: left;
+    background-color: #FFFFFF;
+    border: 0px #3A748F solid;
+    font-size: 10pt;
+    padding: 0px
+}
+
+.plan {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: #9999FF;
+    padding: 1px;
+    border: 1px #3A748F solid;
+    font-size: 10pt;
+    vertical-align: middle
+}
+
+.planL {
+    font-family: "Arial", "新细明体";
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    background-color: #A8E6FD;
+    padding: 1px;
+    border: 1px #3A748F solid;
+    font-size: 10pt;
+    vertical-align: middle
+}
+
+.nurstr1 {
+    background-color: #D5E4EC;
+    border: 1px #000000 solid;
+    font-size: 12pt;
+    padding: 2px
+}
+
+.nurstr2 {
+    background-color: #E9F1F5;
+    border: 1px #000000 solid;
+    font-size: 10pt;
+    padding: 2px
+}
+
+.nurstrTd2 {
+    background-color: #E9F1F5;
+    border: 0px #000000 solid;
+    font-size: 10pt;
+    padding: 2px
+}
+
+.nurstrMouseOver {
+    background-color: #FFFFCC;
+}
+
+.nursTextGenerally {
+    background-color: #FFFFFF;
+    font-weight: bold;
+}
+
+.nursTexteExceptional {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.fontcolor1 {
+    font-weight: bold;
+    color: #555555;
+    font-size: 10pt;
+}
+
+.fontcolor2 {
+    font-weight: bold;
+    color: #FF0000;
+    font-size: 10pt;
+}
+
+.fontcolor3 {
+    font-weight: bold;
+    color: #0000FF;
+    font-size: 10pt;
+}
+
+.fontPhrase {
+    font-size: 9pt;
+}
+
+.clsActiveDivTagContent {
+    height: 100%;
+    width: 100%;
+    display: block;
+    border: 0px none;
+}
+
+.clsDeactiveDivTagContent {
+    height: 100%;
+    width: 100%;
+    display: none;
+    border: 0px none;
+}
+
+.clsIframeMax {
+    width: 100%;
+}
+
+.clsNumberAlign {
+    text-align: right;
+    font-size: 11pt;
+    color: #000000;
+}
+
+.namefont {
+    font-size: 8pt;
+}
+
+.clsBackgroundGray {
+    background-color: #e4e4e4;
+}
+
+a:link {
+    font-family: "Arial", "新细明体";
+    font-size: 9pt;
+    color: #3300FF;
+    text-decoration: none
+}
+
+a:visited {
+    font-family: "Arial", "新细明体";
+    font-size: 9pt;
+    color: #3300FF;
+    text-decoration: none
+}
+
+a:hover {
+    font-family: "Arial", "新细明体";
+    font-size: 9pt;
+    color: #FF0000;
+    text-decoration: underline
+}
+
+.mainBody {
+    background-color: #FFFFFF;
+    font-family: "Arial", "新细明体";
+    font-size: 9pt;
+    color: #000000
+}
+
+p {
+    font-family: "Arial", "新细明体";
+    font-size: 9pt;
+    text-align: justify;
+    letter-spacing: 1px;
+    word-spacing: 1px
+}
+
+h1 {
+    font-family: "Arial", "新细明体";
+    color: #000099
+}
+
+h2 {
+    font-family: "Arial", "新细明体";
+    color: #000099
+}
+
+h3 {
+    font-family: "Arial", "新细明体";
+    color: #000099;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px
+}
+
+h4 {
+    font-family: "Arial", "新细明体";
+    color: #000099;
+    font-size: 11pt;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px
+}
+
+h5 {
+    font-family: "Arial", "新细明体";
+    color: #FF9900;
+    font-size: 11pt;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px
+}
+
+h6 {
+    font-family: "Arial", "新细明体";
+    color: #000099;
+    font-size: 9pt;
+    margin-top: 1px;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    margin-left: 1px
+}
+
+li {
+    font-family: "Arial", "新细明体";
+    word-spacing: 1px;
+    letter-spacing: 1px
+}
+
+.clsButton {
+    font-family: "Arial", "新细明体";
+    font-size: 9pt;
+    background-image: url(../../../images/table_bk/main_menu_BK.jpg);
+    color: #000000;
+    border: 1px #3A748F solid;
+    cursor: pointer;
+}
+
+.clsTableNormal {
+    font-family: "Arial", "新细明体";
+    font-size: 9pt
+}
+
+.clsTdNormal {
+    font-family: "Arial", "新细明体"
+}
+
+.clsThNormal {
+    font-family: "Arial", "新细明体";
+}

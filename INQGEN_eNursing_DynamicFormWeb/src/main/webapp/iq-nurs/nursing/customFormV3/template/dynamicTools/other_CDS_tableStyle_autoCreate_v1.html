@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="../customFormV3/css/CDS.css?csSvnVersion=">
+<table class="tableType1" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+        	{{each $data.items item idx}}<th>{{item.title}}</th>
+        	{{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>{{each $data.items item idx}}
+            <td>
+                <p class="pFormItem" data-bean="{{item.name}}" data-index="{{'{'+'{'}}idx{{'}'+'}'}}" data-formversionid="{{'{'+'{'}}dForm.formVersionId{{'}'+'}'}}" />
+            </td>
+        {{/each}}</tr>
+    </tbody>
+</table>
+<table class="tableType2" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+        	{{each $data.items item idx}}<th>{{item.title}}</th>
+        	{{/each}}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>{{each $data.items item idx}}
+            <td>
+                <p class="pFormItem" data-bean="{{item.name}}" data-index="{{'{'+'{'}}idx{{'}'+'}'}}" data-formversionid="{{'{'+'{'}}dForm.formVersionId{{'}'+'}'}}" />
+            </td>
+        {{/each}}</tr>
+    </tbody>
+</table>
+
+<!-- 觸發彈出框 -->
+<input type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-blue" value="彈出框">
+<!-- 彈出框（Modal） -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-blue">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    彈出框  標題
+                </h4>
+            </div>
+            <div class="modal-body">
+                我是body
+            </div>
+            <div class="modal-footer">
+                <input type="button" data-dismiss="modal"  class="btn btn-blue"value="關閉">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig 
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<properties resource="tableschema.properties"/>
+	<settings cacheModelsEnabled="true" lazyLoadingEnabled="true" useStatementNamespaces="true" />
+	<!--Gform start-->
+	<sqlMap resource="com/inqgen/nursing/dynamic/form/dao/FormVersionDao.xml" />
+	<sqlMap resource="com/inqgen/nursing/dynamic/form/dao/GFormDao.xml" />
+	<!--Gform end-->
+	<sqlMap resource="com/inqgen/nursing/dynamic/form/dao/FormDao.xml" />
+	<sqlMap resource="com/inqgen/nursing/dynamic/form/dao/FormFrameDao.xml" />
+
+	<sqlMap resource="com/inqgen/nursing/dynamic/form/dao/GFormComparison.xml" />
+</sqlMapConfig>
+   
+

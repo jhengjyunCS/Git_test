@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="gformJndiName" class="java.lang.String">
+        <constructor-arg value="java:comp/env/jdbc/pd06"/>
+    </bean>
+    <bean id="frameJndiName" class="java.lang.String">
+        <constructor-arg value="java:comp/env/jdbc/pd06"/>
+    </bean>
+    <bean id="fileJndiName" class="java.lang.String">
+        <constructor-arg value="java:comp/env/jdbc/pd06"/>
+    </bean>
+    <bean id="schemaJndiMap" class="java.util.LinkedHashMap">
+        <constructor-arg>
+            <map>
+                <entry key="NIS_DP_CTH" value="java:comp/env/jdbc/pd06"/>
+                <entry key="HIS021" value="java:comp/env/jdbc/his_info"/>
+            </map>
+        </constructor-arg>
+    </bean>
+</beans>

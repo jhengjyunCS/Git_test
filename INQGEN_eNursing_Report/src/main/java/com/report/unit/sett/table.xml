@@ -1,0 +1,71 @@
+<TableSchema>
+ <!--   
+   <DataSource name="NSIIS" jndi="java:comp/env/jdbc/NSIIS" schema="VGHTPEVG"/>
+   <DataSource name="CICMS" jndi="java:comp/env/jdbc/CICMSlnx" schema="CICMS"/>
+-->
+  <DataSource name="NSIIS"  schema="VGHTPEVG" driver="com.ibm.db2.jcc.DB2Driver" url="jdbc:db2://127.0.0.1:50000/NSIIS_BR:currentSchema=VGHTPEVG;" userName="db2admin" pwd="db2admin"></DataSource>
+   <DataSource name="CICMS"  schema="CICMS" driver="com.ibm.db2.jcc.DB2Driver" url="jdbc:db2://127.0.0.1:50000/NSIIS_BR:currentSchema=CICMS;" userName="db2admin" pwd="db2admin"></DataSource>
+
+	 
+	 
+  <tables>
+
+    <Table>
+      <dbSource>CICMS</dbSource>
+      <type>Table</type>
+      <name>CICCASE</name>
+    </Table>
+
+    <Table>
+      <dbSource>CICMS</dbSource>
+      <type>Table</type>
+      <name>CICRDPS_0</name>
+    </Table>
+    
+     <Table>
+      <dbSource>CICMS</dbSource>
+      <type>Table</type>
+      <name>CICRDPS</name>
+    </Table>
+
+    <Table>
+      <dbSource>CICMS</dbSource>
+      <type>Table</type>
+      <name>VW_CICPCASEA</name>
+    </Table>
+
+    <Table>
+      <dbSource>CICMS</dbSource>
+      <type>Table</type>
+      <name>VW_CICPCASED</name>
+    </Table>
+    
+     <Table>
+      <dbSource>NSIIS</dbSource>
+      <type>Table</type>
+      <name>NISDDIN</name>
+    </Table>
+
+
+
+
+    
+    
+    <Table>
+      <dbSource>CICMS</dbSource>
+      <type>XmlForm</type>
+      <name>CICDPClose</name>
+      <selectSql>
+          <![CDATA[
+          select b.SOURCEID,a.FDOCID,a.FORMID,a.FORMTYPE,a.EVALUATIONTIME,a.TOTALSCORE,a.FORMVERSIONID,a.USERID,a.USERNAME,a.CREATETIME,a.MODIFYID,a.MODIFYNAME,a.MODIFYTIME,c.ITEMKEY,c.ITEMVALUE,c.OTHERVALUE
+          from
+          GFORM a left join GFORMINDEX b on a.FORMTYPE=b.FORMTYPE and a.FORMID=b.FORMID left join GFORMITEM c on a.FDOCID=c.FDOCID
+          where
+          a.STATUS='Y' and a.FORMTYPE='{FORMTYPE}' and {where}
+          {ORDER}
+          ]]>
+      </selectSql>
+    </Table>
+
+  </tables>
+</TableSchema>

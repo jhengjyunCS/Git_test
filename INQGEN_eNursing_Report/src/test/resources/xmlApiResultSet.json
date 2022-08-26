@@ -1,0 +1,22 @@
+{
+  "result": [
+    {
+      "gformItemMap": {
+        "Group01": {
+          "itemKey": "Group01",
+          "itemValue": "{\"Group01\":{\"0\":{\"ID\":{\"itemValue\":\"11a3d9fe-ccc9-4904-9779-61167103cc79\",\"itemKey\":\"Group01-0-ID\",\"nodeId\":\"Group01-0-ID\"},\"COURSES_ID\":{\"itemValue\":\"TEST001\",\"itemKey\":\"Group01-0-COURSES_ID\",\"nodeId\":\"Group01-0-COURSES_ID\"},\"LABSTAGE\":{\"itemKey\":\"Group01-0-LABSTAGE\",\"nodeId\":\"Group01-0-LABSTAGE\"},\"EGG_FREEZE_TIME\":{\"itemKey\":\"Group01-0-EGG_FREEZE_TIME\",\"nodeId\":\"Group01-0-EGG_FREEZE_TIME\"},\"site\":{\"itemValue\":\"1-1-1-12\",\"itemKey\":\"Group01-0-site\",\"nodeId\":\"Group01-0-site\"},\"topno\":{\"itemValue\":\"1-R\",\"itemKey\":\"Group01-0-topno\",\"nodeId\":\"Group01-0-topno\"}},\"1\":{\"ID\":{\"itemValue\":\"debe035c-f5f3-4c96-b7f4-41fd7767b8c8\",\"itemKey\":\"Group01-1-ID\",\"nodeId\":\"Group01-1-ID\"},\"COURSES_ID\":{\"itemValue\":\"TEST001\",\"itemKey\":\"Group01-1-COURSES_ID\",\"nodeId\":\"Group01-1-COURSES_ID\"},\"LABSTAGE\":{\"itemKey\":\"Group01-1-LABSTAGE\",\"nodeId\":\"Group01-1-LABSTAGE\"},\"EGG_FREEZE_TIME\":{\"itemKey\":\"Group01-1-EGG_FREEZE_TIME\",\"nodeId\":\"Group01-1-EGG_FREEZE_TIME\"},\"site\":{\"itemValue\":\"1-1-1-12\",\"itemKey\":\"Group01-1-site\",\"nodeId\":\"Group01-1-site\"},\"topno\":{\"itemValue\":\"1-R\",\"itemKey\":\"Group01-1-topno\",\"nodeId\":\"Group01-1-topno\"}}}}"
+        }
+      },
+      "gformItems": [
+        {
+          "$ref": "$.result[0].gformItemMap.Group01"
+        }
+      ]
+    }
+  ],
+  "resultMsg": {
+    "code": "000000",
+    "success": true,
+    "message": "获取初始化數據成功"
+  }
+}

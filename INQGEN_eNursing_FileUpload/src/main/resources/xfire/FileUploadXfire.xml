@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- START SNIPPET: services -->
+<beans>
+
+  <service xmlns="http://xfire.codehaus.org/config/1.0">
+     <name>FileUploadService</name>
+     <namespace>http://cs-ehealth.com/FileUploadService</namespace>
+     <serviceClass>com.inqgen.nursing.file.webService.FileUploadService</serviceClass>
+     <implementationClass>com.inqgen.nursing.file.webService.FileUploadServiceImpl</implementationClass>
+  </service>
+  
+  
+</beans>
+<!-- END SNIPPET: services -->

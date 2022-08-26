@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="../../../style/style.css?csSvnVersion=" />
+<link rel="stylesheet" href="../../../plugins/css/fontawesome.min.css?csSvnVersion=" />
+
+<!-- 将被种到#bodyContent的#targetForm里 -->
+<div class="iframe_page">
+    <div class="title between" style="z-index: 999">
+        <div class="flex-end">
+            <h3><i class="fas fa-angle-double-right"></i>{{$data.formName}}</h3>
+        </div>
+        <div class="btnAll">
+            <input type="button" style="width: 100px; color: #fff;" class="btn orange_btn patientDetail" value="暫存" onclick="gFormJS.status = 'N';gFormSave(this, function(rsGForms){
+                    doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+                });
+            ">
+            <input type="button" style="width: 120px; color: #fff;" class="btn green_btn patientDetail" value="儲存" onclick="gFormJS.status = 'Y';gFormSave(this, function(rsGForms){
+                    doURL('gFormWebLIST.html?multiLevel='+multiLevel);
+                });
+            ">
+            <input type="button" style="width: 100px; color: #fff;" class="btn red_btn patientDetail" value="放棄" onclick="doURL('gFormWebLIST.html?multiLevel='+multiLevel);">
+        </div>
+    </div>
+</div>
+
+<div id="showPageDiv">
+{{if $data.hasTab}}
+<!-- 有頁簽 -->
+    <!-- Tab links -->
+    <div class="tab">
+    {{each $data.items item idx}}
+        {{if item.controlType=="tab"}}
+        <input id="btn_{{item.name}}" type="button" class="tablinks{{if idx==0}} active{{/if}}" onclick="openDivTab(this, 'div_{{item.name}}')" value="{{item.title}}" />
+        {{/if}}
+    {{/each}}
+    </div>
+    {{each $data.items tabItem idx}}
+        {{if tabItem.controlType=="tab"}}
+            {{set tabName=tabItem.name}}
+    <!-- Tab content -->
+    <div id="div_{{tabItem.name}}" class="tabcontent">
+        <table class="table table-striped table-bordered" width="100%" cellspacing="0" cellpadding="0">
+            {{each $data.items item idx}}
+            {{if item.tab==tabName}}
+                {{if item.controlType!="group" && item.parent==null && item.parent==null && !(item.isHorFormItem || item.isVerFormItem)}}
+                    {{if item.trStart}}
+            <tr>
+                    {{/if}}
+                    {{if item.controlType!="level" && !item.rowLevel}}
+                <td class="nurstr1 col-1" rowspan="1">{{item.title}}</td>
+                <td class="etd_executeA col-9" colspan="{{item.colspan}}">
+                    <p class="pFormItem" data-bean="{{item.name}}" />
+                </td>
+                    {{else if item.controlType=="level"}}
+                <td class="nurstr1 col-1" rowspan="{{item.rowspan}}" colspan="1">{{item.title}}</td>
+                    {{else if item.controlType!="level"}}
+                <td class="etd_executeA col-9" colspan="{{item.colspan}}">
+                    <p class="pFormItem" data-bean="{{item.name}}" />
+                </td>
+                    {{/if}}
+                    {{if item.trEnd}}
+            </tr>
+                    {{/if}}
+                {{else if item.controlType=="group"}}
+                    {{set childrens=item.children.split(",")}}
+            <tr>
+                <td class="nurstr1 col-1" colspan="3">{{item.name}}</td>
+                <td class="etd_executeA col-9">
+                    <table cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                    {{each childrens children idx2}}
+                                <th>{{$data.hashItems[children].title}}</th>
+                    {{/each}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="pFormItemGroup" data-bean="{{item.name}}">
+                    {{each childrens children idx2}}
+                                <td>
+                                    <p class="pFormItem" data-bean="{{$data.hashItems[children].name}}"/>
+                                </td>
+                    {{/each}}
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="createGroupBtn" type="button" data-parent onclick="createFormItemGroup(this,'{{item.name}}')" value="新增 {{item.name}}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+                {{/if}}
+            {{/if}}
+            {{/each}}
+        </table>
+    </div>
+        {{/if}}
+    {{/each}}
+{{else}}
+    <!-- 沒有頁簽 -->
+    <table class="table table-striped table-bordered" width="100%" cellspacing="0" cellpadding="0">
+    {{each $data.items item idx}}
+        {{if item.controlType!="group" && item.parent==null && !(item.isHorFormItem || item.isVerFormItem)}}
+            {{if item.trStart}}
+        <tr>
+            {{/if}}
+            {{if item.controlType!="level" && !item.rowLevel}}
+            <td class="nurstr1 col-1" rowspan="1">{{item.title}}</td>
+            <td class="etd_executeA col-9" colspan="{{item.colspan}}">
+                <p class="pFormItem" data-bean="{{item.name}}" />
+            </td>
+            {{else if item.controlType=="level"}}
+            <td class="nurstr1 col-1" rowspan="{{item.rowspan}}" colspan="1">{{item.title}}</td>
+            {{else if item.controlType!="level"}}
+            <td class="etd_executeA col-9" colspan="{{item.colspan}}">
+                <p class="pFormItem" data-bean="{{item.name}}" />
+            </td>
+            {{/if}}
+            {{if item.trEnd}}
+        </tr>
+            {{/if}}
+        {{else if item.controlType=="group"}}
+            {{set childrens=item.children.split(",")}}
+        <tr>
+            <td class="nurstr1 col-1" colspan="3">{{item.name}}</td>
+            <td class="etd_executeA col-9">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+            {{each childrens children idx2}}
+                            <th>{{$data.hashItems[children].title}}</th>
+            {{/each}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="pFormItemGroup" data-bean="{{item.name}}">
+            {{each childrens children idx2}}
+                            <td>
+                                <p class="pFormItem" data-bean="{{$data.hashItems[children].name}}"/>
+                            </td>
+            {{/each}}
+                        </tr>
+                        <tr>
+                            <td>
+                                <input class="createGroupBtn" type="button" data-parent onclick="createFormItemGroup(this,'{{item.name}}')" value="新增 {{item.name}}">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        {{/if}}
+    {{/each}}
+    </table>
+{{/if}}
+</div>

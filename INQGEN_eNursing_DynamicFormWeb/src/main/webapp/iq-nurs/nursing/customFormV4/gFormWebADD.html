@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=11;IE=10;IE=9;IE=8;IE=7" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <META http-equiv="Expires" content="Mon, 26 Jul 1997 05:00:00 GMT" />
+    <META http-equiv="Last-Modified" content="Sat, 10 Nov 1997 09:08:07 GMT" />
+    <META http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <META http-equiv="Pragma" content="no-cache" />
+    <link rel="shortcut icon" href="../customFormV3/images/favicon.ico" type="image/x-icon" />
+
+    <title></title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/jquery.form.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/jquery.twzipcode32.beta.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/base64.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/common.js?csSvnVersion="></script>
+
+    <!-- <link rel="stylesheet" href="css/nurse_event.css?csSvnVersion=" id="nurse_event_css" class="defult_UI"> -->
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap-datetimepicker.css?csSvnVersion=">
+    <!-- <link rel="stylesheet" href="../customFormV3/css2/bootstrap.min.css?csSvnVersion=" id="bootstrap_min_css" class="defult_UI"> -->
+    <!-- <link rel="stylesheet" href="../customFormV3/css2/bootstrap-reset.css?csSvnVersion=" id="bootstrap_reset_css" class="defult_UI"> -->
+
+    <link rel="stylesheet" href="../customFormV3/css/dynamicForm.css?csSvnVersion="><!-- 動態表單基礎css -->
+    <!-- 動態表單各家獨立的css -->
+    <link rel="stylesheet" href="../../../style/dynamicForm2/common.css?csSvnVersion="><!-- 通用 -->
+    <link rel="stylesheet" href="../../../style/dynamicForm2/add.css?csSvnVersion="><!-- add專用 -->
+
+    <!-- <script src="../customFormV3/js2/bootstrap.js?csSvnVersion=" id="bootstrap_js" class="defult_UI"></script> -->
+    <script src="../customFormV3/js2/datetimepicker/bootstrap-datetimepicker.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js?csSvnVersion="></script>
+    <!--    <script src="../customFormV3/plugins/canvas_BodyRegion/js/fabric.min.js?csSvnVersion="></script>--><!-- 人形圖-因IE問題改至includeHeadFileWeb.js引用 -->
+    <script src="../customFormV3/plugins/canvas_BodyRegion/js/csCanvas.js?csSvnVersion="></script><!-- 人形圖 -->
+    <link rel="stylesheet" href="../customFormV3/plugins/canvas_BodyRegion/css/csCanvas.css?csSvnVersion="><!-- 人形圖 -->
+
+    <script src="js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="js/includeFootJsWeb.js?csSvnVersion="></script>
+    <!--Add特有區段 start-->
+    <script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+    <!--Add特有程式 end-->
+</head>
+
+<body>
+    <div id="targetForm" class="form-horizontal" role="form" onsubmit="return false;">
+    </div>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/DateTime.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/checkObjectFormat.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/user.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/station.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/patient.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/apiModule.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/test.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/forwardNull.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/process.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<!-- 動態表單各家獨立的js (表單建置前) -->
+<script src="../../../js/dynamicForm2/pageNotReady/common.js?csSvnVersion="></script><!-- 通用 -->
+<script src="../../../js/dynamicForm2/pageNotReady/add.js?csSvnVersion="></script><!-- add專用 -->
+<script>
+//Frame模板讀取來源 (true=本地端, false=資料庫)
+var loadLocalFrame;
+//Frame模板的init程式讀取來源 (true=本地端, false=資料庫)
+var loadLocalFrame_INIT;
+//指定某個formType (beanName)需要改為讀本地端
+var loadLocalFrame_formType;
+
+try{
+  loadLocalFrame = isTestForm;
+  loadLocalFrame_INIT = isTestForm;
+  loadLocalFrame_formType = testFormType;
+  if (isTestForm && isTestForm_byUrl){
+    window.localStorage["gFormWebADD_sourceId"] = loadLocalFrame_formType;
+    window.localStorage["gFormWebADD_formType"] = loadLocalFrame_formType;
+    window.localStorage["gFormWebADD_frameModel"] = "gFormWebADD";
+    window.localStorage["gFormWebADD_frameModel_INIT"] = "gFormWebADD_INIT";
+  }
+}catch(e){
+  console.log("偵測到疑似properties.js未宣告 isTestForm, testFormType, isTestForm_changeLocalStorage");
+  loadLocalFrame = false;
+  loadLocalFrame_INIT = false;
+  loadLocalFrame_formType = "XXX";
+}
+</script>
+
+
+<script>
+var checkObjectFormat = nursing.createCheckObjectFormat();
+
+// eNursing.sendMsg=eNursing.sendMsgWS; //把WebSocket接口改為WebService接口，IE9以下不支援WebSocket
+//取得多層變數 multiLevel
+var multiLevel = nursing.createGForm().getUrlSessionToJson().multiLevel;
+//設定Title
+var headerTitle = window.localStorage["gFormWebADD_headerTitle"+multiLevel];
+//設定此form的sourceId
+var sourceId = window.localStorage["gFormWebADD_sourceId"+multiLevel];
+//設定此form的formType
+var formType = window.localStorage["gFormWebADD_formType"+multiLevel];
+//設定此page的對應功能頁面
+var frameModel = window.localStorage["gFormWebADD_frameModel"+multiLevel];  //AppLIST AppADD  AppUPD  WebLIST WebADD WebPRINT WebUPD
+//設定此page的對應功能頁面程式
+var frameModel_INIT = window.localStorage["gFormWebADD_frameModel_INIT"+multiLevel];  //AppLIST_INIT AppADD_INIT  AppUPD_INIT  WebLIST_INIT WebADD_INIT WebPRINT_INIT WebUPD_INIT
+//設定此page的formId
+var formId = window.localStorage["gFormWebADD_formId"+multiLevel];
+
+//登入者ID
+var userId = window.localStorage["gForm_userId"];
+//登入者姓名
+var userName = window.localStorage["gForm_userName"];
+//版本號
+var versionNo = 0;
+//當前頁面狀態
+var thisPageStatus = "ADD";
+//Add頁面
+var thisTimeIsAddTime = true;
+//是Gform
+var thisTimeIsGform = true;
+//有Ditto資料 (舊表單資料要帶入)
+var thisTimeIsDittoTime = false;
+//要ditto的資料
+var dittoData = [];
+//apiModule清單
+var apis = [];
+
+//user所屬病區
+var userPossessive = window.localStorage["userPossessive"] ? window.localStorage["userPossessive"].split(",") : [];
+//病區mapping
+var userPossessiveMap = window.localStorage["userPossessiveMap"] ? JSON.parse(window.localStorage["userPossessiveMap"]) : {};
+//user所屬群組
+var userPosition = window.localStorage["userPosition"] ? window.localStorage["userPosition"].split(",") : [];
+
+var gForm = null;
+//app--title离线缓存使用
+var gForm_Title= null ;
+
+//人形圖設定資料map key=csName-typeA-typeB  value=properties
+var propCsCanvasMap = {};
+
+//測試區
+// formType = "LIMS_EggThaw";
+// frameModel = "gFormWebADD";
+//測試區 靜態表單
+// $.ajax({url: "frame/gFormWebADD_INIT.html", cache: false, async: false}).done(function( context ) {appendInit(context);}).fail(function(err){console.error("未找到本地端表单模板...");});
+// doStart();
+
+
+//沒有formId代表ADD，有否則是UPD
+if (!formId) {
+    doStart();
+} else {
+    //取得gForm資料 (根據formId)
+    var page_gFormJS = nursing.createGForm();
+    page_gFormJS.searchParamGF.formId = formId;
+    page_gFormJS.searchParamGF.formType = formType;
+    page_gFormJS.searchParamGF.hasContent = true;
+    page_gFormJS.getSingleGForm(page_gFormJS, function(result) {
+        if (window.console) console.log(result);
+        if (window.localStorage["loadEditorFrame_INIT"]){
+            versionNo = 99998;
+            gFormJS.formType = formType;
+            gFormJS.formId = formId;
+            window.localStorage["gForm"+multiLevel] = JSON.stringify(gFormJS);
+            doStart();
+        }else if (result.length==0){
+            alert('查無表單資料!');
+            console.error('查無表單資料!', page_gFormJS);
+            doStart();
+        }else{
+            window.localStorage["gForm"+multiLevel] = JSON.stringify(result[0].gForm);
+            gForm_Title = result[0].title;
+            doStart();
+        }
+    }, function() {});
+}
+
+function doStart() {
+    //以管理介面導入頁面
+    if (window.localStorage["loadEditorFrame_INIT"]) {
+        window.localStorage.removeItem("loadEditorFrame_INIT");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // var loadEditorFrame_INIT_context=JSON.parse(window.localStorage["loadEditorFrame_INIT_context"]);
+        //2022.04.08之後改用
+        var loadEditorFrame_INIT_context = JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_INIT_context"));
+        var newVersionNo = parseFloat(loadEditorFrame_INIT_context.version);
+        versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+        appendInit(loadEditorFrame_INIT_context.content);
+        window.localStorage.removeItem("loadEditorFrame_INIT_context");
+    }
+    //讀取本地端init
+    else if (loadLocalFrame_INIT && formType == loadLocalFrame_formType) {
+        $.ajax({url: "frame/gFormWebADD_INIT.html", cache: false, async: false}).done(function (context) {
+            appendInit(context);
+        }).fail(function (err) {
+            successCall("未找到本地端表单模板...");
+        });
+        // $.ajax({url: "frame/gFormWebADD_INIT.html", cache: false, async: false}).done(function( context ) {appendInit(context);}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }
+    //讀取資料庫init
+    else {
+        frame_init();
+
+        function frame_init() {
+            if (window.console) console.log(nursing);
+            //基础参数
+            var basicParam = nursing.getBasicParam();
+            //動態表單
+            var dynamicForm = null;
+            dynamicForm = nursing.getDynamicForm();
+            //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+            dynamicForm.searchParamDF.formType = formType;
+            dynamicForm.searchParamDF.frameModel = frameModel_INIT;
+
+            //沒有gForm代表是ADD，要取得最新版formFrame
+            if (!window.localStorage["gForm"+multiLevel]) {
+                basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, function (formFrame) {
+                    if (formFrame != null) {
+                        var newVersionNo = parseFloat(formFrame.newVersionNo);
+                        versionNo = (newVersionNo > versionNo) ? newVersionNo : versionNo;
+                        appendInit(formFrame.content);
+                    }
+                }, function () {
+                });
+            }else{
+                versionNo = JSON.parse(window.localStorage["gForm"+multiLevel]).versionNo;
+                dynamicForm.searchParamDF.versionNo = versionNo;
+                basicParam.getDynamicFormFrameByformTypeFrameModelVersionNo(dynamicForm, function(formFrame){
+                    appendInit(formFrame.content);
+                }, function() {});
+            }
+        }
+    }
+}
+
+function appendInit(context){
+    $("body").append(context);
+}
+</script>

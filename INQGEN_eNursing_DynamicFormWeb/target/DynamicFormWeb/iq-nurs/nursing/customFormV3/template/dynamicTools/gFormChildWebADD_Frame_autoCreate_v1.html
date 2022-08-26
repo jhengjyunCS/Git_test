@@ -1,0 +1,46 @@
+<table align="center" height="51px">
+    <tr>
+        <td nowrap width="20%"></td>
+        <td nowrap align="center">
+            <input type="button" id="btnAdd" name="btnAdd" value="新增" class="clsButton" onclick="parent.gFormSave(this, function(rsGForms){
+                sourceId = rsGForms[0].gForm.formId;
+                gFormJS.searchParamGF.sourceId = sourceId;
+                window.localStorage['gFormWebADD_sourceId'+multiLevel] = sourceId;
+                window.localStorage['gFormWebUPD_sourceId'+multiLevel] = sourceId;
+                gFormSave(this, function(rsGForms){
+                    window.localStorage['gFormWebUPD_formId'+multiLevel] = rsGForms[0].gForm.formId;
+                    doURL('gFormWebUPD.html?multiLevel='+multiLevel);
+                });
+            });">
+        </td>
+        <td nowrap width="20%"></td>
+    </tr>
+</table>
+<table width="90%" cellspacing="0" cellpadding="0">
+    {{each $data.items item idx}}
+    <tr style="/**/">
+        <td class="nurstr1">{{item.title}} : </td>
+        <td class="etd_executeA">
+            <p class="pFormItem" data-bean="{{item.name}}" />
+        </td>
+    </tr>
+    {{/each}}
+</table>
+<table align="center" height="51px">
+    <tr>
+        <td nowrap width="20%"></td>
+        <td nowrap align="center">
+            <input type="button" id="btnAdd" name="btnAdd" value="新增" class="clsButton" onclick="parent.gFormSave(this, function(rsGForms){
+                sourceId = rsGForms[0].gForm.formId;
+                gFormJS.searchParamGF.sourceId = sourceId;
+                window.localStorage['gFormWebADD_sourceId'+multiLevel] = sourceId;
+                window.localStorage['gFormWebUPD_sourceId'+multiLevel] = sourceId;
+                gFormSave(this, function(rsGForms){
+                    window.localStorage['gFormWebUPD_formId'+multiLevel] = rsGForms[0].gForm.formId;
+                    doURL('gFormWebUPD.html?multiLevel='+multiLevel);
+                });
+            });">
+        </td>
+        <td nowrap width="20%"></td>
+    </tr>
+</table>

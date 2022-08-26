@@ -1,0 +1,407 @@
+<script>
+</script>
+<link rel="stylesheet" href="../../../TSR/_css/bootstrap.min.css?csSvnVersion=">
+<link rel="stylesheet" href="../../../TSR/_css/fontawesome.min.css?csSvnVersion=">
+<link rel="stylesheet" href="../../../TSR/_css/style.css?csSvnVersion=">
+<!--JS -->
+<script src="../../../TSR/puglin/bootstrap.min.js?csSvnVersion="></script>
+<script src="../../../TSR/js/custom.js?csSvnVersion="></script>
+<script>
+//頁面載入完成
+var alreadySet = false;
+function pageReady(){
+    $("#loadeffect").hide();
+    if (window.console) console.log("頁面載入完成...");
+    if (window.console) console.log(gForms);
+
+    if (!alreadySet){
+        alreadySet = true;
+        //自動選取 醫院別/科別
+        $("#ORG_ID").val(USER.ud_UNIT).change();
+        if (USER.ud_RIGHT==="3" || USER.ud_RIGHT==="4"){
+            $("#ORG_ID").removeAttr("disabled");
+        }else{
+            $("#ORG_ID").attr("disabled", "disabled");
+        }
+    }
+
+    $("#showCounts").val(showCounts);
+
+    //計算並顯示分頁
+    showPage(gForms);
+
+    //住院日期 發病日期
+    $('#sh_IH_DT_start, #sh_IH_DT_end, #sh_ONSET_start ,#sh_ONSET_end').datetimepicker({
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 4,
+        minView: 2,
+        forceParse: 0,
+        language: "zh-TW"
+    }).attr("placeholder", "yyyy-MM-dd");
+
+    //check all
+    $(".checkboxAll").click(function(){
+        console.log($(this).hasClass("checked"))
+        if($(this).hasClass("checked")){
+            $(this).removeClass("checked");
+            $(".checkbox").removeClass("checked");
+        }else{
+            $(this).addClass("checked");
+            $(".checkbox").addClass("checked");
+        }
+    });
+    //checkbox
+    $(".checkbox").click(function(){
+        $(this).toggleClass("checked");
+    });
+}
+
+
+//基础参数
+var basicParam = null;
+//動態表單
+var dynamicForm = null;
+//gForm
+var gFormJS = null;
+
+var gForm = null;
+var gForms = null;
+var completeCount=0;
+
+//每頁顯示筆數
+var showCounts = 10;
+//第n頁
+var pageIndex = 1;
+//共m頁
+var pageTotal = 1;
+
+var dynamicFormTemplate;
+
+//在動態表單都會用到的JS、CSS在這邊一併引入
+includeHead(function(){
+    //在動態表單都會共用的JS程式，在這邊統一執行
+    includeFoot(completeFoot);
+},"default");
+
+//foot運行完了之後再執行
+function completeFoot() {
+    //病患資料
+    patient=nursing.getPatient().getCurrent();
+
+    //基础参数
+    basicParam = nursing.getBasicParam();
+    //動態表單
+    dynamicForm = nursing.getDynamicForm();
+    //gForm
+    gFormJS = nursing.createGForm();
+    gForms = null;
+
+    showCounts = (window.localStorage["showCounts"]) ? window.localStorage["showCounts"] : showCounts;
+    showCounts = parseInt(showCounts);
+
+
+    //依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+    dynamicForm.searchParamDF.formType = formType;
+    dynamicForm.searchParamDF.frameModel = frameModel;
+    if (window.localStorage["loadEditorFrame_Frame"]){//以管理介面導入頁面
+        window.localStorage.removeItem("loadEditorFrame_Frame");
+        //因代碼風險關係自2022.04.08之後已作廢
+        // successCall(JSON.parse(window.localStorage["loadEditorFrame_Frame_context"]));
+        window.localStorage.removeItem("loadEditorFrame_Frame_context");
+        //2022.04.08之後改用
+        successCall(JSON.parse(parent.$("#previewIframe").data("loadEditorFrame_Frame_context")));
+    }else if(loadLocalFrame && formType==loadLocalFrame_formType){//讀取本地端frame
+        $.ajax({url: "frame/gFormAppLIST_Frame.html", cache: false, async: false}).done(function( context ) {successCall({"version":0,"content":context});}).fail(function(err){successCall("未找到本地端表单模板...");});
+    }else{//讀取資料庫frame
+        basicParam.getCurrDynamicFormFrameByformTypeFrameModel(dynamicForm, successCall, function() {});
+    }
+    //查詢formFrame(表單外框)
+    var call = false;
+    function successCall (formFrame) {
+        if (call) return; else call=true;
+        //沒有模板資料
+        if (formFrame==null){
+            $("#targetForm").html('<div class="form-group" ><div class="col-xs-12 col-md-12">表单模板未配对...</div></div>');
+            $("#loadeffect").hide();
+        }else{
+            //將資料庫的formFrame 引入到body裡面的#targetForm
+            $("#targetForm").html('<div id="pageResult">'+formFrame.content+'</div>');
+            successCall3();
+        }
+    }
+    basicParam.getCurrDynamicFormTemplateV3(dynamicForm, createSuccess, function() {});
+
+    //查詢動態表單
+    var callCreateSuccess = false;
+    function createSuccess(dFTemplate){
+        if (callCreateSuccess) return; else callCreateSuccess=true;
+        dynamicFormTemplate = dFTemplate[0].basicParam.dynamicFormTemplate;
+        $(".pFormItem2").each(function() {
+            var bean = getDataset(this).bean;
+            var formItemTemplate = dynamicFormTemplate.hashItems[bean];
+            dynamicForm.createElement(this, formItemTemplate, dynamicFormTemplate.hashItems);
+        });
+
+        //查詢該sourceId和formType下的所有數據
+        var cdt = "{ORG_ID}='"+USER.ud_UNIT+"'";
+        gFormJS.searchParamGF.itemCondition=cdt;
+        gFormJS.searchParamGF.formType = formType;
+        gFormJS.searchParamGF.counts = showCounts;
+        gFormJS.searchParamGF.statusArr = ["Y", "N"];
+        gFormJS.getGFormListWithConditionPlus(gFormJS, successCall2, function() {});
+    }
+
+}
+
+
+//查詢動態表單
+var call2 = false;
+function successCall2 (result) {
+    if (call2) return; else call2=true;
+    $("#tableList tbody").empty();
+    gForms = result;
+    if (window.console) console.log(gForms);
+    successCall3();
+}
+
+function successCall3(){
+    if (++completeCount<2) return;
+    for (var i = 0, len = gForms.length; i < len; i++) {
+        var gForm = gForms[i].gForm.versionNo="9999";
+    }
+    var cxt = template.compile($("#tableListTr_Template").html());
+    var html = cxt(gForms);
+    $("#tableList tbody").append(html);
+
+    //轉譯所有formItemValue為FormItemDesc
+    list_gFormTransefer(pageReady, errorTransefer);
+}
+
+function errorTransefer(err){
+    if (window.console) console.log(err);
+    $("#loadeffect").hide();
+}
+
+//點擊編輯按鈕
+var count_getGFormList = 0;
+function updateForm(that, index) {
+    //記錄當前選擇的 gForm
+    var gForm = gForms[index].gForm;
+    window.localStorage["gFormAppADD_sourceId"+multiLevel] = sourceId;
+    window.localStorage["gFormAppADD_formId"+multiLevel] = gForm.formId;
+    window.localStorage["gForm"+multiLevel] = JSON.stringify(gForm);
+    changeCustomFormPage(that); //跳轉頁面
+}
+
+//點擊刪除按鈕
+var delCounts = 0;
+function deleteForm(that) {
+    console.log("=======deleteForm");
+    var formIds = [];
+    $(".formCheckBox.checked").each(function(){
+        formIds.push($(this).attr("value"));
+    });
+    delCounts = formIds.length;
+    if (!confirm("確定要刪除 "+delCounts+" 筆資料？")){
+        return false;
+    }
+    gFormJS.searchParamGF.sourceId = formType;
+    var isDontConfirm = true;
+    for(var i=0, len=formIds.length; i<len; ++i){
+        gFormJS.formId = formIds[i];
+        gFormJS.deleteGForm(gFormJS, deleteFormComplete, function() {}, isDontConfirm);
+    }
+
+    //刪除 (表單主鍵 oldFormId, sourceId)
+    // var gForm = gForms[index].gForm;
+    // gFormJS.leftJoin(gForm);
+    // gFormJS.searchParamGF.sourceId=formType;
+    // gFormJS.deleteGForm(gFormJS, function() { location.reload() }, function() {});
+}
+
+function deleteFormComplete(){
+    if (--delCounts>0) return;
+    location.reload();
+}
+
+//查詢資料
+function showData(that){
+    //建立條件
+    var cdt = "";
+    var sh_ORG_ID = $("#ORG_ID").val(); //醫院別/科別
+    var sh_PTID = $("#sh_PTID").val(); //身份證字號
+    var sh_PATIENT_ID = $("#sh_PATIENT_ID").val(); //病歷號
+    var sh_PTNAME = $("#sh_PTNAME").val(); //姓名
+    var sh_QC = $("#sh_QC").val(); //QC狀態
+    var sh_IH_DT_start = $("#sh_IH_DT_start").val(); //住院日期起
+    var sh_IH_DT_end = $("#sh_IH_DT_end").val(); //住院日期迄
+    var sh_ONSET_start = $("#sh_ONSET_start").val(); //發病日期起
+    var sh_ONSET_end = $("#sh_ONSET_end").val(); //發病日期迄
+    cdt += (sh_ORG_ID != "" && sh_ORG_ID != "-1") ? "|| {ORG_ID}='"+sh_ORG_ID+"'" : "";
+    cdt += (sh_PTID != "") ? "|| {PTID}='"+sh_PTID+"'" : "";
+    cdt += (sh_PATIENT_ID != "") ? "|| {PATIENT_ID}='"+sh_PATIENT_ID+"'" : "";
+    cdt += (sh_PTNAME != "") ? "|| {PTNAME}='"+sh_PTNAME+"'" : "";
+
+    if (sh_IH_DT_start != "" || sh_IH_DT_end !=""){//如果 住院日期 起訖只有一個為空，帶入預設值
+        sh_IH_DT_start = (sh_IH_DT_start=="") ? "1911-01-01" : sh_IH_DT_start;
+        sh_IH_DT_end = (sh_IH_DT_end=="") ? "3000-01-01" : sh_IH_DT_end;
+    }
+
+    if (sh_ONSET_start != "" || sh_ONSET_end !=""){//如果 發病日期 起訖只有一個為空，帶入預設值
+        sh_ONSET_start = (sh_ONSET_start=="") ? "1911-01-01" : sh_ONSET_start;
+        sh_ONSET_end = (sh_ONSET_end=="") ? "3000-01-01" : sh_ONSET_end;
+    }
+
+    cdt += (sh_IH_DT_start != "") ? "|| {IH_DT} BETWEEN '"+sh_IH_DT_start+"' and '"+sh_IH_DT_end+"'" : "";
+    cdt += (sh_ONSET_start != "") ? "|| {ONSET} BETWEEN '"+sh_ONSET_start+"' and '"+sh_ONSET_end+"'" : "";
+
+    //根據條件查詢數據
+    cdt = (cdt.length>2) ? cdt.substr(2) : cdt;
+    gFormJS.searchParamGF.itemCondition=cdt;
+    gFormJS.searchParamGF.formType = formType;
+    if (sh_QC != ""){
+        gFormJS.searchParamGF.status = sh_QC;
+        delete gFormJS.searchParamGF.statusArr;
+    }else{
+        delete gFormJS.searchParamGF.status;
+        gFormJS.searchParamGF.statusArr = ["Y", "N"];
+    }
+
+    changeDataPage("first");
+}
+
+//換頁
+//type = 首頁  | 末頁  | 上頁 | 下頁 | 指定頁
+//type = first | last | prev | next | index
+function changeDataPage(type, idx){
+    if (type === "first"){
+        pageIndex = 1;
+    }else if (type === "last"){
+        pageIndex = pageTotal;
+    }else if (type === "prev"){
+        if (pageIndex===1){
+            return;
+        }
+        pageIndex -= 1;
+    }else if (type === "next"){
+        if (pageIndex===pageTotal){
+            return;
+        }
+        pageIndex += 1;
+    }else if (type === "index"){ //按下數字
+        pageIndex = parseInt(idx);
+    }else{
+        pageIndex = 1;
+    }
+
+    call2=false;
+    $("#tableList tbody").empty();
+
+    gFormJS.searchParamGF.beginIndex = (pageIndex-1) * showCounts + 1;
+
+    gFormJS.searchParamGF.counts = showCounts;
+    gFormJS.getGFormListWithConditionPlus(gFormJS, successCall2, function() {});
+}
+
+//每頁顯示筆數發生變動
+function showCountsChange(){
+    var newShowCounts = parseInt($("#showCounts").val());
+
+    if (!(/^[0-9][0-9]*$/.test(newShowCounts))){
+        alert("請輸入正整數");
+        return;
+    }
+    if (showCounts==newShowCounts){
+        return;
+    }
+    showCounts = newShowCounts;
+    window.localStorage["showCounts"] = showCounts;
+    changeDataPage("first");
+}
+
+
+
+// //每頁顯示筆數
+// var showCounts = 10;
+// //第n頁
+// var pageIndex = 1;
+// //共m頁
+// var pageTotal = 1;
+//計算並顯示分頁
+function showPage(gForms){
+    var maxPage = 9; //最多max頁(必須是單數)，其餘隱藏
+    var totalCounts = 0; //總筆數
+    console.log("=====showPage=====");
+    var json = {
+        "hidePrevIndex" : false, //低於 maxPage 頁時，被隱藏的頁數以 ".." 顯示，按下此按鈕將顯示第 hidePrevIndex 頁
+        "hideNextIndex" : false, //超出 maxPage 頁時，被隱藏的頁數以 ".." 顯示，按下此按鈕將顯示第 hideNextIndex 頁
+        "pageArr" : [{
+            "index" : 1,    // index (頁碼)
+            "active" : true //是否highlight true | false)
+        }],
+        "pageTotal" : 1
+    };
+    //計算總頁數
+    if (gForms.length==0){
+        pageIndex = 1;
+        pageTotal = 1;
+    }else{
+        totalCounts = parseInt(gForms[0].gForm.totalCounts);
+        pageTotal = parseInt(totalCounts / showCounts);
+        pageTotal += (totalCounts % showCounts !==0) ? 1 : 0;
+    }
+    //計算頁數範圍
+    var start = 1, end = 1;
+    if (pageIndex - parseInt(maxPage/2) <= 1){
+        start = 1;
+    }else{
+        start = pageIndex - parseInt(maxPage/2);
+    }
+    if (pageIndex + parseInt(maxPage/2) >= pageTotal){
+        end = pageTotal;
+    }else{
+        end = pageIndex + parseInt(maxPage/2);
+    }
+    var pageCount = end-start+1;
+    while ((pageCount<maxPage) && (start!==1 || end!==pageTotal)){
+        if (start>1){
+            --start;
+            ++pageCount;
+        }
+        if (end<pageTotal && pageCount<maxPage){
+            ++end;
+            ++pageCount;
+        }
+    }
+    if (start !== 1){
+        json.hidePrevIndex = start-1;
+    }
+    if (end !== pageTotal){
+        json.hideNextIndex = end+1;
+    }
+    json.pageTotal = pageTotal;
+
+    json.pageArr = [];
+    for (var i = start; i<=end; ++i){
+        json.pageArr.push({
+            "index" : i,    // index (頁碼)
+            "active" : pageIndex === i //是否highlight true | false)
+        });
+    }
+
+    //完成設定，開始渲染
+    var cxt = template.compile($("#ul_showPage_Template").html());
+    var html = cxt(json);
+    $("#ul_showPage").html(html);
+
+    //顯示 資料筆數：1 - 10 筆，共 1268 筆
+    $("#font_countFirst").html(parseInt((pageIndex-1) * showCounts +1));
+    var font_countLast = parseInt((pageIndex) * showCounts);
+    $("#font_countLast").html( (font_countLast <= totalCounts) ? font_countLast : totalCounts );
+    $("#font_countTotal").html(totalCounts);
+}
+</script>

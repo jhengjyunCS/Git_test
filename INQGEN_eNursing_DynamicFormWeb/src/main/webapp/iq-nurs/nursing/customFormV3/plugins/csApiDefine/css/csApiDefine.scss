@@ -1,0 +1,590 @@
+@font-face {
+	font-family: "bootstrap-icons";
+	src:         url("../../../../customFormV3/plugins/bootstrap/bootstrap-icons/font/fonts/bootstrap-icons.woff2?8bd4575acf83c7696dc7a14a966660a3") format("woff2"),
+				 url("../../../../customFormV3/plugins/bootstrap/bootstrap-icons/font/fonts/bootstrap-icons.woff?8bd4575acf83c7696dc7a14a966660a3") format("woff");
+}
+
+//工具列
+#divToolBar {
+	overflow: hidden !important;
+
+	.btn {
+		color:       white;
+		height:      24px;
+		margin:      5px 0px 5px 5px;
+		line-height: 12px;
+		padding:     0 6px;
+		width:       auto;
+		//滑入效果
+		&:hover, &:hover.active {
+			background-color: #5779f6;
+		}
+
+		//點擊效果
+		&:active, &.active, &.active:active {
+			background-color: #2453fe;
+		}
+
+		//view / code / ...
+		&.text {
+			margin-left:                -5px;
+			border:                     white 1px solid;
+			border-bottom:              0;
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius:  0;
+
+			&:first-child {
+				margin-left: 5px;
+			}
+
+			label {
+				font-style:    italic;
+				color:         #bfbfbf;
+				display:       unset;
+				margin-bottom: auto;
+				cursor:        pointer;
+			}
+		}
+	}
+}
+
+//節點字串
+#divNodeStr {
+	font-size: 1.0rem;
+	padding:   2px 5px;
+	overflow:  hidden !important;
+}
+
+//jsonViewer
+#divJsonViewer {
+	font-size: 1.3rem;
+	border:    #343A40 1px solid;
+	height:    calc(100% - 42px);
+	padding:   0 5px;
+
+	div {
+		display: inline-block;
+	}
+
+	&[data-type="object"] {
+		&:before {
+			content: " {"
+		}
+
+		&:after {
+			content: "}"
+		}
+	}
+
+	&[data-type="array"] {
+		&:before {
+			content: " ["
+		}
+
+		&:after {
+			content: "]"
+		}
+	}
+
+	.node {
+		display:      block;
+		padding-left: 2em;
+		padding-top:  8px;
+		border-left: 1px solid lightgrey;
+
+		> .btnBar {
+			width: 24px;
+
+			&.expanded, &.collapsed {
+				&:before {
+					display:                 inline-block;
+					font-family:             bootstrap-icons !important;
+					font-style:              normal;
+					font-weight:             normal !important;
+					font-variant:            normal;
+					text-transform:          none;
+					line-height:             1;
+					vertical-align:          -.225em;
+					-webkit-font-smoothing:  antialiased;
+					-moz-osx-font-smoothing: grayscale;
+				}
+			}
+
+			&.expanded:before {
+				content: "\f229";
+			}
+
+			&.collapsed:before {
+				content: "\f231";
+			}
+		}
+
+		.key, .type, .desc, .value {
+			padding: 0 5px;
+			//沒有填值的key, type, desc, value
+			&:empty {
+				background-color: white;
+				color:            gray;
+				font-style:       italic;
+			}
+		}
+
+		.source {
+			padding: 0 5px;
+			//source的method沒有填值
+			&[data-method=''] {
+				background-color: white;
+				color:            gray;
+				font-style:       italic;
+			}
+		}
+
+		//除key之外的屬性
+		.type, .desc, .value, .source, .setting {
+			min-height: 24px;
+			font-size:  1.0rem;
+		}
+
+		//key, type, desc, value
+		.key {
+			min-width: 4em;
+
+			&:empty:after {
+				content: "key值";
+			}
+
+
+			&:before {
+				content: '';
+				//padding-left: 16px;
+			}
+
+			&[data-is-bean]:before {
+				content:       "";
+				display:       inline-block;
+				transform:     rotate(45deg);
+				height:        18px;
+				width:         10px;
+				padding-left:  0;
+				margin-right:  7px;
+				border-bottom: 4px solid #78b13f;
+				border-right:  5px solid #78b13f;
+			}
+
+			&[data-bean-mapping]:after {
+				content: " ->" attr(data-bean-mapping);
+				color:   #78b13f;
+			}
+		}
+
+		.type {
+			min-width: 3em;
+			color:     #a092ec;
+
+			&:empty:after {
+				content: "型態";
+			}
+
+			&[data-value="array"]:after {
+				content:      "[ ]";
+				padding-left: 3px;
+			}
+
+			&[data-value="object"]:after {
+				content:      "{ }";
+				padding-left: 3px;
+			}
+		}
+
+		.desc {
+			min-width:        5em;
+			background-color: #fad6aa;
+
+			&:empty {
+				background-color: #ffffff;
+			}
+
+			&:empty:after {
+				content: "範例值說明"
+			}
+
+
+			&[data-is-check]:before {
+				content: "狀態查核點 ";
+			}
+
+			&[data-is-check-message]:before {
+				content: "狀態查核提示說明點 ";
+			}
+
+			&[data-is-check]:before, &[data-is-check-message]:before {
+				color:            #e4e4e4;
+				font-style:       normal;
+				padding-right:    5px;
+				background-color: #a092ec;
+			}
+
+			&[data-show-ui-value]:after {
+				content:      "-> " attr(data-show-ui-value);
+				padding-left: 3px;
+			}
+		}
+
+		.value {
+			min-width: 3em;
+			color:     #ff8c00;
+
+			&:empty:after {
+				content: "範例值"
+			}
+		}
+
+		.source {
+			min-width: 3em;
+			color:     #a092ec;
+
+			&[data-method]:before {
+				color: #a092ec;
+				background-color: #efefef;
+			}
+
+			&[data-method="local"]:before {
+				content:      "localStorage";
+				padding-left: 3px;
+			}
+
+			&[data-method="form"]:before {
+				content:      "表單元件";
+				padding-left: 3px;
+			}
+			&[data-method="eleId"]:before {
+				content:      "element";
+				padding-left: 3px;
+			}
+
+			&[data-method="fixed"]:before {
+				content:      "固定值";
+				padding-left: 3px;
+			}
+
+			&[data-method="gFormData"]:before {
+				content:      "gFormData";
+				padding-left: 3px;
+			}
+
+			&[data-method="externalData"]:before {
+				content:      "彈出外部資料傳參";
+				padding-left: 3px;
+			}
+
+			&[data-method="urlParameters"]:before {
+				content:      "url傳參";
+				padding-left: 3px;
+			}
+
+			&[data-method="gFormJspUrlParameters"]:before {
+				content:      "gForm.jsp傳參";
+				padding-left: 3px;
+			}
+
+			&[data-value]:after {
+				content:      " -> " attr(data-value);
+			}
+
+			&[data-value='']:after {
+				content:      " -> (empty)";
+				font-style:       italic;
+			}
+			/**method沒填的話，連value也不顯示**/
+			&[data-method='']:before {
+				content: "參數來源";
+			}
+			&[data-method='']:after {
+				content: "";
+			}
+		}
+		.setting {
+			display: none;
+			padding: 0 5px;
+			color: #d5d1ea;
+			background-color: #080808;
+			&:hover {
+				cursor:           pointer;
+				background-color: #454545;
+			}
+		}
+
+		&.editMode > {
+			//可contenteditable的div (不含type，type只能用選的)
+			.key, .desc, .value {
+				-webkit-user-modify: read-write;
+				-moz-user-modify:    read-write;
+				user-modify:         read-write;
+				white-space:         pre-wrap; //contentEditable時，可避免輸入值有&nbsp;<br/>
+				&:hover {
+					cursor:           text;
+					background-color: #eaebf5;
+				}
+			}
+
+			//type, source
+			.type, .source {
+				&:hover {
+					cursor:           pointer;
+					background-color: #eaebf5;
+				}
+			}
+		}
+		/**輸出資料 receiveParam 不顯示參數來源 source**/
+		&.receiveParam > {
+			.source {
+				display: none;
+
+			}
+		}
+		/**調用api方式sendMethod = xmlApi**/
+		&.sendParam.xmlApi {
+			//params > [{}]
+			&:not(:nth-child(1), :nth-child(2)){
+				>.type, >.desc, >.value {
+					display: none;
+				}
+			}
+			//params > [index]
+			&.arrayIndex{
+				>.source {
+					display: none;
+				}
+				//params > [index] > 第二個節點 (value) (因為node之前還有6格節點，所以是 6+2=8)
+				>.node:nth-child(8) {
+					>.desc, >.value {
+						display: inline-block !important;
+					}
+				}
+			}
+			//configFiles
+			&:nth-child(1) {
+				>.value {
+					display: none;
+				}
+				>.setting {
+					display: inline-block;
+					&:before {
+						content: "設定";
+					}
+				}
+			}
+			//params
+			&:nth-child(2) {
+				>.value, >.source {
+					display: none;
+				}
+				>.setting {
+					display: inline-block;
+					&:before {
+						content: "設定";
+					}
+				}
+			}
+		}
+	}
+
+}
+
+//type 下拉選單
+.dropdown-menu, #divJsonViewer .dropdown-menu {
+	display: none;
+
+	&.show {
+		display: block;
+	}
+}
+
+//desc 編輯值域
+#modal_editUiValue {
+	#modal_editUiValue_subTitle {
+		background-color: #fad6aa;
+	}
+
+	#modal_editUiValue_body {
+		> .row {
+			display:         flex;
+			justify-content: space-around;
+		}
+
+		> .row:first-child {
+			background-color: #343a40;
+			color:            white;
+
+			> label {
+				flex:       2;
+				text-align: center;
+				border:     white 1px solid;
+			}
+
+			> #modal_checkType_title {
+				flex: 1;
+			}
+		}
+
+		> .row:not(:first-child) {
+			> .modal_uiValue, > .modal_uiDesc {
+				flex:         2;
+				margin-left:  20px;
+				margin-right: 20px;
+			}
+
+			> .modal_checkType {
+				flex:         1;
+				margin-left:  20px;
+				margin-right: 10px;
+			}
+
+			//border-bottom: #343a40 1px solid;
+			> .modal_uiValue, > .modal_uiDesc, > .modal_checkType {
+				line-height:   37px;
+				text-align:    center;
+				border-radius: 6px;
+				border:        #343a40 1px solid;
+				height:        37px;
+				overflow:      hidden;
+			}
+		}
+	}
+}
+
+//設定參數來源
+#modal_editSource{
+	#modal_editSource_subTitle {
+		background-color: #fad6aa;
+	}
+	#modal_editSource_body {
+
+		> .row {
+			display:         flex;
+			justify-content: space-around;
+		}
+
+		> .row:first-child {
+			background-color: #343a40;
+			color:            white;
+
+			> label {
+				flex:       1;
+				text-align: center;
+				border:     white 1px solid;
+			}
+		}
+
+		> .row:not(:first-child) {
+			//border-bottom: #343a40 1px solid;
+			> .modal_sourceMethod, > .modal_sourceValue, > .modal_sourceValue_localStorage, > .modal_sourceValue_gFormData {
+				flex:         1;
+				margin-right: 20px;
+				line-height:   37px;
+				text-align:    center;
+				border-radius: 6px;
+				border:        #343a40 1px solid;
+				height:        37px;
+				overflow:      hidden;
+			}
+			/**gFormData**/
+			> .modal_sourceValue_localStorage, > .modal_sourceValue_gFormData {
+				line-height: 20px !important;
+				font-size: 0.95rem;
+			}
+		}
+		/**方法**/
+		.modal_sourceMethod {
+			line-height: 20px !important;
+			font-size: 0.95rem;
+		}
+		/**備註**/
+		#modal_editSource_remark {
+			font-weight: bold;
+		}
+	}
+}
+//setting 設定 - configFiles, params
+#modal_clickSetting_configFiles, #modal_clickSetting_params {
+	.modal-title {
+		background-color: #fad6aa;
+	}
+
+	.modal-body {
+		> .row {
+			display:         flex;
+			justify-content: space-around;
+		}
+
+		> .row:first-child {
+			background-color: #343a40;
+			color:            white;
+
+			> label {
+				flex:       2;
+				text-align: center;
+				border:     white 1px solid;
+			}
+		}
+
+		> .row:not(:first-child) {
+			>.modal_value, >.modal_file_extension, >.modal_key, >.modal_type, >.modal_format {
+				flex: 1;
+				margin-left:  20px;
+				margin-right: 20px;
+				line-height:   37px;
+				text-align:    center;
+				height:        37px;
+				overflow:      hidden;
+			}
+
+			>.modal_value, >.modal_key, >.modal_type, >.modal_format {
+				border-radius: 6px;
+				border:        #343a40 1px solid;
+			}
+			>.modal_type {
+				line-height: 20px !important;
+				font-size: 0.95rem;
+			}
+		}
+	}
+}
+
+//jsonViewer
+#divJsonEditor {
+	height:   calc(100% - 42px);
+	overflow: hidden;
+
+	.CodeMirror {
+		height: 100%;
+	}
+}
+.modal-body{
+	.CodeMirror {
+		height: 65vh;
+	}
+}
+.CodeMirror-vscrollbar {
+	&::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+		background-color: #F5F5F5;
+		border-radius: 10px;
+	}
+	&::-webkit-scrollbar {
+		width: 12px;
+		background-color: #F5F5F5;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+		background-color: #000;
+	}
+	scrollbar-color: #000 #F5F5F5;
+	&::-webkit-scrollbar-track {
+		border-radius: 0 !important;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 0 !important;
+	}
+}

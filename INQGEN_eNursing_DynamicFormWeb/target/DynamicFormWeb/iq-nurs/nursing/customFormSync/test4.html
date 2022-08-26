@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>條件連動式-測試頁</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap-datetimepicker.css?csSvnVersion=">
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap.min.css?csSvnVersion=">
+    <link rel="stylesheet" href="../customFormV3/css2/bootstrap-reset.css?csSvnVersion=">
+
+    <script src="../customFormV3/js2/bootstrap.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/bootstrap-datetimepicker.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+</head>
+
+<body>
+    條件連動式-測試頁...
+    <input type="button" value="顯示儲存物件" onclick="console.log(dynamicFormSave_getItems(this));console.log(JSON.stringify(dynamicFormSave_getItems(this)));console.log(JSON.parse(dynamicFormSave_getItems(this)[2].itemValue))"/>
+    <!-- <p class="pFormItem" data-bean="rdo" data-uidescitem="1,2,6"></p>
+    <p class="pFormItem" data-bean="rdo" data-uidescitem="3,4,5"></p> -->
+    <p class="pFormItem" data-bean="chk" data-uidescitem="1,2,6"></p>
+    <p class="pFormItem" data-bean="chk" data-uidescitem="3,4,5"></p>
+    <p class="pFormItem" data-bean="rdo" data-ControlType="text"></p>
+    <div>
+        <p class="pFormItem" data-bean="Birthday"></p>
+        <p class="pFormItem" data-bean="A"></p>
+        <p class="pFormItem" data-bean="B" data-controltype="checkbox" data-uidesc="1,2" data-uiValue="1,2"></p>
+        <p class="pFormItem" data-bean="C"></p>
+    </div>
+    <div class="parentD">
+        parentD
+        <p class="pFormItem" data-bean="D"></p>
+        <div class="childrenE">
+            childrenE
+            <p class="pFormItem" data-bean="E"></p>
+        </div>
+    </div>
+    <!-- <p class="pFormItem" data-bean="A-B3"></p> -->
+    <label>
+    </label>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/DateTime.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/user.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/station.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/patient.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/test.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/forwardNull.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/process.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+//基础参数
+var basicParam = nursing.getBasicParam();
+//動態表單
+var dynamicForm = null;
+dynamicForm = nursing.getDynamicForm();
+//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+dynamicForm.searchParamDF.formType = "PDR1";
+dynamicForm.searchParamDF.frameModel = "xxxx";
+var gFormJS = nursing.createGForm();
+var dynamicFormTemplate = {"formVersionId":"089ad061-2203-482e-8da1-accfe6aa22c0","formName":"test","formType":"test","formModel":"test","items":[{"controlType":"date","dontDitto":false,"typeFormat":"{\"date\":{\"format\":\"yyyy-mm-dd\",\"weekStart\":1,\"todayBtn\":1,\"autoclose\":1,\"todayHighlight\":1,\"startView\":2,\"minView\":2,\"forceParse\":0,\"language\":\"zh-TW\"}}","educationNos":[null],"hasOther":[false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Birthday","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"promptTips":"请输入出生年","required":true,"show":true,"showTitle":false,"textSize":8,"title":"出生日期","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"radio","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"rdo","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"rdo","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},{"controlType":"checkbox","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"chk","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"chk","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"A","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"A","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"B","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"B","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"C","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"C","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"D","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"D","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"E","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"E","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]}],"hashItems":{"Birthday":{"controlType":"date","dontDitto":false,"typeFormat":"{\"date\":{\"format\":\"yyyy-mm-dd\",\"weekStart\":1,\"todayBtn\":1,\"autoclose\":1,\"todayHighlight\":1,\"startView\":2,\"minView\":2,\"forceParse\":0,\"language\":\"zh-TW\"}}","educationNos":[null],"hasOther":[false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Birthday","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"promptTips":"请输入出生年","required":true,"show":true,"showTitle":false,"textSize":8,"title":"出生日期","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"D":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"D","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"D","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"rdo":{"controlType":"radio","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"rdo","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"rdo","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},"E":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"E","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"E","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"chk":{"controlType":"checkbox","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"chk","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"chk","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},"A":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"A","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"A","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"B":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"B","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"B","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"C":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"C","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"C","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]}},"highRisk":0,"peopleCategory":"adult","version":0};
+
+console.log(dynamicFormTemplate);
+
+var gForm = {};
+gForm.gformItems=[];
+gForm = gFormJS.setGFormItemMap(gForm);
+console.log(gForm.gformItemMap);
+
+
+createElement(dynamicFormTemplate.hashItems, pageReady);
+
+
+function pageReady(){
+    console.log("Ready GO!!");
+    setElementValue_GForm();
+}
+
+
+
+
+
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "checked",  //number / string /checked
+            "bean" : "chk",
+            "uiValue" : ["1","2","4"],
+            "operator": "&&",
+        },
+        {
+            "datatype": "checked",
+            "bean" : "chk",
+            "uiValue" : ["1","2","5"],
+            "operator": "&&",
+        }
+    ],
+    "tar" : ["C","B","A"],
+    "parents" : [""],
+    "childrens" : [""],
+    "evt" : ["show","hide","show"],
+    "runMode" : "auto",  //auto / onlyTrue / onlyFalse
+    // "evt" : ["show","hide","show"],
+    "operator": "||",
+    "eval_true" : "",
+    "eval_false" : ""
+});
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "checked",  //number / string /checked
+            "bean" : "chk",
+            "uiValue" : ["2","5"],
+            "operator": "||",
+        }
+    ],
+    "tar" : ["B"],
+    "parents" : [""],
+    "childrens" : [""],
+    "evt" : ["show"],
+    "runMode" : "auto",  //auto / onlyTrue / onlyFalse
+    "operator": "||",
+    "eval_true" : "alert(456)",
+    "eval_false" : "alert(4566)"
+});
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "checked",  //number / string /checked
+            "bean" : "chk",
+            "uiValue" : ["1","5"],
+            "operator": "&&",
+        }
+    ],
+    "tar" : ["A"],
+    "parents" : [""],
+    "childrens" : [""],
+    "evt" : ["show"],
+    "runMode" : "auto",  //auto / onlyTrue / onlyFalse
+    "operator": "||",
+    "eval_true" : "alert(789)",
+    "eval_false" : "alert(7899)"
+});
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "checked",  //number / string /checked
+            "bean" : "rdo",
+            "uiValue" : ["2"],
+            "operator": "&&",
+        }
+    ],
+    "tar" : ["#E"],
+    "parents" : [""],
+    "childrens" : [""],
+    "evt" : ["show"],
+    "runMode" : "onlyFalse",  //auto / onlyTrue / onlyFalse
+    "operator": "||",
+    "eval_true" : "",
+    "eval_false" : ""
+});
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "number",
+            "bean" : "rdo",
+            "min": "1",
+            "max": "3",
+        }
+    ],
+    "tar" : ["#D","#E"],
+    "parents" : ["",""],
+    "childrens" : ["",""],
+    "evt" : ["show","hide"],
+    "runMode" : "onlyTrue",  //auto / onlyTrue / onlyFalse
+    "operator": "||",
+    "eval_true" : "",
+    "eval_false" : ""
+});
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "number",
+            "bean" : "rdo",
+            "min": "4",
+            "max": "6",
+        }
+    ],
+    "tar" : ["#D","#E"],
+    "parents" : ["",""],
+    "childrens" : ["",""],
+    "evt" : ["show","show"],
+    "runMode" : "onlyTrue",  //auto / onlyTrue / onlyFalse
+    "operator": "||",
+    "eval_true" : "",
+    "eval_false" : ""
+});
+showRules.push({
+    "ifs" : [
+        {
+            "datatype": "number",
+            "bean" : "rdo",
+            "min": "7",
+            "max": "9",
+        }
+    ],
+    "tar" : ["#D","#E"],
+    "parents" : ["",""],
+    "childrens" : ["",""],
+    "evt" : ["hide","hide"],
+    "runMode" : "onlyTrue",  //auto / onlyTrue / onlyFalse
+    "operator": "||",
+    "eval_true" : "",
+    "eval_false" : ""
+});
+//建置物件的顯示規則表索引
+ruleTools.showRules_compiler();
+//依照現行所有物件狀態判斷並執行顯示規則
+ruleTools.showRules_runAll();
+
+
+
+
+
+
+</script>

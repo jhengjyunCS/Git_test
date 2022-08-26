@@ -1,0 +1,26 @@
+.csCanvasHorizontal{
+	display: inline-block;
+}
+.csCanvasLeft{
+	display: inline-block;
+	vertical-align: top;
+}
+.csCanvasRight{
+	display: inline-block;
+	vertical-align: top;
+}
+.csCanvasBeanDiv_template{
+	display: none;
+}
+.csCanvasBeanOther{
+	display:  none;
+}
+.csCanvasBeanOther.csCanvasShow{
+	display: inline-block;
+}
+.csCanvas-hide{
+	display: none;
+}
+.canvas-container{
+	display: inline-block;
+}

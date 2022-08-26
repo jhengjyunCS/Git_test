@@ -1,0 +1,76 @@
+
+<table style="border-collapse: collapse" align=center>
+    <tr>
+        <td nowrap>
+            <h4 align="center">{{$data.formName}}</h4>
+        </td>
+    </tr>
+    <tr>
+        <td align="left">
+            <form action="start" method="post" >
+                <a onclick="doURL('gFormWebLIST.html');">
+                    <input type="button" value="查询" class="clsButton" />
+                </a>
+                <a onclick="doURL('gFormWebADD.html');">
+                    <input type="button" value="新增" class="clsButton" />
+                </a>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<table id="tableList" class="etable">
+    <tr>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>创建日期</th>
+        {{each $data.items item idx}}
+        <th>
+            {{item.title}}
+        </th>
+        {{/each}}
+        <th>评估者</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+    </tr>
+</table>
+
+
+<script id="tableListTr_Template" type="text/html">
+    {{'{'+'{'}}each $data gForms idx{{'}'+'}'}}
+        {{'{'+'{'}}set gForm=gForms.gForm{{'}'+'}'}}
+        <tr>
+            <td class="etd" align=center>
+                <a href="#" onclick="updateForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="編輯" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="deleteForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                {{'{'+'{'}}gForm.createTime{{'}'+'}'}}
+            </td>
+            {{each $data.items item idx}}
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="{{item.name}}" data-index="{{'{'+'{'}}idx{{'}'+'}'}}" data-formversionid="{{'{'+'{'}}gForm.formVersionId{{'}'+'}'}}"/>
+            </td>
+            {{/each}}
+            <td class="etd" align=center>
+                {{'{'+'{'}}gForm.modifyUserName{{'}'+'}'}}
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="updateForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="編輯" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="deleteForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    {{'{'+'{'}}/each{{'}'+'}'}}
+</script>

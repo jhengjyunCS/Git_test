@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+    <title>同步作業</title>
+    <script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/common.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+    <script src="js/index.js?csSvnVersion="></script>
+    <style type="text/css">
+    table {
+        width: 100%;
+    }
+    .custombox input[type="checkbox"] {
+        width: auto;
+        display: none;
+        box-sizing: border-box;
+    }
+    .custombox label {
+        position: relative;
+        cursor: pointer;
+        padding-left: 30px;
+        margin-right: 5px;
+        text-align: left;
+    }
+    .custombox label:before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 3px;
+        border: 1px solid #888888;
+        background-color: #fff;
+    }
+    .custombox input[type="checkbox"]:disabled + label {
+        color: #d9d9d9;
+    }
+    .custombox input[type="checkbox"]:disabled + label:before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 3px;
+        border: 1px solid #d9d9d9;
+        background-color: #f2f2f2;
+    }
+    .custombox input[type="checkbox"]:checked + label::after {
+            content: "";
+            position: absolute;
+            left: 13px;
+            width: 9px;
+            height: 24px;
+            top: 25%;
+            transform: translateY(-50%) rotate(36deg);
+            border-radius: 3px;
+            border: 4px solid #ff0000;
+            border-top: none;
+            border-left: none;
+    }
+    .hide {
+        display: none;
+    }
+    .state2_1 td, .table_left .state2_2 td, .state3_1 td, .state4_1 td{
+        border-top: dashed 1px #A5A5A5;
+    }
+    .state0 .td1_1{
+        font-size: 17px;
+        width: 30px;
+        vertical-align: middle;
+    }
+    .state0 .td1_2{
+        font-size: 17px;
+        width: 500px;
+        vertical-align: middle;
+    }
+    .state1_1 td{
+        width: 280px;
+        height: 70px;
+        vertical-align: top;
+    }
+    .state1_1 .td1{
+        width: 350px;
+        height: 70px;
+        vertical-align: top;
+    }
+    .state1_1 p{
+        margin: 0;
+    }
+    .state2_1 td, .state3_1 td{
+        height: 30px;
+    }
+    .state4_1 td{
+        height: 75px;
+    }
+    .state2_2 td, .state3_2 td, .state4_2 td{
+        height: 120px;
+    }
+    .w3-check{
+        width:24px;
+        height:24px;
+        position:relative;
+    }
+    .w3-button{
+        border:none;
+        display:inline-block;
+        padding:8px 16px;
+        vertical-align:middle;
+        overflow:hidden;
+        text-decoration:none;
+        color:inherit;
+        background-color:inherit;
+        text-align:center;
+        cursor:pointer;
+        font-weight: bold;
+        white-space:nowrap
+    }
+    .w3-button{
+        -webkit-touch-callout:none;
+        -webkit-user-select:none;
+        -khtml-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none
+    }
+    .w3-border{
+        border:1px solid #ccc!important
+    }
+    .w3-button:disabled{
+        cursor:not-allowed;
+        opacity:0.3
+    }
+    .w3-button:hover{
+        color:#000!important;
+        background-color:#ccc!important
+    }
+    .w3-blue, .w3-hover-blue:hover{
+        color:#fff!important;
+        background-color:#2196F3!important
+    }
+    .w3-light-blue, .w3-hover-light-blue:hover{
+        color:#000!important;
+        background-color:#87CEEB!important
+    }
+    .w3-red,.w3-hover-red:hover{
+        color:#fff!important;
+        background-color:#f44336!important
+    }
+    .w3-lime,.w3-hover-lime:hover{
+        color:#000!important;
+        background-color:#cddc39!important
+    }
+    .w3-pale-green {
+        color: #000!important;
+        background-color: #98FB98!important
+    }
+    .optional {
+        font-size: 8pt;
+        text-decoration: underline;
+        color: #f2f2f2;
+        cursor: pointer;
+    }
+    .optional:hover {
+        color: #a2a2a2;
+    }
+    .optional.active {
+        color: red;
+    }
+    textarea {
+        width: 100%;
+        height: 100px;
+    }
+    /*遮挡部分CSS*/
+    #showAddUpdModelDiv {
+        height: 100%;
+        width: 100%;
+        /*// 页面定位到最上面*/
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: silver;
+        /*// 透明度这样能看到后面的内容效果真实一些*/
+        opacity: 0.8;
+        /*// 遮挡级别最好高一些，防止别的内容会突然出现在你的弹出层上面，这就尴尬了。*/
+        z-index: 99;
+    }
+
+    /*// 弹出框内容CSS*/
+    #showAddUpdModel {
+        width: 80%;
+        height: 80%;
+        background-color: #222222;
+        border-radius: 10px;
+        padding: 15px;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        z-index: 99;
+        overflow: auto;
+    }
+
+    .dynamicFormTable {
+        margin-top: 5px;
+        border-collapse: collapse !important;
+        border: solid 1px #e5e5e5 !important;
+        background-color: #222222 !important;
+    }
+
+    .dynamicFormTable tr {
+        border-collapse: collapse;
+        background-color: #222222;
+        font-color: #ffffff;
+    }
+
+    .dynamicFormTable tr th {
+        border-collapse: collapse !important;
+        border: solid 1px #e5e5e5 !important;
+        background-color: #555555 !important;
+        color: #66FF66 !important;
+        padding: 1px !important;
+        margin: 1px !important;
+        text-align: center !important;
+    }
+
+    .dynamicFormTable tr td {
+        border-collapse: collapse !important;
+        border: solid 1px #e5e5e5 !important;
+        background-color: #222222 !important;
+        color: #e2e2e2 !important;
+        padding: 1px;
+        margin: 1px !important;
+        cursor: pointer;
+    }
+
+    .dynamicFormTable tr:hover td,
+    .dynamicFormTable tr:hover td {
+        background-color: #555555 !important;
+    }
+
+    .search {
+        width: 50%;
+        padding: 6px;
+        margin-top: 8px;
+        font-size: 17px;
+        border: none;
+    }
+    tr.active td {
+        background-color: #990036 !important;
+    }
+    .syncMsg {
+        line-height: 8px;
+    }
+    .differenceItem {
+        line-height: 1px;
+    }
+    .differenceItem thead th {
+        text-align: left;
+        font-weight: bold;
+        color: #6559EB;
+        border-bottom:3px #82FFFF solid;
+    }
+    </style>
+    <script type="text/javascript">
+        var propFormTypeArr = ["propAPIListForm", "propCsCanvas"];
+        var propNameNode = {
+            "propAPIListForm": {
+                "name1": "gformItemMap.apiName.itemValue",
+                "name2": "gformItemMap.apiDescription.itemValue"
+            },
+            "propCsCanvas": {
+                "name1": "gformItemMap.csName.itemValue",
+                "name2": "gformItemMap.searchParam.itemValue"
+            }
+        };
+        var propSearchItemName = {
+            "propAPIListForm": ["apiName"],
+            "propCsCanvas": ["searchParam"]
+        };
+        $().ready(function(){
+            var urlLocal = "";
+            var urlLocal_gform = "";
+            var urlServer = "";
+            var urlServer_gform = "";
+            // var urlLocal = window.localStorage["sync_urlLocal"];
+            // var urlLocal_gform = window.localStorage["sync_urlLocal_gform"];
+            // var urlServer = window.localStorage["sync_urlServer"];
+            // var urlServer_gform = window.localStorage["sync_urlServer_gform"];
+            if (urlLocal){
+                $("#urlLocal").val(urlLocal);
+            }else{
+                $("#urlLocal").val(const_webserviceUrl);
+            }
+            if (urlLocal_gform){
+                $("#urlLocal_gform").val(urlLocal_gform);
+            }else{
+                $("#urlLocal_gform").val(const_gformServiceUrl);
+            }
+            if (urlServer){
+                $("#urlServer").val(urlServer);
+            }else{
+                $("#urlServer").val(const_webserviceUrl);
+            }
+            if (urlServer_gform){
+                $("#urlServer_gform").val(urlServer_gform);
+            }else{
+                $("#urlServer_gform").val(const_gformServiceUrl);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td colspan="2" align="right"><input class="w3-button w3-border w3-light-blue w3-hover-blue" type="button" value="清除MBNIS緩存" onclick="eNursing.clearMbnisStorage(function(rs){alert(rs.resultMsg.message);});" /></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table_left">
+                    <tr class="state0">
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td class="td1_1" colspan="1">serviceUrl:</td>
+                                    <td class="td1_2" colspan="1"><input id="urlLocal" type="text" value="ws://127.0.0.1:8080/MBNIS/websocket" style="width: 100%; height: 30px; font-size:18px;" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1_1" colspan="1">gformServiceUrl:</td>
+                                    <td class="td1_2" colspan="1"><input id="urlLocal_gform" type="text" value="http://127.0.0.1:8080/PD08/services/DynamicFormService" style="width: 100%; height: 30px; font-size:18px;" /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="state1_1">
+                        <td class="td1"><label>1-1.(Local) 取得同步參數-差異同步</label></td>
+                        <td><input class="w3-button w3-border w3-light-blue w3-hover-blue" type="button" value="取得參數" onclick="showFormType('Local');" /></td>
+                    </tr>
+                    <tr class="state1_2">
+                        <td colspan="2"><textarea style="height: 423px;" id="getTareaSyncParamLocal"></textarea></td>
+                    </tr>
+                    <tr class="state4_1">
+                        <td class="td1"><label>4.(Local) 依照路徑上的檔案同步資料</label>
+                            <br />
+                            <br />
+                            <input id="fileSyncData" type="file" multiple/>
+                        </td>
+                        <td>
+                            <input type="button" class="w3-button w3-border w3-light-blue w3-hover-blue" value="同步資料" onclick="getAjaxSyncData()" />
+                            <br/>
+                            <br/>
+                            <input type="checkbox" id="chkPasteToTextarea" onclick="showPasteToTextarea(this)"/>
+                            <label for="chkPasteToTextarea">不使用檔案上傳</label>
+                        </td>
+                    </tr>
+                    <tr class="state4_2">
+                        <td colspan="2" valign="top">
+                            <textarea id="tareaSyncData_Upload" style="display: none"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="table_right">
+                    <tr class="state0">
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <td class="td1_1" colspan="1">serviceUrl:</td>
+                                    <td class="td1_2" colspan="1"><input id="urlServer" type="text" value="ws://127.0.0.1:8080/MBNIS/websocket" style="width: 100%; height: 30px; font-size:18px;" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td1_1" colspan="1">gformServiceUrl:</td>
+                                    <td class="td1_2" colspan="1"><input id="urlServer_gform" type="text" value="http://127.0.0.1:8080/PD08/services/DynamicFormService" style="width: 100%; height: 30px; font-size:18px;" /></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="state1_1">
+                        <td class="td1">
+                            <label>1-2.(Server) 取得同步參數-完整同步(新form請選這個)</label>
+                            <p>ts=
+                                <input id="syncSetTs" type="text" value="1990/01/01 00:00:00" onkeyup="checkTs(this.value)" style="width: 200px; height: 30px; font-size:18px;" />
+                                <input type="button" class="w3-button w3-pale-green" value="今天日期" onclick="$('#syncSetTs').val(new Date().format('yyyy/MM/dd')+' 00:00:00')"  style="margin-bottom: 7px;" />
+                            </p>
+                        </td>
+                        <td>
+                            <input type="button" class="w3-button w3-border w3-light-blue w3-hover-blue" value="取得參數" onclick="showFormType('Server');"  style="margin-bottom: 7px;" />
+                            <br/>
+                            <label><font color="#FF2222" id="syncSetTs_Msg"></font></label>
+                        </td>
+                    </tr>
+                    <tr class="state1_2">
+                        <td colspan="2"><textarea id="getTareaSyncParamServer"></textarea></td>
+                    </tr>
+                    <tr class="state2_1">
+                        <td class="td1" colspan="2"><label>2.(Server) 貼上同步參數</label></td>
+                    </tr>
+                    <tr class="state2_2">
+                        <td colspan="2"><textarea id="tareaSyncParam_Server"></textarea></td>
+                    </tr>
+                    <tr class="state3_1">
+                        <td class="td1">
+                            <label>3.(Server) 取得同步資料</label>
+                            <span class="optional" onclick="$('#otherOption').removeClass('hide');$(this).addClass('active');">進階</span>
+                        </td>
+                        <td><input type="button" class="w3-button w3-border w3-light-blue w3-hover-blue" value="取得資料" onclick="getSyncData()" /><a id="downloadDataHref" style="display: none">下載</a></td>
+                    </tr>
+                    <tr class="state3_1_1 hide" id="otherOption">
+                        <td colspan="2">
+                            <label style="display: inline-block;">進階選項：</label>
+                            <form class="custombox" style="display: inline-block;">
+                                <input type="checkbox" name="lastdata" id="lastdata" onchange="optionChange(this);" value="1">
+                                <label for="lastdata">last version</label>
+                                <input type="checkbox" name="formversionbox" id="formversionbox" onchange="optionChange(this);" value="2">
+                                <label for="formversionbox">formversion</label>
+                                <input type="checkbox" name="formframebox" id="formframebox" onchange="optionChange(this);" value="3">
+                                <label for="formframebox">formframe</label>
+                                <input type="checkbox" name="propbox" id="propbox" onchange="optionChange(this);" value="4">
+                                <label for="propbox">prop設定檔</label>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="state3_2">
+                        <td colspan="2"><textarea id="tareaSyncData_Server" style="display: none"></textarea></td>
+                    </tr>
+                    <tr class="state4_1">
+                        <td class="td1">差異項目</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="state4_2">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <table>
+        <tr>
+            <td width="48%" valign="top">
+                <div>
+                    <table class="syncMsg">
+                        <tbody id="syncMsg">
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+            <td width="48%" valign="top">
+                <div>
+                    <label style="background-color: #9EA5EE; color: #FFFFFF">
+                        ====formVersion====
+                    </label>
+                    <table class="differenceItem" cellpadding="10" border="0">
+                        <thead>
+                            <tr>
+                                <th>formType</th>
+                                <th>version</th>
+                                <th>時戳</th>
+                            </tr>
+                        </thead>
+                        <tbody id="differenceItem_formVersion"></tbody>
+                    </table>
+                    <label style="background-color: #9EA5EE; color: #FFFFFF">
+                        ====formFrame====
+                    </label>
+                    <table class="differenceItem" cellpadding="10" border="0">
+                        <thead>
+                        <tr>
+                            <th>formType</th>
+                            <th>frameModel</th>
+                            <th>version</th>
+                            <th>時戳</th>
+                        </tr>
+                        </thead>
+                        <tbody id="differenceItem_formFrame"></tbody>
+                    </table>
+                    <label style="background-color: #9EA5EE; color: #FFFFFF">
+                        ====prop設定檔====
+                    </label>
+                    <table class="differenceItem" cellpadding="10" border="0">
+                        <thead>
+                        <tr>
+                            <th>formType</th>
+                            <th>sourceId</th>
+                            <th>name1</th>
+                            <th>name2</th>
+                            <th>時戳</th>
+                        </tr>
+                        </thead>
+                        <tbody id="differenceItem_prop"></tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- 这个是用来遮罩的 -->
+    <div id="showAddUpdModelDiv" onclick="closeModel();" style="display: none">
+    </div>
+    <!-- 这个是用来展示弹框内容的 -->
+    <div id="showAddUpdModel" style="display: none">
+    </div>
+    <script type="text/html" id="list_formType_Template">
+        <input class="search" type="text" placeholder="Search.." id="search" onkeyup="search(this)">
+        <input class="dfTableBtn w3-button w3-border w3-light-blue w3-hover-blue" type="button" value="取得同步參數" style="width: 140px; height: 35px; font-size: 17px;" onclick="getSyncParam('{{$data.urlMode}}')"/>
+        <input class="dfTableBtn w3-button w3-border w3-red w3-hover-blue" type="button" value="清空" onclick="document.getElementById('clickAll').checked='';document.getElementById('clickAllProp').checked='';clickAllFormType(document.getElementById('clickAll'));clickAllProp(document.getElementById('clickAllProp'));">
+        <span id="totalCheck" style="color: white; padding-left: 10px; font-size: 20px"></span>
+        <input class="dfTableBtn w3-button" type="button" value="&times;" style="color: #FF2222; float: right; font-size:20px;" onclick="closeModel()"/>
+        <br/>
+        <table id="dynamicFormTable" class="dynamicFormTable">
+            <thead>
+                <tr>
+                    <th><input class="w3-check" type="checkbox" onclick="clickAllFormType(this)" id="clickAll" /></th>
+                    <th>formType</th>
+                    <th>title</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{each $data.list d idx}}
+                <tr data-formtype="{{d.formType}}" data-title="{{d.title}}">
+                    <td width="10px" align="center" ><input class="w3-check" name="chkFormType" type="checkbox" onclick="checkThis(this);" value="{{d.formType}}"/></td>
+                    <td onclick="checkThis(this);" style="padding-left: 5px;">{{d.formType}}</td>
+                    <td onclick="checkThis(this);" style="padding-left: 5px;">{{d.title}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <br/>
+        <br/>
+        <table id="propTable" class="dynamicFormTable">
+            <thead>
+            <tr>
+                <th><input class="w3-check" type="checkbox" onclick="clickAllProp(this)" id="clickAllProp" /></th>
+                <th>formType</th>
+                <th>sourceId</th>
+                <th>name1</th>
+                <th>name2</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{each $data.prop prop idx}}
+            <tr data-formtype="{{prop.gForm.formType}}" data-name1="{{prop.gForm.showMessage.name1}}">
+                <td width="10px" align="center" ><input class="w3-check" name="chkFormType" type="checkbox" onclick="checkThis(this);" value="{{prop.gForm.showMessage.searchParamGF}}" data-auto-click-param="{{prop.gForm.showMessage.autoClickParam}}"/></td>
+                <td onclick="checkThis(this);" style="padding-left: 5px;">{{prop.gForm.formType}}</td>
+                <td onclick="checkThis(this);" style="padding-left: 5px;">{{prop.gForm.sourceId}}</td>
+                <td onclick="checkThis(this);" style="padding-left: 5px;">{{prop.gForm.showMessage.name1}}</td>
+                <td onclick="checkThis(this);" style="padding-left: 5px;">{{prop.gForm.showMessage.name2}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </script>
+<script type="text/html" id="template_SyncData">
+syncTryCount = 0;
+syncCount = -1;
+versionArr = [],
+frameArr = [],
+propArr = [];
+var c=-1;
+var c2=-1;
+var c3=-1;
+{{each $data.versionList d idx}}
+versionArr[++c]={"formType":"{{@d.formType}}","version":"{{@d.version}}","ts":"{{@d.ts}}","content":"{{@d.content}}"};
+{{/each}}
+{{each $data.frameList d idx}}
+frameArr[++c2]={"formType":"{{@d.formType}}","frameModel":"{{@d.frameModel}}","version":"{{@d.version}}","note":"{{if(d.note!=undefined)}}{{@d.note}}{{/if}}","ts":"{{@d.ts}}","content":"{{@d.content}}"};
+{{/each}}
+{{each $data.propList d idx}}
+propArr[++c3]={{@d}};
+{{/each}}
+doSyncFormVersion(true);
+</script>
+</body>
+
+</html>
+<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script type="text/javascript">
+var syncTryCount = 0,
+    syncTryTotal = 3; //syncTryTotal=錯誤時重複執行N次
+var showSyncMsg = false,
+    showSyncMsg_onError = true; //showSyncMsg=是否常規顯示同步訊息, showSync_onError=是否在錯誤發生時顯示同步訊息
+var showContent = true; //showContent=上述條件成立時，是否顯示content訊息
+var gForm_Title = ""; //騙過gForm.addOrUpdateGForm
+var thisPageStatus = "UPD"; //騙過gForm.addOrUpdateGForm
+
+var syncCount = -1;
+var versionArr = [],
+    frameArr = [],
+    propArr = [];
+
+//執行同步formVersion
+var basicParam = nursing.getBasicParam();
+
+function doSyncFormVersion(first) {
+    if (first == true) {
+        if (window.console) console.log("***開始同步formVersion");
+        showSyncMsgFunc("***開始同步formVersion");
+    }
+    var dform = eNursing.extend({}, nursing.getDynamicForm());
+
+    if (++syncCount < versionArr.length) {
+        try {
+            syncTryCount = 0;
+            if (window.console) console.log("-->正在同步第 " + (syncCount + 1) + " / " + versionArr.length + " 筆 ("+versionArr[syncCount].formType+") (ver."+versionArr[syncCount].version+") ...");
+            showSyncMsgFunc("-->正在同步第 " + (syncCount + 1) + " / " + versionArr.length + " 筆 ..."
+                ,versionArr[syncCount].formType
+                ,null
+                ,"ver."+versionArr[syncCount].version
+                ,new Date(versionArr[syncCount].ts).format("yyyy/MM/dd HH:mm")
+            );
+            syncFuncFormVersion(showSyncMsg);
+        } catch (e) {
+            if (window.console) console.log("=====發生錯誤!!!(doSyncFormVersion)=====");
+            if (window.console) console.log(e);
+            showSyncMsgFunc("=====發生錯誤!!!(doSyncFormVersion)=====");
+            showSyncMsgFunc(e.toString());
+        }
+    } else {
+        if (window.console) console.log("formVersion同步完成！");
+        if (window.console) console.log("***開始同步formFrame");
+        showSyncMsgFunc("formVersion同步完成！");
+        showSyncMsgFunc("***開始同步formFrame");
+        syncCount = -1;
+        doSyncFormFrame();
+    }
+}
+
+//執行同步formFrame
+function doSyncFormFrame() {
+    if (++syncCount < frameArr.length) {
+        try {
+            syncTryCount = 0;
+            if (window.console) console.log("-->正在同步第 " + (syncCount + 1) + " / " + frameArr.length + " 筆 ("+frameArr[syncCount].formType+") ...");
+            showSyncMsgFunc("-->正在同步第 " + (syncCount + 1) + " / " + frameArr.length + " 筆 ..."
+                ,frameArr[syncCount].formType
+                ,frameArr[syncCount].frameModel
+                ,"ver."+frameArr[syncCount].version
+                ,new Date(frameArr[syncCount].ts).format("yyyy/MM/dd HH:mm")
+            );
+            syncFuncFormFrame(showSyncMsg);
+        } catch (e) {
+            if (window.console) console.log("=====發生錯誤!!!(doSyncFormFrame)=======");
+            if (window.console) console.log(e);
+            showSyncMsgFunc("=====發生錯誤!!!(doSyncFormFrame)=======");
+            showSyncMsgFunc(e.toString());
+        }
+    } else {
+        if (window.console) console.log("formFrame同步完成！");
+        if (window.console) console.log("***開始同步prop設定檔");
+        showSyncMsgFunc("formFrame同步完成！");
+        showSyncMsgFunc("***開始同步prop設定檔！");
+        syncCount = -1;
+        doSyncProp();
+    }
+}
+
+//執行同步prop設定檔
+function doSyncProp() {
+    if (++syncCount < propArr.length) {
+        try {
+            syncTryCount = 0;
+            if (window.console) console.log("-->正在同步第 " + (syncCount + 1) + " / " + propArr.length + " 筆 ("+propArr[syncCount].formType+") ...");
+            showSyncMsgFunc("-->正在同步第 " + (syncCount + 1) + " / " + propArr.length + " 筆 ..."
+                ,propArr[syncCount].formType
+                ,propArr[syncCount].sourceId
+                ,getJsonNodeValue(propArr[syncCount], propNameNode[propArr[syncCount].formType].name1)+"--"+getJsonNodeValue(propArr[syncCount], propNameNode[propArr[syncCount].formType].name2)
+                ,new Date(propArr[syncCount].modifyTime || propArr[syncCount].createTime).format("yyyy/MM/dd HH:mm")
+            );
+            syncFuncProp(showSyncMsg);
+        } catch (e) {
+            if (window.console) console.log("=====發生錯誤!!!(doSyncProp)=======");
+            if (window.console) console.log(e);
+            showSyncMsgFunc("=====發生錯誤!!!(doSyncProp)=======");
+            showSyncMsgFunc(e.toString());
+        }
+    } else {
+        if (window.console) console.log("prop設定檔同步完成！");
+        showSyncMsgFunc("prop設定檔同步完成！");
+    }
+}
+
+//同步發生錯誤formVersion
+function doSyncFormVersionError() {
+    if (window.console) console.log("=====同步失敗!!!(doSyncFormVersionError)=======");
+    showSyncMsgFunc("=====同步失敗!!!(doSyncFormVersionError)=======");
+    if (++syncTryCount <= syncTryTotal) {
+        try {
+            if (window.console) console.log("-->再次嘗試同步第 " + (syncCount + 1) + " / " + versionArr.length + " 筆... (第" + syncTryCount + "/" + syncTryTotal + "次)");
+            showSyncMsgFunc("-->再次嘗試同步第 " + (syncCount + 1) + " / " + versionArr.length + " 筆... (第" + syncTryCount + "/" + syncTryTotal + "次)");
+            syncFuncFormVersion(showSyncMsg_onError);
+        } catch (e) {
+            if (window.console) console.log("=====發生錯誤!!!(doSyncFormVersionError)=======");
+            if (window.console) console.log(e);
+            showSyncMsgFunc("=====發生錯誤!!!(doSyncFormVersionError)=======");
+            showSyncMsgFunc(e.toString());
+        }
+    } else {
+        if (window.console) console.log("=====發生錯誤達 " + syncTryTotal + " 次，同步停止。=====");
+        showSyncMsgFunc("=====發生錯誤達 " + syncTryTotal + " 次，同步停止。=====");
+    }
+}
+
+//同步發生錯誤formFrame
+function doSyncFormFrameError() {
+    if (window.console) console.log("=====同步失敗!!!(doSyncFormFrameError)=======");
+    showSyncMsgFunc("=====同步失敗!!!(doSyncFormFrameError)=======");
+    if (++syncTryCount <= syncTryTotal) {
+        try {
+            if (window.console) console.log("-->再次嘗試同步第 " + (syncCount + 1) + " / " + frameArr.length + " 筆... (第" + syncTryCount + "/" + syncTryTotal + "次)");
+            showSyncMsgFunc("-->再次嘗試同步第 " + (syncCount + 1) + " / " + frameArr.length + " 筆... (第" + syncTryCount + "/" + syncTryTotal + "次)");
+            syncFuncFormFrame(showSyncMsg_onError);
+        } catch (e) {
+            if (window.console) console.log("=====發生錯誤!!!(doSyncFormFrameError)=======");
+            if (window.console) console.log(e);
+            showSyncMsgFunc("=====發生錯誤!!!(doSyncFormFrameError)=======");
+            showSyncMsgFunc(e.toString());
+        }
+    } else {
+        if (window.console) console.log("=====發生錯誤達 " + syncTryTotal + " 次，同步停止。=====");
+        showSyncMsgFunc("=====發生錯誤達 " + syncTryTotal + " 次，同步停止。=====");
+    }
+}
+
+//同步發生錯誤prop設定檔
+function doSyncPropError() {
+    if (window.console) console.log("=====同步失敗!!!(doSyncPropError)=======");
+    showSyncMsgFunc("=====同步失敗!!!(doSyncPropError)=======");
+    if (++syncTryCount <= syncTryTotal) {
+        try {
+            if (window.console) console.log("-->再次嘗試同步第 " + (syncCount + 1) + " / " + frameArr.length + " 筆... (第" + syncTryCount + "/" + syncTryTotal + "次)");
+            showSyncMsgFunc("-->再次嘗試同步第 " + (syncCount + 1) + " / " + frameArr.length + " 筆... (第" + syncTryCount + "/" + syncTryTotal + "次)");
+            syncFuncProp(showSyncMsg_onError);
+        } catch (e) {
+            if (window.console) console.log("=====發生錯誤!!!(doSyncPropError)=======");
+            if (window.console) console.log(e);
+            showSyncMsgFunc("=====發生錯誤!!!(doSyncPropError)=======");
+            showSyncMsgFunc(e.toString());
+        }
+    } else {
+        if (window.console) console.log("=====發生錯誤達 " + syncTryTotal + " 次，同步停止。=====");
+        showSyncMsgFunc("=====發生錯誤達 " + syncTryTotal + " 次，同步停止。=====");
+    }
+}
+
+//同步formVersion
+function syncFuncFormVersion(showMsg) {
+    var version = eNursing.extend({}, nursing.getFormVersion());
+    // version.formType = "syncTest";
+    version.formType = versionArr[syncCount].formType;
+    version.version = versionArr[syncCount].version;
+    version.ts = versionArr[syncCount].ts;
+    version.content = versionArr[syncCount].content;
+    if (window.console) {
+        if (showMsg) {
+            if (window.console) console.log("formType = " + version.formType);
+            if (window.console) console.log("version = " + version.version);
+            if (window.console) console.log("ts = " + version.version);
+            showSyncMsgFunc("formType = " + version.formType);
+            showSyncMsgFunc("version = ver." + version.version);
+            showSyncMsgFunc("ts = " + version.ts);
+            if (showContent) {
+                if (window.console) console.log(version.content);
+                showSyncMsgFunc("<textarea>" + version.content + "</textarea>");
+            }
+        }
+    }
+    basicParam.syncFormVersion(version, doSyncFormVersion, doSyncFormVersionError);
+}
+
+//同步formFrame
+function syncFuncFormFrame(showMsg) {
+    var frame = eNursing.extend({}, nursing.getFormFrame());
+    // frame.formType = "syncTest";
+    // frame.frameModel = "syncTest";
+    // frame.note = "syncTest";
+    frame.formType = frameArr[syncCount].formType;
+    frame.frameModel = frameArr[syncCount].frameModel;
+    frame.version = frameArr[syncCount].version;
+    frame.note = frameArr[syncCount].note;
+    frame.ts = frameArr[syncCount].ts;
+    frame.content = frameArr[syncCount].content;
+    if (window.console) {
+        if (showMsg) {
+            if (window.console) console.log("formType = " + frame.formType);
+            if (window.console) console.log("frameModel = " + frame.frameModel);
+            if (window.console) console.log("version = " + frame.version);
+            if (window.console) console.log("note = " + frame.note);
+            if (window.console) console.log("ts = " + frame.ts);
+            showSyncMsgFunc("formType = " + frame.formType);
+            showSyncMsgFunc("frameModel = " + frame.frameModel);
+            showSyncMsgFunc("version = ver." + frame.version);
+            showSyncMsgFunc("note = " + frame.note);
+            showSyncMsgFunc("ts = " + frame.ts);
+            if (showContent) {
+                if (window.console) console.log(frame.content);
+                showSyncMsgFunc("<textarea>" + frame.content + "</textarea>");
+            }
+        }
+    }
+    basicParam.syncFormFrame(frame, doSyncFormFrame, doSyncFormFrameError);
+}
+
+//同步prop設定檔
+function syncFuncProp(showMsg) {
+    var gFormJS = nursing.createGForm();
+    propArr[syncCount].searchParamGF={
+        "sourceId": propArr[syncCount].sourceId,
+        "userId": "sync",
+        "userName": "sync"
+    };
+    if (window.console) {
+        if (showMsg) {
+            if (window.console) console.log("formType = " + propArr[syncCount].formType);
+            if (window.console) console.log("sourceId = " + propArr[syncCount].sourceId);
+            if (window.console) console.log("name1 = " + getJsonNodeValue(propArr[syncCount], propNameNode[propArr[syncCount].formType].name1));
+            if (window.console) console.log("name2 = " + getJsonNodeValue(propArr[syncCount], propNameNode[propArr[syncCount].formType].name2));
+            if (window.console) console.log("ts = " + new Date(propArr[syncCount].modifyTime || propArr[syncCount].createTime).format("yyyy/MM/dd HH:mm"));
+            showSyncMsgFunc("formType = " + propArr[syncCount].formType);
+            showSyncMsgFunc("sourceId = " + propArr[syncCount].sourceId);
+            showSyncMsgFunc("name1 = " + getJsonNodeValue(propArr[syncCount], propNameNode[propArr[syncCount].formType].name1));
+            showSyncMsgFunc("name2 = " + getJsonNodeValue(propArr[syncCount], propNameNode[propArr[syncCount].formType].name2));
+            showSyncMsgFunc("ts = " + new Date(propArr[syncCount].modifyTime || propArr[syncCount].createTime).format("yyyy/MM/dd HH:mm"));
+            if (showContent) {
+                if (window.console) console.log(propArr[syncCount]);
+                showSyncMsgFunc("<textarea>" + JSON.stringify(propArr[syncCount], undefined, 4) + "</textarea>");
+            }
+        }
+    }
+    gFormJS.addOrUpdateGForm(propArr[syncCount], doSyncProp, doSyncPropError);
+}
+
+//顯示同步資訊
+function showSyncMsgFunc(msg, formType, frameModel, version, ts) {
+    var $tr=$("<tr/>"),
+        $tdMerge=$("<td colspan='5'></td>");
+    if (msg.indexOf("***") > -1) {
+        $tr.append($tdMerge.append("<b>" + msg + "</b>"));
+    } else if (msg.indexOf("-->") > -1) {
+        $tr.append($("<td/>").append("<font color='#2222ff'>" + msg + "</font>"));
+        $tr.append($("<td/>").append("<font color='#222222'>" + formType + "</font>"));
+        $tr.append($("<td/>").append("<font color='#222222'>" + (frameModel) ? frameModel : "" + "</font>"));
+        $tr.append($("<td/>").append("<font color='#222222'>" + version + "</font>"));
+        $tr.append($("<td/>").append("<font color='#222222'>" + ts + "</font>"));
+    } else if (msg.indexOf("=====") > -1) {
+        $tr.append($tdMerge.append("<font color='#ff2222'>" + msg + "</font>"));
+    } else {
+        $tr.append($tdMerge.append("<font color='gray'>" + msg + "</font>"));
+    }
+    $("#syncMsg").append($tr);
+    $("#syncMsg").append("<br/>");
+    // 捲動至適當位置
+    if (document.body.offsetHeight - $tr.offset().top > 50){
+        $(document).scrollTop($tr.offset().top - window.screen.availHeight + 150);
+    }else{
+        $tr[0].scrollIntoView();
+    }
+
+    // console.log($tr.offset().top);
+    // console.log($(document).scrollTop());
+    // console.log(document.body.offsetHeight);
+    // scrollTo(0,999999);
+}
+</script>

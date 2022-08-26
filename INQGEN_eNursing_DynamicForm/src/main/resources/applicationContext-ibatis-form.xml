@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop   http://www.springframework.org/schema/aop/spring-aop-2.0.xsd  http://www.springframework.org/schema/tx   http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<import resource="classpath:database-jndi.xml"/>
+
+	<bean id="dataSourceForm" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" ref="gformJndiName"/>
+	</bean>
+	<bean id="dataSourceFrame" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" ref="frameJndiName"/>
+	</bean>
+
+	<bean id="sqlMapClientForm" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-config-form.xml"/>
+		<property name="dataSource"  ref="dataSourceForm" />
+	</bean>
+	<bean id="sqlMapClientFrame" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sql-map-config-form.xml"/>
+		<property name="dataSource" ref="dataSourceFrame" />
+	</bean>
+
+	<!--GFORM start-->
+	<bean id="formVersionDao" class="com.inqgen.nursing.dynamic.form.dao.impl.FormVersionDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientFrame"/>
+	</bean>
+	<bean id="gFormDao" class="com.inqgen.nursing.dynamic.form.dao.impl.GFormDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientForm"/>
+	</bean>
+	<!--GFORM end-->
+	<bean id="formDao" class="com.inqgen.nursing.dynamic.form.dao.impl.FormDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientForm"/>
+	</bean>
+	<bean id="formFrameDao" class="com.inqgen.nursing.dynamic.form.dao.impl.FormFrameDaoImpl">
+		<property name="sqlMapClient" ref="sqlMapClientFrame"/>
+	</bean>
+	<bean id="gFormComparison" class="com.inqgen.nursing.dynamic.form.dao.impl.GFormComparisonImpl">
+		<property name="sqlMapClient" ref="sqlMapClientForm"/>
+	</bean>
+</beans>

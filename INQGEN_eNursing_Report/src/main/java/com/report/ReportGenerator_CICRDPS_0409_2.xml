@@ -1,0 +1,150 @@
+<ReportGenerator>
+	<Algorithm>
+		<DeleteData NAME="CICRDPS">
+			<!--刪除原報表區間內資料 -->
+			<Where><![CDATA[REPORTPERIOD=:month]]></Where>
+			<Field NAME="month">month</Field>
+		</DeleteData>
+		<MainFile TotalLevel="2">
+			<QueryData NAME="CICRDPS_0"> <!-- 查個案總表CICCASE 出備病房，前一月狀態為已收案，本月新收案的個案 -->
+			    <Column>HOSPITAL,sum(NOPTS) AS NOPTS, sum(CLOSEPTS_H) AS CLOSEPTS_H, sum(TOTHERWARD) AS TOTHERWARD, sum(AOUTDEAD) AS AOUTDEAD, sum(DISABLEBOOK) AS DISABLEBOOK, sum(LTCARE) AS LTCARE, sum(CARESERVICE) AS CARESERVICE, sum(BORROW) AS BORROW, sum(DAILYCARE) AS DAILYCARE, sum(RESPITECARE)AS RESPITECARE, sum(ADA) AS ADA, sum(OLDFOODS) AS OLDFOODS, sum(TRANSPORTS) AS TRANSPORTS, sum(HRESTHERS) AS HRESTHERS, sum(HTRANQUILITY) AS HTRANQUILITY, sum(HMEDICAL) AS HMEDICAL, sum(RETIRECENTER) AS RETIRECENTER, sum(NURSINGHOME) AS NURSINGHOME, sum(HOMECARE) AS HOMECARE, sum(P_REHABIH) AS P_REHABIH, sum(P_HMEDICAL) AS P_HMEDICAL, sum(P_CREHABI) AS P_CREHABI, sum(P_DAILYCARE) AS P_DAILYCARE, sum(TVGH) AS TVGH, sum(HNH) AS HNH, sum(GANDAU) AS GANDAU, sum(OTEHRH) AS OTEHRH, sum(RCW) AS RCW, sum(HOSPICE) AS HOSPICE, sum(HC) AS HC, sum(SERTOTAL) AS SERTOTAL, sum(CROSSTEACH) AS CROSSTEACH, sum(YILAN) AS YILAN, sum(KEELUNG) AS KEELUNG, sum(TAIPEI) AS TAIPEI, sum(NTAIPEI) AS NTAIPEI, sum(TAOYUAN) AS TAOYUAN, sum(HSINCHU) AS HSINCHU, sum(MIAOLI) AS MIAOLI, sum(KINMEN) AS KINMEN, sum(OTHERC) AS OTHERC </Column>
+			    
+				<Where>
+				    <![CDATA[
+				    REPORTPERIOD=:month
+				    ]]>
+				</Where>
+				<GroupBy>HOSPITAL</GroupBy>
+				<Field NAME="month">month</Field><!--怎麼套兩個月的區間 -->
+			</QueryData>
+			<Key Level="1" NAME="ID" />
+		</MainFile>
+
+		<Process_Detail>
+			<!-- 上月未結案之舊案數-->
+			<QueryData NAME="CICCASE"> 
+			    <Column>COUNT(ID) as SIZE</Column>
+				<Where><![CDATA[ TO_CHAR(APTIME, 'YYYYMM')=:month and CASESTATUS<800 AND STATIONID=:HOSPITAL]]></Where>
+				<Field NAME="HOSPITAL">getMap(mainFile, "HOSPITAL")</Field>
+				<Field NAME="month">dateUtils.format(new Date(dateUtils.parse(month, "yyyyMM").getTime()-1000*60), "yyyyMM")</Field>
+			</QueryData>
+			<!-- 本月新收案數 -->
+			<QueryData NAME="CICCASE AS CICCASE2"> 
+			    <Column>COUNT(ID) as SIZE</Column>
+				<Where><![CDATA[ TO_CHAR(APTIME, 'YYYYMM')=:month and CASESTATUS<800 AND STATIONID=:HOSPITAL]]></Where>
+				<Field NAME="HOSPITAL">getMap(mainFile, "HOSPITAL")</Field>
+				<Field NAME="month">dateUtils.format(new Date(dateUtils.parse(month, "yyyyMM").getTime()-1000*60), "yyyyMM")</Field>
+			</QueryData>
+			
+		</Process_Detail>
+
+		<Process_Tail>
+			<Level>1</Level>
+			<NewData NAME="CICRDPS" />
+		</Process_Tail>
+	</Algorithm>
+
+	<ResultTable NAME="CICRDPS" Description="個案清單出院準備服務報表"> 	
+		<Field NAME="ID">UUID()</Field>
+		<Field NAME="REPORTPERIOD">month</Field>
+		<Field NAME="HOSPITAL">getMap(mainFile, "HOSPITAL")</Field>
+		
+		<!-- 上月未結案之舊案數 -->
+		<Field NAME="TOTALCLOSEPTS">getListValue(resultMap,"CICCASE","SIZE")</Field>
+		<!-- 本月新收案數 -->
+		<Field NAME="NEWPTS">getListValue(resultMap,"CICCASE AS CICCASE2","SIZE")</Field>
+		<!-- 總管案數 -->
+		<Field NAME="TOTALPTS">getListValue(resultMap,"CICCASE","SIZE")+getListValue(resultMap,"CICCASE AS CICCASE2","SIZE")</Field> <!--不知如何計算-->
+		<!-- 成功完成服務案數 -->
+		<Field NAME="CLOSEPTS">(getListValue(resultMap,"CICCASE","SIZE")+getListValue(resultMap,"CICCASE AS CICCASE2","SIZE"))-(getMap(mainFile, "NOPTS")+ getMap(mainFile, "CLOSEPTS_H")+getMap(mainFile, "TOTHERWARD")+getMap(mainFile, "TOTHERWARD"))</Field>
+		<!-- 未結案數(尚住院)  -->
+		<Field NAME="NOPTS">getMap(mainFile, "NOPTS")</Field> <!--不知如何計算-->
+		
+		<Field NAME="CLOSEPTS_H">getMap(mainFile, "CLOSEPTS_H")</Field> <!--不知如何計算-->
+		<Field NAME="TOTHERWARD">getMap(mainFile, "TOTHERWARD")</Field> <!--不知如何計算-->
+		<Field NAME="AOUTDEAD">getMap(mainFile, "TOTHERWARD")</Field> <!--不知如何計算-->
+		<Field NAME="DISABLEBOOK">getMap(mainFile, "TOTHERWARD")</Field>
+		<!--以下不知如何count-->
+		<Field NAME="LTCARE">getMap(mainFile, "LTCARE")</Field>  
+		<Field NAME="CARESERVICE">getMap(mainFile, "CARESERVICE")</Field>
+		<Field NAME="BORROW">getMap(mainFile, "BORROW")</Field>  <!-- 用物租借 待對應-->
+		<Field NAME="DAILYCARE">getMap(mainFile, "DAILYCARE")</Field>
+		<Field NAME="RESPITECARE">getMap(mainFile, "RESPITECARE")</Field>
+		<Field NAME="ADA">getMap(mainFile, "ADA")</Field>
+		<Field NAME="OLDFOODS">getMap(mainFile, "OLDFOODS")</Field>
+		<Field NAME="TRANSPORTS">getMap(mainFile, "TRANSPORTS")</Field>
+		<Field NAME="HRESTHERS">getMap(mainFile, "HRESTHERS")</Field>
+		<Field NAME="HTRANQUILITY">getMap(mainFile, "HTRANQUILITY")</Field>
+		<Field NAME="HMEDICAL">getMap(mainFile, "HMEDICAL")</Field>
+		<Field NAME="RETIRECENTER">getMap(mainFile, "RETIRECENTER")</Field>
+		<Field NAME="NURSINGHOME">getMap(mainFile, "NURSINGHOME")</Field>
+		<Field NAME="HOMECARE">getMap(mainFile, "HOMECARE")</Field>
+		<Field NAME="P_REHABIH">getMap(mainFile, "P_REHABIH")</Field>
+		<Field NAME="P_HMEDICAL">getMap(mainFile, "P_HMEDICAL")</Field>
+		<Field NAME="P_CREHABI">getMap(mainFile, "P_CREHABI")</Field>
+		<Field NAME="P_DAILYCARE">getMap(mainFile, "P_DAILYCARE")</Field>
+		<Field NAME="TVGH">getMap(mainFile, "TVGH")</Field>
+		<Field NAME="HNH">getMap(mainFile, "HNH")</Field>
+		<Field NAME="GANDAU">getMap(mainFile, "GANDAU")</Field>
+		<Field NAME="OTEHRH">getMap(mainFile, "OTEHRH")</Field>
+		<Field NAME="RCW">getMap(mainFile, "RCW")</Field>
+		<Field NAME="HOSPICE">getMap(mainFile, "HOSPICE")</Field>
+		<Field NAME="HC">getMap(mainFile, "HC")</Field>
+		<Field NAME="SERTOTAL">getMap(mainFile, "SERTOTAL")</Field>
+		<Field NAME="CROSSTEACH">getMap(mainFile, "CROSSTEACH")</Field>	
+		<Field NAME="YILAN">getMap(mainFile, "YILAN")</Field>	
+		<Field NAME="KEELUNG">getMap(mainFile, "KEELUNG")</Field>
+		<Field NAME="TAIPEI">getMap(mainFile, "TAIPEI")</Field>
+		<Field NAME="NTAIPEI">getMap(mainFile, "NTAIPEI")</Field>
+		<Field NAME="TAOYUAN">getMap(mainFile, "TAOYUAN")</Field>
+		<Field NAME="HSINCHU">getMap(mainFile, "HSINCHU")</Field>
+		<Field NAME="MIAOLI">getMap(mainFile, "MIAOLI")</Field>
+		<Field NAME="KINMEN">getMap(mainFile, "KINMEN")</Field>
+		<Field NAME="OTHERC">getMap(mainFile, "OTHERC")</Field>
+		<Field NAME="TOTALC">getMap(mainFile, "YILAN")+
+		    getMap(mainFile, "KEELUNG")+
+		    getMap(mainFile, "TAIPEI")+
+		    getMap(mainFile, "NTAIPEI")+
+		    getMap(mainFile, "TAOYUAN")+
+		    getMap(mainFile, "HSINCHU")+
+		    getMap(mainFile, "MIAOLI")+
+		    getMap(mainFile, "KINMEN")+
+		    getMap(mainFile, "OTHERC")</Field>
+		<Field NAME="TOTALH">
+		     getMap(mainFile, "CROSSTEACH")
+		     getMap(mainFile, "KEELUNG")+
+		    getMap(mainFile, "TAIPEI")+
+		    getMap(mainFile, "NTAIPEI")+
+		    getMap(mainFile, "TAOYUAN")+
+		    getMap(mainFile, "HSINCHU")+
+		    getMap(mainFile, "MIAOLI")+
+		    getMap(mainFile, "KINMEN")+
+		    getMap(mainFile, "OTHERC")
+		    </Field>
+	</ResultTable>
+</ReportGenerator>
+
+<!-- 
+1.報表全局參數
+	月份（yyyyMM）：month
+
+  2.取【MainFile】中QueryData結果集中的值
+	getMap(mainFile,”表欄位”)
+
+3.取【Process_Detail】中【QueryData】結果集中的值
+	3.1查詢指定結果集中的第一筆資料，指定欄位是否包括指定值
+	   boolean searchListFirstHasVal(resultMap,"QueryData.NAME","表欄位","值")
+	3.2日期函數
+	   Date parseDt(String value,String format)
+	3.3從指定結果集中，指定欄位，轉換出日期
+	   Date getListToTm(resultMap,"QueryData.NAME",["表欄位","表欄位","???"] as String,"yyyyMMddHHmm")
+	3.4從指定結果集中，取得指定值
+	   Object getListValue(resultMap,"QueryData.NAME","表欄位")
+	3.5計算指定結果集中，取得結果集總數
+	   int getMapCount(resultMap,"QueryData.NAME")
+	3.6產生UUID
+	   String UUID()
+	3.7查詢指定結果集中指定欄位是否包括指定值
+	   boolean searchListHasVal(resultMap,"QueryData.NAME","表欄位","值")
+
+ -->

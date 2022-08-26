@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>定磐人形圖設計工具 (csCanvas)</title>
+	<link rel="icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="../bootstrap/bootstrap-4.6.0-dist/css/bootstrap.min.css?csSvnVersion=">
+	<link rel="stylesheet" href="../bootstrap/bootstrap-4.6.0-dist/css/bstreeview.min.css?csSvnVersion=">
+	<link rel="stylesheet" href="../bootstrap/bootstrap-icons/font/bootstrap-icons_forCanvas.css?csSvnVersion=">
+	<link rel="stylesheet" href="css/form.css?csSvnVersion=">
+<!--	<script src="../../../../../../../../../../tw_minsheng民生/INQGEN_eNursing_Web/src/main/webapp/META-JS/properties.js?csSvnVersion="></script>&lt;!&ndash; 基礎參數設定 &ndash;&gt;-->
+	<script src="../../../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+	<script src="../../js2/jquery.js?csSvnVersion="></script>
+	<script src="../bootstrap/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js?csSvnVersion="></script>
+	<script src="../bootstrap/bootstrap-4.6.0-dist/js/bstreeview.min.js?csSvnVersion="></script>
+	<script src="js/formFile.js?csSvnVersion="></script>
+	<!-- 用來產生動態表單的JS、CSS在這邊一併引入 (必須先引入jquery) -->
+	<script src="../../../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+	<script src="../../../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+	<script src="../../../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+	<script src="../../../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+	<!-- codemirror 文字編輯器 -->
+	<script src="../codemirror-5.57.0/lib/codemirror.js?csSvnVersion="></script>
+	<link rel="stylesheet" href="../codemirror-5.57.0/lib/codemirror.css?csSvnVersion=">
+	<link rel="stylesheet" href="../codemirror-5.57.0/theme/monokai.css?csSvnVersion=">
+	<script src="../codemirror-5.57.0/mode/javascript/javascript.js?csSvnVersion="></script>
+	<script src="../codemirror-5.57.0/mode/htmlmixed/htmlmixed.js?csSvnVersion="></script>
+	<script src="../codemirror-5.57.0/mode/xml/xml.js?csSvnVersion="></script>
+	<script src="../codemirror-5.57.0/mode/css/css.js?csSvnVersion="></script>
+	<!-- csCanvas人形圖 -->
+	<script src="js/fabric.min.js?csSvnVersion="></script>
+	<script src="js/csCanvas.js?csSvnVersion="></script>
+	<link rel="stylesheet" href="css/csCanvas.css?csSvnVersion=">
+	<!-- 測試 -->
+	<script src="data/data_type1.js?csSvnVersion="></script>
+	<script>
+		let leftMenu, leftTopBox, leftBottomBox
+		$(document).ready(function(){
+			eNursing.showLog=function(){}; //關閉showLog功能
+			leftMenu = document.getElementById('leftMenu')
+			leftTopBox 		= document.querySelector('.left-top-box')
+			leftBottomBox 	= document.querySelector('.left-bottom-box')
+			console.log(leftMenu)
+			// 畫面初始化
+			leftMenu.addEventListener('mouseenter', leftMenuHover)
+			leftMenu.addEventListener('mousemove', leftMenuHover)
+			leftMenu.addEventListener('mouseleave', leftBoxHover)
+			leftMenu.addEventListener('click', leftMenuClick)
+			leftTopBox.addEventListener('mouseenter', leftBoxHover)
+			leftTopBox.addEventListener('mousemove', leftBoxHover)
+			leftTopBox.addEventListener('click', leftMenuClick)
+			leftBottomBox.addEventListener('mousemove', leftBoxHover)
+			leftBottomBox.addEventListener('mousemove', leftBoxHover)
+			leftBottomBox.addEventListener('click', leftMenuClick)
+
+			//測試
+			// console.log(data_type1)
+			// const_propCsCanvas.setValue(data_type1)
+			// $('#div-environment-sourceId').html(data_type1.sourceId)
+			// $('#div-environment-csName').html(data_type1.csName)
+			// $('#div-environment-typeA').html(data_type1.typeA)
+			// $('#div-environment-typeB').html(data_type1.typeB)
+			// console.log(const_propCsCanvas)
+			// formFile.showCsCanvas()
+		})
+		/**
+		 * 左側菜單滑入效果
+		 * @param {Event} e
+		 */
+		function leftMenuHover(e) {
+			if (e.target === leftMenu)
+				e.target.classList.add('hover')
+		}
+
+		/**
+		 * 左側區塊滑入效果
+		 * @param {Event} e
+		 */
+		function leftBoxHover(e) {
+			leftMenu.classList.remove('hover')
+		}
+
+		/**
+		 * 左側菜單點擊縮放效果
+		 * @param {Event} e
+		 */
+		function leftMenuClick(e) {
+			if (e.target === leftTopBox || e.target === leftBottomBox || e.target === leftMenu) {
+				if (leftMenu.classList.contains('active'))
+					leftMenu.classList.remove('active')
+				else
+					leftMenu.classList.add('active')
+				leftBoxHover(e)
+			}
+		}
+	</script>
+</head>
+<body>
+<div class="mask hide"></div>
+<div class="loading-mask fade hide"></div>
+<div class="spinner-container fade hide">
+	<div class="spinner-border m-5 loading-spinner" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<div class="d-flex flex-column h-100">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">csCanvas</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link" href="#" id="navbarFileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-default" title="檔案" onclick="return false;">
+							<i class="bi bi-folder text-white"></i>
+						</button>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarFileDropdown">
+						<a class="dropdown-item" href="#" onclick="formFile.newForm(); return false">開新檔案</a>
+						<a class="dropdown-item" href="#" onclick="formFile.openForm(); return false">開啟舊檔</a>
+						<a class="dropdown-item" href="#" onclick="formFile.saveForm(true); return false">儲存表單</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link" href="#" id="navbarHelpDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<button class="btn btn-default" title="幫助" onclick="return false;">
+							<i class="bi bi-question text-white"></i>
+						</button>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarHelpDropdown">
+						<a class="dropdown-item" href="#" onclick="formFile.showConnectProperties(); return false">連線參數</a>
+						<a class="dropdown-item" href="#" onclick="formFile.showCsCanvasProperties(); return false">csCanvas物件</a>
+						<a class="dropdown-item disabled" href="#">版本 ver1.0 (Beta)</a>
+					</div>
+				</li>
+				<li class="nav-item dropdown" id="toolBar">
+					<button class="btn btn-default" id="btn_recover" disabled="disabled" title="復原上一步(ctrl+z)" onclick="formFile.btn_recover(this)">
+						<i class="bi bi-arrow-left text-white"></i>
+					</button>
+					<button class="btn btn-default" id="btn_redo" disabled="disabled" title="重作下一步(ctrl+y)" onclick="formFile.btn_redo(this)">
+						<i class="bi bi-arrow-right text-white"></i>
+					</button>
+				</li>
+			</ul>
+<!--			<div id="toolBar">-->
+<!--				<i id="btn_recover" class="bi bi-arrow-90deg-left text-white disabled" title="復原上一步(ctrl+z)" onclick="formFile.btn_recover(this)"></i>-->
+<!--				<i id="btn_redo" class="bi bi-arrow-90deg-right text-white disabled" title="重作下一步(ctrl+y)" onclick="formFile.btn_redo(this)"></i>-->
+<!--				<i class="last"></i>-->
+<!--			</div>-->
+		</div>
+	</nav>
+	<div class="main-page container-fluid row d-flex flex-fill border no-padding">
+		<div class="left-block active" id="leftMenu">
+			<div class="left-top-box">
+				<ul class="nav nav-tabs" id="bean-tabs" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link" id="li-environment" data-toggle="tab" href="#div-environment" role="tab" aria-controls="div-environment" aria-selected="true" onclick="formFile.setEnvironmentHTML()">環境設定</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" id="li-areaObj" data-toggle="tab" href="#div-areaObj" role="tab" aria-controls="div-areaObj" aria-selected="true">區域物件</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="li-backgroundObj" data-toggle="tab" href="#div-backgroundObj" role="tab" aria-controls="div-backgroundObj" aria-selected="true">底圖物件</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="li-otherObj" data-toggle="tab" href="#div-otherObj" role="tab" aria-controls="div-otherObj" aria-selected="true">其他物件</a>
+					</li>
+				</ul>
+				<div class="tab-content border flex-fill" id="bean-tabContent">
+					<div class="tab-pane fade" id="div-environment" role="tabpanel" aria-labelledby="li-environment" style="padding: 0;">
+						<div class="materialTitle container row no-padding">
+							<div class="col-5">醫院</div>
+							<div class="col-7" id="div-environment-sourceId"></div>
+							<div class="col-5">人形圖名稱</div>
+							<div class="col-7" id="div-environment-csName"></div>
+							<div class="col-5">區分類型A</div>
+							<div class="col-7" id="div-environment-typeA"></div>
+							<div class="col-5">區分類型B</div>
+							<div class="col-7" id="div-environment-typeB"></div>
+							<div class="col-5">背景圖</div>
+							<div class="col-7">
+								<button class="btn btn-primary" type="button" onclick="formFile.selectImg()">選擇圖片</button>
+								<input type="file" class="hide" id="input_selectImg" accept="image/*" onchange="formFile.selectImg_getBase64()">
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade show active" id="div-areaObj" role="tabpanel" aria-labelledby="li-areaObj">
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('Rect', true)">方形</button>
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('Circle', true)">圓形</button>
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('drawPain', true)">鋼筆(ctrl+b)</button>
+					</div>
+					<div class="tab-pane fade" id="div-backgroundObj" role="tabpanel" aria-labelledby="li-backgroundObj">
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('Rect', false)">方形</button>
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('Circle', false)">圓形</button>
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('Text', false)">文字</button>
+						<button class="btn btn-outline-info" type="button" onclick="formFile.addArea('drawPain', false)">鋼筆</button>
+					</div>
+					<div class="fade" id="div-otherObj" role="tabpanel" aria-labelledby="li-otherObj">
+						<div class="container row no-padding" id="addDiv_templateDiv">
+							<div class="col-12">
+								<button class="btn btn-success" type="button" onclick="formFile.addOtherOptions(true)">新增</button>
+							</div>
+						</div>
+						<div class="materialTitle container row no-padding">
+							<div class="col-4 bg-dark text-white attributeTitle">選項標題</div>
+							<div class="col-4 bg-dark text-white attributeTitle">選項值</div>
+							<div class="col-3 bg-dark text-white attributeTitle">輸入框</div>
+							<div class="col-1 bg-dark text-white attributeTitle"></div>
+						</div>
+						<div class="row attributeContent flex-fill" id="list_templateDiv">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="left-bottom-box">
+				<div class="materialTitle container row no-padding">
+					<div class="col-12 bg-dark text-white attributeTitle">切換模式</div>
+				</div>
+				<div class="row attributeContent flex-fill" id="materialList">
+					<div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'normal')">
+						<label class="switchMode-label">操作模式</label>
+						<label class="hotKey">(alt + 1)</label>
+					</div>
+					<div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'edit')">
+						<label class="switchMode-label">編輯模式</label>
+						<label class="hotKey">(alt + 2)</label>
+					</div>
+					<div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'changeShap')">
+						<label class="switchMode-label">變形模式</label>
+						<label class="hotKey">(alt + 3)</label>
+					</div>
+					<div class="col-12 subTitle switchMode-div" onclick="formFile.switchMode(this, 'sort')">
+						<label class="switchMode-label">排序模式</label>
+						<label class="hotKey">(alt + 4)</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="right-block scrollbar-black square">
+			<div class="col-12 h-100 d-flex flex-column" id="drawPage">
+				<canvas id="mycanvas" class="csCanvas" style="/*border: 1px #000 solid;*/" onchange=""></canvas>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--modal 新增表單-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_newForm" aria-modal="true" style="display: none;">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:black" id="modal_newForm_title">開新檔案</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body" id="modal_newForm_body">
+				<div class="form-group row"><label class="col-sm-3 col-form-label" for="modal_newForm_formType">formType</label>
+					<div class="col-sm-9"><input type="text" class="form-control" id="modal_newForm_formType" name="modal_newForm_formType" placeholder="formType" value="propCsCanvas" disabled="disabled"></div>
+				</div>
+				<div class="form-group row"><label class="col-sm-3 col-form-label" for="modal_newForm_sourceId">醫院(sourceID)*</label>
+					<div class="col-sm-9"><select class="custom-select" id="modal_newForm_sourceId" name="modal_newForm_sourceId">
+						<option value="高雄民生" selected>高雄民生</option>
+						<option value="台北榮總">台北榮總</option>
+						<option value="新店耕莘出備">新店耕莘出備</option>
+					</select></div>
+				</div>
+				<div class="form-group row"><label class="col-sm-3 col-form-label" for="modal_newForm_csName">人形圖名稱*</label>
+					<div class="col-sm-9"><input type="text" class="form-control" id="modal_newForm_csName" name="modal_newForm_csName" placeholder="ex. 傷口" value=""></div>
+				</div>
+				<div class="form-group row"><label class="col-sm-3 col-form-label" for="modal_newForm_typeA">區分類型A</label>
+					<div class="col-sm-9"><input type="text" class="form-control" id="modal_newForm_typeA" name="modal_newForm_typeA" placeholder="ex. 成人,青少年,幼兒" value=""></div>
+				</div>
+				<div class="form-group row"><label class="col-sm-3 col-form-label" for="modal_newForm_typeB">區分類型B</label>
+					<div class="col-sm-9"><input type="text" class="form-control" id="modal_newForm_typeB" name="modal_newForm_typeB" placeholder="ex. 壓力性損傷, 手術, 外傷" value=""></div>
+				</div>
+			</div>
+			<div class="modal-footer" id="modal_newForm_footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+				<button class="btn btn-success" type="button" onclick="formFile.newForm_btn()">新增</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--modal 連線參數-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_connectProperties" aria-modal="true" style="display: none;">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:black">連線參數</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group row" id="modal_title_const_socketUrl"><label class="col-sm-3 col-form-label">webSocket接口</label>
+					<label class="col-sm-9" style="user-select: text; cursor: auto;" id="modal_label_const_socketUrl"></label>
+				</div>
+				<div class="form-group row" id="modal_title_const_webserviceUrl"><label class="col-sm-3 col-form-label">webService接口</label>
+					<label class="col-sm-9" style="user-select: text; cursor: auto;" id="modal_label_const_webserviceUrl"></label>
+				</div>
+				<div class="form-group row" id="modal_title_const_gformServiceUrl"><label class="col-sm-3 col-form-label">gForm接口</label>
+					<label class="col-sm-9" style="user-select: text; cursor: auto;" id="modal_label_const_gformServiceUrl"></label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">關閉</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--modal csCanvas物件-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_csCanvasProperties" aria-modal="true" style="display: none;">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:black">csCanvas物件</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="formFile.showCsCanvasPropertiesOnClose()"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<textarea id="propCsCanvas_editor" class="editor" style="height: 500px; display: none"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal" onclick="formFile.showCsCanvasPropertiesOnClose()">關閉</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--modal 提示-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_alert" aria-modal="true" style="padding-right: 17px; display: none;">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-danger text-white">
+				<h5 class="modal-title">提示</h5><button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<p class="modal-body-paragraph" style="color:black" id="modal_alert_msg">施工中</p>
+			</div>
+			<div class="modal-footer"><button type="button" class="btn btn-primary" data-dismiss="modal">確定</button></div>
+		</div>
+	</div>
+</div>
+
+<!--modal 開啟舊檔-->
+<div class="modal fade show" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" id="modal_gFormList" aria-modal="true" style="padding-right: 17px; display: none;">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="color:black">開啟舊檔</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-striped table-borderless">
+					<thead id="modal_gFormList_thead">
+						<tr class="table-info">
+							<th scope="col" class="text-center">#</th>
+							<th scope="col" class="text-center">醫院(sourceId)</th>
+							<th scope="col" class="text-center">人形圖名稱</th>
+							<th scope="col" class="text-center">區分類型A</th>
+							<th scope="col" class="text-center">區分類型B</th>
+							<th scope="col" class="text-center historyRec hide">上傳日期</th>
+							<th scope="col" class="text-center">功能</th>
+						</tr>
+					</thead>
+					<tbody id="modal_gFormList_tbody">
+						<tr class="text-center">
+							<td>1</td>
+							<td>XX醫院</td>
+							<td>XX人形圖名稱</td>
+							<td>XX區分類型A</td>
+							<td>XX區分類型B</td>
+							<td class="historyRec hide">XX上傳日期</td>
+							<td>
+								<button class="btn btn-success" type="button" onclick="formFile.chooseThisForm(0); return false">選擇</button>
+								<button class="btn btn-success historyBtn" type="button" onclick="formFile.openForm(0); return false">歷次紀錄</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script>
+	// $("#onlineMode").click()
+	// chooseThisFormOnlineMode('7391823262bf4c9886ec42a6ccdd1edc', 'MStest');
+	// setTimeout(function(){
+	// 	switchFormat()
+	// 	setTimeout(function(){
+	// 		$("#formFormatFormType").val("list")
+	// 		$("#mosal_alert").find(".btn.btn-success").click()
+	// 	}, 500)
+	// }, 500)
+</script>

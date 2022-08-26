@@ -1,0 +1,235 @@
+<div class="iframe_page detailed">
+    <div class="whiteBg">
+        <div class="title between">
+            <div class="flex-end">
+                <h3>資料登錄</h3>
+                <span class="status">查詢資料</span>
+            </div>
+            <div class="btnAll">
+                <!-- <a href="../../../_page/page02_2.html" class="btn patientDetail">新增</a> -->
+                <a data-formtype="TSR-Form" data-framemodel="gFormAppAdd" onclick="window.localStorage.removeItem('gForm');changeCustomFormPage(this);return false;" class="btn patientDetail">新增</a>
+                <a href="../../../_page/page02_3.html" class="btn patientDetail">批次匯入</a>
+                <a href="../../../_page/page02_4.html" class="btn patientDetail">統計報表</a>
+            </div>
+        </div>
+        <div class="searchbox">
+            <form class="form">
+                <div class="top flex">
+                    <div class="form-group flex">
+                        <div class="pFormItem2" data-bean="ORG_ID" >
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <input id="sh_PTID" type="text" placeholder="身份證字號">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <input id="sh_PATIENT_ID" type="text" placeholder="病歷號">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <input type="text" placeholder="簡表代號(未實做)">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <input id="sh_PTNAME" type="text" placeholder="姓名">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <div>
+                            <div class="divFormItem">
+                                <select id="sh_QC" class="formItem selectFormItem">
+                                    <option value="">QC狀態</option>
+                                    <option value="N">未完成</option>
+                                    <option value="Y">已完成</option>
+                                <select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom flex">
+                    <div class="form-group flex">
+                        <label>住院日期起：</label>
+                        <div>
+                            <input type="text" id="sh_IH_DT_start" placeholder="yyyy-MM-dd" data-title="住院日期起" data-dateformat="yyyy-MM-dd" data-typeformat="{&quot;date&quot;:{&quot;format&quot;:&quot;yyyy-mm-dd&quot;,&quot;weekStart&quot;:1,&quot;todayBtn&quot;:1,&quot;autoclose&quot;:1,&quot;todayHighlight&quot;:1,&quot;startView&quot;:4,&quot;minView&quot;:2,&quot;forceParse&quot;:0,&quot;language&quot;:&quot;zh-TW&quot;}}" data-minlimit="{&quot;date&quot;:&quot;1800-01-01&quot;}" data-maxlimit="{&quot;date&quot;:&quot;+0y+0m+0d&quot;}" onblur="checkDateFormat(this);">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <label>住院日期迄：</label>
+                        <div>
+                            <input type="text" id="sh_IH_DT_end" placeholder="yyyy-MM-dd" data-title="住院日期起" data-dateformat="yyyy-MM-dd" data-typeformat="{&quot;date&quot;:{&quot;format&quot;:&quot;yyyy-mm-dd&quot;,&quot;weekStart&quot;:1,&quot;todayBtn&quot;:1,&quot;autoclose&quot;:1,&quot;todayHighlight&quot;:1,&quot;startView&quot;:4,&quot;minView&quot;:2,&quot;forceParse&quot;:0,&quot;language&quot;:&quot;zh-TW&quot;}}" data-minlimit="{&quot;date&quot;:&quot;1800-01-01&quot;}" data-maxlimit="{&quot;date&quot;:&quot;+0y+0m+0d&quot;}" onblur="checkDateFormat(this);">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <label>發病日期起：</label>
+                        <div>
+                            <input type="text" id="sh_ONSET_start" placeholder="yyyy-MM-dd" data-title="住院日期起" data-dateformat="yyyy-MM-dd" data-typeformat="{&quot;date&quot;:{&quot;format&quot;:&quot;yyyy-mm-dd&quot;,&quot;weekStart&quot;:1,&quot;todayBtn&quot;:1,&quot;autoclose&quot;:1,&quot;todayHighlight&quot;:1,&quot;startView&quot;:4,&quot;minView&quot;:2,&quot;forceParse&quot;:0,&quot;language&quot;:&quot;zh-TW&quot;}}" data-minlimit="{&quot;date&quot;:&quot;1800-01-01&quot;}" data-maxlimit="{&quot;date&quot;:&quot;+0y+0m+0d&quot;}" onblur="checkDateFormat(this);">
+                        </div>
+                    </div>
+                    <div class="form-group flex">
+                        <label>發病日期迄：</label>
+                        <div>
+                            <input type="text" id="sh_ONSET_end" placeholder="yyyy-MM-dd" data-title="住院日期起" data-dateformat="yyyy-MM-dd" data-typeformat="{&quot;date&quot;:{&quot;format&quot;:&quot;yyyy-mm-dd&quot;,&quot;weekStart&quot;:1,&quot;todayBtn&quot;:1,&quot;autoclose&quot;:1,&quot;todayHighlight&quot;:1,&quot;startView&quot;:4,&quot;minView&quot;:2,&quot;forceParse&quot;:0,&quot;language&quot;:&quot;zh-TW&quot;}}" data-minlimit="{&quot;date&quot;:&quot;1800-01-01&quot;}" data-maxlimit="{&quot;date&quot;:&quot;+0y+0m+0d&quot;}" onblur="checkDateFormat(this);">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="searchBtn btnAll">
+            <button class="btn" onclick="showData(this); return false;"><i class="fas fa-search"></i>查詢資料</button>
+            <button class="btn" onclick="alert('敬請期待...'); return false;"><i class="far fa-file-alt"></i>查詢匯出</button>
+        </div>
+        <div class="tableAll">
+            <div class="toolBar between">
+                <div class="tableBtn">
+                    <button class="btn" onclick="deleteForm(this); return false;">刪除</button>
+                    <button class="btn" onclick="alert('敬請期待...'); return false;">匯出</button>
+                    <span>[請勾選下表中的選項]</span>
+                </div>
+                <div class="tableDetail">
+                    <p>每頁顯示<input type="text" id="showCounts" value="10" maxlength="4" style="width: 60px;" onblur="showCountsChange();"/>筆，資料筆數：<font id="font_countFirst">1</font> - <font id="font_countLast">10</font> 筆，共 <font id="font_countTotal">1268</font> 筆</p>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="tableList" class="table tableList table-striped table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th scope="col"><span class="checkboxAll"></span></th>
+                            <th scope="col">病人姓名</th>
+                            <th scope="col">病歷號</th>
+                            <th scope="col">簡表代號</th>
+                            <th scope="col">住院日期</th>
+                            <th scope="col">發病日期</th>
+                            <th scope="col">性別</th>
+                            <th scope="col">ICD9</th>
+                            <th scope="col">醫院別</th>
+                            <th scope="col">狀態</th>
+                            <th scope="col">建檔人</th>
+                            <th scope="col">建檔日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="mypager">
+                <ul id="ul_showPage" class="pagination justify-content-center mypager_list" data-total="12">
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('first'); return false;">1</a>
+                    </li>
+                    <li class="page-item prev">
+                        <a href="" class="page-link" onclick="changeDataPage('prev'); return false;">&lt;</a>
+                    </li>
+                    <li class="page-item active">
+                        <a href="" class="page-link" onclick="changeDataPage('index', $(this).html()); return false;">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('index', $(this).html()); return false;">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('index', $(this).html()); return false;">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('next'); return false;">&gt;</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="" class="page-link" onclick="changeDataPage('last'); return false;">？</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script id="tableListTr_Template" type="text/html">
+{{if $data.length==0}}
+        <tr>
+            <td colspan="11">查無資料..</td>
+        </tr>
+{{else}}
+    {{each $data gForms idx}}
+        {{set gForm=gForms.gForm}}
+        <tr>
+            <td><span class="checkbox formCheckBox" value="{{gForm.formId}}"></span></td>
+            <td>
+                <a href="_page/page02_1b.html" class="patientDetail" data-formtype="TSR-Form" data-framemodel="gFormAppAdd" onclick="updateForm(this, {{idx}});return false;">
+                    <font class="pFormItem" data-bean="PTNAME" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}" fns-substr-0="0,1" fns-backTitle-1="OO"/>
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="PATIENT_ID" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="S_ID" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="IH_DT" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" align=center>
+                {{if gForm.gformItemMap.ONSET.itemValue}}
+                    {{gForm.gformItemMap.ONSET.itemValue.split(" ")[0]}}
+                {{/if}}
+            </td>
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="GENDER_TX" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="ICD_TX" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="ORG_ID" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" align=center>
+                {{if gForm.status=='Y'}}
+                    完成
+                {{else}}
+                    未完成
+                {{/if}}
+            </td>
+            <td class="etd" align=center>
+                {{if gForm.modifyUserName}}
+                    {{gForm.modifyUserName}}
+                {{else}}
+                    {{gForm.creatorName}}
+                {{/if}}
+            </td>
+            <td class="etd" align=center>
+                {{dateFormat (gForm.createTime,"yyyy/MM/dd")}}
+            </td>
+        </tr>
+    {{/each}}
+{{/if}}
+</script>
+
+<script id="ul_showPage_Template" type="text/html">
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('first'); return false;">1</a>
+    </li>
+    <li class="page-item prev">
+        <a href="" class="page-link" onclick="changeDataPage('prev'); return false;">&lt;</a>
+    </li>
+{{if $data.hidePrevIndex}}
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('index', {{$data.hidePrevIndex}}); return false;">..</a>
+    </li>
+{{/if}}
+{{each $data.pageArr page idx}}
+    <li class="page-item {{if page.active}}active{{/if}}">
+        <a href="" class="page-link" onclick="changeDataPage('index', {{page.index}}); return false;">{{page.index}}</a>
+    </li>
+{{/each}}
+{{if $data.hideNextIndex}}
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('index', {{$data.hideNextIndex}}); return false;">..</a>
+    </li>
+{{/if}}
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('next'); return false;">&gt;</a>
+    </li>
+    <li class="page-item">
+        <a href="" class="page-link" onclick="changeDataPage('last'); return false;">{{$data.pageTotal}}</a>
+    </li>
+</script>

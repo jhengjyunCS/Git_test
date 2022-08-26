@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    status : 這個用於設置log4j2自身內部的訊息輸出,可以不設置,當設置成trace時,會看到log4j2內部各種詳細輸出
+    monitorInterval : Log4j能夠自動檢測修改配置文件和重新配置本身, 設置間隔秒數。
+
+    注：本配置文件的目標是將不同級別的日誌輸出到不同文件，最大2MB一個文件，
+    文件資料達到最大值時，舊資料會被壓縮並放進指定文件夾
+-->
+<Configuration status="WARN" monitorInterval="600">
+
+    <Properties>
+        <!-- 配置日誌文件輸出目錄，此配置將日誌輸出到tomcat根目錄下的指定文件夾 -->
+        <Property name="LOG_HOME">${web:rootDir}/WEB-INF/logs</Property>
+    </Properties>
+
+    <Appenders>
+
+        <!--這個輸出控制臺的配置，這裏輸出除了warn和error級別的訊息到System.out-->
+        <Console name="console_out_appender" target="SYSTEM_OUT">
+            <!-- 控制臺只輸出level及以上級別的訊息(onMatch),其他的直接拒絕(onMismatch) -->
+            <ThresholdFilter level="warn" onMatch="DENY" onMismatch="ACCEPT"/>
+            <!-- 輸出日誌的格式 -->
+            <PatternLayout pattern="%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n"/>
+        </Console>
+        <!--這個輸出控制臺的配置，這裏輸出warn和error級別的訊息到System.err，在eclipse控制臺上看到的是紅色文字-->
+        <Console name="console_err_appender" target="SYSTEM_ERR">
+            <!-- 控制臺只輸出level及以上級別的訊息(onMatch),其他的直接拒絕(onMismatch) -->
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- 輸出日誌的格式 -->
+            <PatternLayout charset="UTF-8" pattern="%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n"/>
+        </Console>
+
+        <!-- TRACE級別日誌 -->
+        <!-- 設置日誌格式並配置日誌壓縮格式，壓縮文件獨立放在一個文件夾內，
+        日期格式不能為冒號，否則無法生成，因為文件名不允許有冒號，此appender只輸出trace級別的資料到trace.log -->
+        <RollingRandomAccessFile name="trace_appender"
+            immediateFlush="true" fileName="${LOG_HOME}/trace.log"
+            filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/trace - %d{yyyy-MM-dd}.log.gz">
+            <PatternLayout charset="UTF-8">
+                <pattern>%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n</pattern>
+            </PatternLayout>
+            <Policies><!-- 兩個配置任選其一 -->
+                <!--<TimeBasedTriggeringPolicy modulate="true" interval="1"/>-->
+                <!-- 每個日誌文件最大2MB -->
+                <SizeBasedTriggeringPolicy size="5MB"/>
+
+            </Policies>
+            <Filters><!-- 此Filter意思是，只輸出debug級別的資料 -->
+                <!-- DENY，日誌將立即被拋棄不再經過其他過濾器；
+                       NEUTRAL，有序列表裏的下個過濾器過接著處理日誌；
+                       ACCEPT，日誌會被立即處理，不再經過剩餘過濾器。 -->
+                <ThresholdFilter level="debug" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+
+        <!-- DEBUG級別日誌 -->
+        <!-- 設置日誌格式並配置日誌壓縮格式，壓縮文件獨立放在一個文件夾內，
+        日期格式不能為冒號，否則無法生成，因為文件名不允許有冒號，此appender只輸出debug級別的資料到debug.log -->
+        <RollingRandomAccessFile name="debug_appender"
+            immediateFlush="true" fileName="${LOG_HOME}/debug.log"
+            filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/debug - %d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout charset="UTF-8">
+                <pattern>%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n</pattern>
+            </PatternLayout>
+            <Policies><!-- 兩個配置任選其一 -->
+
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <!-- 每個日誌文件最大2MB -->
+                <SizeBasedTriggeringPolicy size="5MB"/>
+
+                <!-- 如果啟用此配置，則日誌會按文件名生成新壓縮文件，
+                即如果filePattern配置的日期格式為 %d{yyyy-MM-dd HH} ，則每小時生成一個壓縮文件，
+                如果filePattern配置的日期格式為 %d{yyyy-MM-dd} ，則天生成一個壓縮文件 -->
+                <!--                 <TimeBasedTriggeringPolicy interval="1" modulate="true" /> -->
+
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+            <Filters><!-- 此Filter意思是，只輸出debug級別的資料 -->
+                <!-- DENY，日誌將立即被拋棄不再經過其他過濾器；
+                       NEUTRAL，有序列表裏的下個過濾器過接著處理日誌；
+                       ACCEPT，日誌會被立即處理，不再經過剩餘過濾器。 -->
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+
+        <!-- INFO級別日誌 -->
+        <RollingRandomAccessFile name="info_appender"
+            immediateFlush="true" fileName="${LOG_HOME}/info.log"
+            filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/info - %d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout charset="UTF-8">
+                <pattern>%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="5M"/>
+            </Policies>
+            <DefaultRolloverStrategy max="1000" />
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+
+        <!-- WARN級別日誌 -->
+        <RollingRandomAccessFile name="warn_appender"
+            immediateFlush="true" fileName="${LOG_HOME}/warn.log"
+            filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/warn - %d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout charset="UTF-8">
+                <pattern>%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="5MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+
+        <!-- ERROR級別日誌 -->
+        <RollingRandomAccessFile name="error_appender"
+            immediateFlush="true" fileName="${LOG_HOME}/error.log"
+            filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/error - %d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout charset="UTF-8">
+                <pattern>%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="5MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- 配置日誌的根節點 -->
+        <root level="trace">
+            <!--控制臺顯示
+            <appender-ref ref="console_out_appender"/>
+            <appender-ref ref="console_err_appender"/>-->
+            <appender-ref ref="trace_appender"/>
+            <appender-ref ref="debug_appender"/>
+            <appender-ref ref="info_appender"/>
+            <appender-ref ref="warn_appender"/>
+            <appender-ref ref="error_appender"/>
+        </root>
+
+        <!-- 第三方日誌系統 -->
+        <logger name="org.springframework.core" level="info"/>
+        <logger name="org.springframework.beans" level="info"/>
+        <logger name="org.springframework.context" level="info"/>
+        <logger name="org.springframework.web" level="info"/>
+        <logger name="org.jboss.netty" level="warn"/>
+        <logger name="org.apache.http" level="warn"/>
+    </Loggers>
+
+</Configuration>

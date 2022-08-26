@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>apiSet list</title>
+    <link rel="stylesheet" type="text/css" href="../plugins/css/div-table.css?csSvnVersion="/>
+    <link rel="stylesheet" type="text/css" href="../plugins/css/modal-dialog.css?csSvnVersion="/>
+    <script type="text/javascript" src="../js/jquery-1.11.1.min.js?csSvnVersion="></script>
+    <script type="text/javascript" src="../plugins/art-template/template-web.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../plugins/art-template/template-transfer.js?csSvnVersion=" id="template" defer></script>
+    <script type="text/javascript" src="../plugins/art-template/template-form.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../META-JS/properties.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../plugins/modules/apiSet.js?csSvnVersion=" defer></script>
+    <script type="text/javascript" src="../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion=" id="eInit" defer></script>
+</head>
+<body>
+<div id="form-details" class="overlay">
+    <div class="modal">
+        <a class="close" style="display: none" id="form-close" href="#"><span>&times;</span></a>
+        <div id="form-container" style="text-align: center">
+            <script type="text/html" id="form-template">
+                {{@ajaxInclude('form',$data)}}
+            </script>
+        </div>
+    </div>
+</div>
+<div id="forms-container">
+    <script type="text/html" id="forms-template">
+        {{@ajaxInclude('forms',$data)}}
+    </script>
+</div>
+<script>
+    var sourceId = "apiSetData";
+    $("#template").ready(function () {
+        $.ajax({
+            url: "apiSetTemplate.json",
+            type: "post",
+            cache: true,
+            ifModified: true,
+            async: true,
+            dataType: "json",
+            success: function (context) {
+                formTemplate = context;
+                var render = template.compile($("#form-template").html());
+                var html = render(context);
+                $("#form-container").html(html);
+            }
+        });
+        var apiSet = nursing.getApiSet();
+        /*apiSet.getLastApiSetFormTemplate(apiSet,function (apiSetFormTemplate) {
+            formTemplate=apiSetFormTemplate;
+            listApiSets();
+            var render = template.compile($("#form-template").html());
+            var html = render(apiSetFormTemplate);
+            $("#form-container").html(html);
+        },errorCall);*/
+        apiSet.getApiSets(function (apiSets) {
+            gforms = apiSets;
+            listApiSets();
+        },errorCall);
+        function listApiSets() {
+            if(formTemplate&&gforms) {
+                formTemplate.itemMap=formTemplate.itemMap||arrayToMap(formTemplate.items);
+                var render = template.compile($("#forms-template").html());
+                var html = render({formTemplate: formTemplate, gforms: gforms,formName:formTemplate.formName});
+                $("#forms-container").html(html)
+            }
+        }
+    });
+</script>
+</body>
+</html>

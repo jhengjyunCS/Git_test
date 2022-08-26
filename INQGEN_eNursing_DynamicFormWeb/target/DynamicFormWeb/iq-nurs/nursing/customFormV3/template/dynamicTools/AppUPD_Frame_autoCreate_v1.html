@@ -1,0 +1,46 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div class="container col-md-12 main-contrnt">
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <div align="center" class="col-xs-5  col-md-3">
+                <input type="button" value=" 保 存 " onclick="dynamicFormSave(this)" />
+            </div>
+            <div align="center" class="col-xs-4  col-md-3">
+                <a class="" href="javascript: return false;" onclick="doURL('AppLIST.html')">
+                    <input type="button" value=" 清 除 " /></a>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="datetimepicker1" class="col-xs-3 col-md-2">纪录日期</label>
+            <div class="col-xs-5 col-md-5">
+                <input type="text" class="form-control" id="datetimepicker1" readonly />
+            </div>
+            <div class="col-xs-4 col-md-5">
+                <input type="text" class="form-control" id="datetimepicker2" readonly />
+            </div>
+        </div>
+
+        {{each $data.items item idx}}
+        <div class="form-group">
+            <div class="col-xs-3 col-md-2">
+                <span class="span1">{{item.title}}：</span>
+            </div>
+            <div class="col-xs-9 col-md-10">
+                <p class="pFormItem" data-bean="{{item.name}}" />
+            </div>
+        </div>
+        {{/each}}
+        <div class="form-group">
+            <div class="col-xs-2 col-md-2">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#pt-pa-info">?</button>
+            </div>
+            <div align="center" class="col-xs-5  col-md-3">
+                <input type="button" value=" 保 存 " onclick="dynamicFormSave(this)" />
+            </div>
+            <div align="center" class="col-xs-4  col-md-3">
+                <a class="" href="javascript: return false;" onclick="doURL('AppLIST.html')">
+                    <input type="button" value=" 清 除 " /></a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,17 @@
+{
+  "method": "formType.init",
+  "configFiles": [
+    "LIMS_EggRetrieval.init.xml"
+  ],
+  "params": [
+    {
+      "key": "eggIds",
+      "value": [
+        "11a3d9fe-ccc9-4904-9779-61167103cc79",
+        "debe035c-f5f3-4c96-b7f4-41fd7767b8c8"
+      ],
+      "type": "stringArray",
+      "format": ""
+    }
+  ]
+}

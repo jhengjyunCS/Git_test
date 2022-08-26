@@ -1,0 +1,73 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<div style="overflow:auto; width: 100%">
+    <table height="51" width="100%" align=center>
+        <tr>
+            <td nowrap>
+                <h4 align="center">{{$data.formName}}</h4>
+            </td>
+        </tr>
+        <tr>
+            <td nowrap align=left>
+                <a onclick="doURL('WebADD.html');">
+                    <input type="button" value="新增" class="clsButton" />
+                </a>
+                <a href="javascript: return false;" onclick="">
+                    <input type="button" value="打印" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    </table>
+    <table id="tableList" class="etable">
+        <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>记录日期</th>
+            {{each $data.items item idx}}
+            <th>
+                {{item.title}}
+            </th>
+            {{/each}}
+            <th>总分</th>
+            <th>评估者</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </table>
+</div>
+<script id="tableListTr_Template" type="text/html">
+    {{'{'+'{'}}each $data dForms idx{{'}'+'}'}}
+        {{'{'+'{'}}set dForm=dForms.dynamicForm{{'}'+'}'}}
+        <tr>
+            <td class="etd" align=center>
+                <a onclick="updateForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="編輯" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="deleteForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                {{'{'+'{'}}dForm.evaluationTime{{'}'+'}'}}
+            </td>
+            {{each $data.items item idx}}
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="{{item.name}}" data-index="{{'{'+'{'}}idx{{'}'+'}'}}" data-formversionid="{{'{'+'{'}}dForm.formVersionId{{'}'+'}'}}"/>
+            </td>
+            {{/each}}
+            <td class="etd" align=center>{{'{'+'{'}}@dForm.totalScore{{'}'+'}'}}</td>
+            <td class="etd" align=center>{{'{'+'{'}}dForm.createUserName{{'}'+'}'}}</td>
+            <td class="etd" align=center>
+                <a onclick="updateForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="編輯" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="deleteForm('{{'{'+'{'}}idx{{'}'+'}'}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    {{'{'+'{'}}/each{{'}'+'}'}}
+</script>

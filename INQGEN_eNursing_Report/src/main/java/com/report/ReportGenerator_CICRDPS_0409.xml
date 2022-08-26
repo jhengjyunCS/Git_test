@@ -1,0 +1,101 @@
+<ReportGenerator>
+    
+    
+	<Algorithm>
+		<DeleteData NAME="CICRDPS_0">
+			<!--刪除原報表區間內資料 -->
+			<Where><![CDATA[REPORTPERIOD=:month]]></Where>
+			<Field NAME="month">month</Field>
+		</DeleteData>
+		<MainFile TotalLevel="2">
+			<QueryData NAME="CICCASE"> <!-- 查個案總表CICCASE 出備病房，前一月狀態為已收案，本月新收案的個案 -->
+				<Where>
+				    <![CDATA[
+				    CASETYPE = 'DischargePlanningSt' 
+				    and TO_CHAR(APTIME, 'YYYYMM')=:month
+				    and CASESTATUS = '300'
+				    ]]>
+				</Where>
+				<OrderBy>APTIME DESC</OrderBy>
+				<Field NAME="month">month</Field><!--怎麼套兩個月的區間 -->
+			</QueryData>
+			<Key Level="1" NAME="ID" />
+		</MainFile>
+
+		<Process_Detail>
+
+			<QueryData NAME="CICDPMeetingReport"> <!-- 查跨團隊會議記錄單 用個案號來查 -->
+				<Where>SOURCEID=:ID</Where>
+				<OrderBy>EVALUATIONTIME desc</OrderBy>
+				<Field NAME="ID">getMap(mainFile, "ID")</Field>
+			</QueryData>
+
+			<QueryData NAME="VW_CICPCASEA"> <!-- 查 住院歷程 -->
+				<Where>PCASENO=:PCASENO</Where>
+				<OrderBy></OrderBy>
+				<Field NAME="PCASENO">getMap(mainFile, "PCASENO")</Field>
+			</QueryData>
+			
+			<QueryData NAME="NISDDIN"> 
+				<Where>SER_NUM=:PCASENO</Where>
+				<OrderBy></OrderBy>
+				<Field NAME="PCASENO">getMap(mainFile, "PCASENO")</Field>
+			</QueryData>
+		</Process_Detail>
+
+		<Process_Tail>
+			<Level>1</Level>
+			<NewData NAME="CICRDPS_0" />
+		</Process_Tail>
+	</Algorithm>
+
+	<ResultTable NAME="CICRDPS_0" Description="個案清單出院準備服務報表">
+		<Field NAME="ID">UUID()</Field>
+		<Field NAME="REPORTPERIOD">month</Field>
+		<Field NAME="HOSPITAL">getMap(mainFile, "STATIONID")</Field>
+		<Field NAME="NOPTS"><![CDATA[(getMap(mainFile,"CASESTATUS")!=800 && getListValue(resultMap,"VW_CICPCASEA","PCASENO")!=null)?1:0]]></Field> <!--未結案數(尚住院)-->
+		<Field NAME="CLOSEPTS_H"><![CDATA[(getMap(mainFile,"CASESTATUS")==800 && getListValue(resultMap,"VW_CICPCASEA","PCASENO")!=null)?1:0]]></Field> <!--不知如何計算 -->
+		<Field NAME="TOTHERWARD">0</Field> <!--不知如何計算 -->
+		<!-- 自動出院或死亡 -->
+		<Field NAME="AOUTDEAD">(searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWhere","5")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWhere","6"))?1:0</Field> 
+		<!-- 領有身心障礙手冊 -->
+		<Field NAME="DISABLEBOOK">searchListHasVal(resultMap,"NISDDIN", "HDISABILITY","1")?1:0</Field>
+		<!--以下不知如何count -->
+		<Field NAME="LTCARE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWhere","3")?1:0</Field>
+		<Field NAME="CARESERVICE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","TransLongCareApply","1")?1:0</Field>
+		<Field NAME="BORROW">0</Field>  <!-- 用物租借 待對應 -->
+		<Field NAME="DAILYCARE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","TransLongCareApplyCare","2")?1:0</Field>
+		<Field NAME="RESPITECARE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","TransLongCareApply","2")?1:0</Field>
+		<Field NAME="ADA">searchListFirstHasVal(resultMap,"CICDPMeetingReport","TransLongCareApply","5")?1:0</Field>
+		<Field NAME="OLDFOODS">searchListFirstHasVal(resultMap,"CICDPMeetingReport","TransLongCareApply","7")?1:0</Field>
+		<Field NAME="TRANSPORTS">searchListFirstHasVal(resultMap,"CICDPMeetingReport","TransLongCareApply","4")?1:0</Field>
+		<Field NAME="HRESTHERS">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTransItem","4")?1:0</Field>
+		<Field NAME="HTRANQUILITY">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTransItem","5")?1:0</Field>
+		<Field NAME="HMEDICAL">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTransItem","1")?1:0</Field>
+		<Field NAME="RETIRECENTER">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeLongCareType","1")?1:0</Field>
+		<Field NAME="NURSINGHOME">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeLongCareType","2")?1:0</Field>
+		<Field NAME="HOMECARE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTrans","1")?1:0</Field>
+		<Field NAME="P_REHABIH">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeLongCareType","3")?1:0</Field>
+		<Field NAME="P_HMEDICAL">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTrans","3")?1:0</Field>
+		<Field NAME="P_CREHABI">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTrans","4")?1:0</Field>
+		<Field NAME="P_DAILYCARE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHomeTrans","5")?1:0</Field>
+		<Field NAME="TVGH">((searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHopitalCare","3")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHopitalRehabilitation","1"))?1:0)</Field>
+		<Field NAME="HNH">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeLongCareType","4")?1:0</Field>
+		<Field NAME="GANDAU"><![CDATA[((searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWherePACHospital","關渡醫院")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWherePAC2Hospital","關渡醫院")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWherePAC3Hospital","關渡醫院")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWherePAC4Hospital","關渡醫院")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeWherePAC5Hospital","關渡醫院"))?1:0)]]></Field>
+		<Field NAME="OTEHRH"><![CDATA[(searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeLongCareType","5")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHopitalCare","4")|| searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHopitalRehabilitation","2"))?1:0]]></Field>
+		<Field NAME="RCW">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHopitalCare","1")?1:0</Field>
+		<Field NAME="HOSPICE">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHopitalCare","2")?1:0</Field>
+		<Field NAME="HC"><![CDATA[((searchListFirstHasVal(resultMap,"CICDPMeetingReport","OrganizationName_OtherHospital","健康服務中心")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","OrganizationName_OtherHospital","衛生所"))?1:0)]]></Field>
+		<Field NAME="SERTOTAL">0</Field>
+		<Field NAME="CROSSTEACH">searchListFirstHasVal(resultMap,"CICDPMeetingReport","DischargeHome","1")?1:0</Field>
+		<Field NAME="YILAN">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","1")?1:0</Field>
+		<Field NAME="KEELUNG">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","2")?1:0</Field>
+		<Field NAME="TAIPEI">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","3")?1:0</Field>
+		<Field NAME="NTAIPEI">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","4")?1:0</Field>
+		<Field NAME="TAOYUAN">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","5")?1:0</Field>
+		<Field NAME="HSINCHU">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","6")?1:0</Field>
+		<Field NAME="MIAOLI">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","7")?1:0</Field>
+		<Field NAME="KINMEN">searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","19")?1:0</Field>
+		<Field NAME="OTHERC"><![CDATA[(searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","8")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","9") ||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","10")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","11")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","12")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","13")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","14")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","15")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","16")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","17")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","18")||searchListFirstHasVal(resultMap,"CICDPMeetingReport","County_TransLongCare","20"))?1:0]]></Field>
+	</ResultTable>
+</ReportGenerator>

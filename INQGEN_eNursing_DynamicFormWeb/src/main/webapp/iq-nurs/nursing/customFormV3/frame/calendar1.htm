@@ -1,0 +1,218 @@
+<HTML>
+<head>
+<meta http-equiv="Content-Language" content="zh-tw">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>小桌历</title>
+<style>
+<!--
+.cls_Box
+{
+    BORDER-BOTTOM: gray 1px solid;
+    BORDER-LEFT: white 1px solid;
+    BORDER-RIGHT: gray 1px solid;
+    BORDER-TOP: white 1px solid;
+    PADDING-BOTTOM: 2px;
+    PADDING-LEFT: 4px;
+    PADDING-RIGHT: 4px;
+    PADDING-TOP: 2px;
+    
+    BACKGROUND-COLOR: #BAD4E0;
+    FONT-FAMILY: "Arial", "新细明体";
+    FONT-SIZE: 9pt;
+    FONT-WEIGHT: normal;
+    COLOR: blue;
+    CURSOR: auto
+}
+.cls_Date
+{
+    BACKGROUND-COLOR: #FFFFFF;
+    FONT-FAMILY: "Arial", "新细明体";
+    FONT-SIZE: 11pt;
+    FONT-WEIGHT: normal;
+    COLOR: blue;
+    CURSOR: hand
+}
+.cls_FontGeneral
+{
+    COLOR: blue;
+    FONT-FAMILY: "Arial", "新细明体";
+    FONT-SIZE: 10pt
+}
+-->
+</style>
+<script language=javascript>
+	var year;
+	var month;
+	var date;
+
+	var currentRow = 0;
+	var monthEnglish = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+	var monthChinese = new Array("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月");
+	var monthDigital = new Array("01","02","03","04","05","06","07","08","09","10","11","12");
+	var monthValue = new Array(0,1,2,3,4,5,6,7,8,9,10,11);
+	
+	var days = new Array(31,29,31,30,31,30,31,31,30,31,30,31);
+	var day = new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+	var dayB = new Array("Sun","Mon","Tues","Wed","Thur","Fri","Sat");
+	var dayC = new Array("日","一","二","三","四","五","六");
+	
+	function init(){
+		var today = new Date();
+		var thisYear = today.getFullYear();	// 年 YYYY
+		var thisMonth = today.getMonth();	// 月 0-11
+		var thisDate = today.getDate();		// 日 1-31
+		var thisDay = today.getDay();		// 星期 0-6
+		
+		showCal(thisYear,thisMonth,thisDate);
+	}
+	
+
+	function showCal(thisYear,thisMonth,thisDate){
+		year = thisYear;
+		month = thisMonth;
+		date = thisDate;
+
+		//alert(year+"-"+month+"-"+date);
+		for(i=document.all("tblCal").rows.length-1;i>0;i--){
+			document.all("tblCal").deleteRow(i);
+			currentRow--;
+		}
+		
+		var firstDate = new Date(year,month,1);
+		var startDay = firstDate.getDay();
+		
+		if( ((year%4 == 0) && (year%100 != 0)) || (year%400 == 0) ){
+			days[1] = 29;
+		}
+		else{
+			days[1] = 28;
+		}
+
+		//======================================================================
+		var str1="";
+		str1 += "<img src='image/back.gif' alt='上一年' align=left width=20px height=20px onclick=showCal("+(year-1)+","+month+","+date+")>";
+		str1 += year;
+		str1 += "<img src='image/next.gif' alt='下一年'  width=20px height=20px onclick=showCal("+(year+1)+","+month+","+date+")>";
+	
+
+
+		str1 += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+		str1 += "&nbsp;&nbsp;"		
+		str1 += "<img src='image/back.gif' alt='上一月'  width=20px height=20px onclick=showCal("+(month == 0 ? year-1 : year)+","+(month == 0 ? 11 : month-1)+","+date+")>";
+		
+		
+		str1 += "<select id=selectMonth name=selectMonth class=cls_FontGeneral onchange=showCal("+year+",document.all('selectMonth').value,"+date+")>";
+		for(i=0;i<12;i++){
+			if(i == month)
+				str1 += "<option value="+monthValue[i]+" selected>"+monthChinese[i];
+			else
+				str1 += "<option value="+monthValue[i]+">"+monthChinese[i];
+		}
+		str1 += "</select>";
+		str1 += "<img src='image/next.gif' alt='下一月'  width=20px height=20px onclick=showCal("+(month == 11 ? year+1 : year)+","+(month == 11 ? 0 : month+1)+","+date+")>";
+
+			
+		document.all("banner").innerHTML = str1;
+		//======================================================================
+		
+		var cnt=0;
+		
+		createRow("tblCal",++currentRow);
+		for(i=0;i<7;i++){
+			if(cnt == 0)
+				createCellHead("tblCal",currentRow,i,dayC[i],"cls_Box","red");
+			else
+				createCellHead("tblCal",currentRow,i,dayC[i],"cls_Box","blue");
+			cnt++;
+		}
+		
+		cnt=0;
+		createRow("tblCal",++currentRow);
+		
+		// Process dates before a month
+		for(i=0;i<startDay;i++){
+			createCell("tblCal",currentRow,cnt++,"","cls_Date","black");
+		}
+		// Process dates of a month
+		for(i=1;i<=days[month];i++){
+			if(cnt == 7){
+				cnt = 0;
+				createRow("tblCal",++currentRow);
+			}
+			var sh="";
+			if (i<10) { sh="0"+i; } else {sh=""+i;}
+			if(cnt == 0){
+//				createCell("tblCal",currentRow,cnt++,"0"+i,"cls_Date","red");
+				createCell("tblCal",currentRow,cnt++,sh,"cls_Date","red");
+			}
+			else{
+//				createCell("tblCal",currentRow,cnt++,"0"+i,"cls_Date","blue");
+				createCell("tblCal",currentRow,cnt++,sh,"cls_Date","blue");
+			}
+		}
+		// Process dates after a month
+		for(i=cnt;i<7;i++){
+			createCell("tblCal",currentRow,i,"","cls_Date","black");
+		}
+	}
+	
+	function createRow(tableName,indexRow){
+		document.all(tableName).insertRow(indexRow);
+	}
+	function createCellHead(tableName,indexRow,indexCell,cellValue,className,fontColor){
+	    
+	    if(document.all(tableName).rows[indexRow].innerHTML==null || document.all(tableName).rows[indexRow].innerHTML.length==0){
+		  try{
+		  document.all(tableName).rows[indexRow].innerHTML="<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+		  }catch(E){document.all(tableName).rows[indexRow].insertCell();}
+		}
+	    if(document.all(tableName).rows[indexRow].cells[indexCell]==null){
+		  document.all(tableName).rows[indexRow].insertCell();
+		}
+		
+		document.all(tableName).rows[indexRow].cells[indexCell].innerHTML = cellValue;
+		document.all(tableName).rows[indexRow].cells[indexCell].align = "center";
+		document.all(tableName).rows[indexRow].cells[indexCell].width = 30;
+		document.all(tableName).rows[indexRow].cells[indexCell].className = className;
+		document.all(tableName).rows[indexRow].cells[indexCell].style.color = fontColor;
+	}
+	function createCell(tableName,indexRow,indexCell,cellValue,className,fontColor){
+	    if(document.all(tableName).rows[indexRow].innerHTML==null || document.all(tableName).rows[indexRow].innerHTML.length==0){
+		  try{
+		  document.all(tableName).rows[indexRow].innerHTML="<td></td><td></td><td></td><td></td><td></td><td></td><td></td>";
+		  }catch(E){document.all(tableName).rows[indexRow].insertCell();}
+		}
+	    if(document.all(tableName).rows[indexRow].cells[indexCell]==null){
+		  document.all(tableName).rows[indexRow].insertCell();
+		}
+
+		document.all(tableName).rows[indexRow].cells[indexCell].innerHTML = "<div onclick=selectDate("+cellValue+")> "+cellValue+" </div>";
+		document.all(tableName).rows[indexRow].cells[indexCell].align = "center";
+		document.all(tableName).rows[indexRow].cells[indexCell].width = 30;
+		document.all(tableName).rows[indexRow].cells[indexCell].style.cursor = "hand";
+		document.all(tableName).rows[indexRow].cells[indexCell].className = className;
+		document.all(tableName).rows[indexRow].cells[indexCell].style.color = fontColor;
+		if(date == cellValue)
+			document.all(tableName).rows[indexRow].cells[indexCell].className = "cls_Box";
+			//document.all(tableName).rows[indexRow].cells[indexCell].style.backgroundColor = "#c9d000";
+	}
+	function selectDate(aa){
+		if(aa<10) aa="0"+aa;
+		foo = year+"/"+monthDigital[month]+"/"+aa;
+		//window.opener.ans.value = foo;
+		window.returnValue = foo;
+		window.close();
+	}
+	//#F6F7EE
+</script>
+</head>
+<body bgcolor="#E9F1F5" onload=init()>
+<br>
+<table id=tblCal name=tblCal align=center>
+	<tr>
+		<td rowspan=9>&nbsp;&nbsp;</td>
+		<td id=banner name=banner colspan=7 class=cls_Box></td>
+	</tr>
+</table>
+</body>
+</HTML>

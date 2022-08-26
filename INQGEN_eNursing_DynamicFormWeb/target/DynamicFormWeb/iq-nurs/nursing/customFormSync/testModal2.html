@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+	<link rel="stylesheet" href="tempelate.css?csSvnVersion=">
+</head>
+<body>
+	<button onclick="document.getElementById('myModal1').style.display='block'">click me!</button><br>
+	<textarea style="width: 50%; height: 800px;" id="jsonView"></textarea>
+	<div id="myModal1" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+
+		    <header class="w3-container w3-mineral-blue">
+			    <span onclick="document.getElementById('myModal1').style.display='none'"
+			      	class="w3-button w3-hover-sky-blue w3-display-topright">&times;</span>
+			    <h2>新 增 驗 證 規 則 Step.1</h2>
+		    </header>
+		    <div class="w3-container w3-alice-blue w3-margin-large">
+		    	<h3>※ 輸入驗證規則名稱及相關說明 ※</h3>
+		    	<p>為了幫助後續維護及修改更為容易，加入詳細的說明更為妥善。</p>
+		    </div>
+		    <span class="w3-title">規則名稱</span>
+		    <div class="w3-container w3-block-1">
+				<div class="w3-main-block w3-border-top">
+					<div class="w3-main-item">
+						<div class="w3-left">
+				      		<span>規則名稱：</span>
+				      	</div>
+				      	<div class="w3-right">
+				      		<input class="w3-input w3-border w3-large" type="text" onblur="addName(this)" placeholder="請輸入規則名稱。 Ex: 驗證規則01">
+				      	</div>
+					</div>
+					<div class="w3-main-item">
+			      		<div class="w3-left">
+			      			<span>備註：</span>
+			      		</div>
+			      		<div class="w3-right">
+			      			<input class="w3-input w3-border w3-large" type="text" onchange="addDesc(this)" placeholder="(Optional)">
+			      		</div>
+			      	</div>
+				</div>
+		    </div>
+
+		    <footer class="w3-container w3-light-grey w3-padding">
+		    	<button class="w3-button w3-dark-gray w3-border w3-site-left" style="margin-left: 10px;" onclick="document.getElementById('myModal1').style.display='none'">
+		    		取消
+		    	</button>
+		    	<button class="w3-button w3-dodger-blue w3-hover-nany w3-border w3-site-right" style="margin-right: 10px;" onclick="nextPage(this, 2)">
+		    		下一步
+		    	</button>
+		    </footer>
+
+		</div>
+	</div>
+	<div id="myModal2" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+			<header class="w3-container w3-mineral-blue">
+			    <span onclick="document.getElementById('myModal2').style.display='none'"
+			      	class="w3-button w3-hover-sky-blue w3-display-topright">&times;</span>
+			    <h2>新 增 驗 證 規 則 Step.2</h2>
+		    </header>
+		    <div class="w3-container w3-alice-blue w3-margin-large">
+		    	<h3>※ 新增主要驗證規則的元件 ※</h3>
+		    	<p>選擇【主要元件】及【驗證規則】，若超過兩個主要元件需選擇【元件邏輯】</p>
+		    </div>
+			<!-- <button class="w3-title-btn w3-button" onclick="addMainItem(this)">+</button> -->
+			<div class="w3-scrollbar w3-max-height" style="position: relative;">
+				<span class="w3-title">主要元件及邏輯</span>
+				<div class="w3-container w3-block-1" id="itemList">
+					<div class="w3-main-block w3-border-top">
+						<div class="w3-main-item">
+							<div class="w3-left">
+								<span>元件清單：</span>
+							</div>
+							<div class="w3-right" id="beanList">
+								<!-- <button class="w3-button w3-border w3-pale-green w3-hover-forst-green"> 元件001 </button> -->
+							</div>
+						</div>
+						<div class="w3-main-item">
+							<div class="w3-left">
+					      		<span>元件邏輯：</span>
+					      	</div>
+					      	<div class="w3-right">
+					      		<select class="w3-select w3-border" id="mainEvent" onchange="editMainEvent(this)">
+						     		<option>請選擇</option>
+						     		<option value="&&">且 (&&)</option>
+						     		<option value="||">或 (||)</option>
+						     	</select>
+					      	</div>
+						</div>
+					</div>
+				</div>
+				<div class="w3-container">
+					<button class="w3-button w3-border w3-bisque w3-hover-burly-wood w3-site-right" onclick="addMainView(this)" id="addMain">新增主元件</button>
+					<button class="w3-button w3-border w3-rose-red w3-hover-dark-violet w3-disabled" onclick="delMainView(this)" style="margin-left: 10px" id="delMain">刪除主元件</button>
+					<button class="w3-button w3-border w3-alice-blue w3-hover-alice-blue w3-site-left w3-disabled" onclick="editMainView(this)" id="editMain">修改主元件</button>
+				</div>
+				<br><hr>
+				<div class="w3-scrollbar w3-transfer" style="height: 0px;" id="mainItemList">
+					<div class="w3-container w3-block-1">
+						<!-- <button class="w3-title-btn w3-button" onclick="removeMainItem(this)"> X </button> -->
+					    <div class="w3-main-block">
+					   		<div class="w3-main-item">
+					      		<div class="w3-left">
+						      		<span>主元件：</span>
+						      	</div>
+						      	<div class="w3-right">
+						      		<select class="w3-select w3-border" onchange="formItemChange(this)" id="beanMain">
+							     		<option value="0">請選擇</option>
+							     		<option value="checkbox">checkbox Item</option>
+							      		<option value="radiobox">radiobox Item</option>
+							     		<option value="input">input Item</option>
+							      		<option value="select">select Item</option>
+							      		<option value="other">...</option>
+							      	</select>
+							      	<button class="w3-button w3-border w3-light-grey w3-site-right" onclick="cancelMainAdd(this)" id="close">關閉</button>
+						      	</div>
+						    </div>
+						    <div class="w3-main-item mainItem chk" style="display: none">
+						      	<div class="w3-left">
+						      		<span>觸發指定值：</span>
+						      	</div>
+						      	<div class="w3-right">
+						      		<div class="w3-checkbox-group">
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值1">
+						      			<label>值1</label>
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值2">
+						      			<label>值2</label>
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值3">
+						      			<label>值3</label>
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值4">
+						     			<label>值4</label>
+						     			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值5">
+						      			<label>值5</label>
+						      		</div>
+						      	</div>
+						    </div>
+						    <div class="w3-main-item mainItem chk" style="display: none">
+						    	<div class="w3-left">
+						    		<span>邏輯運算：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<select class="w3-select w3-border" onchange="addMainLogic(this, 'o')" id="beanLogic">
+						    			<option value="0">請選擇</option>
+						    			<option value="&&">且 (&&)</option>
+						    			<option value="||">或 (||)</option>
+						    		</select>
+						    	</div>
+						    </div>
+						    <div class="w3-main-item mainItem ipt" style="display: none">
+						    	<div class="w3-left">
+						    		<span>類型：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<select class="w3-select w3-border" onchange="addMainLogic(this, 't')" id="beanType">
+						    			<option value="0">請選擇</option>
+						    			<option value="string">文字</option>
+						    			<option value="number">數字</option>
+						    		</select>
+						    	</div>
+						    </div>
+						    <div class="w3-main-item mainItem ipt" style="display: none">
+						    	<div class="w3-left">
+						    		<span>最小值：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addMinAMax(this, 'min')" id="beanMin" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item mainItem ipt" style="display: none">
+						    	<div class="w3-left">
+						    		<span>最大值：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addMinAMax(this, 'max')" id="beanMax" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item mainItem chk ipt" style="display: none">
+						    	<div class="w3-left">
+						    	</div>
+						    	<div class="w3-right">
+						    		<button class="w3-button w3-border w3-hover-aqtique-white w3-aqtique-white" onclick="addMainItem(this);">完成</button>
+						    	</div>
+						    </div>
+					    </div> 	
+					</div>
+				</div>
+			</div>
+				
+			<footer class="w3-container w3-light-grey w3-padding">
+		    	<button class="w3-button w3-dark-gray w3-border w3-site-left" style="margin-left: 10px;" onclick="document.getElementById('myModal2').style.display='none'">
+		    		取消
+		    	</button>
+		    	<button class="w3-button w3-light-violet w3-hover-dark-violet w3-border w3-site-left" style="margin-left: 10px;" onclick="nextPage(this, 1)">
+		    		上一步
+		    	</button>
+		    	<button class="w3-button w3-dodger-blue w3-hover-nany w3-border w3-site-right" style="margin-right: 10px;" onclick="nextPage(this, 3)">
+		    		下一步
+		    	</button>
+		    </footer>
+		</div>
+	</div>
+	<div id="myModal3" class="w3-modal">
+		<div class="w3-modal-content w3-animate-right">
+			<header class="w3-container w3-mineral-blue">
+			    <span onclick="document.getElementById('myModal3').style.display='none'"
+			      	class="w3-button w3-hover-sky-blue w3-display-topright">&times;</span>
+			    <h2>新 增 驗 證 規 則 Step.3</h2>
+		    </header>
+		    <div class="w3-container w3-alice-blue w3-margin-large">
+		    	<h3>※ 新增次要元件條件及事件 ※</h3>
+		    	<p>選擇【次要元件】、【驗證條件】、【觸發事件】，若條件的規則超過兩個需選擇【條件邏輯】</p>
+		    </div>
+		    <div class="w3-scrollbar w3-max-height" style="position: relative;">
+			    <span class="w3-title">次要元件及邏輯</span>
+				<!-- <button class="w3-title-btn w3-button" onclick="addMainItem(this)">+</button> -->
+				<div class="w3-container w3-block-1">
+					<div class="w3-main-block w3-border-top">
+						<div class="w3-main-item">
+							<div class="w3-left">
+								<span>元件清單：</span>
+							</div>
+							<div class="w3-right" id="subBeanList">
+								<!-- <button class="w3-button w3-border w3-pale-green w3-hover-forst-green"> 元件001 </button> -->
+							</div>
+						</div>
+						<div class="w3-main-item w3-hide">
+							<div class="w3-left">
+								<span>條件清單：</span>
+							</div>
+							<div class="w3-right" id="subConditionList">
+								<!-- <button class="w3-button w3-border w3-pale-green w3-hover-forst-green"> 元件001 </button> -->
+							</div>
+						</div>
+						<div class="w3-main-item w3-hide">
+							<div class="w3-left">
+								<span>事件清單：</span>
+							</div>
+							<div class="w3-right" id="subEventList">
+								<!-- <button class="w3-button w3-border w3-pale-green w3-hover-forst-green"> 元件001 </button> -->
+							</div>
+						</div>
+						<div class="w3-main-item w3-hide">
+							<div class="w3-left">
+					      		<span>條件邏輯：</span>
+					      	</div>
+					      	<div class="w3-right">
+					      		<select class="w3-select w3-border" onchange="editSubEvent(this)">
+						     		<option>請選擇</option>
+						     		<option value="&&">且 (&&)</option>
+						     		<option value="||">或 (||)</option>
+						     	</select>
+					      	</div>
+						</div>
+					</div>
+				</div>
+				<div class="w3-container">
+					<button class="w3-button w3-border w3-bisque w3-hover-burly-wood w3-site-right" onclick="addSubDuo(this, 'main')" id="addSub">新增元件</button>
+					<button class="w3-button w3-border w3-snow w3-hover-snow w3-site-right w3-hide" style="margin-right: 10px;" onclick="addSubDuo(this, 'event')" id="addEvt">新增事件</button>
+					<button class="w3-button w3-border w3-linen w3-hover-linen w3-site-right w3-hide" style="margin-right: 10px;" onclick="addSubDuo(this, 'condition')" id="addCon">新增條件</button>
+					<button class="w3-button w3-border w3-rose-red w3-hover-dark-violet w3-disabled" onclick="delSubView(this)" style="margin-left: 10px" id="delSub">刪除元件</button>
+					<button class="w3-button w3-border w3-alice-blue w3-hover-alice-blue w3-site-left w3-disabled" onclick="editSubView(this)" id="editSub">修改元件</button>
+				</div>
+				<br><hr>
+				<div class="w3-scrollbar w3-transfer" style="height: 0px;" id="subItemList">
+					<div class="w3-container w3-block-1">
+						<button class="w3-button w3-border w3-light-grey w3-site-right" style="display: none; position: absolute; right: 15px" onclick="cancelSubAdd(this)" id="subClose">關閉</button>
+					    <div class="w3-main-block">
+					   		<div class="w3-main-item subItem ipt">
+					      		<div class="w3-left">
+						      		<span>次元件：</span>
+						      	</div>
+						      	<div class="w3-right">
+						      		<select class="w3-select w3-border" onchange="subFormItemChange(this)" id="subBeanMain">
+							     		<option value="0">請選擇</option>
+							     		<!-- <option value="checkbox">checkbox Item</option>
+							      		<option value="radiobox">radiobox Item</option> -->
+							     		<option value="input">input Item</option>
+							      		<option value="select">select Item</option>
+							      		<option value="other">...</option>
+							      	</select>
+						      	</div>
+						    </div>
+						    <!-- <div class="w3-main-item subItem chk" style="display: none">
+						      	<div class="w3-left">
+						      		<span>觸發指定值：</span>
+						      	</div>
+						      	<div class="w3-right">
+						      		<div class="w3-checkbox-group">
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值1">
+						      			<label>值1</label>
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值2">
+						      			<label>值2</label>
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值3">
+						      			<label>值3</label>
+						      			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值4">
+						     			<label>值4</label>
+						     			<input class="w3-check" type="checkbox" name="itemValue" onchange="addMainItemValue(this)" value="值5">
+						      			<label>值5</label>
+						      		</div>
+						      	</div>
+						    </div>
+						    <div class="w3-main-item subItem chk" style="display: none">
+						    	<div class="w3-left">
+						    		<span>邏輯運算：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<select class="w3-select w3-border" onchange="addMainLogic(this, 'o')" id="subBeanLogic">
+						    			<option value="0">請選擇</option>
+						    			<option value="&&">且 (&&)</option>
+						    			<option value="||">或 (||)</option>
+						    		</select>
+						    	</div>
+						    </div> -->
+						    <div class="w3-main-item subItem con" style="display: none">
+						    	<div class="w3-left">
+						    		<span>類型：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<select class="w3-select w3-border" onchange="addSubLogic(this)" id="subBeanType">
+						    			<option value="0">請選擇</option>
+						    			<option value="string">文字(日期)</option>
+						    			<option value="number">數字(大小)</option>
+						    			<option value="regex">正則表達式(Regex)</option>
+						    		</select>
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem evt type" style="display: none">
+						    	<div class="w3-left">
+						    		<span>類型：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<select class="w3-select w3-border" onchange="addSubEvent(this)" id="subEventType">
+						    			<option value="0">請選擇</option>
+						    			<option value="reject">顯示文字(hint)</option>
+						    			<option value="cgcolor">改變顏色(color)</option>
+						    			<option value="eval">調用函數(function)</option>
+						    		</select>
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem con" style="display: none">
+						    	<div class="w3-left">
+						    		<span>最小值：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubMax(this, 'min')" id="subBeanMin" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem con" style="display: none">
+						    	<div class="w3-left">
+						    		<span>最大值：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubMax(this, 'max')" id="subBeanMax" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem con" style="display: none">
+						    	<div class="w3-left">
+						    		<span>正則表達式：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubRex(this)" id="subBeanRex" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem evt hint" style="display: none">
+						    	<div class="w3-left">
+						    		<span>提示字：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubHint(this)" id="subBeanHint" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem evt color" style="display: none">
+						    	<div class="w3-left">
+						    		<span>背景顏色：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubBgColor(this)" id="subBeanBgColor" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem evt color" style="display: none">
+						    	<div class="w3-left">
+						    		<span>文字顏色：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubTxtColor(this)" id="subBeanTxtColor" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem evt eval" style="display: none">
+						    	<div class="w3-left">
+						    		<span>條件成立：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubTrue(this)" id="subBeanTrue" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem evt eval" style="display: none">
+						    	<div class="w3-left">
+						    		<span>條件不成立：</span>
+						    	</div>
+						    	<div class="w3-right">
+						    		<input class="w3-input w3-border" type="text" onchange="addSubFalse(this)" id="subBeanFalse" />
+						    	</div>
+						    </div>
+						    <div class="w3-main-item subItem ipt con evt type" style="display: none">
+						    	<div class="w3-left">
+						    	</div>
+						    	<div class="w3-right">
+						    		<button class="w3-button w3-border w3-hover-aqtique-white w3-aqtique-white" onclick="addSubItem(this);">完成</button>
+						    		<button class="w3-button w3-border w3-rose-red w3-hover-dark-violet w3-disabled" onclick="delEvtCon(this)" style="margin-left: 10px; display: none" id="delEvtCon">刪除</button>
+						    	</div>
+						    </div>
+					    </div> 	
+					</div>
+				</div>
+			</div>
+		    <footer class="w3-container w3-light-grey w3-padding">
+		    	<button class="w3-button w3-dark-gray w3-border w3-site-left" style="margin-left: 10px;" onclick="document.getElementById('myModal3').style.display='none'">
+		    		取消
+		    	</button>
+		    	<button class="w3-button w3-light-violet w3-hover-dark-violet w3-border w3-site-left" style="margin-left: 10px;" onclick="nextPage(this, 2)">
+		    		上一步
+		    	</button>
+		    	<button class="w3-button w3-light-violet w3-hover-dark-violet w3-border w3-site-right" style="margin-right: 10px;" onclick="submitJson()">
+		    		新增
+		    	</button>
+		    </footer>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+	/**
+		參數
+	**/
+
+	var logicObject = {
+		"name": "",
+		"ifs": [],
+		"events": [],
+		"operation": "",
+		// "eval_true": "",
+		// "eval_false": "",
+		"desc": ""
+	};
+
+	var targetItemNum = 0;
+	var targetSubItemNum = 0;
+	var targetSubConditionNum = 0;
+	var targetSubEventNum = 0;
+	var targetButton = null;
+	var targetSubButton = null;
+	var targetSubConditionButton = null;
+	var targetSubEventButton = null;
+	
+	/**
+		主要元件相關 Function
+	**/
+
+	// 完成主要元件
+	function addMainItem(that) {
+		// logic
+		cleanMainItemValue();
+		targetButton = null;
+		// view
+		mainBtnStatus(true);
+		$('.mainItem').css('display', 'none');
+		$('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+		console.log(logicObject);
+		return false;
+	}
+
+	// 新增主要元件
+	function addMainView(that) {
+		// Logic
+		var object = {
+			"datatype": "", // checked \ number \ string
+			"bean": "",
+			"uiValue": [],
+			"operation": "", // options (checked)
+			"min": "",	// number \ string
+			"max": ""
+		};
+		var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusMainBean(this)" id="' + (logicObject.ifs.length + 1) + '"> 元件' + (logicObject.ifs.length + 1) + ' </button>';
+		logicObject.ifs.push(object);
+
+		targetItemNum = logicObject.ifs.length - 1;
+		// view
+		$(that).addClass('w3-disabled');
+		$(that).attr('disabled', true);
+		$('#close').html('取消新增');
+		$('#mainItemList').css('height', '300px');
+		$('#mainItemList').css('visibility', 'visible');
+		$('#beanList').append(button);
+		targetButton = $('#' + logicObject.ifs.length);
+		$('#beanList').find('button').addClass('disabled').attr('disabled', true);
+		console.log(logicObject);
+		return false;
+	}
+
+	//修改主元件
+	function editMainView(that) {
+		// logic
+		var object = logicObject.ifs[targetItemNum];
+		$('#beanMain').val(object.bean);
+		switch(object.datatype) {
+			case "checked":
+				$('.mainItem.chk').css('display', 'block');
+				for (var i = 0; i < object.uiValue.length; i++) {
+					$('.mainItem.chk').find('input[value="' + object.uiValue[i] + '"]').prop('checked', 'checked');
+					$('#beanLogic').val(object.operation);
+				}
+				break;
+			case "string":
+			case "number":
+				$('.mainItem.ipt').css('display', 'block');
+				$('#beanType').val(object.datatype);
+				if (object.min != undefined && object.min != "") {
+					$('#beanMin').val(object.min);
+				}
+				if (object.max != undefined && object.max != "") {
+					$('#beanMax').val(object.max);
+				}
+				break;	
+			case "select":
+				break;
+		}
+		// view
+		$('#mainItemList').css('height', '300px');
+		$('#mainItemList').css('visibility', 'visible');
+		$('#editMain').addClass('w3-disabled');
+		$('#editMain').attr('disabled', true);
+		$('#delMain').addClass('w3-disabled');
+		$('#delMain').attr('disabled', true);
+		$('#close').html('關閉');
+		$('#beanList').find('button').addClass('disabled').attr('disabled', true);
+	}
+
+	// 刪除主要元件
+	function delMainView(that) {
+		// logic
+		logicObject.ifs[targetItemNum] = null;
+		targetButton.remove();
+		targetButton = null;
+		cleanMainItemValue();
+		// view
+		mainBtnStatus(true);
+		$('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+		console.log(logicObject);
+		return false;
+	}
+
+	// 取消新增主要元件
+	function cancelMainAdd(that) {
+		// logic
+		if (!targetButton.hasClass('active')) {
+			logicObject.ifs[targetItemNum] = null;
+			targetButton.remove();
+			targetButton = null;
+		}
+		cleanMainItemValue();
+		// view 
+		mainBtnStatus(true);
+		$('.mainItem').css('display', 'none');
+		$('#beanList').find('button').removeClass('active').removeClass('disabled').attr('disabled', false);
+		console.log(logicObject);
+		return false;
+	}
+
+	// 元件選取 
+	function focusMainBean(that) {
+		// logic
+		if ($(that).hasClass('active')) {
+			$(that).removeClass('active');
+			targetButton = null;
+			mainBtnStatus(true);
+		} else {
+			$(that).parent().find('button').removeClass('active');
+			$(that).addClass('active');
+			targetButton = $(that);
+			targetItemNum = parseInt($(that).attr('id')) - 1;
+			mainBtnStatus(false);
+		}
+	}
+
+	// 主元件切換 判斷類型
+	function formItemChange(that) {
+		// logic
+		var func = that.value;
+		logicObject.ifs[targetItemNum].bean = func;
+		// view
+		$('.mainItem').css('display', 'none');
+		if (func == 'checkbox' || func == 'radiobox') {
+			logicObject.ifs[targetItemNum].datatype = 'checked';
+			$('.mainItem.chk').css('display', 'block');
+		} else if (func == 'input') {
+			$('.mainItem.ipt').css('display', 'block');
+		} else if (func == 'select') {
+
+		} else {
+
+		}
+		targetButton.html(func);
+		console.log(logicObject);
+	}
+
+	// 主元件值新增
+	function addMainItemValue(that) {
+		// logic
+		var checked = that.checked;
+		var func = that.value;
+		if (checked) {
+			if (logicObject.ifs[targetItemNum].uiValue.indexOf(func) == -1) {
+				logicObject.ifs[targetItemNum].uiValue.push(func);
+			}
+		} else {
+			if (logicObject.ifs[targetItemNum].uiValue.indexOf(func) > -1) {
+				var site = logicObject.ifs[targetItemNum].uiValue.indexOf(func);
+				logicObject.if[targetItemNum].uiValue.splice(site, 1);
+			}
+		}
+		// view
+		console.log(logicObject);
+	}
+
+	// 主元件新增物件
+	function addMainLogic(that, type) {
+		// logic
+		var func = that.value;
+		if (type == 'o') { // Checked
+			logicObject.ifs[targetItemNum].operation = func;
+		} else if (type == 't') { // string \ number
+			logicObject.ifs[targetItemNum].datatype = func;
+		}
+		
+		// view
+		console.log(logicObject);
+	}
+
+	// 主元件 - 最大最小值
+	function addMinAMax(that, type) {
+		var func = that.value;
+		if (type == 'min') {
+			logicObject.ifs[targetItemNum].min = func;
+		} else if (type == 'max') {
+			logicObject.ifs[targetItemNum].max = func;
+		}
+		console.log(logicObject);
+	}
+
+	// 多元件邏輯判斷
+	function editMainEvent(that) {
+		var func = that.value;
+		logicObject.operation = func;
+		console.log(logicObject);
+	}
+
+	// 清除內容
+	function cleanMainItemValue() {
+		$('#beanMain').val(0);
+		$('#beanLogic').val(0);
+		$('#beanType').val(0);
+		$('#beanMin').val('');
+		$('#beanMax').val('');
+		$('.mainItem.chk').find('input').attr('checked', false);
+	}
+
+	// 按鈕轉換
+	function mainBtnStatus(bol) {
+		if (bol) {
+			$('#mainItemList').css('visibility', 'hidden');
+			$('#mainItemList').css('height', '0');
+			$('#editMain').addClass('w3-disabled');
+			$('#editMain').attr('disabled', true);
+			$('#delMain').addClass('w3-disabled');
+			$('#delMain').attr('disabled', true);
+			$('#addMain').removeClass('w3-disabled');
+			$('#addMain').attr('disabled', false);
+		} else {
+			$('#editMain').removeClass('w3-disabled');
+			$('#editMain').attr('disabled', false);
+			$('#delMain').removeClass('w3-disabled');
+			$('#delMain').attr('disabled', false);
+			$('#addMain').addClass('w3-disabled');
+			$('#addMain').attr('disabled', true);
+		}
+	}
+
+	/**
+		次要元件相關 Function
+	**/
+
+
+	// 完成次要元件
+	function addSubItem(that) {
+		// logic
+		cleanSubItemValue();
+		// view
+		$('.subItem').css('display', 'none');
+		if (targetSubConditionButton == null && targetSubEventButton == null) {
+			if (!targetSubButton.hasClass('active')) {
+				targetSubButton = null;
+				subBtnStatus(true);
+				$('#subBeanList').find('button').removeClass('active');
+			} else {
+				subBtnStatus(true);
+			}				
+		} else if (targetSubConditionButton != null && targetSubEventButton == null) {
+			targetSubConditionButton = null;
+			fiveBtnView(2);
+			$('#subConditionList').find('button').removeClass('active');
+			$('#subEventList').find('button').removeClass('active');
+		} else if (targetSubConditionButton == null && targetSubEventButton != null) {
+			targetSubEventButton = null;
+			fiveBtnView(2);
+			$('#subConditionList').find('button').removeClass('active');
+			$('#subEventList').find('button').removeClass('active');
+		}
+		listView(5);
+		$('#delEvtCon').addClass('w3-disabled');
+		$('#delEvtCon').attr('disabled', true);
+		$('#delEvtCon').css('display', 'none');
+		console.log(logicObject);
+		return false;
+	}
+
+
+	// 新增次要元件、元件條件、事件
+	function addSubDuo(that, type) {
+		$('.subItem.ipt').css('display', 'none');
+		if (type == 'event') {
+			// logic
+			var object = {
+				"mode": "", // string \ number \ regex
+				"hint": "",
+				"bgColor": "",
+				"fontColor": "",
+				"eval_true": "",
+				"eval_false": ""
+			};
+			var button = '<button class="w3-button w3-border w3-snow w3-hover-snow w3-margin" onclick="focusSubItem(this, \'event\')" id="evt' + (logicObject.events[targetSubItemNum].evts.length + 1) + '"> 元件' + (logicObject.events[targetSubItemNum].evts.length + 1) + ' </button>';
+			logicObject.events[targetSubItemNum].evts.push(object);
+			targetSubEventNum = logicObject.events[targetSubItemNum].evts.length - 1;
+
+			// view
+			$('#subEventList').append(button);
+			$('.subItem.evt.type').css('display', 'block');
+			targetSubEventButton = $('#evt' + logicObject.events[targetSubItemNum].evts.length);
+		} else if (type == 'condition') {
+			// logic
+			var object = {
+				"checktype": "", // string \ number \ regex
+				"condition": "",
+				"min": "",
+				"max": ""
+			};
+			var button = '<button class="w3-button w3-border w3-mint-cream w3-hover-mint-cream w3-margin" onclick="focusSubItem(this, \'condition\')" id="con' + (logicObject.events[targetSubItemNum].ifs.length + 1) + '"> 元件' + (logicObject.events[targetSubItemNum].ifs.length + 1) + ' </button>';
+			logicObject.events[targetSubItemNum].ifs.push(object);
+			targetSubConditionNum = logicObject.events[targetSubItemNum].ifs.length - 1;
+
+			// view
+			$('#subConditionList').append(button);
+			$('.subItem.con').css('display', 'block');
+			targetSubConditionButton = $('#con' + logicObject.events[targetSubItemNum].ifs.length);
+		} else if (type == 'main') {
+			// logic
+			var object = {
+				"tar": "", // beanName
+				"ifs": [],
+				"operator": "",
+				"evts": []
+			};
+			var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusSubBean(this)" id="sub' + (logicObject.events.length + 1) + '"> 元件' + (logicObject.events.length + 1) + ' </button>';
+			logicObject.events.push(object);
+
+			targetSubItemNum = logicObject.events.length - 1;
+
+			// view
+			$('#subBeanList').append(button);
+			$('.subItem.ipt').css('display', 'block');
+			targetSubButton = $('#sub' + logicObject.events.length);
+		}
+			
+		// view
+		fiveBtnView(1);
+		listView(1);
+		$('#delSub').attr('disabled', true);
+		$('#subClose').html('取消新增');
+		$('#subClose').css('display', 'block');
+		
+		console.log(logicObject);
+	}
+
+	//修改次要元件
+	function editSubView(that) {
+		// logic
+		var object = logicObject.events[targetSubItemNum];
+		$('#subBeanMain').val(object.tar);
+		// view
+		fiveBtnView(1);
+		listView(1);
+		$('.subItem.ipt').css('display', 'block');
+		$('#subClose').html('關閉');
+		$('#subClose').css('display', 'block');
+	}
+
+	// 刪除次要元件
+	function delSubView(that) {
+		// logic
+		logicObject.events[targetSubItemNum] = null;
+		targetSubButton.remove();
+		targetSubButton = null;
+		$('.w3-show').addClass('w3-hide').removeClass('w3-show');
+		cleanSubItemValue();
+		// view
+		subBtnStatus(true);
+		listView(5);
+		$('#subBeanList').find('button').removeClass('active');
+		console.log(logicObject);
+		return false;
+	}
+
+	// 取消新增次要元件
+	function cancelSubAdd(that) {
+		// logic
+		if (targetSubButton != null && targetSubConditionButton == null && targetSubEventButton == null) {
+			if (!targetSubButton.hasClass('active')) {
+				logicObject.events[targetSubItemNum] = null;
+				targetSubButton.remove();
+				targetSubButton = null;
+			}
+		} else if (targetSubButton != null && targetSubConditionButton != null && targetSubEventButton == null) {
+			if (!targetSubConditionButton.hasClass('active')) {
+				logicObject.events[targetSubItemNum].ifs[targetSubConditionNum] = null;
+				targetSubConditionButton.remove();
+			}
+			targetSubConditionButton = null;
+		} else if (targetSubButton != null && targetSubConditionButton == null && targetSubEventButton != null) {
+			if (!targetSubEventButton.hasClass('active')) {
+				logicObject.events[targetSubItemNum].evts[targetSubEventNum] = null;
+				targetSubEventButton.remove();
+			}
+			targetSubEventButton = null;
+		}
+		cleanSubItemValue();
+		// view 
+		subBtnStatus(true);
+		listView(5);
+		$('.subItem').css('display', 'none');
+		$('#delEvtCon').addClass('w3-disabled');
+		$('#delEvtCon').attr('disabled', true);
+		$('#delEvtCon').css('display', 'none');
+		$('#subConditionList').find('button').removeClass('active');
+		$('#subEventList').find('button').removeClass('active');
+		console.log(logicObject);
+		return false;
+	}
+
+	// 多元件邏輯判斷
+	function editSubEvent(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].operator = func;
+		console.log(logicObject);
+	}
+
+	// 次要元件選取 
+	function focusSubBean(that) {
+		// logic
+		if ($(that).hasClass('active')) {
+			$(that).removeClass('active');
+			targetSubButton = null;
+			$('.w3-show').addClass('w3-hide').removeClass('w3-show');
+			subBtnStatus(true);
+		} else {
+			var id = $(that).attr('id');
+			$(that).parent().find('button').removeClass('active');
+			$(that).addClass('active');
+			targetSubButton = $(that);
+			targetSubItemNum = parseInt(id.substr(3, (id.length - 3))) - 1;
+			setSubTopValue();
+			$('.w3-hide').addClass('w3-show').removeClass('w3-hide');
+			subBtnStatus(false);
+		}
+	}
+
+	// 事件選取
+	function focusSubItem(that, type) {
+		if ($(that).hasClass('active')) {
+			$(that).removeClass('active');
+			if (type == 'event') {
+				targetSubEventButton = null;
+			} else if (type == 'condition') {
+				targetSubConditionButton = null;
+			}
+			fiveBtnView(2);
+			listView(5);
+			$('#delEvtCon').addClass('w3-disabled');
+			$('#delEvtCon').attr('disabled', true);
+			$('#delEvtCon').css('display', 'none');
+			$('.subItem.evt').css('display', 'none');
+			$('.subItem.con').css('display', 'none');
+		} else {
+			var id = $(that).attr('id');
+			var typeNum = 0;
+			$('.subItem.ipt').css('display', 'none');
+			$(that).parent().find('button').removeClass('active');
+			$(that).addClass('active');
+			if (type == 'event') {
+				targetSubEventButton = $(that);
+				targetSubEventNum = parseInt(id.substr(3, (id.length - 3))) - 1;
+				typeNum = 3;
+				$('.subItem.evt.type').css('display', 'block');
+			} else if (type == 'condition') {
+				targetSubConditionButton = $(that);
+				targetSubConditionNum = parseInt(id.substr(3, (id.length - 3))) - 1;
+				typeNum = 4;
+				$('.subItem.con').css('display', 'block');
+			}
+			setSubBotValue(type);
+			fiveBtnView(1);
+			listView(typeNum)
+			$('#delEvtCon').removeClass('w3-disabled');
+			$('#delEvtCon').attr('disabled', false);
+			$('#delEvtCon').css('display', 'inline-block');
+			$('#subClose').html('關閉');
+			$('#subClose').css('display', 'block');
+		}
+	}
+	
+	// 條件事件帶出
+	function setSubTopValue() {
+		$('#subConditionList').html('');
+		$('#subEventList').html('');
+		var ifs = logicObject.events[targetSubItemNum].ifs;
+		var evts = logicObject.events[targetSubItemNum].evts;
+		for (var i = 0; i < ifs.length; i++) {
+			if (ifs[i] != null) {
+				var ifsName = ifs[i].checktype;
+				var button = '<button class="w3-button w3-border w3-mint-cream w3-hover-mint-cream w3-margin" onclick="focusSubItem(this, \'condition\')" id="con' + (i + 1) + '"> ' + ifsName + ' </button>';
+				$('#subConditionList').append(button);
+			}
+				
+		}
+		for (var i = 0; i < evts.length; i++) {
+			if (evts[i] != null) {
+				var ifsName = evts[i].mode;
+				var button = '<button class="w3-button w3-border w3-snow w3-hover-snow w3-margin" onclick="focusSubItem(this, \'event\')" id="evt' + (i + 1) + '"> ' + ifsName + ' </button>';
+				$('#subEventList').append(button);
+			}
+			
+		}
+	}
+
+	// 下方事件帶出
+	function setSubBotValue(type) {
+		switch(type){
+			case "event":
+				var mode = logicObject.events[targetSubItemNum].evts[targetSubEventNum].mode;
+				$('#subEventType').val(mode);
+				$('.subItem.evt').css('display', 'none');
+				$('.subItem.evt.type').css('display', 'block');
+				switch(mode) {
+					case "reject":
+						var hint = logicObject.events[targetSubItemNum].evts[targetSubEventNum].hint;
+						$('#subBeanHint').val(hint);
+						$('.subItem.evt.hint').css('display', 'block');
+						break;
+					case "cgcolor":
+						var bgColor = logicObject.events[targetSubItemNum].evts[targetSubEventNum].bgColor;
+						var fontColor = logicObject.events[targetSubItemNum].evts[targetSubEventNum].fontColor;
+						$('#subBeanBgColor').val(bgColor);
+						$('#subBeanTxtColor').val(fontColor);
+						$('.subItem.evt.color').css('display', 'block');
+						break;
+					case "eval":
+						var eval_true = logicObject.events[targetSubItemNum].evts[targetSubEventNum].eval_true;
+						var eval_false = logicObject.events[targetSubItemNum].evts[targetSubEventNum].eval_false;
+						$('#subBeanTrue').val(eval_true);
+						$('#subBeanFalse').val(eval_false);
+						$('.subItem.evt.eval').css('display', 'block');
+						break;
+				}
+				break;
+			case "condition":
+				var checktype = logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].checktype;
+				var min = logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].min;
+				var max = logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].max;
+				var condition = logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].condition;
+				$('#subBeanType').val(checktype);
+				if (min != undefined) {
+					$('#subBeanMin').val(min);
+				}
+				if (max != undefined) {
+					$('#subBeanMax').val(max);
+				}
+				if (condition != undefined) {
+					$('#subBeanRex').val(condition);
+				}
+				break;
+		}
+	}
+
+	// 條件事件刪除
+	function delEvtCon(that) {
+		// logic
+		if (targetSubConditionButton != null) {
+			targetSubConditionButton.remove();
+			logicObject.events[targetSubItemNum].ifs[targetSubConditionNum] = null;
+			targetSubConditionButton = null;
+		}
+
+		if (targetSubEventButton != null) {
+			targetSubEventButton.remove();
+			logicObject.events[targetSubItemNum].evts[targetSubEventNum] = null;
+			targetSubEventButton = null;
+		}
+		// view
+		cleanSubItemValue();
+		subBtnStatus(true);
+		$('.subItem').css('display', 'none');
+		$('#delEvtCon').addClass('disabled');
+		$('#delEvtCon').attr('disabled', true);
+		$('#delEvtCon').css('display', 'none');
+		$('#subConditionListList').find('button').removeClass('active');
+		$('#subEventList').find('button').removeClass('active');
+		listView(5);
+	}
+
+	// 次要元件切換 判斷類型
+	function subFormItemChange(that) {
+		// logic
+		var func = that.value;
+		logicObject.events[targetSubItemNum].tar = func;
+		// view
+		$('.subItem').css('display', 'none');
+		$('.subItem.ipt').css('display', 'block');
+		targetSubButton.html(func);
+		console.log(logicObject);
+	}
+
+	// 次要元件新增物件
+	function addSubLogic(that) {
+		// logic
+		var func = that.value;
+		logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].checktype = func;
+
+		// view
+		targetSubConditionButton.html(func);
+		console.log(logicObject);
+	}
+
+	// 次要元件新增事件類型
+	function addSubEvent(that) {
+		// logic
+		var func = that.value;
+		logicObject.events[targetSubItemNum].evts[targetSubEventNum].mode = func;
+		// view
+		targetSubEventButton.html(func);
+		$('.subItem.evt').css('display', 'none');
+		$('.subItem.evt.type').css('display', 'block');
+		switch(func) {
+			case "reject":
+				$('.subItem.evt.hint').css('display', 'block');
+				break;
+			case "cgcolor":
+				$('.subItem.evt.color').css('display', 'block');
+				break;
+			case "eval":
+				$('.subItem.evt.eval').css('display', 'block');
+				break;
+		}
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 最大最小值
+	function addSubMax(that, type) {
+		var func = that.value;
+		if (type == 'min') {
+			logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].min = func;
+		} else if (type == 'max') {
+			logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].max = func;
+		}
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 正則表達式 
+	function addSubRex(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].ifs[targetSubConditionNum].condition = func;
+
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 提示文字
+	function addSubHint(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].evts[targetSubEventNum].hint = func;
+
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 背景顏色
+	function addSubBgColor(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].evts[targetSubEventNum].bgColor = func;
+
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 文字顏色
+	function addSubTxtColor(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].evts[targetSubEventNum].fontColor = func;
+
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 條件成立
+	function addSubTrue(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].evts[targetSubEventNum].eval_true = func;
+
+		console.log(logicObject);
+	}
+
+	// 次要元件 - 條件不成立
+	function addSubFalse(that) {
+		var func = that.value;
+		logicObject.events[targetSubItemNum].evts[targetSubEventNum].eval_false = func;
+
+		console.log(logicObject);
+	}
+
+	// 清除次要內容
+	function cleanSubItemValue() {
+		$('#subBeanMain').val(0);
+		$('#subBeanLogic').val(0);
+		$('#subBeanType').val(0);
+		$('#subEventType').val(0);
+		$('#subBeanMin').val('');
+		$('#subBeanMax').val('');
+		$('#subBeanRex').val('');
+		$('#subBeanHint').val('');
+		$('#subBeanBgColor').val('');
+		$('#subBeanTxtColor').val('');
+		$('#subBeanTrue').val('');
+		$('#subBeanFalse').val('');
+	}
+
+	// 次要按鈕轉換
+	function subBtnStatus(bol) {
+		if (bol) {
+			$('#subItemList').css('visibility', 'hidden');
+			$('#subItemList').css('height', '0');
+			if (targetSubButton == null) {
+				$('#addSub').removeClass('w3-disabled');
+				$('#addSub').attr('disabled', false);
+				$('#editSub').addClass('w3-disabled');
+				$('#editSub').attr('disabled', true);
+				$('#delSub').addClass('w3-disabled');
+				$('#delSub').attr('disabled', true);
+			} else {
+				$('#editSub').removeClass('w3-disabled');
+				$('#editSub').attr('disabled', false);
+				$('#delSub').removeClass('w3-disabled');
+				$('#delSub').attr('disabled', false);
+			}
+			$('#addCon').removeClass('w3-disabled');
+			$('#addCon').attr('disabled', false);
+			$('#addEvt').removeClass('w3-disabled');
+			$('#addEvt').attr('disabled', false);
+		} else {
+			$('#editSub').removeClass('w3-disabled');
+			$('#editSub').attr('disabled', false);
+			$('#delSub').removeClass('w3-disabled');
+			$('#delSub').attr('disabled', false);
+			$('#addSub').addClass('w3-disabled');
+			$('#addSub').attr('disabled', true);
+		}
+	}
+
+	function fiveBtnView(type) {
+		/**
+			1: 全部 disabled
+			2: 除新增元件 disabled 其餘 enable
+			3: 除新增元件其餘 disabled
+		**/
+		switch(type) {
+			case 1:
+				$('#subItemList').css('visibility', 'visible');
+				$('#subItemList').css('height', '300px');
+				$('#editSub').addClass('w3-disabled');
+				$('#editSub').attr('disabled', true);
+				$('#delSub').addClass('w3-disabled');
+				$('#delSub').attr('disabled', true);
+				$('#addEvt').addClass('w3-disabled');
+				$('#addEvt').attr('disabled', true);
+				$('#addCon').addClass('w3-disabled');
+				$('#addCon').attr('disabled', true);
+				$('#addSub').addClass('w3-disabled');
+				$('#addSub').attr('disabled', true);
+				break;
+			case 2:
+				$('#subItemList').css('visibility', 'hidden');
+				$('#subItemList').css('height', '0');
+				$('#editSub').removeClass('w3-disabled');
+				$('#editSub').attr('disabled', false);
+				$('#delSub').removeClass('w3-disabled');
+				$('#delSub').attr('disabled', false);
+				$('#addEvt').removeClass('w3-disabled');
+				$('#addEvt').attr('disabled', false);
+				$('#addCon').removeClass('w3-disabled');
+				$('#addCon').attr('disabled', false);
+				$('#addSub').addClass('w3-disabled');
+				$('#addSub').attr('disabled', true);
+				break;
+			case 3:
+				$('#subItemList').css('visibility', 'hidden');
+				$('#subItemList').css('height', '0');
+				$('#editSub').addClass('w3-disabled');
+				$('#editSub').attr('disabled', true);
+				$('#delSub').addClass('w3-disabled');
+				$('#delSub').attr('disabled', true);
+				$('#addEvt').addClass('w3-disabled');
+				$('#addEvt').attr('disabled', true);
+				$('#addCon').addClass('w3-disabled');
+				$('#addCon').attr('disabled', true);
+				$('#addSub').removeClass('w3-disabled');
+				$('#addSub').attr('disabled', false);
+				break;
+		}
+	}
+
+	function listView(type) {
+		/**
+			1: 全部 disabled
+			2: 元件清單 disabled
+			3: 條件清單 enable
+			4: 事件清單 enable
+			5: 全部 enable
+		**/
+		switch(type) {
+			case 1:
+				$('#subBeanList').find('button').addClass('w3-disabled').attr('disabled', true);
+				$('#subEventList').find('button').addClass('w3-disabled').attr('disabled', true);
+				$('#subConditionList').find('button').addClass('w3-disabled').attr('disabled', true);
+				break;
+			case 2:
+				$('#subBeanList').find('button').addClass('w3-disabled').attr('disabled', true);
+				$('#subEventList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				$('#subConditionList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				break;
+			case 3:
+				$('#subBeanList').find('button').addClass('w3-disabled').attr('disabled', true);
+				$('#subEventList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				$('#subConditionList').find('button').addClass('w3-disabled').attr('disabled', true);
+				break;
+			case 4:
+				$('#subBeanList').find('button').addClass('w3-disabled').attr('disabled', true);
+				$('#subEventList').find('button').addClass('w3-disabled').attr('disabled', true);
+				$('#subConditionList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				break;
+			case 5:
+				$('#subBeanList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				$('#subEventList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				$('#subConditionList').find('button').removeClass('w3-disabled').attr('disabled', false);
+				break;
+		}
+	}
+
+	// 新增條件名稱
+	function addName(that) {
+		var func = that.value;
+		logicObject.name = func;
+
+		console.log(logicObject);
+	}
+
+	// 新增備註
+	function addDesc(that) {
+		var func = that.value;
+		logicObject.desc = func;
+
+		console.log(logicObject);
+	}
+
+
+	// 換頁
+	function nextPage(that, Page) {
+		var point = $(that).parent().parent().parent();
+		$(point).css('display', 'none');
+		if (logicObject != undefined) {
+			setValueView(Page);
+		}
+		$('#myModal' + Page).css('display', 'block');
+	}
+
+	function setValueView(page) {
+		switch(page) {
+			case 1:
+				if (logicObject.name != undefined) {
+					$('#myModal1').find('input:first').val()
+				}
+				if (logicObject.desc != undefined) {
+					$('#myModal1').find('input:last').val()
+				}	
+				break;
+			case 2:
+				if (logicObject.ifs != undefined && logicObject.ifs > 0) {
+					var len = logicObject.ifs.length;
+					for (var i = 0; i < len; i++) {
+						if (logicObject.ifs[i] != null && logicObject.ifs[i] != undefined) {
+							var tarval = logicObject.ifs[i].bean;
+							var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusMainBean(this)" id="' + (i + 1) + '"> ' + tarval + ' </button>';
+							$('#beanList').append(button);
+						}
+							
+					}
+					if (logicObject.operation != undefined) {
+						$('#mainEvent').val(logicObject.operation);
+					}
+				}
+				break;
+			case 3:
+				if (logicObject.events != undefined && logicObject.events.length > 0) {
+					for (var i = 0; i < logicObject.events.length; i++) {
+						if (logicObject.events[i] != null && logicObject.events[i] != undefined) {
+							var tarval = logicObject.events[i].tar;
+							var button = '<button class="w3-button w3-border w3-pale-green w3-hover-forst-green w3-margin" onclick="focusSubBean(this)" id="sub' + (i + 1) + '"> ' + tarval + ' </button>';
+							$('#subBeanList').append(button);
+						}
+					}
+				}
+				break;
+		};
+	}
+
+	// 送出
+	function submitJson() {
+		// logic
+		for (var i = (logicObject.ifs.length - 1); i >= 0; i--) {
+			if (logicObject.ifs[i] === null) {
+				logicObject.ifs.splice(i, 1);
+			}
+		}
+		for (var i = (logicObject.events.length - 1); i >= 0; i--) {
+			console.log(logicObject);
+			if (logicObject.events[i] === null) {
+				logicObject.events.splice(i, 1);
+			} else {
+				for (var j = (logicObject.events[i].ifs.length - 1); j >= 0; j--) {
+					if (logicObject.events[i].ifs[j] === null) {
+						logicObject.events[i].ifs.splice(j, 1);
+					}
+				}
+				for (var j = (logicObject.events[i].evts.length - 1); j >= 0; j--) {
+					if (logicObject.events[i].evts[j] === null) {
+						logicObject.events[i].evts.splice(j, 1);
+					}
+				}
+			}
+		}
+
+		// view
+		$('#myModal3').css('display', 'none');
+		$('#jsonView').val(JSON.stringify(logicObject, undefined, 4))
+		console.log(logicObject);
+	}
+</script>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>testapi</title>
+	<link rel="stylesheet" href="../customFormV3/css2/bootstrap.min.css?csSvnVersion=">
+	<script src="../../../META-JS/properties.js?csSvnVersion="></script><!-- 基礎參數設定 -->
+    <script src="../customFormV3/js2/jquery.js?csSvnVersion="></script>
+    <script src="../customFormV3/js/json2.js?csSvnVersion="></script>
+	<script src="../customFormV3/js2/bootstrap.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/bootstrap-datetimepicker.js?csSvnVersion="></script>
+    <script src="../customFormV3/js2/datetimepicker/locales/bootstrap-datetimepicker.zh-TW.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeHeadFileWeb.js?csSvnVersion="></script>
+    <script src="../customFormV4/js/includeFootJsWeb.js?csSvnVersion="></script>
+	<style type="text/css">
+		#dynamicJson, #dittoJson {
+			width: 100%;
+			height: 500px;
+		}
+		input {
+			width: 50%;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+	<div class="container-fluid">
+		<button type="button" class="btn btn-primary" onclick="callApi();">click!</button>
+	</div> 
+	-->
+	<div class="container-fluid">
+		<h5>元件</h5>
+		<div>
+	        <p class="pFormItem" data-bean="Prelationship_main"></p>
+	        <p class="pFormItem" data-bean="Prelationship_2"></p>
+	    </div>
+	</div>
+	<div class="container-fluid">
+		<h5>Api取得的值</h5>
+		<textarea id="dynamicJson"></textarea>
+		
+		<h5>Ditto的對象</h5>
+		<textarea id="dittoJson"></textarea>
+	</div>
+	
+</body>
+<script src="../../../js/global/nis/v2.0/DateTime.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/user.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/station.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/patient.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/dynamicForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/gForm.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/fileUpload.js?csSvnVersion=" defer></script>
+<script src="../../../js/global/nis/v2.0/modules/test.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/modules/eNursing.init.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/forwardNull.js?csSvnVersion="></script>
+<script src="../../../js/global/nis/v2.0/process.js?csSvnVersion="></script>
+<!-- Template模板 -->
+<script src="../customFormV3/js2/template-web.js?csSvnVersion="></script>
+<script src="../customFormV3/js2/template-transfer.js?csSvnVersion="></script>
+<script src="../customFormV3/js/addAndUpd.js?csSvnVersion="></script>
+<script type="text/javascript">
+	//基础参数
+	var basicParam = nursing.getBasicParam();
+	//動態表單
+	var dynamicForm = null;
+	var thisTimeIsDittoTime = false;
+	dynamicForm = nursing.getDynamicForm();
+	//依據formModel(表單名)、frameModel(對應頁面) 取得最新版的formFrame(表單外框)
+	dynamicForm.searchParamDF.formType = "PDR1";
+	dynamicForm.searchParamDF.frameModel = "xxxx";
+	var gFormJS = nursing.getGForm();
+	var dynamicFormTemplate = {"formVersionId":"089ad061-2203-482e-8da1-accfe6aa22c0","formName":"test","formType":"test","formModel":"test","items":[{"controlType":"radio","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"rdo","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"rdo","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},{"controlType":"checkbox","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"chk","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"chk","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"A","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"A","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"B","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"B","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"C","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"C","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"D","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"D","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"E","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"E","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Prelationship_main","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"Prelationship_main","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Prelationship_2","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"Prelationship_2","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]}],"hashItems":{"D":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"D","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"D","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"rdo":{"controlType":"radio","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"rdo","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"rdo","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},"E":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"E","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"E","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"chk":{"controlType":"checkbox","displayMode":"horizontal","educationNos":[null],"hasOther":[false,false,false,false,false,false],"checked":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"chk","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"chk","totalScoreType":"total","uiDesc":["1","2","3","4","5","6"],"uiScore":["0","0","0","0","0","0"],"uiValue":["1","2","3","4","5","6"]},"A":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"A","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"A","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"B":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"B","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"B","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"C":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"C","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"C","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"Prelationship_main":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Prelationship_main","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"Prelationship_main","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]},"Prelationship_2":{"controlType":"text","educationNos":[null],"hasOther":[false],"maxItemTotalScore":2147483647,"maxTotalScore":2147483647,"name":"Prelationship_2","otherBackTitle":[null],"otherTitle":[null],"planNos":[null],"printShowTitle":true,"required":false,"show":true,"showTitle":true,"textSize":8,"title":"Prelationship_2","totalScoreType":"total","uiDesc":[null],"uiScore":[null],"uiValue":[null]}},"highRisk":0,"peopleCategory":"adult","version":0};
+	var ditto = [
+	    			{
+	    				"beanName": "Prelationship_main",             
+	    				"value": "gformItemMap.Prelationship_main.itemValue"                 
+	    			},
+	    			{
+	    				"beanName": "item[0].Prelationship_2",            
+	    				"value": "gformItemMap.Prelationship_2.itemValue"                    
+	    			}
+	    		];
+
+	var gForm = {};
+	var x = 0;
+	gForm.gformItems=[];
+	gForm = gFormJS.setGFormItemMap(gForm);
+	console.log(gForm, gForm.gformItemMap);
+
+
+	createElement(dynamicFormTemplate.hashItems, pageReady);
+	callApi();
+
+	function pageReady() {
+		if (x++ < 1) { return; }
+	    console.log("Ready GO!!");
+	    
+	    gFormJS.setGFormItems(gForm);
+	    setElementValue_GForm();
+	}
+
+	function callApi() {
+		$.ajax({
+			url: '../../../api/PatData.do',
+			dataType: 'text',
+			async: false,
+			success: function(a) {
+				console.log(a);
+				var json = JSON.parse(JSON.parse(a));
+				console.log(json);
+				document.getElementById("dynamicJson").value = JSON.stringify(json, null, 4);
+				document.getElementById("dittoJson").value = JSON.stringify(ditto, null, 4);
+				// var val = objectTreeGetValue(json, 'Prelationship_main');
+				// objectTreeSetValue(gForm, 'gformItemMap.Prelationship_main.itemValue', val);
+
+				settingAllBean(gForm, json, ditto);
+
+				pageReady();
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+
+	function settingAllBean(gformObject, jsonObject, ditto) {
+
+		for (var i = 0; i < ditto.length; i++) {
+			var bean = ditto[i].beanName;
+			var tree = ditto[i].value;
+
+			var targetValue = objectTreeGetValue(jsonObject, bean);
+			objectTreeSetValue(gformObject, tree, targetValue);
+		}
+
+	}
+
+	// 取得物件樹節點參數
+	// obj 目標查詢物件
+	// tree 節點
+	
+	function objectTreeGetValue(obj, tree) {
+		var end;
+		console.log(obj, tree);
+		if (tree.indexOf('.') === -1) {								// 最終結束取參，判斷 tree 節點是否為最終
+			if (tree.indexOf('[') > -1) {
+				var clsName = tree.substring(0, tree.indexOf('['));
+				var clsNum	= tree.substring(tree.indexOf('[') + 1, tree.indexOf(']'));
+				if (obj[clsName][clsNum] === undefined) {
+					return false;
+				}
+				return obj[clsName][clsNum];
+			} else {
+				return obj[tree];									// 回調取得參數
+			}
+		}
+		var tpr = tree.split('.');									// 解構 tree 節點
+		var boa = false;
+
+		if (tpr[0].indexOf('[') > -1) {
+			var clsName = tpr[0].substring(0, tpr[0].indexOf('['));
+			var clsNum	= tpr[0].substring(tpr[0].indexOf('[') + 1, tpr[0].indexOf(']'));
+			boa 		= true;
+		}
+
+		if (!Array.isArray(obj)) {									// 判斷陣列 或 物件
+			if (boa) {
+				if (obj[clsName][clsNum] === undefined) {
+					return false;
+				} else {
+					tpr.splice(0, 1);								// 將 tree 節點更深入
+					tpr = tpr.join('.');							// 陣列化
+					end = objectTreeGetValue(obj[clsName][clsNum], tpr);	
+				}
+			} else {
+				var clsName = tpr[0];
+				if (obj[clsName] === undefined) {
+					return false;
+				} else {
+					tpr.splice(0, 1);								// 將 tree 節點更深入
+					tpr = tpr.join('.');							// 陣列化
+					end = objectTreeGetValue(obj[clsName], tpr);
+				}
+			}
+		} else {
+			for (var i = 0; i < obj.length; i++) {					// 迴圈
+				if (boa) {
+					if (obj[i][clsName][clsNum] !== undefined) {
+						tpr.splice(0, 1);
+						tpr = tpr.join('.');
+						end = objectTreeGetValue(obj[i][clsName][clsNum], tpr);
+						break;
+					}
+				} else {
+					var clsName = tpr[0];
+					if (obj[i][clsName] !== undefined) {
+						tpr.splice(0, 1);
+						tpr = tpr.join('.');
+						end = objectTreeGetValue(obj[i][clsName], tpr);
+						break;
+					}
+				}
+			}
+		}
+		return end;
+	}
+
+	// 設置物件樹節點參數
+	// obj 目標查詢物件
+	// tree 節點
+	// gfrom.gformItemMap.a.itemValue
+	// gform.gformItem[0].itemValue
+
+	function objectTreeSetValue(obj, tree, param) {
+		console.log(obj, tree);
+		if (tree.indexOf('.') === -1) {								// 判斷 tree 節點是否為最終
+			// array
+			if (tree.indexOf('[') > -1) {
+				var clsName = tree.substring(0, tree.indexOf('['));
+				var clsNum	= tree.substring(tree.indexOf('[') + 1, tree.indexOf(']'));
+				if (obj[clsName] === undefined) {
+					obj[clsName] = [];
+					for (var i = 0; i < clsNum; i++) {
+						obj[clsName].push({});
+					}
+				} else if (obj[clsName][clsNum] === undefined) {
+					var len = obj[clsName].length;
+					for (var i = 0; i < clsNum - len + 1; i++) {
+						obj[clsName].push({});
+					}
+				}
+				obj[clsName][clsNum] = param;
+			} else {
+				obj[tree] = param;
+			}
+			return false;
+		}
+		var tpr = tree.split('.');
+		var boa = false;
+
+		if (tpr[0].indexOf('[') > -1) {
+			var clsName = tpr[0].substring(0, tpr[0].indexOf('['));
+			var clsNum	= tpr[0].substring(tpr[0].indexOf('[') + 1, tpr[0].indexOf(']'));
+			boa 		= true;
+		}
+		if (!Array.isArray(obj)) {
+			if (boa) {
+				if (obj[clsName] === undefined) {
+					obj[clsName] = [];
+					for (var i = 0; i < clsNum; i++) {
+						obj[clsName].push({});
+					}
+				} else if (obj[clsName][clsNum] === undefined) {
+					var len = obj[clsName].length;
+					for (var i = 0; i < clsNum - len + 1; i++) {
+						obj[clsName].push({});
+					}
+				}
+				tpr.splice(0, 1);
+				tpr = tpr.join('.');
+				objectTreeSetValue(obj[clsName][clsNum], tpr, param);
+			} else {
+				var clsName = tpr[0];
+				if (obj[clsName] === undefined) {
+					obj[clsName] = {};
+				}
+				tpr.splice(0, 1);
+				tpr = tpr.join('.');
+				objectTreeSetValue(obj[clsName], tpr, param);
+			}
+		} else {
+			for (var i = 0; i < obj.length; i++) {
+				if (boa) {
+					if (obj[i][clsName] === undefined) {
+						obj[i][clsName] = [];
+						for (var i = 0; i < clsNum; i++) {
+							obj[i][clsName].push({});
+						}
+					}
+					tpr.splice(0, 1);
+					tpr = tpr.join('.');
+					objectTreeSetValue(obj[clsName][clsNum], tpr, param);
+				} else {
+					var clsName = tpr[0];
+					if (obj[i][clsName] === undefined) {
+						obj[i][clsName] = {};
+					}
+					tpr.splice(0, 1);
+					tpr = tpr.join('.');
+					objectTreeSetValue(obj[i][clsName], tpr, param);
+				}
+			}
+		}
+	}
+</script>
+</html>

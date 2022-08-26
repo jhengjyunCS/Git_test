@@ -1,0 +1,40 @@
+<div id="div_forms_{{$data.formType}}">
+    <div class="table" style="max-width: 100%">
+        <div class="caption">
+            {{$data.formName}}<br>
+            <input value="新增" type="button" onclick="addGform();">
+        </div>
+        <div class="tbody">
+            <div class="tr">
+                {{each $data.formTemplate.items item}}
+                <div class="th">{{item.title}}</div>
+                {{/each}}
+                <div class="th"></div>
+            </div>
+            {{each $data.gforms data}}
+            <div class="tr">
+                {{each $data.formTemplate.items item}}
+                {{set formItem=data.gForm.gformItemMap[item.name]}}
+                <div class="td">
+                    {{if formItem}}
+                        {{if /text|textarea/g.test(item.controlType)}}
+                    <div style="overflow: auto;max-width:269px;max-height: 169px">{{@formItem.itemValue|jsonFormat true}}</div>
+                        {{else if /radio|checkbox|select/g.test(item.controlType)}}
+                            {{each item.uiValue uiValue i}}
+                                {{if uiValue==formItem.itemValue}}
+                                    {{@item.uiDesc[i]}}
+                                {{/if}}
+                            {{/each}}
+                        {{/if}}
+                    {{/if}}
+                </div>
+                {{/each}}
+                <div id="tools_{{$index}}_{{$data.formType}}" class="td">
+                    <input type="button" value="修改" onclick="updateGform(this,'{{data.gForm.formId}}','{{$index}}')">
+                    <input type="button" value="删除" onclick="deleteGform(this,'{{data.gForm.formId}}','{{$index}}')">
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

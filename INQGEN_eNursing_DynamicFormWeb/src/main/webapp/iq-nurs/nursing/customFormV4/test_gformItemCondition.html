@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>gFormItem查詢條件測試工具</title>
+</head>
+<body>
+    gFormItem查詢條件測試工具...
+    <br/>
+    <table width="100%">
+    	<tr>
+    		<td width="50%">輸入</td>
+    		<td width="50%">輸出</td>
+    	</tr>
+    	<tr>
+    		<td width="50%"></td>
+    		<td width="50%">
+    			itemConditionHitCounts=<input id="itemConditionHitCounts" type="text"/><br/>
+				itemCondition ↓↓↓
+    		</td>
+    	</tr>
+    	<tr>
+    		<td width="50%">
+    			<textarea id="condition" style="width:95%; height: 450px;" onkeyup="complie_itemCondition(this.value)">
+(
+	{Tr_date}>='2019-06-29'AND {tr_date}<='2019-06-29 24'
+)
+||
+(
+	(
+		{tr_date} bEtwEen '2019-06-29' and '2019-06-29 24'
+	)
+	and {tr_date} <> '2019-06-29 12'
+)
+|| {pt_code}=''
+|| {site}='700'
+|| {vistype}='opd'
+|| {rep_nurse} like '%T31371%'
+|| {formcode} in ('FRC','LDC','DFC','HPI','DPA','DFA','VAC')
+	    		</textarea>
+	    	</td>
+    		<td width="50%"><textarea id="itemCondition" style="width:95%; height: 450px;"></textarea></td>
+    	</tr>
+    	<tr>
+    		<td width="50%" id="itemKey_repeat_title">重複</td>
+    		<td width="50%" id="itemKey_notRepeat_title">不重複</td>
+    	</tr>
+    	<tr>
+    		<td width="50%" id="itemKey_repeat"></td>
+    		<td width="50%" id="itemKey_notRepeat"></td>
+    	</tr>
+    </table>
+</body>
+</html>
+<script>
+	complie_itemCondition(document.getElementById('condition').value || document.getElementById('condition').value);
+	function complie_itemCondition(v){
+		var st=v, test, regex;
+
+		// st = "({Tr_date} >'1'  and {tr_date} <='3') || (({tr_date} bEtwEen '2019-06-29' and '2019-06-29 24') and {tr_date} <> '2019-06-29 12') || {pt_code}='' || {site}='700' || {vistype}='opd' || {rep_nurse} like '%T31371%' || {formcode} in ('FRC','LDC','DFC','HPI','DPA','DFA','VAC')";
+
+		console.log( st );
+
+		//total { }
+		regex = /\{\w+\}/gi
+		test = st.toLowerCase().match(regex);
+		document.getElementById("itemKey_repeat").innerHTML="";
+		for (var i=0; i<test.length; i++){
+			document.getElementById("itemKey_repeat").innerHTML+=test[i].substring(1,test[i].length-1)+"<br/>";
+		}
+		document.getElementById("itemKey_repeat_title").innerHTML="重複 ("+test.length+")";
+		console.log( "itemKey 共 " + test.length + " 個 ↓↓↓" );
+		console.log( test );
+
+		var test = test.filter(function(element, index, arr){
+		    return arr.indexOf(element) === index;
+		});
+		document.getElementById("itemKey_notRepeat").innerHTML="";
+		for (var i=0; i<test.length; i++){
+			document.getElementById("itemKey_notRepeat").innerHTML+=test[i].substring(1,test[i].length-1)+"<br/>";
+		}
+		document.getElementById("itemKey_notRepeat_title").innerHTML="重複 ("+test.length+")";
+		console.log( "itemKey (不重複) 共 " + test.length + " 個 ↓↓↓" );
+		console.log( test );
+
+		//between
+		regex = /\{(\w+)\}\s*between\s*\'([^\']*)\'\s+and\s+\'([^\']*)\'/gi;  //["{tr_date} between '2019-06-29' and '2019-06-29 24'"]
+		st = st.replace(regex, "(gfi2.itemkey='$1' AND gfi2.itemvalue BETWEEN '$2' AND '$3')");
+
+		//=,>=,<=,<>,>,<
+		regex = /\{(\w+)\}\s*([>|=|<|like]+)\s*\'([^\']*)\'/gi;  //["{tr_date} between '2019-06-29' and '2019-06-29 24'"]
+		st = st.replace(regex, "(gfi2.itemkey='$1' AND gfi2.itemvalue $2 '$3')");
+
+		//in
+		regex = /\{(\w+)\}\s*in\s*\(([^\)]*)\)/gi;  //["{tr_date} between '2019-06-29' and '2019-06-29 24'"]
+		st = st.replace(regex, "(gfi2.itemkey='$1' AND gfi2.itemvalue in ($2))");
+
+		//||
+		regex = /\|\|/gi;  //["{tr_date} between '2019-06-29' and '2019-06-29 24'"]
+		st = st.replace(regex, " OR ");
+
+		// test = st.match(regex);
+		// console.log( test );
+		console.log( st );
+		document.getElementById('itemConditionHitCounts').value=test.length;
+		document.getElementById('itemCondition').value=st;
+	}
+
+// var a="yyyy";
+// var b=/(^yyyy$)|(^mm$)|(^dd$)|(^yyyy\-mm$)|(^mm\-dd$)|(^yyyy\-mm\-dd$)/;
+// alert(b.test(a));
+// var a="hh";
+// var b=/(^hh$)|(^ii$)|(^hh\:ii$)/;
+// alert(b.test(a));
+
+
+
+
+
+// SELECT gi.sourceid,g.formId,g.formType,totalScore,g.status,formVersionId, evaluationTime, g.createTime
+//         ,g.modifyUserId,g.modifyUserName,g.modifyTime,g.versionNo,gfi.itemKey,gfi.itemValue,gfi.otherValue
+//         FROM GFORM g
+//         right join GFORMINDEX gi on g.FORMID=gi.FORMID
+//         left join GFORMITEM gfi on gfi.formId = g.formId
+//         where g.formType='formItemTemplate'
+//         and gi.SOURCEID='bbabf3c13dbb452f8b7544bd4144ffb4'
+//         and gi.FORMTYPE='formItemTemplate' and gi.STATUS in('Y', 'N')
+//         and g.status in('Y', 'N')
+//         and (
+//                     select count(*) as counts from gformitem gi2 where 
+//                     gi2.formid in g.formid
+//                     and
+//                     (
+//                         (
+//                             (gi2.itemkey='fitShow' and gi2.itemvalue between'2019-06-29' and '2019-06-29 24' and gi2.itemvalue<>'1')
+//                         )
+//                         or (gi2.itemkey='fitRequired' and gi2.itemvalue = '0')
+//                         or (
+//                             (gi2.itemkey='fitControlType' and gi2.itemvalue = 'radio')
+//                             or (gi2.itemkey='fitHasOther' and gi2.itemvalue = 'false,false')
+//                         )
+//                     )
+//                     group by gi2.formid
+//         )=4
+//         order by evaluationTime,createtime
+
+// --select * from gformitem where formid='e268d1c70f2f4e5199f1d4ee7932024e' and itemkey ='fitShow'
+// --update gformitem set itemvalue='2019-06-29'  where formid='e268d1c70f2f4e5199f1d4ee7932024e' and itemkey ='fitShow'
+
+// --  ('590decc19d0c4f65b4fa0e64aa7881fd', 'e268d1c70f2f4e5199f1d4ee7932024e', '61b6fdebc2194866bca5468323727a09')
+
+
+// --select * from gform g, gformitem gi  where g.formid='d725975284ba47ffa7ce2dc4a2d9592f' and g.formid=gi.formid
+
+// --and (select count(*) from ${GFORMITEM} gfi where gfi.formId = g.formId
+// --                <iterate property="items" prepend="and" open="(" close=")" conjunction="or">
+// --                    <![CDATA[ (gfi.itemKey=#items[].key# and gfi.itemValue=#items[].value#)]]>
+// --                </iterate>
+//  --               )>0
+
+
+
+
+
+
+</script>

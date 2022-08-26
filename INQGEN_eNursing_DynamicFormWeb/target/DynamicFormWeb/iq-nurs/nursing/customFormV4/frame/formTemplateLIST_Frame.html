@@ -1,0 +1,57 @@
+
+<table style="border-collapse: collapse" align=center>
+    <tr>
+        <td nowrap>
+            <h4 align="center">表单模板管理<br>&nbsp;</h4>
+        </td>
+    </tr>
+    <tr>
+        <th align="left" style="border-right: 1px #3A748F solid">
+            <form action="start" method="post" >
+                <a onclick="doURL('formTemplateLIST.html');">
+                    <input type="button" value="查询" class="clsButton" />
+                </a>
+                <a onclick="doURL('formTemplateADD.html');">
+                    <input type="button" value="新增" class="clsButton" />
+                </a>
+                <a onclick="doURL('formTemplateADDTemplate.html');">
+                    <input type="button" value="增加模版" class="clsButton" />
+                </a>
+            </form>
+        </th>
+    </tr>
+</table>
+
+<table id="tableList" width="96%" align="center" class="etable">
+    <tr>
+        <th >表单名字</th>
+        <th >表单类型</th>
+        <th  style="text-align: center"></th>
+    </tr>
+</table>
+
+
+<script id="tableListTr_Template" type="text/html">
+    {{each $data gForms idx}}
+        {{set gForm=gForms.gForm}}
+        <tr>
+            <td class="etd"align=center>
+                <font class="pFormItem" data-bean="ftFormName" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd"  align=center>
+                <font class="pFormItem" data-bean="ftFormType" data-index="{{idx}}" data-formversionid="{{gForm.formVersionId}}"/>
+            </td>
+            <td class="etd" style="text-align: center">
+                <a href="#" onclick="doMain('{{idx}}');">
+                    <input type="button" value="编辑" class="clsButton" />
+                </a>
+                <a href="#" onclick="doDelete('{{idx}}');">
+                    <input type="button" value="删除" class="clsButton" />
+                </a>
+                <a href="#" onclick="doPrint('{{idx}}');">
+                    <input type="button" value="打印" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    {{/each}}
+</script>

@@ -1,0 +1,210 @@
+<!-- 將被種到#bodyContent的#targetForm裡 -->
+<link rel="stylesheet" type="text/css" href="aa.css?csSvnVersion="/>
+<div style="overflow:auto; width: 100%">
+    <table height="51" width="100%" align=center>
+        <tr>
+            <td nowrap>
+                <h4 align="center">住院病患预防跌倒护理评估单</h4>
+            </td>
+        </tr>
+        <tr>
+            <td nowrap align=left>
+                <a onclick="doURL('WebADD.html');">
+                    <input type="button" value="新增" class="clsButton" />
+                </a>
+                <a href="javascript: return false;" onclick="">
+                    <input type="button" value="打印" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    </table>
+    <table id="tableList" class="etable">
+        <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>记录日期</th>
+            
+            <th>
+                陪伴者
+            </th>
+            
+            <th>
+                年龄≧65岁 ≦4岁
+            </th>
+            
+            <th>
+                意识状态：GCS：7-14分
+            </th>
+            
+            <th>
+                Hb值偏低 ≤80g／l或Hct≤24%
+            </th>
+            
+            <th>
+                头晕、晕眩
+            </th>
+            
+            <th>
+                过去半年有跌倒经验
+            </th>
+            
+            <th>
+                病患身上有管路留置
+            </th>
+            
+            <th>
+                主诉视觉不良
+            </th>
+            
+            <th>
+                辅具使用
+            </th>
+            
+            <th>
+                医嘱下达需陪护1人，实际却无陪
+            </th>
+            
+            <th>
+                排泄情形
+            </th>
+            
+            <th>
+                使用增加跌倒风险药物
+            </th>
+            
+            <th>
+                步态不稳或肢体活动受限
+            </th>
+            
+            <th>
+                
+            </th>
+            
+            <th>
+                
+            </th>
+            
+            <th>
+                
+            </th>
+            
+            <th>
+                跌倒发生日期
+            </th>
+            
+            <th>
+                
+            </th>
+            
+            <th>总分</th>
+            <th>评估者</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </table>
+</div>
+<script id="tableListTr_Template" type="text/html">
+    {{each $data dForms idx}}
+        {{set dForm=dForms.dynamicForm}}
+        <tr>
+            <td class="etd" align=center>
+                <a href="WebUPD.html" onclick="updateForm('{{idx}}');">
+                    <input type="button" value="編輯" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="deleteForm('{{idx}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                {{dForm.evaluationTime}}
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm1" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm2" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm3" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm4" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm5" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm6" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm7" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm8" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm9" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm10" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm11" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm12" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm13" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm14" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm15" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm16" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm17" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>
+                <font class="pFormItem" data-bean="FallBenQForm18" data-index="{{idx}}" data-formversionid="{{dForm.formVersionId}}"/>
+            </td>
+            
+            <td class="etd" align=center>{{@dForm.totalScore}}</td>
+            <td class="etd" align=center>{{dForm.createUserName}}</td>
+            <td class="etd" align=center>
+                <a href="WebUPD.html" onclick="updateForm('{{idx}}');">
+                    <input type="button" value="編輯" class="clsButton" />
+                </a>
+            </td>
+            <td class="etd" align=center>
+                <a href="#" onclick="deleteForm('{{idx}}');">
+                    <input type="button" value="刪除" class="clsButton" />
+                </a>
+            </td>
+        </tr>
+    {{/each}}
+</script>
