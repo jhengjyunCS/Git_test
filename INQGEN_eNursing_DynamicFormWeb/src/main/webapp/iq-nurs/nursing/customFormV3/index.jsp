@@ -1,5 +1,4 @@
-﻿//生理監測修改-1
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../setCheckUpdateFunction.jsp"%>
 <%@ page import="com.fto.m2.service.org.User"%>
