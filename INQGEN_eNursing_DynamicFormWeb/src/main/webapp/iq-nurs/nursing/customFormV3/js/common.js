@@ -1,4 +1,4 @@
-
+var a
 //判斷使否為chrome瀏覽器
 var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
 //判斷chrome版本是否大於60 (2019.5.8實測打包apk是30.0.0.0版、電腦是74.0.3729.131版)
