@@ -1,3 +1,4 @@
+var b
 //Add和Upd特有區段
 //創建動態表單元件
 function createElement(formItemsTemplate, pageReady) {
